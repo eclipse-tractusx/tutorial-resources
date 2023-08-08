@@ -1,0 +1,95 @@
+/*
+ *  Copyright (c) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+ *
+ *  This program and the accompanying materials are made available under the
+ *  terms of the Apache License, Version 2.0 which is available at
+ *  https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  SPDX-License-Identifier: Apache-2.0
+ *
+ *  Contributors:
+ *       Bayerische Motoren Werke Aktiengesellschaft (BMW AG) - initial API and implementation
+ *
+ */
+
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-center {
+  align-items: center;
+}
+.justify-stretch {
+  justify-content: stretch;
+}
+.justify-center {
+  justify-content: center;
+}
+
+.grow {
+  flex-grow: 1;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.w-3\/5 {
+  width: 60%;
+}
+.w-1\/5 {
+  width: 20%;
+}
+.w-4\/5 {
+  width: 80%;
+}
+.w-2\/5 {
+  width: 40%;
+}
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.pt-2 {
+  padding-top: 0.5rem;
+}
+
+.text-ellipsis {
+  text-overflow: ellipsis;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.constraints-menu {
+    max-height: 300px;
+    overflow: scroll;
+}

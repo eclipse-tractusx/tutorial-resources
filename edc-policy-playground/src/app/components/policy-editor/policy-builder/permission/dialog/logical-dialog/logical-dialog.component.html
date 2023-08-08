@@ -1,0 +1,58 @@
+<!--
+  ~  Copyright (c) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+  ~
+  ~  This program and the accompanying materials are made available under the
+  ~  terms of the Apache License, Version 2.0 which is available at
+  ~  https://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  SPDX-License-Identifier: Apache-2.0
+  ~
+  ~  Contributors:
+  ~       Bayerische Motoren Werke Aktiengesellschaft (BMW AG) - initial API and implementation
+  ~
+  -->
+
+<h1 mat-dialog-title>Edit Logical Constraint</h1>
+<div mat-dialog-content>
+  <div class="flex flex-col pt-2">
+    <mat-form-field appearance="outline">
+      <mat-label>Operator</mat-label>
+      <mat-select [(ngModel)]="constraint.operator">
+        <mat-option
+          *ngFor="let operator of logicalOperators"
+          [value]="operator"
+        >
+          {{ operator }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="flex flex-row">
+      <constraint-list
+        [container]="constraint"
+        [constraints]="constraints"
+        (onConstraintRemove)="onConstraintRemove($event)"
+        (onConstraintAdd)="onConstraintAdd($event)"
+        (onConstraintEdit)="onConstraintEdit($event)"
+        class="w-3/5"
+      >
+      </constraint-list>
+
+      <mat-card class="w-2/5">
+        <mat-card-content>
+          <atomic-constraint
+            [constraint]="currentConstraint"
+            [disabled]="isEditorDisabled()"
+          >
+          </atomic-constraint>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-button [mat-dialog-close]="constraint" cdkFocusInitial>
+    Save
+  </button>
+</div>

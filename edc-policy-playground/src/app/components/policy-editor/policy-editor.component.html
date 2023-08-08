@@ -1,0 +1,47 @@
+<!--
+  ~  Copyright (c) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+  ~
+  ~  This program and the accompanying materials are made available under the
+  ~  terms of the Apache License, Version 2.0 which is available at
+  ~  https://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  SPDX-License-Identifier: Apache-2.0
+  ~
+  ~  Contributors:
+  ~       Bayerische Motoren Werke Aktiengesellschaft (BMW AG) - initial API and implementation
+  ~
+  -->
+
+<div class="policy-editor-container">
+  <div class="policy-editor-container flex justify-center">
+    <mat-form-field appearance="outline">
+      <mat-label>Select policy</mat-label>
+      <mat-select
+        [ngModel]="policyConfig"
+        (ngModelChange)="onConfigSelectionChange($event)"
+      >
+        <mat-option *ngFor="let config of configurations" [value]="config">
+          {{ config.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-icon-button color="primary" matTooltip="Create new policy" (click)="addPolicy()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <button mat-icon-button color="primary" matTooltip="Copy the selected policy" (click)="copyPolicy()">
+      <mat-icon>content_copy</mat-icon>
+    </button>
+  </div>
+  <div class="flex flex-row policy-split-container">
+    <div class="policy-card-container w-3/5">
+      <policy-builder
+        (policyChange)="onConfigChange($event)"
+        [policyConfig]="policyConfig"
+      ></policy-builder>
+    </div>
+    <div class="policy-card-container w-2/5">
+      <editor class="policy-editor" [text]="text"></editor>
+    </div>
+  </div>
+</div>

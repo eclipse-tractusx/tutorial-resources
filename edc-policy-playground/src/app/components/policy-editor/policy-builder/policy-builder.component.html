@@ -1,0 +1,81 @@
+<!--
+  ~  Copyright (c) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+  ~
+  ~  This program and the accompanying materials are made available under the
+  ~  terms of the Apache License, Version 2.0 which is available at
+  ~  https://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  SPDX-License-Identifier: Apache-2.0
+  ~
+  ~  Contributors:
+  ~       Bayerische Motoren Werke Aktiengesellschaft (BMW AG) - initial API and implementation
+  ~
+  -->
+
+<div class="policy-builder-container">
+  <div>
+    <mat-form-field class="w-full">
+      <mat-label>Policy Name</mat-label>
+      <input
+        matInput
+        #input
+        placeholder="My Policy"
+        [(ngModel)]="policyConfig.name"
+      />
+    </mat-form-field>
+
+  </div>
+  <mat-accordion class="w-full">
+    <mat-expansion-panel
+      expanded="panelOpenState"
+      (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title> Permission </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="flex flex-row justify-between">
+        <mat-selection-list
+          #shoes
+          [multiple]="false"
+          [ngModel]="selectedPermissions"
+          (ngModelChange)="onPermissionSelectionChange($event)"
+          class="w-1/5"
+        >
+          <mat-list-option
+            selected="permission === currentPermission"
+            *ngFor="let permission of policyConfig.policy.permissions"
+            [value]="permission"
+          >
+            {{ permission.name }}
+          </mat-list-option>
+        </mat-selection-list>
+        <permission
+          *ngIf="currentPermission"
+          (permissionChange)="onPermissionChange()"
+          [permission]="currentPermission"
+          class="grow w-4/5"
+        ></permission>
+      </div>
+      <mat-action-row>
+        <button
+          mat-button
+          color="primary"
+          (click)="removePermission()"
+          matTooltip="Remove selected permission"
+        >
+          Remove
+        </button>
+        <button
+          mat-button
+          color="primary"
+          (click)="addPermission()"
+          matTooltip="Add permission"
+        >
+          Add
+        </button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

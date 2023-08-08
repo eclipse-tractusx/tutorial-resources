@@ -1,0 +1,45 @@
+<!--
+  ~  Copyright (c) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+  ~
+  ~  This program and the accompanying materials are made available under the
+  ~  terms of the Apache License, Version 2.0 which is available at
+  ~  https://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  SPDX-License-Identifier: Apache-2.0
+  ~
+  ~  Contributors:
+  ~       Bayerische Motoren Werke Aktiengesellschaft (BMW AG) - initial API and implementation
+  ~
+  -->
+
+<mat-card class="grow">
+  <mat-card-content>
+    <div class="flex flex-col">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input
+          matInput
+          placeholder="Permission name"
+          [(ngModel)]="permission.name"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Action</mat-label>
+        <mat-select [(ngModel)]="permission.action">
+          <mat-option *ngFor="let action of actions" [value]="action">
+            {{ action }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <constraint-list
+        [container]="permission"
+        [constraints]="constraints"
+        (onConstraintRemove)="onConstraintChange($event)"
+        (onConstraintAdd)="onConstraintChange($event)"
+        (onConstraintEdit)="onConstraintEdit($event)"
+      >
+      </constraint-list>
+    </div>
+  </mat-card-content>
+</mat-card>
