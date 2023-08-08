@@ -32,15 +32,20 @@ For the most bare-bones installation of the dataspace, execute the following com
 
 ```shell
 kind create cluster -n mxd
+# the next step is specific to KinD and will be different for other Kubernetes runtimes!
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 cd <path/of/mxd>
 terraform init
 terraform apply
 # type "yes" and press enter when prompted to do so 
 ```
 
+Notice that the `kubectl apply` command deploys a Kubernetes Ingress Controller to the cluster and is required to reach
+our applications from outside the cluster. Specifically, it deploys an NGINX ingress controller. Notice also, that the
+command is *specific to KinD* and will likely not work on other Kubernetes runtimes or with other ingress controllers!
+
 Wait. Then wait some more. It will take a couple of minutes until all services are booted up. If your machine is a
-potato,
-it'll take even longer. Just get a coffee. Eventually, it should look similar to this:
+potato, it'll take even longer. Just get a coffee. Eventually, it should look similar to this:
 
 ![img.png](assets/img.png)
 
@@ -69,15 +74,17 @@ inspect all the databases
 and tables, but there is not much data in there yet. Particularly the connector databases will be empty. We will fill
 them in the subsequent steps.
 
-
 ### Verify your local installation
 
 In order to check that the connectors were deployed successfully, please execute the following commands in a shell:
+
 ```shell
 curl -X GET http://localhost/bob/health/api/check/liveness
 curl -X GET http://localhost/alice/health/api/check/liveness
 ```
-which should return something similar to this, the important part being the `isSystemHealthy: true` bit: 
+
+which should return something similar to this, the important part being the `isSystemHealthy: true` bit:
+
 ```json
 {
   "componentResults": [
@@ -101,7 +108,6 @@ which should return something similar to this, the important part being the `isS
 In this step we will focus on inserting data into our participant Alice using
 the [Management API](https://app.swaggerhub.com/apis/eclipse-edc-bot/management-api/0.1.4-SNAPSHOT). We will use plain
 CLI tools (`curl`) for this, but feel free to use graphical tools such as Postman or Insomnia.
-
 
 ### 3.1 Add a basic `asset`, `policy` and `contract-definition`
 
@@ -154,7 +160,8 @@ and it is the most basic transfer available.
 ## 6. Simplify negotiation and transfer using the EDR API
 
 In [step 5](#5-bob-transfers-data-from-alice) we saw how a contract negotiation and a transfer can be executed using the
-management API, first the negotiation and then the transfer phase, but there is a simpler way to do this: enter the EDR API.
+management API, first the negotiation and then the transfer phase, but there is a simpler way to do this: enter the EDR
+API.
 Using this convenient tool, we don't have to care about the intricacies of negotiation and transfer anymore, we can
 simply request an API token to Alice's proxy, and start sucking data out of it.
 We don't even need to worry about token expiry - the EDR API has a little gizmo that automatically refreshes the token
