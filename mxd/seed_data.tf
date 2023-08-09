@@ -8,8 +8,8 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
   }
   spec {
     // run only once
-    completions                = 1
-    completion_mode            = "NonIndexed"
+    completions     = 1
+    completion_mode = "NonIndexed"
     // clean up any job pods after 90 seconds, failed or succeeded
     ttl_seconds_after_finished = "90"
     template {
@@ -19,8 +19,8 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
       spec {
         // this container seeds data to the BOB connector
         container {
-          name    = "newman-bob"
-          image   = "postman/newman:ubuntu"
+          name  = "newman-bob"
+          image = "postman/newman:ubuntu"
           command = [
             "newman", "run",
             "--folder", "SeedData",
@@ -36,8 +36,8 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
         }
         // this container seeds data to the ALICE connector
         container {
-          name    = "newman-alice"
-          image   = "postman/newman:ubuntu"
+          name  = "newman-alice"
+          image = "postman/newman:ubuntu"
           command = [
             "newman", "run",
             "--folder", "SeedData",

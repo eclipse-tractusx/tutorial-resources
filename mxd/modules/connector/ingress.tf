@@ -1,6 +1,6 @@
 resource "kubernetes_ingress_v1" "mxd-ingress" {
   metadata {
-    name        = "${var.participantId}-ingress"
+    name = "${var.participantId}-ingress"
     annotations = {
       "nginx.ingress.kubernetes.io/rewrite-target" = "/$2"
       "nginx.ingress.kubernetes.io/use-regex"      = "true"
