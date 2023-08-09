@@ -19,10 +19,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { Constraint, ConstraintContainer, ConstraintTemplate } from 'src/app/models/policy';
-import { PolicyService } from 'src/app/services/policy.service';
 
 @Component({
-  selector: 'constraint-list',
+  selector: 'app-constraint-list',
   templateUrl: './constraint.list.component.html',
   standalone: true,
   imports: [MatListModule, MatMenuModule, MatIconModule, NgFor, MatButtonModule],
@@ -33,28 +32,26 @@ export class ConstraintListComponent {
   @Input() constraints: ConstraintTemplate[] = [];
 
   @Output()
-  onConstraintRemove = new EventEmitter<Constraint>();
+  constraintRemove = new EventEmitter<Constraint>();
 
   @Output()
-  onConstraintAdd = new EventEmitter<Constraint>();
+  constraintAdd = new EventEmitter<Constraint>();
 
   @Output()
-  onConstraintEdit = new EventEmitter<Constraint>();
-
-  constructor(policyService: PolicyService) {}
+  constraintEdit = new EventEmitter<Constraint>();
 
   addConstraint(constraint: Constraint) {
     this.container.constraints.push(constraint);
-    this.onConstraintAdd.emit(constraint);
+    this.constraintAdd.emit(constraint);
     this.editConstraint(constraint);
   }
 
   removeConstraint(constraint: Constraint) {
     this.container.constraints = this.container.constraints.filter(item => item != constraint);
-    this.onConstraintRemove.emit(constraint);
+    this.constraintRemove.emit(constraint);
   }
 
   editConstraint(constraint: Constraint) {
-    this.onConstraintEdit.emit(constraint);
+    this.constraintEdit.emit(constraint);
   }
 }

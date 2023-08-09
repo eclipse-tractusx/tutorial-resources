@@ -20,7 +20,6 @@ import {
   LogicalConstraint,
   LogicalOperator,
   Operator,
-  Value,
   ValueKind,
 } from '../models/policy';
 import {
@@ -32,8 +31,6 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class PolicyService {
-  constructor() {}
-
   logicalOperators(): string[] {
     return this.values(LogicalOperator);
   }

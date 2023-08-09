@@ -12,6 +12,8 @@
  *
  */
 
+/*eslint-disable @typescript-eslint/no-explicit-any*/
+
 import { Injectable } from '@angular/core';
 import {
   AtomicConstraint,
@@ -45,9 +47,7 @@ export const emptyPolicy = Object.assign(policyRequestTemplate, {
 
 @Injectable({ providedIn: 'root' })
 export class FormatService {
-  constructor() {}
-
-  toJsonLd(policyConfig: PolicyConfiguration): any {
+  toJsonLd(policyConfig: PolicyConfiguration): object {
     const permissions = policyConfig.policy.permissions.map(this.mapPermission.bind(this));
 
     return Object.assign(emptyPolicy, {
@@ -55,7 +55,7 @@ export class FormatService {
     });
   }
 
-  formatPolicy(policy: any) {
+  formatPolicy(policy: object) {
     return JSON.stringify(policy, null, 2);
   }
 

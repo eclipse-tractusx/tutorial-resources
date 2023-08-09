@@ -24,7 +24,7 @@ import { AtomicConstraint, Operator } from 'src/app/models/policy';
 import { AtomicConstraintComponent } from '../../../constraint/atomic.constraint.component';
 
 @Component({
-  selector: 'constraint-dialog',
+  selector: 'app-constraint-dialog',
   templateUrl: './constraint-dialog.component.html',
   standalone: true,
   imports: [

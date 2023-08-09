@@ -18,7 +18,7 @@ import { json } from '@codemirror/lang-json';
 import { EditorState } from '@codemirror/state';
 
 @Component({
-  selector: 'editor',
+  selector: 'app-editor',
   template: `<div #codemirrorhost class="codemirrorhost"></div>`,
   standalone: true,
   styles: [

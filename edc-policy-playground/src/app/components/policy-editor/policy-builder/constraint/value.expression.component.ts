@@ -23,10 +23,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { AtomicConstraint, Value, ValueKind } from 'src/app/models/policy';
-import { PolicyService } from 'src/app/services/policy.service';
 
 @Component({
-  selector: 'value-expression',
+  selector: 'app-value-expression',
   templateUrl: './value.expression.component.html',
   styleUrls: [],
   standalone: true,
@@ -50,8 +49,6 @@ export class ValueExpressionComponent implements OnInit {
   @Input() disabled = false;
 
   value!: Value;
-
-  constructor(policyService: PolicyService) {}
 
   ngOnInit() {
     if (this.constraint.kind === ValueKind.Value) {

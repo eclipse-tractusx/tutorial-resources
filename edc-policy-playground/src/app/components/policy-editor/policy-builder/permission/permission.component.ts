@@ -17,7 +17,6 @@ import { AtomicConstraint, Constraint, ConstraintTemplate, LogicalConstraint, Pe
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { MatListModule } from '@angular/material/list';
 import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -25,14 +24,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConstraintDialogComponent } from './dialog/constraint-dialog/constraint-dialog.component';
-import { MatMenuModule } from '@angular/material/menu';
 import { LogicalConstraintDialogComponent } from './dialog/logical-dialog/logical-dialog.component';
 import { PolicyService } from 'src/app/services/policy.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ConstraintListComponent } from '../constraint/constraint.list.component';
 
 @Component({
-  selector: 'permission',
+  selector: 'app-permission',
   templateUrl: './permission.component.html',
   standalone: true,
   imports: [
