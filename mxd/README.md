@@ -49,6 +49,41 @@ potato, it'll take even longer. Just get a coffee. Eventually, it should look si
 
 ![img.png](assets/img.png)
 
+### Inspect terraform output
+
+After the `terraform` command has successfully completed, it will output a few configuration and setup values
+that we will need in later steps. Please note that most values will be different on your local system.
+
+```shell
+Outputs:
+
+alice-urls = {
+  "health" = "http://localhost/alice/health"
+  "management" = "http://localhost/alice/management/v2"
+}
+bob-node-ip = "10.96.248.22"
+bob-urls = {
+  "health" = "http://localhost/bob/health"
+  "management" = "http://localhost/bob/management/v2"
+}
+connector1-aeskey = "R3BDWGF4SWFYZigmVj0oIQ=="
+connector1-client-secret = "W3s1OikqRkxCbltfNDBmRg=="
+connector2-aeskey = "JHJISjZAS0tSKlNYajJTZA=="
+connector2-client-secret = "enFFUlkwQyZiJSRLQSohYg=="
+keycloak-database-credentials = {
+  "database" = "miw"
+  "password" = "Tn*iwPEuCgO@d==R"
+  "user" = "miw_user"
+}
+keycloak-ip = "10.96.103.80"
+miw-database-pwd = {
+  "database" = "keycloak"
+  "password" = "W:z)*mnHdy(DTV?+"
+  "user" = "keycloak_user"
+}
+postgres-url = "jdbc:postgresql://10.96.195.240:5432/"
+```
+
 ### Inspect the databases
 
 Please be aware, that all services and applications that were deployed in the previous step, are **not** accessible from
@@ -70,9 +105,8 @@ and `password=postgres`:
 
 Every service in the cluster has their own database, but for the sake of simplicity, they are hosted in one Postgres
 server. We will show in [later sections](#8-improving-the-setup), how the databases can be segregated out. Feel free to
-inspect all the databases
-and tables, but there is not much data in there yet. Particularly the connector databases will be empty. We will fill
-them in the subsequent steps.
+inspect all the databases and tables, but there is not much data in there yet. There is just a few automatically seeded
+assets, policies and contract definitions.
 
 ### Verify your local installation
 
@@ -102,6 +136,73 @@ which should return something similar to this, the important part being the `isS
   "isSystemHealthy": true
 }
 ```
+
+Once we've established the basic readiness of our connectors, we can move on to inspect a few data items:
+
+```shell
+curl -X POST http://localhost/bob/management/v3/assets/request -H "x-api-key: password" -H "content-type: application/json" | jq
+```
+
+this queries the `/assets` endpoint returning the entire list of assets that `bob` currently maintains. You should see
+something like
+
+```json
+[
+  {
+    "@id": "1",
+    "@type": "edc:Asset",
+    "edc:properties": {
+      "edc:description": "Product EDC Demo Asset 1",
+      "edc:id": "1"
+    },
+    "edc:dataAddress": {
+      "@type": "edc:DataAddress",
+      "edc:type": "HttpData",
+      "edc:baseUrl": "https://jsonplaceholder.typicode.com/todos"
+    },
+    "@context": {
+      "dct": "https://purl.org/dc/terms/",
+      "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+      "edc": "https://w3id.org/edc/v0.0.1/ns/",
+      "dcat": "https://www.w3.org/ns/dcat/",
+      "odrl": "http://www.w3.org/ns/odrl/2/",
+      "dspace": "https://w3id.org/dspace/v0.8/"
+    }
+  },
+  {
+    "@id": "2",
+    "@type": "edc:Asset",
+    "edc:properties": {
+      "edc:description": "Product EDC Demo Asset 2",
+      "edc:id": "2"
+    },
+    "edc:dataAddress": {
+      "@type": "edc:DataAddress",
+      "edc:type": "HttpData",
+      "edc:baseUrl": "https://jsonplaceholder.typicode.com/todos"
+    },
+    "@context": {
+      "dct": "https://purl.org/dc/terms/",
+      "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+      "edc": "https://w3id.org/edc/v0.0.1/ns/",
+      "dcat": "https://www.w3.org/ns/dcat/",
+      "odrl": "http://www.w3.org/ns/odrl/2/",
+      "dspace": "https://w3id.org/dspace/v0.8/"
+    }
+  }
+]
+```
+
+Note: the same thing can be done to inspect policies and contract definitions. The respective `curl` commands are:
+
+```shell
+# policies:
+curl -X POST http://localhost/bob/management/v2/policydefinitions/request -H "x-api-key: password" -H "content-type: application/json" | jq
+# contract defs:
+curl -X POST http://localhost/bob/management/v2/contractdefinitions/request -H "x-api-key: password" -H "content-type: application/json" | jq
+```
+
+Alternatively, please check out the [Postman collections here](./postman)
 
 ## 3. Add some data
 

@@ -1,3 +1,7 @@
+# This job's purpose is to supply some very basic master data to both connectors.
+# It will each create two assets, a policy and two contract definitions.
+# To achieve that, the Job mounts a Postman collection as ConfigMap, and runs it using newman
+
 resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
   metadata {
     name = "seed-connectors"
