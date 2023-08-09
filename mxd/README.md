@@ -34,6 +34,11 @@ For the most bare-bones installation of the dataspace, execute the following com
 kind create cluster -n mxd
 # the next step is specific to KinD and will be different for other Kubernetes runtimes!
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+# wait until the ingress controller is ready
+kubectl wait --namespace ingress-nginx \
+  --for=condition=ready pod \
+  --selector=app.kubernetes.io/component=controller \
+  --timeout=90s
 cd <path/of/mxd>
 terraform init
 terraform apply
@@ -42,7 +47,8 @@ terraform apply
 
 Notice that the `kubectl apply` command deploys a Kubernetes Ingress Controller to the cluster and is required to reach
 our applications from outside the cluster. Specifically, it deploys an NGINX ingress controller. Notice also, that the
-command is *specific to KinD* and will likely not work on other Kubernetes runtimes or with other ingress controllers!
+command is *specific to KinD* and will likely not work on other Kubernetes runtimes (minikube, ...) or with other
+ingress controllers!
 
 Wait. Then wait some more. It will take a couple of minutes until all services are booted up. If your machine is a
 potato, it'll take even longer. Just get a coffee. Eventually, it should look similar to this:
