@@ -25,7 +25,7 @@ import { PolicyEditorComponent } from './components/policy-editor/policy-editor.
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, BrowserAnimationsModule, AppHeader, PolicyEditorComponent],
+  imports: [BrowserModule, BrowserAnimationsModule, AppHeaderComponent, PolicyEditorComponent],
   providers: [PolicyService, FormatService, PolicyConfigurationStore],
   bootstrap: [AppComponent],
 })
