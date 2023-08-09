@@ -40,15 +40,13 @@ output "miw-database-pwd" {
 }
 
 output "bob-urls" {
-  value = {
-    management = "http://localhost/bob/management/v2"
-    health     = "http://localhost/bob/health"
-  }
+  value = module.bob-connector.urls
 }
 
-output "alice-management-url" {
-  value = {
-    management = "http://localhost/alice/management/v2"
-    health     = "http://localhost/alice/health"
-  }
+output "alice-urls" {
+  value = module.alice-connector.urls
+}
+
+output "bob-node-ip" {
+  value = module.bob-connector.node-ip
 }
