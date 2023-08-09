@@ -69,7 +69,8 @@ jobs:
 
       - name: "Run tests"
         run: |-
-          echo "::notice title=This is a placeholder::In the future, this job would run automated tests, e.g. using Postman, etc."
+          curl --fail http://localhost/bob/health/api/check/readiness
+          curl --fail http://localhost/alice/health/api/check/readiness
 
       - name: "Destroy the KinD cluster"
         run: >-
