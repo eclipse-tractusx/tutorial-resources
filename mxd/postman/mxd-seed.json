@@ -1,0 +1,349 @@
+{
+  "info": {
+    "_postman_id": "1466b775-e72c-483f-8707-ca87bf250f05",
+    "name": "MXD Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "647585"
+  },
+  "item": [
+    {
+      "name": "SeedData",
+      "item": [
+        {
+          "name": "Create Asset 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204 No Content (if new asset) or 409 Conflict (if asset already exists)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"@context\": {},\n    \"asset\": {\n        \"@type\": \"Asset\",\n        \"@id\": \"1\", \n        \"properties\": {\n            \"description\": \"Product EDC Demo Asset 1\"\n        }\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{MANAGEMENT_URL}}/assets",
+              "host": [
+                "{{MANAGEMENT_URL}}"
+              ],
+              "path": [
+                "assets"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Asset 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204 No Content (if new asset) or 409 Conflict (if asset already exists)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"@context\": {},\n    \"asset\": {\n        \"@type\": \"Asset\",\n        \"@id\": \"2\", \n        \"properties\": {\n            \"description\": \"Product EDC Demo Asset 2\"\n        }\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{MANAGEMENT_URL}}/assets",
+              "host": [
+                "{{MANAGEMENT_URL}}"
+              ],
+              "path": [
+                "assets"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Policy",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204 No Content (if new policy) or 409 Conflict (if policy already exists)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"@context\": {\n        \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n    },\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"1\",\n    \"policy\": {\n\t\t\"@type\": \"Policy\",\n\t\t\"odrl:permission\" : [{\n\t\t\t\"odrl:action\" : \"USE\",\n\t\t\t\"odrl:constraint\" : {\n\t\t\t\t\"@type\": \"LogicalConstraint\",\n\t\t\t\t\"odrl:or\" : [{\n\t\t\t\t\t\"@type\" : \"Constraint\",\n\t\t\t\t\t\"odrl:leftOperand\" : \"BusinessPartnerNumber\",\n\t\t\t\t\t\"odrl:operator\" : {\n                        \"@id\": \"odrl:eq\"\n                    },\n\t\t\t\t\t\"odrl:rightOperand\" : \"{{POLICY_BPN}}\"\n\t\t\t\t}]\n\t\t\t}\n\t\t}]\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{MANAGEMENT_URL}}/policydefinitions",
+              "host": [
+                "{{MANAGEMENT_URL}}"
+              ],
+              "path": [
+                "policydefinitions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Contract Definition 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204 No Content (if new contract definition) or 409 Conflict (if contract deifinition already exists)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"@context\": {},\n    \"@id\": \"1\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"1\",\n    \"contractPolicyId\": \"1\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"{{EDC_NAMESPACE}}id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"1\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{MANAGEMENT_URL}}/contractdefinitions",
+              "host": [
+                "{{MANAGEMENT_URL}}"
+              ],
+              "path": [
+                "contractdefinitions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Contract Definition 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204 No Content (if new contract definition) or 409 Conflict (if contract deifinition already exists)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"@context\": {},\n    \"@id\": \"2\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"1\",\n    \"contractPolicyId\": \"1\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"{{EDC_NAMESPACE}}id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"2\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{MANAGEMENT_URL}}/contractdefinitions",
+              "host": [
+                "{{MANAGEMENT_URL}}"
+              ],
+              "path": [
+                "contractdefinitions"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "value",
+        "value": "password",
+        "type": "string"
+      },
+      {
+        "key": "key",
+        "value": "X-Api-Key",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "MANAGEMENT_URL",
+      "value": "http://localhost/bob/management/v2"
+    },
+    {
+      "key": "PROVIDER_PROTOCOL_URL",
+      "value": "http://plato-controlplane:8084/api/v1/dsp"
+    },
+    {
+      "key": "ASSET_ID",
+      "value": "1",
+      "type": "default"
+    },
+    {
+      "key": "POLICY_ID",
+      "value": "1",
+      "type": "default"
+    },
+    {
+      "key": "CONTRACT_POLICY_ID",
+      "value": "1",
+      "type": "default"
+    },
+    {
+      "key": "ACCESS_POLICY_ID",
+      "value": "1",
+      "type": "default"
+    },
+    {
+      "key": "CONTRACT_DEFINITION_ID",
+      "value": "1",
+      "type": "default"
+    },
+    {
+      "key": "POLICY_BPN",
+      "value": "BPNBOB",
+      "type": "default"
+    },
+    {
+      "key": "NEGOTIATION_ID",
+      "value": ""
+    },
+    {
+      "key": "AGREEMENT_ID",
+      "value": ""
+    },
+    {
+      "key": "TRANSFER_ID",
+      "value": ""
+    },
+    {
+      "key": "TRANSFER_PROCESS_ID",
+      "value": ""
+    },
+    {
+      "key": "BACKEND_SERVICE",
+      "value": "http://backend:8080",
+      "type": "string"
+    },
+    {
+      "key": "AGREEMENT-ID",
+      "value": ""
+    },
+    {
+      "key": "authCode",
+      "value": ""
+    },
+    {
+      "key": "PROVIDER_ID",
+      "value": "BPNPLATO",
+      "type": "string"
+    },
+    {
+      "key": "EDC_NAMESPACE",
+      "value": "https://w3id.org/edc/v0.0.1/ns/",
+      "type": "string"
+    },
+    {
+      "key": "CONSUMER_ADAPTER_URL",
+      "value": "http://localhost:31364/management",
+      "type": "string"
+    }
+  ]
+}

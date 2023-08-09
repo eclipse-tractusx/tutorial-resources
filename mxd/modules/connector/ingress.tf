@@ -39,4 +39,6 @@ resource "kubernetes_ingress_v1" "mxd-ingress" {
 
 locals {
   control-plane-service = "${var.participantId}-tractusx-connector-controlplane"
+  management_url        = "http://localhost/${var.participantId}/management/v2"
+  health_url            = "http://localhost/${var.participantId}/health"
 }

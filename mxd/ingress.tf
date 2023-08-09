@@ -49,14 +49,3 @@ resource "kubernetes_ingress_v1" "mxd-ingress" {
     }
   }
 }
-
-#resource "helm_release" "ingress-nginx" {
-#  chart = "ingress-nginx"
-#  name  = "mxd-ingress"
-#  repository = "https://kubernetes.github.io/ingress-nginx"
-#  dependency_update = true
-#  force_update = true
-#  replace = true
-#  atomic = true
-#  recreate_pods = true
-#}
