@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { AppHeader } from './components/header/header.component';
+import { AppHeaderComponent } from './components/header/header.component';
 import { PolicyEditorComponent } from './components/policy-editor/policy-editor.component';
 import { PolicyService } from './services/policy.service';
 import { FormatService } from './services/format.service';
@@ -12,7 +12,7 @@ describe('AppComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       declarations: [AppComponent],
-      imports: [BrowserModule, BrowserAnimationsModule, AppHeader, PolicyEditorComponent],
+      imports: [BrowserModule, BrowserAnimationsModule, AppHeaderComponent, PolicyEditorComponent],
       providers: [PolicyService, FormatService, PolicyConfigurationStore],
     }),
   );

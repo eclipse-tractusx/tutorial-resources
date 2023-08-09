@@ -20,7 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PolicyService } from './services/policy.service';
 import { FormatService } from './services/format.service';
 import { PolicyConfigurationStore } from './stores/policy.store';
-import { AppHeader } from './components/header/header.component';
+import { AppHeaderComponent } from './components/header/header.component';
 import { PolicyEditorComponent } from './components/policy-editor/policy-editor.component';
 
 @NgModule({

@@ -26,4 +26,4 @@ import { PolicyEditorComponent } from '../policy-editor/policy-editor.component'
   standalone: true,
   imports: [MatToolbarModule, MatButtonModule, MatIconModule, PolicyEditorComponent],
 })
-export class AppHeader {}
+export class AppHeaderComponent {}
