@@ -6,7 +6,7 @@ resource "kubernetes_service" "controlplane-service" {
     name = "${var.participantId}-nodeport"
   }
   spec {
-    type = "NodePort"
+    type     = "NodePort"
     selector = {
       "app.kubernetes.io/instance" = "${var.participantId}-controlplane"
       "app.kubernetes.io/name"     = "tractusx-connector-controlplane"
@@ -14,6 +14,10 @@ resource "kubernetes_service" "controlplane-service" {
     port {
       name = "management"
       port = 8081
+    }
+    port {
+      name = "health"
+      port = 8080
     }
   }
 }

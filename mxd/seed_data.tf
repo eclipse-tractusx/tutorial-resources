@@ -3,13 +3,15 @@
 # To achieve that, the Job mounts a Postman collection as ConfigMap, and runs it using newman
 
 resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
+  // wait until the connectors are running, otherwise terraform may report an error
+  depends_on = [module.alice-connector, module.bob-connector]
   metadata {
     name = "seed-connectors"
   }
   spec {
     // run only once
-    completions     = 1
-    completion_mode = "NonIndexed"
+    completions                = 1
+    completion_mode            = "NonIndexed"
     // clean up any job pods after 90 seconds, failed or succeeded
     ttl_seconds_after_finished = "90"
     template {
@@ -19,8 +21,8 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
       spec {
         // this container seeds data to the BOB connector
         container {
-          name  = "newman-bob"
-          image = "postman/newman:ubuntu"
+          name    = "newman-bob"
+          image   = "postman/newman:ubuntu"
           command = [
             "newman", "run",
             "--folder", "SeedData",
@@ -36,8 +38,8 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
         }
         // this container seeds data to the ALICE connector
         container {
-          name  = "newman-alice"
-          image = "postman/newman:ubuntu"
+          name    = "newman-alice"
+          image   = "postman/newman:ubuntu"
           command = [
             "newman", "run",
             "--folder", "SeedData",
@@ -50,6 +52,22 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
             mount_path = "/opt/collection"
             name       = "seed-collection"
           }
+        }
+        init_container {
+          name    = "wait-for-bob"
+          image   = "curlimages/curl:latest"
+          command = ["/bin/sh", "-c"]
+          args    = [
+            "while [ $(curl -sw '%%{http_code}' http://${module.bob-connector.node-ip}:8080/api/check/readiness -o /dev/null) -ne 200 ]; do sleep 5; echo 'Waiting for bob'; done",
+          ]
+        }
+        init_container {
+          name    = "wait-for-alice"
+          image   = "curlimages/curl:latest"
+          command = ["/bin/sh", "-c"]
+          args    = [
+            "while [ $(curl -sw '%%{http_code}' http://${module.alice-connector.node-ip}:8080/api/check/readiness -o /dev/null) -ne 200 ]; do sleep 5; echo 'Waiting for alice'; done",
+          ]
         }
         volume {
           name = "seed-collection"
