@@ -12,7 +12,7 @@
  *
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   AtomicConstraint,
   Constraint,
@@ -20,33 +20,42 @@ import {
   Permission,
   PolicyConfiguration,
   Value,
-} from '../models/policy';
+} from "../models/policy";
 
 export const policyRequestTemplate = {
-  '@context': {
-    edc: 'https://w3id.org/edc/v0.0.1/ns/',
+  "@context": {
+    edc: "https://w3id.org/edc/v0.0.1/ns/",
   },
-  '@type': 'PolicyDefinitionRequest',
-  '@id': '{{POLICY_ID}}',
+  "@type": "PolicyDefinitionRequest",
+  "@id": "{{POLICY_ID}}",
   policy: {},
+};
+
+const policyHeader = {
+  "@type": "Set",
+  "@context": "http://www.w3.org/ns/odrl.jsonld",
 };
 
 export const emptyPolicy = Object.assign(policyRequestTemplate, {
   policy: {
-    '@type': 'Set',
-    '@context': 'http://www.w3.org/ns/odrl.jsonld',
+    ...policyHeader,
     permission: [],
   },
 });
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class FormatService {
   constructor() {}
 
   toJsonLd(policyConfig: PolicyConfiguration): any {
-    let permissions = policyConfig.policy.permissions.map(this.mapPermission.bind(this));
+    let permissions = policyConfig.policy.permissions.map(
+      this.mapPermission.bind(this),
+    );
 
-    return Object.assign(emptyPolicy, { policy: { permissions } });
+    console.log(policyHeader);
+    return Object.assign(emptyPolicy, {
+      policy: { ...policyHeader, permissions },
+    });
   }
 
   formatPolicy(policy: any) {
@@ -69,7 +78,7 @@ export class FormatService {
       };
     } else if (constraint instanceof LogicalConstraint) {
       let obj: any = {
-        '@type': 'LogicalConstraint',
+        "@type": "LogicalConstraint",
       };
       obj[constraint.operator.toString().toLowerCase()] =
         constraint.constraints.map(this.mapConstraint.bind(this));
@@ -84,8 +93,8 @@ export class FormatService {
   ): string | number | object | undefined {
     if (constraint.rightOperand instanceof Value) {
       return {
-        '@value': constraint.rightOperand.value,
-        '@type': constraint.rightOperand.ty,
+        "@value": constraint.rightOperand.value,
+        "@type": constraint.rightOperand.ty,
       };
     } else {
       return constraint.rightOperand;
