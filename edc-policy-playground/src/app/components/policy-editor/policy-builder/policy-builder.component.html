@@ -41,12 +41,12 @@
             {{ permission.name }}
           </mat-list-option>
         </mat-selection-list>
-        <permission
+        <app-permission
           *ngIf="currentPermission"
           (permissionChange)="onPermissionChange()"
           [permission]="currentPermission"
           class="grow w-4/5"
-        ></permission>
+        ></app-permission>
       </div>
       <mat-action-row>
         <button mat-button color="primary" (click)="removePermission()" matTooltip="Remove selected permission">

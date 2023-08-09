@@ -27,11 +27,10 @@ import { MatCardModule } from '@angular/material/card';
 import { NgFor, NgIf } from '@angular/common';
 import { PermissionComponent } from './permission/permission.component';
 import { FormsModule } from '@angular/forms';
-import { PolicyService } from 'src/app/services/policy.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
-  selector: 'policy-builder',
+  selector: 'app-policy-builder',
   templateUrl: 'policy-builder.component.html',
   styleUrls: ['policy-builder.component.css'],
   standalone: true,
@@ -76,8 +75,6 @@ export class PolicyBuilderComponent {
   selectedPermissions: Permission[] = [];
 
   panelOpenState = true;
-
-  constructor(policyService: PolicyService) {}
 
   addPermission() {
     this.currentPermission = new Permission('New Permission');

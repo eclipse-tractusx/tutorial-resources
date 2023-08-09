@@ -27,7 +27,7 @@ import { PolicyService } from 'src/app/services/policy.service';
 import { ValueExpressionComponent } from './value.expression.component';
 
 @Component({
-  selector: 'atomic-constraint',
+  selector: 'app-atomic-constraint',
   templateUrl: './atomic.constraint.component.html',
   styleUrls: [],
   standalone: true,

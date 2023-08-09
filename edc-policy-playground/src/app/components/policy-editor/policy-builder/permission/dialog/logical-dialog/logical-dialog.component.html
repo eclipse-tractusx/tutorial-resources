@@ -25,19 +25,20 @@
     </mat-form-field>
 
     <div class="flex flex-row">
-      <constraint-list
+      <app-constraint-list
         [container]="constraint"
         [constraints]="constraints"
-        (onConstraintRemove)="onConstraintRemove($event)"
-        (onConstraintAdd)="onConstraintAdd($event)"
-        (onConstraintEdit)="onConstraintEdit($event)"
+        (constraintRemove)="onConstraintRemove($event)"
+        (constraintAdd)="onConstraintAdd($event)"
+        (constraintEdit)="onConstraintEdit($event)"
         class="w-3/5"
       >
-      </constraint-list>
+      </app-constraint-list>
 
       <mat-card class="w-2/5">
         <mat-card-content>
-          <atomic-constraint [constraint]="currentConstraint" [disabled]="isEditorDisabled()"> </atomic-constraint>
+          <app-atomic-constraint [constraint]="currentConstraint" [disabled]="isEditorDisabled()">
+          </app-atomic-constraint>
         </mat-card-content>
       </mat-card>
     </div>

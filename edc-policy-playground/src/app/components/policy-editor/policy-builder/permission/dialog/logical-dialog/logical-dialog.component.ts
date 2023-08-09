@@ -28,7 +28,7 @@ import { ConstraintListComponent } from '../../../constraint/constraint.list.com
 import { AtomicConstraintComponent } from '../../../constraint/atomic.constraint.component';
 
 @Component({
-  selector: 'logical-dialog',
+  selector: 'app-logical-dialog',
   templateUrl: './logical-dialog.component.html',
   standalone: true,
   imports: [

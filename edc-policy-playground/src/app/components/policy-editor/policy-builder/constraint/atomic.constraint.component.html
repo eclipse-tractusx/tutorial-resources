@@ -43,6 +43,6 @@
       <mat-label>Right Operand</mat-label>
       <input matInput type="number" [(ngModel)]="constraint.rightOperand" [disabled]="disabled" />
     </mat-form-field>
-    <value-expression [constraint]="constraint" *ngSwitchCase="'Value'" class="w-full"></value-expression>
+    <app-value-expression [constraint]="constraint" *ngSwitchCase="'Value'" class="w-full"></app-value-expression>
   </div>
 </div>

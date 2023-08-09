@@ -29,7 +29,7 @@ import { PolicyConfigurationStore } from 'src/app/stores/policy.store';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
-  selector: 'policy-editor',
+  selector: 'app-policy-editor',
   templateUrl: './policy-editor.component.html',
   styleUrls: ['./policy-editor.component.css'],
   standalone: true,

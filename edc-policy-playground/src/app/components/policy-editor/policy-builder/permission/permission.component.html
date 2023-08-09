@@ -28,14 +28,14 @@
         </mat-select>
       </mat-form-field>
 
-      <constraint-list
+      <app-constraint-list
         [container]="permission"
         [constraints]="constraints"
-        (onConstraintRemove)="onConstraintChange($event)"
-        (onConstraintAdd)="onConstraintChange($event)"
-        (onConstraintEdit)="onConstraintEdit($event)"
+        (constraintRemove)="onConstraintChange($event)"
+        (constraintAdd)="onConstraintChange($event)"
+        (constraintEdit)="onConstraintEdit($event)"
       >
-      </constraint-list>
+      </app-constraint-list>
     </div>
   </mat-card-content>
 </mat-card>
