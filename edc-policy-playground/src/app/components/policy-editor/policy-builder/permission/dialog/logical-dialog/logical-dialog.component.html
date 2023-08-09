@@ -18,10 +18,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Operator</mat-label>
       <mat-select [(ngModel)]="constraint.operator">
-        <mat-option
-          *ngFor="let operator of logicalOperators"
-          [value]="operator"
-        >
+        <mat-option *ngFor="let operator of logicalOperators" [value]="operator">
           {{ operator }}
         </mat-option>
       </mat-select>
@@ -40,11 +37,7 @@
 
       <mat-card class="w-2/5">
         <mat-card-content>
-          <atomic-constraint
-            [constraint]="currentConstraint"
-            [disabled]="isEditorDisabled()"
-          >
-          </atomic-constraint>
+          <atomic-constraint [constraint]="currentConstraint" [disabled]="isEditorDisabled()"> </atomic-constraint>
         </mat-card-content>
       </mat-card>
     </div>
@@ -52,7 +45,5 @@
 </div>
 <div mat-dialog-actions align="end">
   <button mat-button (click)="cancel()">Cancel</button>
-  <button mat-button [mat-dialog-close]="constraint" cdkFocusInitial>
-    Save
-  </button>
+  <button mat-button [mat-dialog-close]="constraint" cdkFocusInitial>Save</button>
 </div>

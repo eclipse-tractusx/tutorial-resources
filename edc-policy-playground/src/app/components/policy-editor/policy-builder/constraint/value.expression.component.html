@@ -15,19 +15,11 @@
 <div class="w-full" *ngIf="value">
   <mat-form-field appearance="outline" class="w-full">
     <mat-label>Right Operand Value</mat-label>
-    <input
-      matInput
-      [(ngModel)]="value.value"
-      [disabled]="disabled"
-    />
+    <input matInput [(ngModel)]="value.value" [disabled]="disabled" />
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="w-full">
     <mat-label>Right Operand Value Type</mat-label>
-    <input
-      matInput
-      [(ngModel)]="value.ty"
-      [disabled]="disabled"
-    />
+    <input matInput [(ngModel)]="value.ty" [disabled]="disabled" />
   </mat-form-field>
 </div>

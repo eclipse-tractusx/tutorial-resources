@@ -16,11 +16,7 @@ import { NgFor } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogRef,
-  MatDialogModule,
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -39,7 +35,7 @@ import { AtomicConstraintComponent } from '../../../constraint/atomic.constraint
     MatInputModule,
     MatSelectModule,
     NgFor,
-    AtomicConstraintComponent
+    AtomicConstraintComponent,
   ],
 })
 export class ConstraintDialogComponent {
@@ -51,9 +47,7 @@ export class ConstraintDialogComponent {
   ) {
     this.constraint = data.clone();
 
-    this.operators = Object.values(Operator).filter(
-      (value) => typeof value === 'string',
-    ) as string[];
+    this.operators = Object.values(Operator).filter(value => typeof value === 'string') as string[];
   }
 
   cancel() {

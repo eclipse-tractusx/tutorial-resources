@@ -96,10 +96,9 @@ export class PolicyBuilderComponent {
   }
   removePermission() {
     if (this.currentPermission) {
-      this.policyConfig.policy.permissions =
-        this.policyConfig.policy.permissions.filter(
-          (item) => item != this.currentPermission,
-        );
+      this.policyConfig.policy.permissions = this.policyConfig.policy.permissions.filter(
+        item => item != this.currentPermission,
+      );
 
       this.currentPermission = this.policyConfig.policy.permissions[0];
 

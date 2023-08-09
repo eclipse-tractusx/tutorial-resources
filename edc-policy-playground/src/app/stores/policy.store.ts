@@ -12,7 +12,6 @@
  *
  */
 
-
 import { Injectable } from '@angular/core';
 import { Constraint, Permission, PolicyConfiguration } from '../models/policy';
 import {
@@ -27,12 +26,7 @@ export class PolicyConfigurationStore {
   configurations: PolicyConfiguration[] = [];
 
   constructor() {
-    this.configurations = [
-      bpnPolicy(),
-      inForceFixedPolicy(),
-      inForceDurationPolicy(),
-      ...credentialsPolicies(),
-    ];
+    this.configurations = [bpnPolicy(), inForceFixedPolicy(), inForceDurationPolicy(), ...credentialsPolicies()];
   }
 
   loadConfigurations(): PolicyConfiguration[] {
@@ -57,24 +51,20 @@ function inForceDurationPolicy(): PolicyConfiguration {
 }
 
 function credentialsPolicies(): PolicyConfiguration[] {
-  return credentialsConstraints().map((c) => {
-    let splitted = c.leftOperand?.split('.');
+  return credentialsConstraints().map(c => {
+    const splitted = c.leftOperand?.split('.');
 
     if (!splitted || splitted.length == 1) {
-        return createPolicy(`${c.leftOperand}  Policy`, c);
+      return createPolicy(`${c.leftOperand}  Policy`, c);
     } else {
-        return createPolicy(`${splitted[0]} Policy (${splitted[1]})`, c);
+      return createPolicy(`${splitted[0]} Policy (${splitted[1]})`, c);
     }
   });
 }
 
-function createPolicy(
-  name: string,
-  constraint: Constraint,
-  policyName: String = 'Permission',
-): PolicyConfiguration {
-  let config = new PolicyConfiguration(name);
-  let permission = new Permission();
+function createPolicy(name: string, constraint: Constraint, policyName = 'Permission'): PolicyConfiguration {
+  const config = new PolicyConfiguration(name);
+  const permission = new Permission();
   permission.name = policyName;
   permission.constraints.push(constraint);
   config.policy.permissions.push(permission);

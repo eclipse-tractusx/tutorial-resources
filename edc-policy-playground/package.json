@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test --browsers=ChromeHeadless --watch=false",
+    "format": "prettier --write \"src/**/*.{js,ts,json,md,css,scss,html}\"",
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
@@ -29,9 +31,17 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.1.6",
+    "@angular-eslint/builder": "16.1.0",
+    "@angular-eslint/eslint-plugin": "16.1.0",
+    "@angular-eslint/eslint-plugin-template": "16.1.0",
+    "@angular-eslint/schematics": "16.1.0",
+    "@angular-eslint/template-parser": "16.1.0",
     "@angular/cli": "~16.1.6",
     "@angular/compiler-cli": "^16.1.0",
     "@types/jasmine": "~4.3.0",
+    "@typescript-eslint/eslint-plugin": "5.62.0",
+    "@typescript-eslint/parser": "5.62.0",
+    "eslint": "^8.44.0",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

@@ -1,4 +1,3 @@
-#
 #  Copyright (c) 2023 Bayerische Motoren Werke Aktiengesellschaft
 #
 #  See the NOTICE file(s) distributed with this work for additional
@@ -18,7 +17,7 @@
 #
 
 ---
-name: Publish Application
+name: Publish playground
 
 on:
   push:

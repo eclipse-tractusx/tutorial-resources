@@ -51,15 +51,13 @@ export class PolicyService {
   }
 
   private values(val: object): string[] {
-    return Object.values(val).filter(
-      (value) => typeof value === 'string',
-    ) as string[];
+    return Object.values(val).filter(value => typeof value === 'string') as string[];
   }
 
   constraintTemplates(): ConstraintTemplate[] {
-    let credentialConstraints = credentialsConstraints();
+    const credentialConstraints = credentialsConstraints();
 
-    let credentialConstraintsTemplate = credentialConstraints.map((c) => {
+    const credentialConstraintsTemplate = credentialConstraints.map(c => {
       return {
         name: c.leftOperand + ' credential',
         multiple: false,
@@ -92,7 +90,7 @@ export class PolicyService {
         multiple: true,
         factory: inForceFixedConstraint,
       },
-      ...credentialConstraintsTemplate
+      ...credentialConstraintsTemplate,
     ];
   }
 }

@@ -18,24 +18,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
-import {
-  Constraint,
-  ConstraintContainer,
-  ConstraintTemplate,
-} from 'src/app/models/policy';
+import { Constraint, ConstraintContainer, ConstraintTemplate } from 'src/app/models/policy';
 import { PolicyService } from 'src/app/services/policy.service';
 
 @Component({
   selector: 'constraint-list',
   templateUrl: './constraint.list.component.html',
   standalone: true,
-  imports: [
-    MatListModule,
-    MatMenuModule,
-    MatIconModule,
-    NgFor,
-    MatButtonModule,
-  ],
+  imports: [MatListModule, MatMenuModule, MatIconModule, NgFor, MatButtonModule],
 })
 export class ConstraintListComponent {
   @Input() container!: ConstraintContainer;
@@ -51,8 +41,7 @@ export class ConstraintListComponent {
   @Output()
   onConstraintEdit = new EventEmitter<Constraint>();
 
-  constructor(policyService: PolicyService) {
-  }
+  constructor(policyService: PolicyService) {}
 
   addConstraint(constraint: Constraint) {
     this.container.constraints.push(constraint);
@@ -61,14 +50,11 @@ export class ConstraintListComponent {
   }
 
   removeConstraint(constraint: Constraint) {
-    this.container.constraints = this.container.constraints.filter(
-      (item) => item != constraint,
-    );
+    this.container.constraints = this.container.constraints.filter(item => item != constraint);
     this.onConstraintRemove.emit(constraint);
   }
 
   editConstraint(constraint: Constraint) {
     this.onConstraintEdit.emit(constraint);
   }
-
 }

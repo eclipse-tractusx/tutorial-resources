@@ -13,19 +13,17 @@
  */
 
 import { Component } from '@angular/core';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
-import {PolicyEditorComponent} from "../policy-editor/policy-editor.component";
-
+import { PolicyEditorComponent } from '../policy-editor/policy-editor.component';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
   standalone: true,
-  imports : [MatToolbarModule, MatButtonModule, MatIconModule, PolicyEditorComponent]
+  imports: [MatToolbarModule, MatButtonModule, MatIconModule, PolicyEditorComponent],
 })
-export class AppHeader {
-}
+export class AppHeader {}

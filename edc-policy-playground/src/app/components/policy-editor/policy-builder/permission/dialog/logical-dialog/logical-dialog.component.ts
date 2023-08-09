@@ -17,21 +17,12 @@ import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogRef,
-  MatDialogModule,
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import {
-  AtomicConstraint,
-  Constraint,
-  ConstraintTemplate,
-  LogicalConstraint,
-} from 'src/app/models/policy';
+import { AtomicConstraint, Constraint, ConstraintTemplate, LogicalConstraint } from 'src/app/models/policy';
 import { PolicyService } from 'src/app/services/policy.service';
 import { ConstraintListComponent } from '../../../constraint/constraint.list.component';
 import { AtomicConstraintComponent } from '../../../constraint/atomic.constraint.component';
@@ -76,9 +67,9 @@ export class LogicalConstraintDialogComponent {
     this.operators = policyService.operators();
     this.constraints = data.constraints;
 
-    let constraints = this.constraint.constraints
-      .filter((c) => c instanceof AtomicConstraint)
-      .map((c) => c as AtomicConstraint);
+    const constraints = this.constraint.constraints
+      .filter(c => c instanceof AtomicConstraint)
+      .map(c => c as AtomicConstraint);
 
     if (constraints.length > 0) {
       this.currentConstraint = constraints[0];

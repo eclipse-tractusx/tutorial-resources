@@ -13,13 +13,7 @@
  */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  AtomicConstraint,
-  Constraint,
-  ConstraintTemplate,
-  LogicalConstraint,
-  Permission,
-} from 'src/app/models/policy';
+import { AtomicConstraint, Constraint, ConstraintTemplate, LogicalConstraint, Permission } from 'src/app/models/policy';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -99,7 +93,7 @@ export class PermissionComponent {
       const dialogRef = this.dialog.open(LogicalConstraintDialogComponent, {
         data: {
           constraint: constraint,
-          constraints: this.constraints.filter((c) => !c.multiple),
+          constraints: this.constraints.filter(c => !c.multiple),
         },
         minWidth: '600px',
       });

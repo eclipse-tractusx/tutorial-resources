@@ -20,7 +20,7 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
 .w-full {
@@ -90,6 +90,6 @@ body {
 }
 
 .constraints-menu {
-    max-height: 300px;
-    overflow: scroll;
+  max-height: 300px;
+  overflow: scroll;
 }

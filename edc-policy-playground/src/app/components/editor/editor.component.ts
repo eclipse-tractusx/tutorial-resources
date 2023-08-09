@@ -12,15 +12,7 @@
  *
  */
 
-import {
-  AfterViewInit,
-  Component,
-  Output,
-  ViewChild,
-  ElementRef,
-  ViewEncapsulation,
-  Input,
-} from '@angular/core';
+import { AfterViewInit, Component, Output, ViewChild, ElementRef, ViewEncapsulation, Input } from '@angular/core';
 import { EditorView, basicSetup } from 'codemirror';
 import { json } from '@codemirror/lang-json';
 import { EditorState } from '@codemirror/state';

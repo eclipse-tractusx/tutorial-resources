@@ -16,21 +16,11 @@
   <div>
     <mat-form-field class="w-full">
       <mat-label>Policy Name</mat-label>
-      <input
-        matInput
-        #input
-        placeholder="My Policy"
-        [(ngModel)]="policyConfig.name"
-      />
+      <input matInput #input placeholder="My Policy" [(ngModel)]="policyConfig.name" />
     </mat-form-field>
-
   </div>
   <mat-accordion class="w-full">
-    <mat-expansion-panel
-      expanded="panelOpenState"
-      (opened)="panelOpenState = true"
-      (closed)="panelOpenState = false"
-    >
+    <mat-expansion-panel expanded="panelOpenState" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title> Permission </mat-panel-title>
       </mat-expansion-panel-header>
@@ -59,22 +49,10 @@
         ></permission>
       </div>
       <mat-action-row>
-        <button
-          mat-button
-          color="primary"
-          (click)="removePermission()"
-          matTooltip="Remove selected permission"
-        >
+        <button mat-button color="primary" (click)="removePermission()" matTooltip="Remove selected permission">
           Remove
         </button>
-        <button
-          mat-button
-          color="primary"
-          (click)="addPermission()"
-          matTooltip="Add permission"
-        >
-          Add
-        </button>
+        <button mat-button color="primary" (click)="addPermission()" matTooltip="Add permission">Add</button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>

@@ -16,24 +16,11 @@
   <mat-list-item
     ><div class="flex flex-row justify-between items-center">
       <span>Constraints</span>
-      <button
-        mat-icon-button
-        color="primary"
-        [matMenuTriggerFor]="menu"
-        matTooltip="Add constraint"
-      >
+      <button mat-icon-button color="primary" [matMenuTriggerFor]="menu" matTooltip="Add constraint">
         <mat-icon>add</mat-icon>
       </button>
-      <mat-menu
-        #menu="matMenu"
-        xPosition="before"
-        class="constraints-menu"
-      >
-        <button
-          mat-menu-item
-          *ngFor="let constraint of constraints"
-          (click)="addConstraint(constraint.factory())"
-        >
+      <mat-menu #menu="matMenu" xPosition="before" class="constraints-menu">
+        <button mat-menu-item *ngFor="let constraint of constraints" (click)="addConstraint(constraint.factory())">
           <span class="text-ellipsis overflow-hidden">{{ constraint.name }}</span>
         </button>
       </mat-menu>
@@ -42,24 +29,12 @@
   <mat-divider></mat-divider>
   <mat-list-item *ngFor="let constraint of container.constraints">
     <div class="flex flex-row justify-between items-center">
-      <span class="w-4/5 text-ellipsis overflow-hidden">
-        {{ constraint.toString() }}</span
-      >
+      <span class="w-4/5 text-ellipsis overflow-hidden"> {{ constraint.toString() }}</span>
       <div>
-        <button
-          mat-icon-button
-          color="primary"
-          matTooltip="Edit constraint"
-          (click)="editConstraint(constraint)"
-        >
+        <button mat-icon-button color="primary" matTooltip="Edit constraint" (click)="editConstraint(constraint)">
           <mat-icon>edit</mat-icon>
         </button>
-        <button
-          mat-icon-button
-          color="primary"
-          matTooltip="Delete constraint"
-          (click)="removeConstraint(constraint)"
-        >
+        <button mat-icon-button color="primary" matTooltip="Delete constraint" (click)="removeConstraint(constraint)">
           <mat-icon>delete</mat-icon>
         </button>
       </div>
