@@ -125,8 +125,13 @@ export enum Action {
 
 export enum Operator {
   Eq = 'eq',
+  Neq = 'neq',
   Gte = 'gte',
   Lte = 'lte',
+  In = 'isPartOf',
+  AnyOf = 'isAnyOf',
+  AllOf = 'isAllOf',
+  NoneOf = 'isNoneOf',
 }
 
 export interface ConstraintContainer {

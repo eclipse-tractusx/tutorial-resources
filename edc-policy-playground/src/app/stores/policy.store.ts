@@ -16,6 +16,7 @@ import { Injectable } from '@angular/core';
 import { Constraint, Permission, PolicyConfiguration } from '../models/policy';
 import {
   bpnConstraint,
+  bpnGroupConstraint,
   credentialsConstraints,
   inForceDurationConstraint,
   inForceFixedConstraint,
@@ -26,7 +27,13 @@ export class PolicyConfigurationStore {
   configurations: PolicyConfiguration[] = [];
 
   constructor() {
-    this.configurations = [bpnPolicy(), inForceFixedPolicy(), inForceDurationPolicy(), ...credentialsPolicies()];
+    this.configurations = [
+      bpnPolicy(),
+      bpnGroupPolicy(),
+      inForceFixedPolicy(),
+      inForceDurationPolicy(),
+      ...credentialsPolicies(),
+    ];
   }
 
   loadConfigurations(): PolicyConfiguration[] {
@@ -40,6 +47,10 @@ export class PolicyConfigurationStore {
 
 function bpnPolicy(): PolicyConfiguration {
   return createPolicy('Bpn Policy', bpnConstraint(), 'Bpn permission');
+}
+
+function bpnGroupPolicy(): PolicyConfiguration {
+  return createPolicy('Business Partner Group Policy', bpnGroupConstraint(), 'Business Partner Group permission');
 }
 
 function inForceFixedPolicy(): PolicyConfiguration {

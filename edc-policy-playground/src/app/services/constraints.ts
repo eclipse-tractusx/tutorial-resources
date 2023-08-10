@@ -23,6 +23,10 @@ export const bpnConstraint = () => {
   return new AtomicConstraint('BusinessPartnerNumber', Operator.Eq, '<bpnNumber>');
 };
 
+export const bpnGroupConstraint = () => {
+  return new AtomicConstraint('BusinessPartnerGroup', Operator.In, '<group>');
+};
+
 export const inForceFixedConstraint = () => {
   const constraint = new LogicalConstraint();
   constraint.constraints.push(
