@@ -19,5 +19,9 @@ resource "kubernetes_service" "controlplane-service" {
       name = "health"
       port = 8080
     }
+    port {
+      name = "protocol"
+      port = 8084
+    }
   }
 }

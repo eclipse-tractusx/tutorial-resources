@@ -96,15 +96,13 @@ resource "kubernetes_service" "miw" {
       App = kubernetes_deployment.miw.spec.0.template.0.metadata[0].labels.App
     }
     port {
-      name        = "miw-app-port"
-      port        = var.miw-api-port
-      target_port = var.miw-api-port
+      name = "miw-app-port"
+      port = var.miw-api-port
     }
 
     port {
-      port        = 8090
-      name        = "mgmt-port"
-      target_port = 8090
+      port = 8090
+      name = "mgmt-port"
     }
   }
 }

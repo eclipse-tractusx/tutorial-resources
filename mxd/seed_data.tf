@@ -26,8 +26,7 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
           command = [
             "newman", "run",
             "--folder", "SeedData",
-            "--env-var",
-            "MANAGEMENT_URL=http://${module.bob-connector.node-ip}:8081/management/v2",
+            "--env-var", "MANAGEMENT_URL=http://${module.bob-connector.node-ip}:8081/management/v2",
             "--env-var", "POLICY_BPN=BPNALICE",
             "/opt/collection/${local.newman_collection_name}"
           ]
@@ -43,8 +42,7 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
           command = [
             "newman", "run",
             "--folder", "SeedData",
-            "--env-var",
-            "MANAGEMENT_URL=http://${module.alice-connector.node-ip}:8081/management/v2",
+            "--env-var", "MANAGEMENT_URL=http://${module.alice-connector.node-ip}:8081/management/v2",
             "--env-var", "POLICY_BPN=BPNBOB",
             "/opt/collection/${local.newman_collection_name}"
           ]
