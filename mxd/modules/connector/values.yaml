@@ -24,6 +24,9 @@
 participant:
   id: "test-participant"
 controlplane:
+  debug:
+    enabled: true
+    port: 1044
   service:
     type: NodePort
   endpoints:

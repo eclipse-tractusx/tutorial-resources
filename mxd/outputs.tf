@@ -18,9 +18,10 @@ output "postgres-url" {
   value = "jdbc:postgresql://${local.pg-host}/"
 }
 
-output "keycloak-ip" {
+output "keycloak-cluster-ip" {
   value = kubernetes_service.keycloak.spec.0.cluster_ip
 }
+
 
 output "keycloak-database-credentials" {
   value = {
@@ -30,7 +31,10 @@ output "keycloak-database-credentials" {
   }
 }
 
-output "miw-database-pwd" {
+output "miw-cluster-ip" {
+  value = local.miw-ip
+}
+output "miw-database-credentials" {
 
   value = {
     user     = var.keycloak-db-user
@@ -49,4 +53,8 @@ output "alice-urls" {
 
 output "bob-node-ip" {
   value = module.bob-connector.node-ip
+}
+
+output "alice-node-ip" {
+  value = module.alice-connector.node-ip
 }

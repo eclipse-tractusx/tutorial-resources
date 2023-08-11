@@ -23,5 +23,9 @@ resource "kubernetes_service" "controlplane-service" {
       name = "protocol"
       port = 8084
     }
+    port {
+      name = "debug"
+      port = 1044
+    }
   }
 }
