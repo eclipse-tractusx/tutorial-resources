@@ -43,7 +43,7 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
             "newman", "run",
             "--folder", "SeedData",
             "--env-var", "MANAGEMENT_URL=http://${module.alice-connector.node-ip}:8081/management/v2",
-            "--env-var", "POLICY_BPN=BPNBOB",
+            "--env-var", "POLICY_BPN=BPNL000000000000",
             "/opt/collection/${local.newman_collection_name}"
           ]
           volume_mount {

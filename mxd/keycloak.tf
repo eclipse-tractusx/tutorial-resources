@@ -38,7 +38,7 @@ resource "kubernetes_deployment" "keycloak" {
               name = kubernetes_config_map.keycloak_env.metadata[0].name
             }
           }
-          # Uncomment this to assign (more) resources
+          #           Uncomment this to assign (more) resources
           #          resources {
           #            limits = {
           #              cpu    = "2"
