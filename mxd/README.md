@@ -31,7 +31,7 @@ once and are accessible by all participants.
 For the most bare-bones installation of the dataspace, execute the following commands in a shell:
 
 ```shell
-kind create cluster -n mxd
+kind create cluster -n mxd --config kind.config.yaml
 # the next step is specific to KinD and will be different for other Kubernetes runtimes!
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 # wait until the ingress controller is ready
