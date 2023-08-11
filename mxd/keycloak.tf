@@ -38,7 +38,7 @@ resource "kubernetes_deployment" "keycloak" {
               name = kubernetes_config_map.keycloak_env.metadata[0].name
             }
           }
-          # Uncomment this to assign (more) resources
+          #           Uncomment this to assign (more) resources
           #          resources {
           #            limits = {
           #              cpu    = "2"
@@ -75,7 +75,7 @@ resource "kubernetes_config_map" "keycloak_env" {
     KEYCLOAK_ADMIN             = "admin"
     KEYCLOAK_ADMIN_PASSWORD    = "admin"
     # the KC_HOSTNAME must be known in advance, so that Keycloak's token contain valid `iss` claims
-    KC_HOSTNAME       = local.keycloak-url
+    KC_HOSTNAME       = local.keycloak-ip
     KC_HEALTH_ENABLED = true
   }
 }

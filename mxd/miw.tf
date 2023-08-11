@@ -76,9 +76,9 @@ resource "kubernetes_config_map" "miw-config" {
     VC_SCHEMA_LINK                  = "https://www.w3.org/2018/credentials/v1, https://catenax-ng.github.io/product-core-schemas/businessPartnerData.json"
     VC_EXPIRY_DATE                  = "01-01-2025"
     SUPPORTED_FRAMEWORK_VC_TYPES    = "cx-behavior-twin=Behavior Twin,cx-pcf=PCF,cx-quality=Quality,cx-resiliency=Resiliency,cx-sustainability=Sustainability,cx-traceability=ID_3.0_Trace"
-    MIW_HOST_NAME                   = "localhost:8000"
+    MIW_HOST_NAME                   = "${local.miw-ip}:${var.miw-api-port}"
     ENFORCE_HTTPS_IN_DID_RESOLUTION = false
-    AUTH_SERVER_URL                 = "http://${local.keycloak-url}"
+    AUTH_SERVER_URL                 = "http://${local.keycloak-ip}:${var.keycloak-port}"
     DEV_ENVIRONMENT                 = "docker"
     APPLICATION_PORT                = var.miw-api-port
     MANAGEMENT_PORT                 = 8090
@@ -95,16 +95,22 @@ resource "kubernetes_service" "miw" {
     selector = {
       App = kubernetes_deployment.miw.spec.0.template.0.metadata[0].labels.App
     }
+    session_affinity = "ClientIP"
+    # we need a stable IP, otherwise there will be a cycle with the issuer
+    cluster_ip = local.miw-ip
     port {
-      name        = "miw-app-port"
-      port        = var.miw-api-port
-      target_port = var.miw-api-port
+      name = "miw-app-port"
+      port = var.miw-api-port
     }
 
     port {
-      port        = 8090
-      name        = "mgmt-port"
-      target_port = 8090
+      port = 8090
+      name = "mgmt-port"
     }
   }
+}
+
+locals {
+  miw-ip  = "10.96.81.222"
+  miw-url = "${local.miw-ip}:${var.miw-api-port}"
 }

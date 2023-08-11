@@ -25,6 +25,9 @@ resource "helm_release" "connector" {
     }),
     yamlencode({
       controlplane : {
+        env : {
+          "TX_SSI_ENDPOINT_AUDIENCE" : "http://${kubernetes_service.controlplane-service.spec.0.cluster_ip}:8084/api/v1/dsp"
+        }
         ssi : {
           miw : {
             url : var.ssi-config.miw-url
