@@ -50,3 +50,12 @@ updates:
     labels:
       - "dependencies"
       - "terraform"
+
+  - package-ecosystem: "npm"
+    directory: "/edc-policy-playground"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "npm"
