@@ -31,6 +31,17 @@ on:
       - 'edc-policy-playground/**'
 
 jobs:
+  check-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Run dash
+        id: run-dash
+        uses: eclipse-tractusx/sig-infra/.github/actions/run-dash@main
+        with:
+          dash_input: "edc-policy-playground/package-lock.json"
   check-playground:
     runs-on: ubuntu-latest
     defaults:
