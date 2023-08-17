@@ -23,9 +23,14 @@ variable "image-pull-policy" {
   description = "Kubernetes ImagePullPolicy for all images"
 }
 
+variable "humanReadableName" {
+  type        = string
+  description = "Human readable name of the connector, NOT the BPN!!. Required."
+}
+
 variable "participantId" {
-  type    = string
-  default = "Participant ID of the connector. Required."
+  type        = string
+  description = "Participant ID of the connector. In Catena-X, this MUST be the BPN"
 }
 
 variable "database-host" {

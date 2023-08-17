@@ -18,7 +18,7 @@
 #
 
 resource "helm_release" "connector" {
-  name              = lower(var.participantId)
+  name              = lower(var.humanReadableName)
   force_update      = true
   dependency_update = true
   reuse_values      = true
@@ -46,6 +46,7 @@ resource "helm_release" "connector" {
       controlplane : {
         env : {
           "TX_SSI_ENDPOINT_AUDIENCE" : "http://${kubernetes_service.controlplane-service.spec.0.cluster_ip}:8084/api/v1/dsp"
+          "EDC_DSP_CALLBACK_ADDRESS" : "http://${kubernetes_service.controlplane-service.spec.0.cluster_ip}:8084/api/v1/dsp"
         }
         ssi : {
           miw : {

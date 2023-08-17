@@ -49,10 +49,11 @@ provider "helm" {
 
 # First connector
 module "alice-connector" {
-  source        = "./modules/connector"
-  participantId = "alice"
-  database-host = local.pg-ip
-  database-name = "alice"
+  source            = "./modules/connector"
+  humanReadableName = "alice"
+  participantId     = "BPNL000000000000"
+  database-host     = local.pg-ip
+  database-name     = "alice"
   database-credentials = {
     user     = "postgres"
     password = "postgres"
@@ -69,10 +70,11 @@ module "alice-connector" {
 
 # Second connector
 module "bob-connector" {
-  source        = "./modules/connector"
-  participantId = "bob"
-  database-host = local.pg-ip
-  database-name = "bob"
+  source            = "./modules/connector"
+  humanReadableName = "bob"
+  participantId     = "BPNL000000000000"
+  database-host     = local.pg-ip
+  database-name     = "bob"
   database-credentials = {
     user     = "postgres"
     password = "postgres"

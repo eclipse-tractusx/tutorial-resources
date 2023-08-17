@@ -22,12 +22,12 @@
 
 resource "kubernetes_service" "controlplane-service" {
   metadata {
-    name = "${var.participantId}-nodeport"
+    name = "${var.humanReadableName}-nodeport"
   }
   spec {
     type = "NodePort"
     selector = {
-      "app.kubernetes.io/instance" = "${var.participantId}-controlplane"
+      "app.kubernetes.io/instance" = "${var.humanReadableName}-controlplane"
       "app.kubernetes.io/name"     = "tractusx-connector-controlplane"
     }
     port {

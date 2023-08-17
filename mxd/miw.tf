@@ -114,7 +114,6 @@ resource "kubernetes_service" "miw" {
     selector = {
       App = kubernetes_deployment.miw.spec.0.template.0.metadata[0].labels.App
     }
-    session_affinity = "ClientIP"
     # we need a stable IP, otherwise there will be a cycle with the issuer
     cluster_ip = local.miw-ip
     port {
