@@ -54,6 +54,7 @@ export class LogicalConstraint implements Constraint {
     cloned.constraints = this.constraints.map(c => c.clone());
     return cloned;
   }
+
   toString() {
     return `${this.operator} constraint: [ ${this.constraints.map(c => c.toString()).join(',')} ]`;
   }
