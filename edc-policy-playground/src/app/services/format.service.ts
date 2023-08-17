@@ -54,10 +54,10 @@ export const emptyPolicy = Object.assign(policyRequestTemplate, {
 @Injectable({ providedIn: 'root' })
 export class FormatService {
   toJsonLd(policyConfig: PolicyConfiguration): object {
-    const permissions = policyConfig.policy.permissions.map(this.mapPermission.bind(this));
+    const permission = policyConfig.policy.permissions.map(this.mapPermission.bind(this));
 
     return Object.assign(emptyPolicy, {
-      policy: { ...policyHeader, permissions },
+      policy: { ...policyHeader, permission },
     });
   }
 
