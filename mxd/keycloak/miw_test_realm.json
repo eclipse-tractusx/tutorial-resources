@@ -349,6 +349,53 @@
           "attributes": {}
         }
       ],
+      "miw_private_client_bob": [
+        {
+          "id": "09ab88d3-f7f6-4613-b51c-18e77f146fae",
+          "name": "view_wallets",
+          "description": "view_wallets",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "17d99f9a-22c7-4381-9a08-f843c36b64ac",
+          "attributes": {}
+        },
+        {
+          "id": "2a35c52f-0b6c-4230-b589-2206fe0cfeac",
+          "name": "add_wallets",
+          "description": "add_wallets",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "17d99f9a-22c7-4381-9a08-f843c36b64ac",
+          "attributes": {}
+        },
+        {
+          "id": "6e1ec778-11bc-436f-aac2-d157134b6fa9",
+          "name": "update_wallet",
+          "description": "update_wallet",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "17d99f9a-22c7-4381-9a08-f843c36b64ac",
+          "attributes": {}
+        },
+        {
+          "id": "931848d2-7401-4e39-8211-1c61a74ac601",
+          "name": "view_wallet",
+          "description": "view_wallet",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "17d99f9a-22c7-4381-9a08-f843c36b64ac",
+          "attributes": {}
+        },
+        {
+          "id": "a6b2b7de-288c-4a71-b1f8-2741d27f0870",
+          "name": "update_wallets",
+          "description": "update_wallets",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "17d99f9a-22c7-4381-9a08-f843c36b64ac",
+          "attributes": {}
+        }
+      ],
       "admin-cli": [],
       "account-console": [],
       "broker": [
@@ -517,6 +564,31 @@
       ],
       "clientRoles": {
         "miw_private_client": [
+          "view_wallets",
+          "update_wallet",
+          "add_wallets",
+          "view_wallet",
+          "update_wallets"
+        ]
+      },
+      "notBefore": 0,
+      "groups": []
+    },
+    {
+      "id": "c6d700e5-a61a-46a7-a097-ea130feb497c",
+      "createdTimestamp": 1687957169104,
+      "username": "service-account-miw_private_client_bob",
+      "enabled": true,
+      "totp": false,
+      "emailVerified": false,
+      "serviceAccountClientId": "miw_private_client_bob",
+      "disableableCredentialTypes": [],
+      "requiredActions": [],
+      "realmRoles": [
+        "default-roles-miw_test"
+      ],
+      "clientRoles": {
+        "miw_private_client_bob": [
           "view_wallets",
           "update_wallet",
           "add_wallets",
@@ -802,7 +874,7 @@
           "protocolMapper": "oidc-hardcoded-claim-mapper",
           "consentRequired": false,
           "config": {
-            "claim.value": "BPNL000000000000",
+            "claim.value": "${ALICE_BPN}",
             "userinfo.token.claim": "true",
             "id.token.claim": "true",
             "access.token.claim": "true",
@@ -842,6 +914,149 @@
         },
         {
           "id": "370515a5-370a-4b68-9704-9a67407c1390",
+          "name": "Client Host",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usersessionmodel-note-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.session.note": "clientHost",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "clientHost",
+            "jsonType.label": "String"
+          }
+        }
+      ],
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+    {
+      "id": "17d99f9a-22c7-4381-9a08-f843c36b64ac",
+      "clientId": "miw_private_client_bob",
+      "name": "miw_private_client_bob",
+      "description": "miw_private_client_bob",
+      "rootUrl": "",
+      "adminUrl": "",
+      "baseUrl": "",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "miw_private_client_bob",
+      "redirectUris": [],
+      "webOrigins": [],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "publicClient": false,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "attributes": {
+        "oidc.ciba.grant.enabled": "false",
+        "client.secret.creation.time": "1684923648",
+        "backchannel.logout.session.required": "true",
+        "post.logout.redirect.uris": "+",
+        "display.on.consent.screen": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "backchannel.logout.revoke.offline.tokens": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "protocolMappers": [
+        {
+          "id": "97d1d2b2-f6cc-44b8-b21a-da97a85dc802",
+          "name": "User Client Role",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-client-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "usermodel.clientRoleMapping.clientId": "miw_private_client_bob",
+            "multivalued": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "id": "88a5eb86-9660-4ae5-a333-31939392e74c",
+          "name": "BPN",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "aggregate.attrs": "false",
+            "userinfo.token.claim": "true",
+            "multivalued": "false",
+            "user.attribute": "BPN",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "BPN"
+          }
+        },
+        {
+          "id": "fc48fb2e-e9a2-453a-b74a-c12dd1621a23",
+          "name": "client_bpn_mapper",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-hardcoded-claim-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.value": "${BOB_BPN}",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "BPN",
+            "access.tokenResponse.claim": "false"
+          }
+        },
+        {
+          "id": "dc84e461-56b1-4bc1-9252-4a16f6cba69c",
+          "name": "Client IP Address",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usersessionmodel-note-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.session.note": "clientAddress",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "clientAddress",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "id": "f184e1cf-f226-40c9-aee4-7699926fa41c",
+          "name": "Client ID",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usersessionmodel-note-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.session.note": "clientId",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "clientId",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "id": "2c49f4ef-d427-49ac-8664-5c040271f381",
           "name": "Client Host",
           "protocol": "openid-connect",
           "protocolMapper": "oidc-usersessionmodel-note-mapper",

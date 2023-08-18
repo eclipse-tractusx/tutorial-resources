@@ -46,7 +46,7 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
             "newman", "run",
             "--folder", "SeedData",
             "--env-var", "MANAGEMENT_URL=http://${module.bob-connector.node-ip}:8081/management/v2",
-            "--env-var", "POLICY_BPN=BPNALICE",
+            "--env-var", "POLICY_BPN=${var.aliceBPN}",
             "/opt/collection/${local.newman_collection_name}"
           ]
           volume_mount {
@@ -62,7 +62,7 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
             "newman", "run",
             "--folder", "SeedData",
             "--env-var", "MANAGEMENT_URL=http://${module.alice-connector.node-ip}:8081/management/v2",
-            "--env-var", "POLICY_BPN=BPNL000000000000",
+            "--env-var", "POLICY_BPN=${var.bobBPN}",
             "/opt/collection/${local.newman_collection_name}"
           ]
           volume_mount {

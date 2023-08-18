@@ -41,3 +41,11 @@ variable "keycloak-port" {
 variable "miw-api-port" {
   default = 8000
 }
+
+variable "aliceBPN" {
+  default = "BPNL000000000000"
+}
+
+variable "bobBPN" {
+  default = "BPNL000000000001"
+}
