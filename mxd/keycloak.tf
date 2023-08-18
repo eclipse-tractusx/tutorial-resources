@@ -108,7 +108,6 @@ resource "kubernetes_service" "keycloak" {
     selector = {
       App = kubernetes_deployment.keycloak.spec.0.template.0.metadata[0].labels.App
     }
-    session_affinity = "ClientIP"
     # we need a stable IP, otherwise Keycloak will issue invalid tokens
     cluster_ip = local.keycloak-ip
     port {
