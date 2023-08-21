@@ -100,10 +100,14 @@ resource "kubernetes_config_map" "postgres-config" {
     POSTGRES_USER     = "postgres"
     POSTGRES_PASSWORD = "postgres"
     "init.sql"        = <<EOT
-      CREATE DATABASE ${var.miw-database};
+      CREATE DATABASE ${var.alice-miw-database};
+      CREATE DATABASE ${var.bob-miw-database};
       CREATE USER ${var.miw-db-user} WITH ENCRYPTED PASSWORD '${local.miw-pg-pwd}';
-      GRANT ALL PRIVILEGES ON DATABASE ${var.miw-database} TO ${var.miw-db-user};
-      \c ${var.miw-database}
+      GRANT ALL PRIVILEGES ON DATABASE ${var.alice-miw-database} TO ${var.miw-db-user};
+      GRANT ALL PRIVILEGES ON DATABASE ${var.bob-miw-database} TO ${var.miw-db-user};
+      \c ${var.alice-miw-database}
+      GRANT ALL ON SCHEMA public TO ${var.miw-db-user};
+      \c ${var.bob-miw-database}
       GRANT ALL ON SCHEMA public TO ${var.miw-db-user};
 
       CREATE DATABASE ${var.keycloak-database};

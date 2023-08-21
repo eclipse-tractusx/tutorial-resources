@@ -17,11 +17,11 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-resource "kubernetes_deployment" "miw" {
+resource "kubernetes_deployment" "bob-miw" {
   metadata {
-    name = "miw"
+    name = "bob-miw"
     labels = {
-      App = "miw"
+      App = "bob-miw"
     }
   }
 
@@ -29,18 +29,18 @@ resource "kubernetes_deployment" "miw" {
     replicas = 1
     selector {
       match_labels = {
-        App = "miw"
+        App = "bob-miw"
       }
     }
     template {
       metadata {
         labels = {
-          App = "miw"
+          App = "bob-miw"
         }
       }
       spec {
         container {
-          name              = "miw"
+          name              = "bob-miw"
           image             = "ghcr.io/catenax-ng/tx-managed-identity-wallets_miw_service:latest-java-did-web"
           image_pull_policy = "Always"
 
@@ -54,7 +54,7 @@ resource "kubernetes_deployment" "miw" {
           }
           env_from {
             config_map_ref {
-              name = kubernetes_config_map.miw-config.metadata[0].name
+              name = kubernetes_config_map.bob-miw-config.metadata[0].name
             }
           }
           # Uncomment this to assign (more) resources
@@ -74,28 +74,28 @@ resource "kubernetes_deployment" "miw" {
   }
 }
 
-resource "kubernetes_config_map" "miw-config" {
+resource "kubernetes_config_map" "bob-miw-config" {
   metadata {
-    name = "miw-config"
+    name = "bob-miw-config"
   }
   data = {
     DB_HOST      = local.pg-ip
     DB_PORT      = var.postgres-port
     DB_USER      = "postgres"
-    DB_NAME      = var.alice-miw-database
+    DB_NAME      = var.bob-miw-database
     DB_USER_NAME = var.miw-db-user
     DB_PASSWORD  = local.miw-pg-pwd
 
-    KEYCLOAK_CLIENT_ID              = "miw_private_client"
+    KEYCLOAK_CLIENT_ID              = "miw_private_client_bob"
     ENCRYPTION_KEY                  = "Woh9waid4Ei5eez0aitieghoow9so4oe"
-    AUTHORITY_WALLET_BPN            = var.aliceBPN
-    AUTHORITY_WALLET_DID            = "did:web:miw:${var.aliceBPN}"
+    AUTHORITY_WALLET_BPN            = var.bobBPN
+    AUTHORITY_WALLET_DID            = "did:web:bob-miw:${var.bobBPN}"
     AUTHORITY_WALLET_NAME           = "Catena-X"
     KEYCLOAK_REALM                  = "miw_test"
     VC_SCHEMA_LINK                  = "https://www.w3.org/2018/credentials/v1, https://catenax-ng.github.io/product-core-schemas/businessPartnerData.json"
     VC_EXPIRY_DATE                  = "01-01-2025"
     SUPPORTED_FRAMEWORK_VC_TYPES    = "cx-behavior-twin=Behavior Twin,cx-pcf=PCF,cx-quality=Quality,cx-resiliency=Resiliency,cx-sustainability=Sustainability,cx-traceability=ID_3.0_Trace"
-    MIW_HOST_NAME                   = "${local.alice-miw-ip}:${var.miw-api-port}"
+    MIW_HOST_NAME                   = "${local.bob-miw-ip}:${var.miw-api-port}"
     ENFORCE_HTTPS_IN_DID_RESOLUTION = false
     AUTH_SERVER_URL                 = "http://${local.keycloak-ip}:${var.keycloak-port}"
     DEV_ENVIRONMENT                 = "docker"
@@ -106,16 +106,16 @@ resource "kubernetes_config_map" "miw-config" {
   }
 }
 
-resource "kubernetes_service" "miw" {
+resource "kubernetes_service" "bob-miw" {
   metadata {
-    name = "miw"
+    name = "bob-miw"
   }
   spec {
     selector = {
-      App = kubernetes_deployment.miw.spec.0.template.0.metadata[0].labels.App
+      App = kubernetes_deployment.bob-miw.spec.0.template.0.metadata[0].labels.App
     }
     # we need a stable IP, otherwise there will be a cycle with the issuer
-    cluster_ip = local.alice-miw-ip
+    cluster_ip = local.bob-miw-ip
     port {
       name = "miw-app-port"
       port = var.miw-api-port
@@ -129,6 +129,6 @@ resource "kubernetes_service" "miw" {
 }
 
 locals {
-  alice-miw-ip  = "10.96.81.222"
-  alice-miw-url = "${local.alice-miw-ip}:${var.miw-api-port}"
+  bob-miw-ip  = "10.96.81.224"
+  bob-miw-url = "${local.bob-miw-ip}:${var.miw-api-port}"
 }

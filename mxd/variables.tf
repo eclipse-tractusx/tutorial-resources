@@ -24,8 +24,11 @@ variable "keycloak-database" {
 variable "keycloak-db-user" {
   default = "keycloak_user"
 }
-variable "miw-database" {
+variable "alice-miw-database" {
   default = "miw"
+}
+variable "bob-miw-database" {
+  default = "bob_miw"
 }
 variable "miw-db-user" {
   default = "miw_user"
