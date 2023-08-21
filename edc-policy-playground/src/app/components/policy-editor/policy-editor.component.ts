@@ -27,12 +27,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { PolicyConfiguration } from 'src/app/models/policy';
+import { OutputKind, PolicyConfiguration } from 'src/app/models/policy';
 import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
 import { FormatService } from 'src/app/services/format.service';
 import { PolicyConfigurationStore } from 'src/app/stores/policy.store';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { PolicyService } from 'src/app/services/policy.service';
 
 @Component({
   selector: 'app-policy-editor',
@@ -56,22 +57,28 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class PolicyEditorComponent {
   text!: string;
 
+  outputFormats: string[];
   policyConfig: PolicyConfiguration;
+
+  currentFormat: OutputKind;
 
   configurations: PolicyConfiguration[] = [];
 
   constructor(
     public formatService: FormatService,
     public store: PolicyConfigurationStore,
+    public policyService: PolicyService,
   ) {
     this.configurations = store.loadConfigurations();
+    this.currentFormat = OutputKind.Plain;
 
     if (this.configurations.length == 0) {
       store.store(new PolicyConfiguration('Policy Template'));
     }
     this.policyConfig = this.configurations[0];
+    this.outputFormats = policyService.supportedOutput();
 
-    this.updateJsonText(this.policyConfig);
+    this.updateJsonText(this.policyConfig, this.currentFormat);
   }
 
   addPolicy(): void {
@@ -86,14 +93,18 @@ export class PolicyEditorComponent {
 
   onConfigSelectionChange(cfg: PolicyConfiguration) {
     this.policyConfig = cfg;
-    this.updateJsonText(cfg);
+    this.updateJsonText(cfg, this.currentFormat);
   }
   onConfigChange(cfg: PolicyConfiguration) {
-    this.updateJsonText(cfg);
+    this.updateJsonText(cfg, this.currentFormat);
   }
 
-  updateJsonText(cfg: PolicyConfiguration) {
-    const ld = this.formatService.toJsonLd(cfg);
+  onOutputFormatChange(format: OutputKind) {
+    this.updateJsonText(this.policyConfig, format);
+  }
+
+  updateJsonText(cfg: PolicyConfiguration, format: OutputKind) {
+    const ld = this.formatService.toJsonLd(cfg, format);
     this.text = this.formatService.formatPolicy(ld);
   }
 }

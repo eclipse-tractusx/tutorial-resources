@@ -58,6 +58,9 @@ body {
 .justify-center {
   justify-content: center;
 }
+.justify-right {
+  justify-content: right;
+}
 
 .grow {
   flex-grow: 1;

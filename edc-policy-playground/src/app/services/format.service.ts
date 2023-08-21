@@ -18,86 +18,33 @@
  * SPDX-License-Identifier: Apache-2.0
  ******************************************************************************/
 
-/*eslint-disable @typescript-eslint/no-explicit-any*/
-
 import { Injectable } from '@angular/core';
-import {
-  AtomicConstraint,
-  Constraint,
-  LogicalConstraint,
-  Permission,
-  PolicyConfiguration,
-  Value,
-} from '../models/policy';
-
-export const policyRequestTemplate = {
-  '@context': {
-    edc: 'https://w3id.org/edc/v0.0.1/ns/',
-  },
-  '@type': 'PolicyDefinitionRequest',
-  '@id': '{{POLICY_ID}}',
-  policy: {},
-};
-
-const policyHeader = {
-  '@type': 'Set',
-  '@context': 'http://www.w3.org/ns/odrl.jsonld',
-};
-
-export const emptyPolicy = Object.assign(policyRequestTemplate, {
-  policy: {
-    ...policyHeader,
-    permission: [],
-  },
-});
+import { OutputKind, PolicyConfiguration } from '../models/policy';
+import { PlainFormatter } from './format/plain';
+import { PrefixFormatter } from './format/prefix';
 
 @Injectable({ providedIn: 'root' })
 export class FormatService {
-  toJsonLd(policyConfig: PolicyConfiguration): object {
-    const permission = policyConfig.policy.permissions.map(this.mapPermission.bind(this));
+  formatters: Map<OutputKind, JsonLdFormatter> = new Map();
+  constructor() {
+    this.formatters.set(OutputKind.Plain, new PlainFormatter());
+    this.formatters.set(OutputKind.Prefixed, new PrefixFormatter());
+  }
 
-    return Object.assign(emptyPolicy, {
-      policy: { ...policyHeader, permission },
-    });
+  toJsonLd(policyConfig: PolicyConfiguration, format: OutputKind = OutputKind.Prefixed): object {
+    const formatter = this.formatters.get(format);
+    if (formatter != null) {
+      return formatter.toJsonLd(policyConfig);
+    } else {
+      throw new Error('Formatter not found');
+    }
   }
 
   formatPolicy(policy: object) {
     return JSON.stringify(policy, null, 2);
   }
+}
 
-  mapPermission(permission: Permission): object {
-    return {
-      action: permission.action.toString(),
-      constraint: permission.constraints.map(this.mapConstraint.bind(this)),
-    };
-  }
-
-  mapConstraint(constraint: Constraint): object {
-    if (constraint instanceof AtomicConstraint) {
-      return {
-        leftOperand: constraint.leftOperand,
-        operator: constraint.operator.toString(),
-        rightOperand: this.mapRightOperand(constraint),
-      };
-    } else if (constraint instanceof LogicalConstraint) {
-      const obj: any = {
-        '@type': 'LogicalConstraint',
-      };
-      obj[constraint.operator.toString().toLowerCase()] = constraint.constraints.map(this.mapConstraint.bind(this));
-      return obj;
-    }
-
-    return {};
-  }
-
-  mapRightOperand(constraint: AtomicConstraint): string | number | object | undefined {
-    if (constraint.rightOperand instanceof Value) {
-      return {
-        '@value': constraint.rightOperand.value,
-        '@type': constraint.rightOperand.ty,
-      };
-    } else {
-      return constraint.rightOperand;
-    }
-  }
+export interface JsonLdFormatter {
+  toJsonLd(policyConfig: PolicyConfiguration): object;
 }

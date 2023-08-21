@@ -26,6 +26,7 @@ import {
   LogicalConstraint,
   LogicalOperator,
   Operator,
+  OutputKind,
   ValueKind,
 } from '../models/policy';
 import {
@@ -51,6 +52,10 @@ export class PolicyService {
 
   actions(): string[] {
     return this.values(Action);
+  }
+
+  supportedOutput(): string[] {
+    return this.values(OutputKind);
   }
 
   private values(val: object): string[] {
