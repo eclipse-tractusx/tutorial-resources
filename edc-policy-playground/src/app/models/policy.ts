@@ -180,3 +180,8 @@ export interface ConstraintTemplate {
 }
 
 export type RightOperand = string | number | Value;
+
+export enum OutputKind {
+  Prefixed = 'Prefixed',
+  Plain = 'Plain',
+}

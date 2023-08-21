@@ -36,6 +36,16 @@
       <mat-icon>content_copy</mat-icon>
     </button>
   </div>
+  <div class="flex justify-right">
+    <mat-form-field appearance="outline">
+      <mat-label>Output format</mat-label>
+      <mat-select [ngModel]="currentFormat" (ngModelChange)="onOutputFormatChange($event)">
+        <mat-option *ngFor="let format of outputFormats" [value]="format">
+          {{ format }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   <div class="flex flex-row policy-split-container">
     <div class="policy-card-container w-3/5">
       <app-policy-builder (policyChange)="onConfigChange($event)" [policyConfig]="policyConfig"></app-policy-builder>
