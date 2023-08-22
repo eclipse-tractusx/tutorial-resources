@@ -88,8 +88,8 @@ resource "kubernetes_config_map" "miw-config" {
 
     KEYCLOAK_CLIENT_ID              = "miw_private_client"
     ENCRYPTION_KEY                  = "Woh9waid4Ei5eez0aitieghoow9so4oe"
-    AUTHORITY_WALLET_BPN            = var.aliceBPN
-    AUTHORITY_WALLET_DID            = "did:web:miw:${var.aliceBPN}"
+    AUTHORITY_WALLET_BPN            = var.miw-bpn
+    AUTHORITY_WALLET_DID            = "did:web:miw:${var.miw-bpn}"
     AUTHORITY_WALLET_NAME           = "Catena-X"
     KEYCLOAK_REALM                  = "miw_test"
     VC_SCHEMA_LINK                  = "https://www.w3.org/2018/credentials/v1, https://catenax-ng.github.io/product-core-schemas/businessPartnerData.json"

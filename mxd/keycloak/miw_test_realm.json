@@ -874,12 +874,43 @@
           "protocolMapper": "oidc-hardcoded-claim-mapper",
           "consentRequired": false,
           "config": {
-            "claim.value": "${ALICE_BPN}",
+            "claim.value": "BPNL000000000000",
             "userinfo.token.claim": "true",
             "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "BPN",
             "access.tokenResponse.claim": "false"
+          }
+        },
+        {
+          "id": "8e62191a-1915-4c9c-9db7-b69be5e183a0",
+          "name": "StaticBPN1",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-hardcoded-claim-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.value": "${ALICE_BPN}",
+            "userinfo.token.claim": "false",
+            "id.token.claim": "false",
+            "access.token.claim": "true",
+            "claim.name": "BPN",
+            "jsonType.label": "String",
+            "access.tokenResponse.claim": "true"
+          }
+        },
+        {
+          "name": "StaticBPN2",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-hardcoded-claim-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.value": "${BOB_BPN}",
+            "userinfo.token.claim": "false",
+            "id.token.claim": "false",
+            "access.token.claim": "true",
+            "claim.name": "BPN",
+            "jsonType.label": "String",
+            "access.tokenResponse.claim": "true"
           }
         },
         {
@@ -1017,7 +1048,7 @@
           "protocolMapper": "oidc-hardcoded-claim-mapper",
           "consentRequired": false,
           "config": {
-            "claim.value": "${BOB_BPN}",
+            "claim.value": "BPNL000000000009",
             "userinfo.token.claim": "true",
             "id.token.claim": "true",
             "access.token.claim": "true",

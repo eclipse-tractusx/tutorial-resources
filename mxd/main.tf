@@ -60,7 +60,7 @@ module "alice-connector" {
   }
   ssi-config = {
     miw-url            = "http://${local.alice-miw-ip}:${var.miw-api-port}"
-    miw-authorityId    = var.aliceBPN
+    miw-authorityId    = var.miw-bpn
     oauth-tokenUrl     = "http://${kubernetes_service.keycloak.spec.0.cluster_ip}:${var.keycloak-port}/realms/miw_test/protocol/openid-connect/token"
     oauth-clientid     = "miw_private_client"
     oauth-secretalias  = "client_secret_alias"
@@ -80,11 +80,11 @@ module "bob-connector" {
     password = "postgres"
   }
   ssi-config = {
-    miw-url            = "http://${local.bob-miw-ip}:${var.miw-api-port}"
-    miw-authorityId    = var.bobBPN
+    miw-url            = "http://${local.alice-miw-ip}:${var.miw-api-port}"
+    miw-authorityId    = var.miw-bpn
     oauth-tokenUrl     = "http://${kubernetes_service.keycloak.spec.0.cluster_ip}:${var.keycloak-port}/realms/miw_test/protocol/openid-connect/token"
-    oauth-clientid     = "miw_private_client_bob"
-    oauth-secretalias  = "client_secret_alias_bob"
-    oauth-clientsecret = "miw_private_client_bob"
+    oauth-clientid     = "miw_private_client"
+    oauth-secretalias  = "client_secret_alias"
+    oauth-clientsecret = "miw_private_client"
   }
 }

@@ -46,9 +46,13 @@ variable "miw-api-port" {
 }
 
 variable "aliceBPN" {
-  default = "BPNL000000000000"
+  default = "BPNL000000000001"
 }
 
 variable "bobBPN" {
-  default = "BPNL000000000001"
+  default = "BPNL000000000002"
+}
+
+variable "miw-bpn" {
+  default = "BPNL000000000000"
 }
