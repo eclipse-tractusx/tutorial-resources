@@ -1,0 +1,188 @@
+{
+	"info": {
+		"_postman_id": "cc055ada-9c4f-4cf6-9d14-c00f03e53592",
+		"name": "MIW Wallet APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "252261",
+		"_collection_link": "https://winter-rocket-884715.postman.co/workspace/SAP~ff4cf631-05f4-48ab-a1e0-f716cf2efc25/collection/252261-cc055ada-9c4f-4cf6-9d14-c00f03e53592?action=share&source=collection_link&creator=252261"
+	},
+	"item": [
+		{
+			"name": "Get Access Token  Keycloak",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"access_token\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "{{CLIENT_ID}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{CLIENT_SECRET}}",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "openid",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{KEYCLOAK_URL}}/protocol/openid-connect/token",
+					"host": [
+						"{{KEYCLOAK_URL}}"
+					],
+					"path": [
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create wallet  1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"BPNL1\",\n    \"bpn\": \"BPNL000000000001\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{MIW_URL}}/api/wallets",
+					"host": [
+						"{{MIW_URL}}"
+					],
+					"path": [
+						"api",
+						"wallets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create wallet  2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"BPNL2\",\n    \"bpn\": \"BPNL000000000002\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{MIW_URL}}/api/wallets",
+					"host": [
+						"{{MIW_URL}}"
+					],
+					"path": [
+						"api",
+						"wallets"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "MIW_URL",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "KEYCLOAK_URL",
+			"value": "http://localhost:8080/realms/miw_test",
+			"type": "string"
+		},
+		{
+			"key": "CLIENT_ID",
+			"value": "miw_private_client",
+			"type": "string"
+		},
+		{
+			"key": "CLIENT_SECRET",
+			"value": "miw_private_client",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

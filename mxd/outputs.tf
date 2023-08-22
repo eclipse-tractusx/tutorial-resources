@@ -51,14 +51,14 @@ output "keycloak-database-credentials" {
 }
 
 output "miw-cluster-ip" {
-  value = local.alice-miw-ip
+  value = local.miw-ip
 }
 output "miw-database-credentials" {
 
   value = {
     user     = var.miw-db-user
     password = nonsensitive(local.miw-pg-pwd)
-    database = var.alice-miw-database
+    database = var.miw-database
   }
 }
 

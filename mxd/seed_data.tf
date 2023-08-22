@@ -70,6 +70,24 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
             name       = "seed-collection"
           }
         }
+
+        // this container seeds data to the miw service
+        container {
+          name  = "newman-miw"
+          image = "postman/newman:ubuntu"
+          command = [
+            "newman", "run",
+            "--env-var", "MIW_URL=http://${local.miw-url}",
+            "--env-var", "KEYCLOAK_URL=${local.keycloak-url}/realms/${local.keycloak-realm}",
+            "--env-var", "CLIENT_ID=miw_private_client",
+            "--env-var", "CLIENT_SECRET=miw_private_client",
+            "/opt/collection/${local.newman_miw_collection_name}"
+          ]
+          volume_mount {
+            mount_path = "/opt/collection"
+            name       = "seed-collection"
+          }
+        }
         volume {
           name = "seed-collection"
           config_map {
@@ -89,10 +107,12 @@ resource "kubernetes_config_map" "seed-collection" {
   }
   data = {
     (local.newman_collection_name) = file("./postman/mxd-seed.json")
+    (local.newman_miw_collection_name) = file("./postman/miw-seed.json")
   }
 }
 
 locals {
   newman_collection_name = "mxd-seed.json"
+  newman_miw_collection_name = "miw-seed.json"
 }
 

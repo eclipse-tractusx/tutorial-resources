@@ -82,7 +82,7 @@ resource "kubernetes_config_map" "miw-config" {
     DB_HOST      = local.pg-ip
     DB_PORT      = var.postgres-port
     DB_USER      = "postgres"
-    DB_NAME      = var.alice-miw-database
+    DB_NAME      = var.miw-database
     DB_USER_NAME = var.miw-db-user
     DB_PASSWORD  = local.miw-pg-pwd
 
@@ -91,11 +91,11 @@ resource "kubernetes_config_map" "miw-config" {
     AUTHORITY_WALLET_BPN            = var.miw-bpn
     AUTHORITY_WALLET_DID            = "did:web:miw:${var.miw-bpn}"
     AUTHORITY_WALLET_NAME           = "Catena-X"
-    KEYCLOAK_REALM                  = "miw_test"
+    KEYCLOAK_REALM                  = local.keycloak-realm
     VC_SCHEMA_LINK                  = "https://www.w3.org/2018/credentials/v1, https://catenax-ng.github.io/product-core-schemas/businessPartnerData.json"
     VC_EXPIRY_DATE                  = "01-01-2025"
     SUPPORTED_FRAMEWORK_VC_TYPES    = "cx-behavior-twin=Behavior Twin,cx-pcf=PCF,cx-quality=Quality,cx-resiliency=Resiliency,cx-sustainability=Sustainability,cx-traceability=ID_3.0_Trace"
-    MIW_HOST_NAME                   = "${local.alice-miw-ip}:${var.miw-api-port}"
+    MIW_HOST_NAME                   = "${local.miw-ip}:${var.miw-api-port}"
     ENFORCE_HTTPS_IN_DID_RESOLUTION = false
     AUTH_SERVER_URL                 = "http://${local.keycloak-ip}:${var.keycloak-port}"
     DEV_ENVIRONMENT                 = "docker"
@@ -115,7 +115,7 @@ resource "kubernetes_service" "miw" {
       App = kubernetes_deployment.miw.spec.0.template.0.metadata[0].labels.App
     }
     # we need a stable IP, otherwise there will be a cycle with the issuer
-    cluster_ip = local.alice-miw-ip
+    cluster_ip = local.miw-ip
     port {
       name = "miw-app-port"
       port = var.miw-api-port
@@ -129,6 +129,7 @@ resource "kubernetes_service" "miw" {
 }
 
 locals {
-  alice-miw-ip  = "10.96.81.222"
-  alice-miw-url = "${local.alice-miw-ip}:${var.miw-api-port}"
+  miw-ip  = "10.96.81.222"
+  miw-url = "${local.miw-ip}:${var.miw-api-port}"
+  keycloak-realm = "miw_test"
 }
