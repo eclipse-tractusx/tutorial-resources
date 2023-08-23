@@ -98,8 +98,8 @@ resource "kubernetes_config_map" "keycloak_env" {
     KC_HOSTNAME       = local.keycloak-ip
 #    KC_HOSTNAME_URL   = "http://localhost:8080"
     KC_HEALTH_ENABLED = true
-    ALICE_BPN         = var.aliceBPN
-    BOB_BPN           = var.bobBPN
+    ALICE_BPN         = var.alice-bpn
+    BOB_BPN           = var.bob-bpn
   }
 }
 

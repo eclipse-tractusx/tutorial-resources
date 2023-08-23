@@ -42,14 +42,14 @@ variable "miw-api-port" {
   default = 8000
 }
 
-variable "aliceBPN" {
+variable "miw-bpn" {
+  default = "BPNL000000000000"
+}
+
+variable "alice-bpn" {
   default = "BPNL000000000001"
 }
 
-variable "bobBPN" {
+variable "bob-bpn" {
   default = "BPNL000000000002"
-}
-
-variable "miw-bpn" {
-  default = "BPNL000000000000"
 }
