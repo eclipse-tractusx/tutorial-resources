@@ -55,30 +55,53 @@ export class LogicalConstraint implements Constraint {
     return cloned;
   }
 
+  prefixes(): string[] {
+    const prefixes = this.constraints.flatMap(c => c.prefixes());
+    return ['odrl', ...prefixes];
+  }
+
   toString() {
     return `${this.operator} constraint: [ ${this.constraints.map(c => c.toString()).join(',')} ]`;
   }
 }
 
+export class LeftOperand {
+  prefix?: string;
+  value: string;
+
+  constructor(value: string, prefix?: string) {
+    this.value = value;
+    this.prefix = prefix;
+  }
+
+  toString(withPrefix: boolean = true) {
+    if (withPrefix && this.prefix != null) {
+      return `${this.prefix}:${this.value}`;
+    } else {
+      return `${this.value}`;
+    }
+  }
+}
+
 export class AtomicConstraint implements Constraint {
-  leftOperand?: string;
+  leftOperand!: LeftOperand;
   operator: Operator;
   rightOperand?: string | number | Value;
   kind: ValueKind;
 
   constructor();
-  constructor(leftOperand: string);
-  constructor(leftOperand: string, operator: Operator, rightOperator: RightOperand);
-  constructor(leftOperand: string, operator: Operator, rightOperator: RightOperand, kind: ValueKind);
+  constructor(leftOperand: LeftOperand);
+  constructor(leftOperand: LeftOperand, operator: Operator, rightOperator: RightOperand);
+  constructor(leftOperand: LeftOperand, operator: Operator, rightOperator: RightOperand, kind: ValueKind);
   constructor(
-    leftOperand?: string,
+    leftOperand?: LeftOperand,
     operator: Operator = Operator.Eq,
     rightOperand?: string | number | Value,
     kind: ValueKind = ValueKind.String,
   ) {
     this.kind = kind;
     this.operator = operator;
-    this.leftOperand = leftOperand;
+    this.leftOperand = leftOperand != null ? leftOperand : new LeftOperand('');
     this.rightOperand = rightOperand;
   }
   clone(): AtomicConstraint {
@@ -88,6 +111,14 @@ export class AtomicConstraint implements Constraint {
     cloned.operator = this.operator;
     cloned.rightOperand = this.rightOperand;
     return cloned;
+  }
+
+  prefixes(): string[] {
+    if (this.leftOperand.prefix) {
+      return [this.leftOperand.prefix];
+    } else {
+      return [];
+    }
   }
 
   toString() {
@@ -124,6 +155,8 @@ export enum LogicalOperator {
 
 export interface Constraint {
   clone(): Constraint;
+
+  prefixes(): string[];
 }
 
 export enum Action {
@@ -133,8 +166,8 @@ export enum Action {
 export enum Operator {
   Eq = 'eq',
   Neq = 'neq',
-  Gte = 'gte',
-  Lte = 'lte',
+  Gte = 'gteq',
+  Lte = 'lteq',
   In = 'isPartOf',
   AnyOf = 'isAnyOf',
   AllOf = 'isAllOf',

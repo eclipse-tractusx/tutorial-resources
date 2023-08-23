@@ -29,10 +29,13 @@ import {
   Value,
 } from 'src/app/models/policy';
 import { JsonLdFormatter } from '../format.service';
+import { PolicyService } from '../policy.service';
 
 export const policyRequestTemplate = {
   '@context': {
     edc: 'https://w3id.org/edc/v0.0.1/ns/',
+    tx: 'https://w3id.org/tractusx/v0.0.1/ns/',
+    xsd: 'http://www.w3.org/2001/XMLSchema#',
   },
   '@type': 'PolicyDefinitionRequest',
   '@id': '{{POLICY_ID}}',
@@ -52,10 +55,18 @@ export const emptyPolicy = Object.assign(policyRequestTemplate, {
 });
 
 export class PlainFormatter implements JsonLdFormatter {
+  policyService: PolicyService;
+  constructor(policyService: PolicyService) {
+    this.policyService = policyService;
+  }
   toJsonLd(policyConfig: PolicyConfiguration): object {
     const permission = policyConfig.policy.permissions.map(this.mapPermission.bind(this));
 
+    const context = this.policyService.contextFor(policyConfig);
+    delete context['odrl'];
+
     return Object.assign(emptyPolicy, {
+      '@context': context,
       policy: { ...policyHeader, permission },
     });
   }
@@ -69,10 +80,16 @@ export class PlainFormatter implements JsonLdFormatter {
 
   mapConstraint(constraint: Constraint): object {
     if (constraint instanceof AtomicConstraint) {
+      let leftOperand;
+      if (constraint.leftOperand.prefix) {
+        leftOperand = constraint.leftOperand.toString();
+      } else {
+        leftOperand = {
+          '@value': constraint.leftOperand.toString(),
+        };
+      }
       return {
-        leftOperand: {
-          '@value': constraint.leftOperand,
-        },
+        leftOperand,
         operator: constraint.operator.toString(),
         rightOperand: this.mapRightOperand(constraint),
       };

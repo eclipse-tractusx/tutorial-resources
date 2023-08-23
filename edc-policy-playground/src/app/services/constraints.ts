@@ -18,28 +18,41 @@
  * SPDX-License-Identifier: Apache-2.0
  ******************************************************************************/
 
-import { AtomicConstraint, LogicalConstraint, Operator, Value, ValueKind } from '../models/policy';
+import { AtomicConstraint, LeftOperand, LogicalConstraint, Operator, Value, ValueKind } from '../models/policy';
 
-const IN_FORCE = 'edc:inForceDate';
-const DATE_EXPRESSION = 'edc:dateExpression';
+const EDC_PREFIX = 'edc';
+const IN_FORCE = 'inForceDate';
+const DATE_EXPRESSION = EDC_PREFIX + ':dateExpression';
 
 const XSD_DATETIME = 'xsd:datetime';
 
+const TX_PREFIX = 'tx';
+
 export const bpnConstraint = () => {
-  return new AtomicConstraint('BusinessPartnerNumber', Operator.Eq, '<bpnNumber>');
+  return new AtomicConstraint(new LeftOperand('BusinessPartnerNumber'), Operator.Eq, '<bpnNumber>', ValueKind.String);
 };
 
 export const bpnGroupConstraint = () => {
-  return new AtomicConstraint('BusinessPartnerGroup', Operator.In, '<group>');
+  return new AtomicConstraint(new LeftOperand('BusinessPartnerGroup', TX_PREFIX), Operator.In, '<group>');
 };
 
 export const inForceFixedConstraint = () => {
   const constraint = new LogicalConstraint();
   constraint.constraints.push(
-    new AtomicConstraint(IN_FORCE, Operator.Gte, new Value('2023-01-01T00:00:01Z', XSD_DATETIME), ValueKind.Value),
+    new AtomicConstraint(
+      new LeftOperand(IN_FORCE, EDC_PREFIX),
+      Operator.Gte,
+      new Value('2023-01-01T00:00:01Z', XSD_DATETIME),
+      ValueKind.Value,
+    ),
   );
   constraint.constraints.push(
-    new AtomicConstraint(IN_FORCE, Operator.Lte, new Value('2024-01-01T00:00:01Z', XSD_DATETIME), ValueKind.Value),
+    new AtomicConstraint(
+      new LeftOperand(IN_FORCE, EDC_PREFIX),
+      Operator.Lte,
+      new Value('2024-01-01T00:00:01Z', XSD_DATETIME),
+      ValueKind.Value,
+    ),
   );
   return constraint;
 };
@@ -47,13 +60,18 @@ export const inForceFixedConstraint = () => {
 export const inForceDurationConstraint = () => {
   const constraint = new LogicalConstraint();
   constraint.constraints.push(
-    new AtomicConstraint(IN_FORCE, Operator.Gte, new Value('contractAgreement', DATE_EXPRESSION), ValueKind.Value),
+    new AtomicConstraint(
+      new LeftOperand(IN_FORCE, EDC_PREFIX),
+      Operator.Gte,
+      new Value('contractAgreement+0s', DATE_EXPRESSION),
+      ValueKind.Value,
+    ),
   );
   constraint.constraints.push(
     new AtomicConstraint(
-      IN_FORCE,
+      new LeftOperand(IN_FORCE, EDC_PREFIX),
       Operator.Lte,
-      new Value('contractAgreement + 100d', DATE_EXPRESSION),
+      new Value('contractAgreement+100d', DATE_EXPRESSION),
       ValueKind.Value,
     ),
   );
@@ -72,5 +90,5 @@ const credentials = [
 ];
 
 export const credentialsConstraints = () => {
-  return credentials.map(c => new AtomicConstraint(c, Operator.Eq, 'active'));
+  return credentials.map(c => new AtomicConstraint(new LeftOperand(c, TX_PREFIX), Operator.Eq, 'active'));
 };

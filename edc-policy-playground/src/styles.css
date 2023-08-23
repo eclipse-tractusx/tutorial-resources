@@ -102,3 +102,7 @@ body {
   max-height: 300px;
   overflow: scroll;
 }
+
+.gap-x-1 {
+  column-gap: 4px;
+}

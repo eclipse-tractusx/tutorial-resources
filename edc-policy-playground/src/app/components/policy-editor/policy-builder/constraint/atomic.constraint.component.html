@@ -19,11 +19,16 @@
   -->
 
 <div class="flex flex-col">
-  <mat-form-field appearance="outline">
-    <mat-label>Left Operand</mat-label>
-    <input matInput [(ngModel)]="constraint.leftOperand" [disabled]="disabled" />
-  </mat-form-field>
-
+  <div class="flex flex-row gap-x-1">
+    <mat-form-field appearance="outline" class="w-2/5">
+      <mat-label>Left Operand (prefix)</mat-label>
+      <input matInput [(ngModel)]="constraint.leftOperand.prefix" [disabled]="disabled" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-3/5">
+      <mat-label>Left Operand (value)</mat-label>
+      <input matInput [(ngModel)]="constraint.leftOperand.value" [disabled]="disabled" />
+    </mat-form-field>
+  </div>
   <mat-form-field appearance="outline">
     <mat-label>Operator</mat-label>
     <mat-select [(ngModel)]="constraint.operator" [disabled]="disabled">
