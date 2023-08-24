@@ -18,23 +18,35 @@
  * SPDX-License-Identifier: Apache-2.0
  ******************************************************************************/
 
+/*eslint-disable @typescript-eslint/no-explicit-any*/
+
 import { Injectable } from '@angular/core';
 import {
   Action,
   AtomicConstraint,
   ConstraintTemplate,
+  LeftOperand,
   LogicalConstraint,
   LogicalOperator,
   Operator,
   OutputKind,
+  PolicyConfiguration,
   ValueKind,
 } from '../models/policy';
 import {
   bpnConstraint,
+  bpnGroupConstraint,
   credentialsConstraints,
   inForceDurationConstraint,
   inForceFixedConstraint,
 } from './constraints';
+
+export const NAMESPACES: any = {
+  edc: 'https://w3id.org/edc/v0.0.1/ns/',
+  tx: 'https://w3id.org/tractusx/v0.0.1/ns/',
+  xsd: 'http://www.w3.org/2001/XMLSchema#',
+  odrl: 'http://www.w3.org/ns/odrl/2/',
+};
 
 @Injectable({ providedIn: 'root' })
 export class PolicyService {
@@ -76,7 +88,7 @@ export class PolicyService {
       {
         name: 'Atomic Constraint',
         multiple: false,
-        factory: () => new AtomicConstraint('<field>', Operator.Eq, '<value>'),
+        factory: () => new AtomicConstraint(new LeftOperand('<field>'), Operator.Eq, '<value>'),
       },
       {
         name: 'Logical Constraint',
@@ -87,6 +99,11 @@ export class PolicyService {
         name: 'BPN Constraint',
         multiple: false,
         factory: bpnConstraint,
+      },
+      {
+        name: 'BPN Group Constraint',
+        multiple: false,
+        factory: bpnGroupConstraint,
       },
       {
         name: 'In Force Constraint (Duration)',
@@ -100,5 +117,19 @@ export class PolicyService {
       },
       ...credentialConstraintsTemplate,
     ];
+  }
+
+  contextFor(policy: PolicyConfiguration): any {
+    const context: any = {};
+    policy.policy.permissions
+      .flatMap(permission => permission.constraints)
+      .map(constraint => constraint.prefixes())
+      .flat()
+      .forEach(prefix => {
+        const ns = NAMESPACES[prefix];
+        context[prefix] = ns != null ? ns : `https://<${prefix}-namespace-here>`;
+      });
+
+    return context;
   }
 }

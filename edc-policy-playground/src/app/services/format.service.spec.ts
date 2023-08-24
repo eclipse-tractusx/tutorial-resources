@@ -18,34 +18,28 @@
  * SPDX-License-Identifier: Apache-2.0
  ******************************************************************************/
 
-import { Injectable } from '@angular/core';
 import { OutputKind, PolicyConfiguration } from '../models/policy';
-import { PlainFormatter } from './format/plain';
-import { PrefixFormatter } from './format/prefix';
+import { bpnGroupPolicy, bpnPolicy } from '../stores/policy.store';
+import { FormatService } from './format.service';
 import { PolicyService } from './policy.service';
+import bpnJsonData from '../../../fixtures/policies/bpn.json';
+import bpnGroupJsonData from '../../../fixtures/policies/bpnGroup.json';
 
-@Injectable({ providedIn: 'root' })
-export class FormatService {
-  formatters: Map<OutputKind, JsonLdFormatter> = new Map();
-  constructor(public policyService: PolicyService) {
-    this.formatters.set(OutputKind.Plain, new PlainFormatter(policyService));
-    this.formatters.set(OutputKind.Prefixed, new PrefixFormatter(policyService));
-  }
+describe('FormatService', () => {
+  let formatService: FormatService;
 
-  toJsonLd(policyConfig: PolicyConfiguration, format: OutputKind = OutputKind.Prefixed): object {
-    const formatter = this.formatters.get(format);
-    if (formatter != null) {
-      return formatter.toJsonLd(policyConfig);
-    } else {
-      throw new Error('Formatter not found');
-    }
-  }
+  const toJsonLd = (policy: PolicyConfiguration, kind: OutputKind) => {
+    const jsonLd = formatService.toJsonLd(policy, kind);
+    return formatService.formatPolicy(jsonLd);
+  };
+  beforeEach(() => {
+    formatService = new FormatService(new PolicyService());
+  });
+  it('Should format the BPN Policy', () => {
+    expect(toJsonLd(bpnPolicy(), OutputKind.Plain)).toEqual(formatService.formatPolicy(bpnJsonData));
+  });
 
-  formatPolicy(policy: object) {
-    return JSON.stringify(policy, null, 2);
-  }
-}
-
-export interface JsonLdFormatter {
-  toJsonLd(policyConfig: PolicyConfiguration): object;
-}
+  it('Should format the BPN Group Policy', () => {
+    expect(toJsonLd(bpnGroupPolicy(), OutputKind.Plain)).toEqual(formatService.formatPolicy(bpnGroupJsonData));
+  });
+});
