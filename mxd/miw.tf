@@ -103,6 +103,7 @@ resource "kubernetes_config_map" "miw-config" {
     MANAGEMENT_PORT                 = 8090
     APPLICATION_ENVIRONMENT         = "dev"
     APP_LOG_LEVEL                   = "DEBUG"
+    JAVA_TOOL_OPTIONS               = "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044"
   }
 }
 
