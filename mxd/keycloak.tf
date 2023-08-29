@@ -95,8 +95,8 @@ resource "kubernetes_config_map" "keycloak_env" {
     KEYCLOAK_ADMIN_PASSWORD    = "admin"
     # the KC_HOSTNAME must be known in advance, so that Keycloak's token contain valid `iss` claims
 
-    KC_HOSTNAME       = local.keycloak-ip
-#    KC_HOSTNAME_URL   = "http://localhost:8080"
+    KC_HOSTNAME = local.keycloak-ip
+    #    KC_HOSTNAME_URL   = "http://localhost:8080"
     KC_HEALTH_ENABLED = true
     MIW_BPN           = var.miw-bpn
     ALICE_BPN         = var.alice-bpn

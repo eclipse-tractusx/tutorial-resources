@@ -130,7 +130,7 @@ resource "kubernetes_service" "miw" {
 }
 
 locals {
-  miw-ip  = "10.96.81.222"
-  miw-url = "${local.miw-ip}:${var.miw-api-port}"
+  miw-ip         = "10.96.81.222"
+  miw-url        = "${local.miw-ip}:${var.miw-api-port}"
   keycloak-realm = "miw_test"
 }
