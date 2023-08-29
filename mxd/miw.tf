@@ -41,7 +41,7 @@ resource "kubernetes_deployment" "miw" {
       spec {
         container {
           name              = "miw"
-          image             = "ghcr.io/catenax-ng/tx-managed-identity-wallets_miw_service:latest-java-did-web"
+          image             = "tractusx/managed-identity-wallet:main"
           image_pull_policy = "Always"
 
           port {

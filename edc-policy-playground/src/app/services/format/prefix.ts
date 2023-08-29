@@ -29,11 +29,17 @@ import {
   Value,
 } from 'src/app/models/policy';
 import { JsonLdFormatter } from '../format.service';
+import { NAMESPACES, PolicyService } from '../policy.service';
+
+const ODRL = 'odrl';
+const ODRL_PREFIX = ODRL + ':';
 
 export const policyRequestTemplate = {
   '@context': {
     edc: 'https://w3id.org/edc/v0.0.1/ns/',
     odrl: 'http://www.w3.org/ns/odrl/2/',
+    tx: 'https://w3id.org/tractusx/v0.0.1/ns/',
+    xsd: 'http://www.w3.org/2001/XMLSchema#',
   },
   '@type': 'PolicyDefinitionRequest',
   '@id': '{{POLICY_ID}}',
@@ -41,7 +47,7 @@ export const policyRequestTemplate = {
 };
 
 const policyHeader = {
-  '@type': 'odrl:Set',
+  '@type': ODRL_PREFIX + 'Set',
 };
 
 export const emptyPolicy = Object.assign(policyRequestTemplate, {
@@ -52,35 +58,54 @@ export const emptyPolicy = Object.assign(policyRequestTemplate, {
 });
 
 export class PrefixFormatter implements JsonLdFormatter {
+  policyService: PolicyService;
+
+  constructor(policyService: PolicyService) {
+    this.policyService = policyService;
+  }
   toJsonLd(policyConfig: PolicyConfiguration): object {
     const permission = policyConfig.policy.permissions.map(this.mapPermission.bind(this));
-
+    const context = this.policyService.contextFor(policyConfig);
+    context[ODRL] = NAMESPACES[ODRL];
     return Object.assign(emptyPolicy, {
+      '@context': context,
       policy: { ...policyHeader, 'odrl:permission': permission },
     });
   }
 
   mapPermission(permission: Permission): object {
     return {
-      'odrl:action': permission.action.toString(),
+      'odrl:action': {
+        '@id': ODRL_PREFIX + permission.action.toString(),
+      },
       'odrl:constraint': permission.constraints.map(this.mapConstraint.bind(this)),
     };
   }
 
   mapConstraint(constraint: Constraint): object {
     if (constraint instanceof AtomicConstraint) {
+      let leftOperand;
+      if (constraint.leftOperand.prefix) {
+        leftOperand = {
+          '@id': constraint.leftOperand.toString(),
+        };
+      } else {
+        leftOperand = {
+          '@value': constraint.leftOperand.toString(),
+        };
+      }
       return {
-        'odrl:leftOperand': constraint.leftOperand,
+        'odrl:leftOperand': leftOperand,
         'odrl:operator': {
-          '@id': 'odrl:' + constraint.operator.toString(),
+          '@id': ODRL_PREFIX + constraint.operator.toString(),
         },
-        'odlr:rightOperand': this.mapRightOperand(constraint),
+        'odrl:rightOperand': this.mapRightOperand(constraint),
       };
     } else if (constraint instanceof LogicalConstraint) {
       const obj: any = {
-        '@type': 'odrl:LogicalConstraint',
+        '@type': ODRL_PREFIX + 'LogicalConstraint',
       };
-      obj['odlr:' + constraint.operator.toString().toLowerCase()] = constraint.constraints.map(
+      obj[ODRL_PREFIX + constraint.operator.toString().toLowerCase()] = constraint.constraints.map(
         this.mapConstraint.bind(this),
       );
       return obj;
