@@ -68,6 +68,28 @@ resource "kubernetes_deployment" "keycloak" {
           #              memory = "50Mi"
           #            }
           #          }
+          readiness_probe {
+            http_get {
+              path = "/health/ready"
+              port = var.keycloak-port
+            }
+            initial_delay_seconds = 30
+            period_seconds        = 10
+            timeout_seconds       = 5
+            failure_threshold     = 10
+            success_threshold     = 1
+          }
+          liveness_probe {
+            http_get {
+              path = "/health/live"
+              port = var.keycloak-port
+            }
+            initial_delay_seconds = 30
+            period_seconds        = 10
+            timeout_seconds       = 5
+            failure_threshold     = 10
+            success_threshold     = 1
+          }
         }
         volume {
           name = "miw-test-realm"
