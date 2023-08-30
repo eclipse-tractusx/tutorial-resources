@@ -44,9 +44,9 @@ output "keycloak-cluster-ip" {
 
 output "keycloak-database-credentials" {
   value = {
-    user     = var.miw-db-user
+    user     = var.keycloak-db-user
     password = nonsensitive(local.kc-pg-pwd)
-    database = var.miw-database
+    database = var.keycloak-database
   }
 }
 
@@ -56,9 +56,9 @@ output "miw-cluster-ip" {
 output "miw-database-credentials" {
 
   value = {
-    user     = var.keycloak-db-user
+    user     = var.miw-db-user
     password = nonsensitive(local.miw-pg-pwd)
-    database = var.keycloak-database
+    database = var.miw-database
   }
 }
 

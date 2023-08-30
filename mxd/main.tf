@@ -51,7 +51,7 @@ provider "helm" {
 module "alice-connector" {
   source            = "./modules/connector"
   humanReadableName = "alice"
-  participantId     = "BPNL000000000000"
+  participantId     = var.alice-bpn
   database-host     = local.pg-ip
   database-name     = "alice"
   database-credentials = {
@@ -60,11 +60,11 @@ module "alice-connector" {
   }
   ssi-config = {
     miw-url            = "http://${local.miw-ip}:${var.miw-api-port}"
-    miw-authorityId    = "BPNL000000000000"
+    miw-authorityId    = var.miw-bpn
     oauth-tokenUrl     = "http://${kubernetes_service.keycloak.spec.0.cluster_ip}:${var.keycloak-port}/realms/miw_test/protocol/openid-connect/token"
-    oauth-clientid     = "miw_private_client"
+    oauth-clientid     = "alice_private_client"
     oauth-secretalias  = "client_secret_alias"
-    oauth-clientsecret = "miw_private_client"
+    oauth-clientsecret = "alice_private_client"
   }
 }
 
@@ -72,7 +72,7 @@ module "alice-connector" {
 module "bob-connector" {
   source            = "./modules/connector"
   humanReadableName = "bob"
-  participantId     = "BPNL000000000000"
+  participantId     = var.bob-bpn
   database-host     = local.pg-ip
   database-name     = "bob"
   database-credentials = {
@@ -81,10 +81,10 @@ module "bob-connector" {
   }
   ssi-config = {
     miw-url            = "http://${local.miw-ip}:${var.miw-api-port}"
-    miw-authorityId    = "BPNL000000000000"
+    miw-authorityId    = var.miw-bpn
     oauth-tokenUrl     = "http://${kubernetes_service.keycloak.spec.0.cluster_ip}:${var.keycloak-port}/realms/miw_test/protocol/openid-connect/token"
-    oauth-clientid     = "miw_private_client"
+    oauth-clientid     = "bob_private_client"
     oauth-secretalias  = "client_secret_alias"
-    oauth-clientsecret = "miw_private_client"
+    oauth-clientsecret = "bob_private_client"
   }
 }

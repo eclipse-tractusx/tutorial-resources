@@ -46,7 +46,7 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
             "newman", "run",
             "--folder", "SeedData",
             "--env-var", "MANAGEMENT_URL=http://${module.bob-connector.node-ip}:8081/management/v2",
-            "--env-var", "POLICY_BPN=BPNL000000000000",
+            "--env-var", "POLICY_BPN=${var.alice-bpn}",
             "/opt/collection/${local.newman_collection_name}"
           ]
           volume_mount {
@@ -62,7 +62,28 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
             "newman", "run",
             "--folder", "SeedData",
             "--env-var", "MANAGEMENT_URL=http://${module.alice-connector.node-ip}:8081/management/v2",
-            "--env-var", "POLICY_BPN=BPNL000000000000",
+            "--env-var", "POLICY_BPN=${var.bob-bpn}",
+            "/opt/collection/${local.newman_collection_name}"
+          ]
+          volume_mount {
+            mount_path = "/opt/collection"
+            name       = "seed-collection"
+          }
+        }
+
+        // this container seeds data to the miw service
+        container {
+          name  = "newman-miw"
+          image = "postman/newman:ubuntu"
+          command = [
+            "newman", "run",
+            "--folder", "SeedMIW",
+            "--env-var", "MIW_URL=http://${local.miw-url}",
+            "--env-var", "KEYCLOAK_URL=${local.keycloak-url}/realms/${local.keycloak-realm}",
+            "--env-var", "MIW_CLIENT_ID=miw_private_client",
+            "--env-var", "MIW_CLIENT_SECRET=miw_private_client",
+            "--env-var", "ALICE_BPN=${var.alice-bpn}",
+            "--env-var", "BOB_BPN=${var.bob-bpn}",
             "/opt/collection/${local.newman_collection_name}"
           ]
           volume_mount {
@@ -95,4 +116,3 @@ resource "kubernetes_config_map" "seed-collection" {
 locals {
   newman_collection_name = "mxd-seed.json"
 }
-

@@ -88,10 +88,10 @@ resource "kubernetes_config_map" "miw-config" {
 
     KEYCLOAK_CLIENT_ID              = "miw_private_client"
     ENCRYPTION_KEY                  = "Woh9waid4Ei5eez0aitieghoow9so4oe"
-    AUTHORITY_WALLET_BPN            = "BPNL000000000000"
-    AUTHORITY_WALLET_DID            = "did:web:miw:BPNL000000000000"
+    AUTHORITY_WALLET_BPN            = var.miw-bpn
+    AUTHORITY_WALLET_DID            = "did:web:miw:${var.miw-bpn}"
     AUTHORITY_WALLET_NAME           = "Catena-X"
-    KEYCLOAK_REALM                  = "miw_test"
+    KEYCLOAK_REALM                  = local.keycloak-realm
     VC_SCHEMA_LINK                  = "https://www.w3.org/2018/credentials/v1, https://catenax-ng.github.io/product-core-schemas/businessPartnerData.json"
     VC_EXPIRY_DATE                  = "01-01-2025"
     SUPPORTED_FRAMEWORK_VC_TYPES    = "cx-behavior-twin=Behavior Twin,cx-pcf=PCF,cx-quality=Quality,cx-resiliency=Resiliency,cx-sustainability=Sustainability,cx-traceability=ID_3.0_Trace"
@@ -103,6 +103,7 @@ resource "kubernetes_config_map" "miw-config" {
     MANAGEMENT_PORT                 = 8090
     APPLICATION_ENVIRONMENT         = "dev"
     APP_LOG_LEVEL                   = "DEBUG"
+    JAVA_TOOL_OPTIONS               = "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044"
   }
 }
 
@@ -129,6 +130,7 @@ resource "kubernetes_service" "miw" {
 }
 
 locals {
-  miw-ip  = "10.96.81.222"
-  miw-url = "${local.miw-ip}:${var.miw-api-port}"
+  miw-ip         = "10.96.81.222"
+  miw-url        = "${local.miw-ip}:${var.miw-api-port}"
+  keycloak-realm = "miw_test"
 }
