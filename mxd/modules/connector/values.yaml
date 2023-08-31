@@ -47,6 +47,9 @@ controlplane:
       client:
         secretAlias: "client-secret"
 dataplane:
+  debug:
+    enabled: true
+    port: 1044
   image:
     pullPolicy: Never
     tag: "latest"
@@ -58,6 +61,10 @@ dataplane:
     endpointOverride: http://minio:9000
     secretAccessKey: qwerty123
     accessKeyId: qwerty123
+
+  env:
+    "EDC_API_AUTH_KEY" : "password"
+
 postgresql:
    # JDBC URL should be set from `main.tf`
    jdbcUrl:
