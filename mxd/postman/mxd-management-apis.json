@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "c8d7bd15-d4d7-4cac-aba7-6b5031199838",
+		"_postman_id": "294c5d0c-6677-4eb5-9f87-48596666b666",
 		"name": "tractusx-edc-mgmt-api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "647585"
+		"_exporter_id": "27652630"
 	},
 	"item": [
 		{
@@ -345,7 +345,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"@context\": {\r\n        \"edc\": \"https://w3id.org/edc/v0.0.1/ns/\"\r\n    },\r\n    \"@type\": \"CatalogRequest\",\r\n    \"providerUrl\": \"{{PROVIDER_PROTOCOL_URL}}\",\r\n    \"counterPartyAddress\":\"http://10.96.17.117:8084/api/v1/dsp\",\r\n    \"protocol\": \"dataspace-protocol-http\",\r\n    \"querySpec\": {\r\n        \"offset\": 0,\r\n        \"limit\": 50\r\n    }\r\n}",
+					"raw": "{\r\n    \"@context\": {\r\n        \"edc\": \"https://w3id.org/edc/v0.0.1/ns/\"\r\n    },\r\n    \"@type\": \"CatalogRequest\",\r\n    \"counterPartyAddress\":\"{{PROVIDER_PROTOCOL_URL}}\",\r\n    \"protocol\": \"dataspace-protocol-http\",\r\n    \"querySpec\": {\r\n        \"offset\": 0,\r\n        \"limit\": 50\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -524,7 +524,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"@context\": {\n        \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n    },\n    \"assetId\": \"{{ASSET_ID}}\",\n    \"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n    \"connectorId\": \"{{PROVIDER_ID}}\",\n    \"contractId\": \"MQ==:MQ==:OTBjODM5ODctYWI1MS00NTM2LWE5YjQtN2UwMzYwZWFjOTU2\",\n    \"dataDestination\": {\n        \"type\": \"HttpProxy\"\n    },\n    \"privateProperties\": {\n        \"receiverHttpEndpoint\": \"{{BACKEND_SERVICE}}\"\n    },\n    \"protocol\": \"dataspace-protocol-http\",\n    \"transferType\": {\n        \"contentType\": \"application/octet-stream\",\n        \"isFinite\": true\n    }\n}",
+					"raw": "{\n    \"@context\": {\n        \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n    },\n    \"assetId\": \"{{ASSET_ID}}\",\n    \"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n    \"connectorId\": \"{{PROVIDER_ID}}\",\n    \"contractId\": \"MQ==:MQ==:OGIxZmY5ODgtMzIwMy00OWY5LWFjMjMtN2RmN2JiYjQ1NzQx\",\n    \"dataDestination\": {\n        \"type\": \"HttpProxy\"\n    },\n    \"privateProperties\": {\n        \"receiverHttpEndpoint\": \"{{BACKEND_SERVICE}}\"\n    },\n    \"protocol\": \"dataspace-protocol-http\",\n    \"transferType\": {\n        \"contentType\": \"application/octet-stream\",\n        \"isFinite\": true\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -875,15 +875,15 @@
 	"variable": [
 		{
 			"key": "CONSUMER_MANAGEMENT_URL",
-			"value": "http://localhost:31364/management/"
+			"value": "http://localhost/bob/management/"
 		},
 		{
 			"key": "PROVIDER_PROTOCOL_URL",
-			"value": "http://plato-controlplane:8084/api/v1/dsp"
+			"value": "http://alice-controlplane:8084/api/v1/dsp"
 		},
 		{
 			"key": "PROVIDER_MANAGEMENT_URL",
-			"value": "http://localhost:30279/management/"
+			"value": "http://localhost/alice/management/"
 		},
 		{
 			"key": "ASSET_ID",
@@ -912,7 +912,7 @@
 		},
 		{
 			"key": "POLICY_BPN",
-			"value": "BPNSOKRATES",
+			"value": "BPNL000000000002",
 			"type": "default"
 		},
 		{
@@ -946,7 +946,7 @@
 		},
 		{
 			"key": "PROVIDER_ID",
-			"value": "BPNPLATO",
+			"value": "BPNL000000000001",
 			"type": "string"
 		},
 		{
