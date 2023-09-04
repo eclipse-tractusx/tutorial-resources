@@ -95,7 +95,7 @@ resource "kubernetes_config_map" "miw-config" {
     VC_SCHEMA_LINK                  = "https://www.w3.org/2018/credentials/v1, https://catenax-ng.github.io/product-core-schemas/businessPartnerData.json"
     VC_EXPIRY_DATE                  = "01-01-2025"
     SUPPORTED_FRAMEWORK_VC_TYPES    = "cx-behavior-twin=Behavior Twin,cx-pcf=PCF,cx-quality=Quality,cx-resiliency=Resiliency,cx-sustainability=Sustainability,cx-traceability=ID_3.0_Trace"
-    MIW_HOST_NAME                   = "${local.miw-ip}:${var.miw-api-port}"
+    MIW_HOST_NAME                   = "miw:${var.miw-api-port}"
     ENFORCE_HTTPS_IN_DID_RESOLUTION = false
     AUTH_SERVER_URL                 = "http://${local.keycloak-ip}:${var.keycloak-port}"
     DEV_ENVIRONMENT                 = "docker"
