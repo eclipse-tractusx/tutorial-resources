@@ -18,11 +18,11 @@
 #
 
 # technically, the Helm chart for the connector already brings a Kubernetes service, but there is no
-# (easy) way to get ahold of it from terraform, so lets just declare another one
+# (easy) way to get a hold of it from terraform, so lets just declare another one
 
 resource "kubernetes_service" "controlplane-service" {
   metadata {
-    name = "${var.humanReadableName}-nodeport"
+    name = "${var.humanReadableName}-controlplane"
   }
   spec {
     type = "NodePort"
