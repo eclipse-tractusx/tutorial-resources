@@ -84,4 +84,5 @@ locals {
   management_url        = "http://localhost/${var.humanReadableName}/management/v2"
   proxy_url             = "http://localhost/${var.humanReadableName}/proxy"
   health_url            = "http://localhost/${var.humanReadableName}/health"
+  public_url            = "http://localhost/${var.humanReadableName}/api/public"
 }

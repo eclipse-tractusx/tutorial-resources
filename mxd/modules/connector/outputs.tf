@@ -33,6 +33,7 @@ output "urls" {
     management = local.management_url
     health     = local.health_url
     proxy      = local.proxy_url
+    public     = local.public_url
   }
 }
 
