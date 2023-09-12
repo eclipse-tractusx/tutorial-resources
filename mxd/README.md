@@ -246,8 +246,100 @@ run it in a pod, which executes a Postman collection and tests for the HTTP resu
 Bob wants to get Alice's data catalog. Since Bob does not have the `Dismantler` credential, he will only be able to see
 the "simple-asset" from [step 3.1](#31-add-a-basic-asset-policy-and-contract-definition).
 
-> TODO: curl commands
-> TODO: example JSON response
+We can fetch Alice's catalog with this `curl` command:
+
+``` shell
+curl --location 'http://localhost/bob/management/v2/catalog/request' --header 'Content-Type: application/json' --header 'X-Api-Key: password' \
+--data-raw '{
+    "@context": {
+        "edc": "https://w3id.org/edc/v0.0.1/ns/"
+    },
+    "@type": "CatalogRequest",
+    "counterPartyAddress":"http://alice-controlplane:8084/api/v1/dsp",
+    "protocol": "dataspace-protocol-http",
+    "querySpec": {
+        "offset": 0,
+        "limit": 50
+    }
+}' | jq
+```
+
+this requests the catalog from Alice using the `dsp` protocol with address `http://alice-controlplane:8084/api/v1/dsp`.
+The additional field `querySpec`, is used to filter, limit and sort the elements in the catalog.
+
+More information about the catalog [here](https://eclipse-edc.github.io/docs/#/documentation/developer/handbook?id=catalog)
+
+The catalog response will look like this:
+
+``` json
+{
+    "@id": "736199e5-5b9e-4944-8568-46af97bde862",
+    "@type": "dcat:Catalog",
+    "dcat:dataset": [
+        {
+            "@id": "1",
+            "@type": "dcat:Dataset",
+            "odrl:hasPolicy": {
+                "@id": "MQ==:MQ==:MDJlMGRlOWUtNzdhZS00N2FhLTg5ODktYzEyMTdhMDE4ZjJh",
+                "@type": "odrl:Set",
+                "odrl:permission": {
+                    "odrl:target": "1",
+                    "odrl:action": {
+                        "odrl:type": "USE"
+                    },
+                    "odrl:constraint": {
+                        "odrl:or": {
+                            "odrl:leftOperand": "BusinessPartnerNumber",
+                            "odrl:operator": {
+                                "@id": "odrl:eq"
+                            },
+                            "odrl:rightOperand": "BPNL000000000002"
+                        }
+                    }
+                },
+                "odrl:prohibition": [],
+                "odrl:obligation": [],
+                "odrl:target": "1"
+            },
+            "dcat:distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "dct:format": {
+                        "@id": "HttpProxy"
+                    },
+                    "dcat:accessService": "6a7e8d1e-e8f2-49f0-bf4d-a9b862c73889"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "dct:format": {
+                        "@id": "AmazonS3"
+                    },
+                    "dcat:accessService": "6a7e8d1e-e8f2-49f0-bf4d-a9b862c73889"
+                }
+            ],
+            "edc:description": "Product EDC Demo Asset 1",
+            "edc:id": "1"
+        }
+    ],
+    "dcat:service": {
+        "@id": "6a7e8d1e-e8f2-49f0-bf4d-a9b862c73889",
+        "@type": "dcat:DataService",
+        "dct:terms": "connector",
+        "dct:endpointUrl": "http://alice-controlplane:8084/api/v1/dsp"
+    },
+    "edc:participantId": "BPNL000000000001",
+    "@context": {
+        "dct": "https://purl.org/dc/terms/",
+        "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+        "edc": "https://w3id.org/edc/v0.0.1/ns/",
+        "dcat": "https://www.w3.org/ns/dcat/",
+        "odrl": "http://www.w3.org/ns/odrl/2/",
+        "dspace": "https://w3id.org/dspace/v0.8/"
+    }
+}
+```
+
+
 
 ## 5. Bob transfers data from Alice
 
@@ -272,9 +364,222 @@ API.
 Using this convenient tool, we don't have to care about the intricacies of negotiation and transfer anymore, we can
 simply request an API token to Alice's proxy, and start sucking data out of it.
 We don't even need to worry about token expiry - the EDR API has a little gizmo that automatically refreshes the token
-if it nears expiry.
+if it nears expiry. A detailed docs about the EDR API is available [here](https://github.com/eclipse-tractusx/tractusx-edc/blob/main/docs/samples/edr-api-overview/edr-api-overview.md)
 
-> TODO: repeat negotiation + transfer using EDR API
+The EDR API is a tiny wrapper around the two contract negotiation and transfer state machine. With a single request the system will track the EDR negotiation
+for us, and it will store it locally for future usage. The API for starting a new EDR negotiation is similar to the contract negotiation one.
+
+We can start a new EDR negotiation with this `curl` command:
+
+``` shell
+curl --location 'http://localhost/bob/management/edrs' \
+--header 'Content-Type: application/json' \
+--header 'X-Api-Key: password' \
+--data-raw '{
+	"@context": {
+		"odrl": "http://www.w3.org/ns/odrl/2/"
+	},
+	"@type": "NegotiationInitiateRequestDto",
+	"connectorAddress": "http://alice-controlplane:8084/api/v1/dsp",
+	"protocol": "dataspace-protocol-http",
+	"connectorId": "BPNL000000000001",
+	"providerId": "BPNL000000000001",
+	"offer": {
+		"offerId": "MQ==:MQ==:MDJlMGRlOWUtNzdhZS00N2FhLTg5ODktYzEyMTdhMDE4ZjJh",
+		"assetId": "1",
+		"policy": {
+			"@type": "odrl:Set",
+			"odrl:permission": {
+				"odrl:target": "1",
+				"odrl:action": {
+					"odrl:type": "USE"
+				},
+				"odrl:constraint": {
+					"odrl:or": {
+						"odrl:leftOperand": "BusinessPartnerNumber",
+						"odrl:operator": {
+              "@id": "odrl:eq"
+            },
+						"odrl:rightOperand": "BPNL000000000002"
+					}
+				}
+			},
+			"odrl:prohibition": [],
+			"odrl:obligation": [],
+			"odrl:target": "1"
+		}
+	}
+}' | jq
+```
+
+If everithing is ok, we'll get this as response:
+
+``` json
+{
+  "@type": "edc:IdResponse",
+  "@id": "2f911118-657d-4001-b36c-73cb45222a4a",
+  "edc:createdAt": 1694446314832,
+  "@context": {
+    "dct": "https://purl.org/dc/terms/",
+    "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+    "edc": "https://w3id.org/edc/v0.0.1/ns/",
+    "dcat": "https://www.w3.org/ns/dcat/",
+    "odrl": "http://www.w3.org/ns/odrl/2/",
+    "dspace": "https://w3id.org/dspace/v0.8/"
+  }
+}
+```
+
+
+The `@id` here is the id of the contract negotiation that has been started.
+
+Since the EDR negotiation sits on top of two state machine, contract negotiation and transfer process, is an asyncronous process itself.
+In order to be notified without polling, we could configure the EDC callbacks for being notified on state transition. We could add this in the original request:
+
+``` json
+{
+  ...
+  "callbackAddresses": [
+    {
+      "uri": "http://localhost:8080/hooks",
+      "events": [
+        "transfer.process.started"
+      ],
+      "transactional": false
+    }
+  ]
+}
+```
+
+which will notify us when the transfer process is transitioned to the `STARTED` state (EDR negotiatied).
+
+For having a list of the negotiatied EDR for the `assedId` `1` we can use this `curl` command:
+
+``` shell
+curl --location 'http://localhost/bob/management//edrs?assetId=1' --header 'X-Api-Key: password' | jq
+```
+
+and the response should look like this:
+
+``` json
+[
+  {
+    "@type": "tx:EndpointDataReferenceEntry",
+    "edc:agreementId": "MQ==:MQ==:MWI5OTg2N2YtNTc0ZS00MzUwLTk2NmMtNDFiODE2MzllZTVi",
+    "edc:transferProcessId": "89f0d94e-670e-4b0a-a8d9-a6adc726c005",
+    "edc:assetId": "1",
+    "edc:providerId": "BPNL000000000001",
+    "tx:edrState": "NEGOTIATED",
+    "tx:expirationDate": 1694447767000,
+    "@context": {
+      "dct": "https://purl.org/dc/terms/",
+      "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+      "edc": "https://w3id.org/edc/v0.0.1/ns/",
+      "dcat": "https://www.w3.org/ns/dcat/",
+      "odrl": "http://www.w3.org/ns/odrl/2/",
+      "dspace": "https://w3id.org/dspace/v0.8/"
+    }
+  }
+]
+```
+
+In order to be able to fetch the data with only the `assetId` via consumer data plane proxy (see more later), only one
+`EndPointDataReferenceEntry` should be valid (`Negotiated` or `Refreshing`) at one point in time associated with the `assetId`.
+This will allow the proxy to fetch the right `EDR` while requesting an `assetId`.
+
+The renewal of the token is automatically handle by the extension, so what we need to do is just fire the first EDR negotiation
+and start fetching the data.
+
+Since the EDR is renewed automatically it can happen that while fetching the EDR for a particular `assetId` will have multiple entries like this:
+
+``` json
+[
+  {
+    "@type": "tx:EndpointDataReferenceEntry",
+    "edc:agreementId": "MQ==:MQ==:MWI5OTg2N2YtNTc0ZS00MzUwLTk2NmMtNDFiODE2MzllZTVi",
+    "edc:transferProcessId": "ff468685-0f9b-49a1-8ec6-ea40d5a2dc88",
+    "edc:assetId": "1",
+    "edc:providerId": "BPNL000000000001",
+    "tx:edrState": "NEGOTIATED",
+    "tx:expirationDate": 1694448312000,
+    "@context": {
+      "dct": "https://purl.org/dc/terms/",
+      "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+      "edc": "https://w3id.org/edc/v0.0.1/ns/",
+      "dcat": "https://www.w3.org/ns/dcat/",
+      "odrl": "http://www.w3.org/ns/odrl/2/",
+      "dspace": "https://w3id.org/dspace/v0.8/"
+    }
+  },
+  {
+    "@type": "tx:EndpointDataReferenceEntry",
+    "edc:agreementId": "MQ==:MQ==:MWI5OTg2N2YtNTc0ZS00MzUwLTk2NmMtNDFiODE2MzllZTVi",
+    "edc:transferProcessId": "89f0d94e-670e-4b0a-a8d9-a6adc726c005",
+    "edc:assetId": "1",
+    "edc:providerId": "BPNL000000000001",
+    "tx:edrState": "EXPIRED",
+    "tx:expirationDate": 1694447767000,
+    "@context": {
+      "dct": "https://purl.org/dc/terms/",
+      "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+      "edc": "https://w3id.org/edc/v0.0.1/ns/",
+      "dcat": "https://www.w3.org/ns/dcat/",
+      "odrl": "http://www.w3.org/ns/odrl/2/",
+      "dspace": "https://w3id.org/dspace/v0.8/"
+    }
+  }
+]
+```
+
+but this means that the second `EDR` is now expired and marked for removal later in time.
+
+The EDR itself it's stored in the configured vault. To retrieve it we can use this `curl` command:
+
+``` shell
+curl --location 'http://localhost/bob/management/edrs/ff468685-0f9b-49a1-8ec6-ea40d5a2dc88' --header 'X-Api-Key: password' | jq
+```
+
+where `e04207ee-7167-4951-a92d-e3e0b3673863` is the transfer process id of negotiated EDR. Each EDR is bound to one and only transfer process,
+and the automatic EDR renewal will just fire another transfer request with the same configuration, when it's about to expire.
+
+The response will look like this:
+
+``` json
+{
+  "@type": "edc:DataAddress",
+  "edc:type": "EDR",
+  "edc:authCode": "eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE2OTQ1MjIwNTksImRhZCI6ImNoTTlvVTVLNXQzbDlWMFRsL1ZZdDlLU1J4YmNOSUdzM1FtazNlNktWOWpWcTBkeUhjUDU2Mm82Qk0zSitxeTRwRVg2d0EvWUFsdW9EdGptYnYxZlJoN3VmVmsvQjNONzhBMUhyZ01ENnk2enFsK1BEYzBXa00yTm9ycUJWQUl0TWpVNEFNbGhFMXE1Ym9EQ1lWcVRsQVZnbm9uTlB5MmlVUzVSVTJHTkZtOWFkZVZYR1ZLaDFDWEMzVDV0RkRCS21EMjExWVZYdDExRUlXbCtIU3VISm1PL0xwUUdibFkvaGFicXZ6aUZ0YlppbGlKSDNLdGVhZTZQRkdQTjNWT1Z4YlFrZTNmODNRN3VNeStBNzV4YS9VR1BMcjJlQkJzb0ZVbTBYeFFJS2dBOUROdGxXcnBuR3hwdG9tL1VWY00wQ1RwcWM5eFRRdGlnK3JMVlJ4dUhrb2RreG5KUXhiSENVMnNObnFhdXZJcDV4L04rbGdJN0F1amhtQWxiN2NwUWs0RDhSWWtZSnkvVUZGdGZmZUJLU2k2MnZDeC9QSFJsSERlUGM4VldDaEJTNFF1Q1FXY1pOK2oyUjR5b2Q2a3JlN2JtUStFK3pLUmYva3JhQkJkR041TDR5ZVdIYU0wS3oraGxiSVR5WHg2bjdrQ0VkVVVSREtCUHY3SHdzbHhLTzlxN05ReHplMHFDM0phR2pyWVdHZmJHTzB4SDlJRndsSWpqclZHMzE0WUVxNGdSTjNNPSIsImNpZCI6Ik1RPT06TVE9PTpOV0ZqTTJJeVkyWXRNRGt4WkMwME9UQmxMV0poTXpNdE1ERmxNRGhtTUdNNU5tVTIifQ.2UT3_mIjchrC242TqlLFWoyYPiCOPLLivaN5Xd4_MxhcQkxRkOxrK0IXkXVuRVjC1ReGPi3iaco9LDUxvF3FPw",
+  "edc:endpoint": "http://alice-tractusx-connector-dataplane:8081/api/public",
+  "edc:id": "ff468685-0f9b-49a1-8ec6-ea40d5a2dc88",
+  "edc:authKey": "Authorization",
+  "@context": {
+    "dct": "https://purl.org/dc/terms/",
+    "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+    "edc": "https://w3id.org/edc/v0.0.1/ns/",
+    "dcat": "https://www.w3.org/ns/dcat/",
+    "odrl": "http://www.w3.org/ns/odrl/2/",
+    "dspace": "https://w3id.org/dspace/v0.8/"
+  }
+}
+```
+
+### Fetching data
+
+``` shell
+curl --location 'http://localhost/alice/api/public' \
+--header 'Authorization: eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE2OTQ1MjIwNTksImRhZCI6ImNoTTlvVTVLNXQzbDlWMFRsL1ZZdDlLU1J4YmNOSUdzM1FtazNlNktWOWpWcTBkeUhjUDU2Mm82Qk0zSitxeTRwRVg2d0EvWUFsdW9EdGptYnYxZlJoN3VmVmsvQjNONzhBMUhyZ01ENnk2enFsK1BEYzBXa00yTm9ycUJWQUl0TWpVNEFNbGhFMXE1Ym9EQ1lWcVRsQVZnbm9uTlB5MmlVUzVSVTJHTkZtOWFkZVZYR1ZLaDFDWEMzVDV0RkRCS21EMjExWVZYdDExRUlXbCtIU3VISm1PL0xwUUdibFkvaGFicXZ6aUZ0YlppbGlKSDNLdGVhZTZQRkdQTjNWT1Z4YlFrZTNmODNRN3VNeStBNzV4YS9VR1BMcjJlQkJzb0ZVbTBYeFFJS2dBOUROdGxXcnBuR3hwdG9tL1VWY00wQ1RwcWM5eFRRdGlnK3JMVlJ4dUhrb2RreG5KUXhiSENVMnNObnFhdXZJcDV4L04rbGdJN0F1amhtQWxiN2NwUWs0RDhSWWtZSnkvVUZGdGZmZUJLU2k2MnZDeC9QSFJsSERlUGM4VldDaEJTNFF1Q1FXY1pOK2oyUjR5b2Q2a3JlN2JtUStFK3pLUmYva3JhQkJkR041TDR5ZVdIYU0wS3oraGxiSVR5WHg2bjdrQ0VkVVVSREtCUHY3SHdzbHhLTzlxN05ReHplMHFDM0phR2pyWVdHZmJHTzB4SDlJRndsSWpqclZHMzE0WUVxNGdSTjNNPSIsImNpZCI6Ik1RPT06TVE9PTpOV0ZqTTJJeVkyWXRNRGt4WkMwME9UQmxMV0poTXpNdE1ERmxNRGhtTUdNNU5tVTIifQ.2UT3_mIjchrC242TqlLFWoyYPiCOPLLivaN5Xd4_MxhcQkxRkOxrK0IXkXVuRVjC1ReGPi3iaco9LDUxvF3FPw' 
+```
+
+
+``` shell
+curl --location 'http://localhost/bob/proxy/aas/request' \
+--header 'Content-Type: application/json' \
+--header 'X-Api-Key: password' \
+--data '{
+    "assetId": "1",
+    "providerId": "BPNL000000000001"
+}'
+```
 
 ## 7. Add new participant Trudy
 

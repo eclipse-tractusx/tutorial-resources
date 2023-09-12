@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "8bbb1f64-ca27-4329-ae65-c2c32d99d79f",
+		"_postman_id": "32ff5491-8811-41ba-9560-60b90175f5cb",
 		"name": "MXD Management API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "252261",
-		"_collection_link": "https://winter-rocket-884715.postman.co/workspace/SAP~ff4cf631-05f4-48ab-a1e0-f716cf2efc25/collection/252261-8bbb1f64-ca27-4329-ae65-c2c32d99d79f?action=share&source=collection_link&creator=252261"
+		"_exporter_id": "27652630"
 	},
 	"item": [
 		{
@@ -30,7 +29,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": {},\n    \"asset\": {\n        \"@type\": \"Asset\",\n        \"@id\": \"1\", \n        \"properties\": {\n            \"description\": \"Product EDC Demo Asset 1\"\n        }\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\"\n    }\n}",
+							"raw": "{\n    \"@context\": {},\n    \"asset\": {\n        \"@type\": \"Asset\",\n        \"@id\": \"1\",\n        \"properties\": {\n            \"description\": \"Product EDC Demo Asset 1\"\n        }\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\",\n        \"proxyPath\": \"true\",\n        \"proxyQueryParams\": \"true\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -69,7 +68,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": {},\n    \"asset\": {\n        \"@type\": \"Asset\",\n        \"@id\": \"2\", \n        \"properties\": {\n            \"description\": \"Product EDC Demo Asset 2\"\n        }\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\"\n    }\n}",
+							"raw": "{\n    \"@context\": {},\n    \"asset\": {\n        \"@type\": \"Asset\",\n        \"@id\": \"2\",\n        \"properties\": {\n            \"description\": \"Product EDC Demo Asset 2\"\n        }\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\",\n        \"proxyPath\": \"true\",\n        \"proxyQueryParams\": \"true\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
