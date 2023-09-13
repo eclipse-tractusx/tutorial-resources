@@ -265,9 +265,9 @@ curl --location 'http://localhost/bob/management/v2/catalog/request' --header 'C
 ```
 
 this requests the catalog from Alice using the `dsp` protocol with address `http://alice-controlplane:8084/api/v1/dsp`.
-The additional field `querySpec`, is used to filter, limit and sort the elements in the catalog.
+The additional field `querySpec` is used to filter, limit and sort the elements in the catalog.
 
-More information about the catalog [here](https://eclipse-edc.github.io/docs/#/documentation/developer/handbook?id=catalog)
+More information about the catalog [here](https://eclipse-edc.github.io/docs/#/documentation/developer/handbook?id=catalog).
 
 The catalog response will look like this:
 
@@ -339,7 +339,9 @@ The catalog response will look like this:
 }
 ```
 
-
+In this case the provider, with participant id `BPNL000000000001`, is offering some data with id `1`, description
+`Product EDC Demo Asset 1`, throught the offer `MQ==:MQ==:MDJlMGRlOWUtNzdhZS00N2FhLTg5ODktYzEyMTdhMDE4ZjJh` and the `BusinessPartnerNumber` policy
+restriction. Those informations will be used for negotiating a contract with the provider.
 
 ## 5. Bob transfers data from Alice
 
@@ -364,9 +366,11 @@ API.
 Using this convenient tool, we don't have to care about the intricacies of negotiation and transfer anymore, we can
 simply request an API token to Alice's proxy, and start sucking data out of it.
 We don't even need to worry about token expiry - the EDR API has a little gizmo that automatically refreshes the token
-if it nears expiry. A detailed docs about the EDR API is available [here](https://github.com/eclipse-tractusx/tractusx-edc/blob/main/docs/samples/edr-api-overview/edr-api-overview.md)
+if it nears expiry. 
 
-The EDR API is a tiny wrapper around the two contract negotiation and transfer state machine. With a single request the system will track the EDR negotiation
+A detailed documentation about the EDR API is available [here](https://github.com/eclipse-tractusx/tractusx-edc/blob/main/docs/samples/edr-api-overview/edr-api-overview.md).
+
+The EDR API is a tiny wrapper on top of the contract negotiation and transfer state machines. With a single request the system will track the EDR negotiation
 for us, and it will store it locally for future usage. The API for starting a new EDR negotiation is similar to the contract negotiation one.
 
 We can start a new EDR negotiation with this `curl` command:
@@ -412,6 +416,12 @@ curl --location 'http://localhost/bob/management/edrs' \
 }' | jq
 ```
 
+For requesting an EDR we have to specify:
+
+- `connectorId` and `providerId`: the participantId returned from the catalog request
+- `connectorAddress`: in `dcat:service` field returned from the catalog request 
+- `offer`: it's derived by the chosen `dcat:Dataset` returned from the catalog request
+
 If everithing is ok, we'll get this as response:
 
 ``` json
@@ -430,11 +440,12 @@ If everithing is ok, we'll get this as response:
 }
 ```
 
-
 The `@id` here is the id of the contract negotiation that has been started.
 
-Since the EDR negotiation sits on top of two state machine, contract negotiation and transfer process, is an asyncronous process itself.
-In order to be notified without polling, we could configure the EDC callbacks for being notified on state transition. We could add this in the original request:
+Since the EDR negotiation sits on top of two state machines, contract negotiation and transfer process, it's an asyncronous process itself.
+In order to be notified without polling, we could configure the EDC callbacks for being notified on state transition. 
+
+We could for example add this in the original request:
 
 ``` json
 {
@@ -451,12 +462,12 @@ In order to be notified without polling, we could configure the EDC callbacks fo
 }
 ```
 
-which will notify us when the transfer process is transitioned to the `STARTED` state (EDR negotiatied).
+and be notified when the transfer process transition to the state `STARTED` (EDR negotiatied).
 
 For having a list of the negotiatied EDR for the `assedId` `1` we can use this `curl` command:
 
 ``` shell
-curl --location 'http://localhost/bob/management//edrs?assetId=1' --header 'X-Api-Key: password' | jq
+curl --location 'http://localhost/bob/management/edrs?assetId=1' --header 'X-Api-Key: password' | jq
 ```
 
 and the response should look like this:
@@ -483,14 +494,15 @@ and the response should look like this:
 ]
 ```
 
-In order to be able to fetch the data with only the `assetId` via consumer data plane proxy (see more later), only one
-`EndPointDataReferenceEntry` should be valid (`Negotiated` or `Refreshing`) at one point in time associated with the `assetId`.
-This will allow the proxy to fetch the right `EDR` while requesting an `assetId`.
+To be able to fetch the data with only the `assetId` via consumer data plane proxy (see more later), only one
+`EndPointDataReferenceEntry` associated with an `assetId` should be valid (`Negotiated` or `Refreshing`) at one point in time.
+This will allow the proxy to fetch the right `EDR` while requesting data with the `assetId`. Alternatively if we negotiated multiple
+`EDRs` for the same `assetId` for some reason, we should use the `transferprocessid` for transferring the data.
 
-The renewal of the token is automatically handle by the extension, so what we need to do is just fire the first EDR negotiation
+The renewal of the token is automatically handled by the `EDR` extension, we just need to fire the first EDR negotiation
 and start fetching the data.
 
-Since the EDR is renewed automatically it can happen that while fetching the EDR for a particular `assetId` will have multiple entries like this:
+Since the EDR is renewed automatically, it can happen that while fetching the EDRs for a particular `assetId` we can see multiple entries like this:
 
 ``` json
 [
@@ -531,16 +543,16 @@ Since the EDR is renewed automatically it can happen that while fetching the EDR
 ]
 ```
 
-but this means that the second `EDR` is now expired and marked for removal later in time.
+which means that the second `EDR` is now expired and marked for removal later in time.
 
-The EDR itself it's stored in the configured vault. To retrieve it we can use this `curl` command:
+The EDR itself is stored in the configured vault. To retrieve it we can use this `curl` command:
 
 ``` shell
 curl --location 'http://localhost/bob/management/edrs/ff468685-0f9b-49a1-8ec6-ea40d5a2dc88' --header 'X-Api-Key: password' | jq
 ```
 
-where `e04207ee-7167-4951-a92d-e3e0b3673863` is the transfer process id of negotiated EDR. Each EDR is bound to one and only transfer process,
-and the automatic EDR renewal will just fire another transfer request with the same configuration, when it's about to expire.
+where `ff468685-0f9b-49a1-8ec6-ea40d5a2dc88` is the transfer process id of negotiated EDR. Each EDR is bound to one and only transfer process,
+and the automatic EDR renewal process will just fire another transfer request with the same configuration when it's near expiry.
 
 The response will look like this:
 
@@ -565,11 +577,59 @@ The response will look like this:
 
 ### Fetching data
 
+For fetching the data we can use two strategies depending on the use case:
+
+- Provider data-plane
+- Consumer data-plane (proxy)
+
+#### Provider data-plane
+
+Once the right EDR has been identified using the EDR management API, we can use the `endpont`, `authCode` and `authKey` to make the data request:
+
 ``` shell
 curl --location 'http://localhost/alice/api/public' \
---header 'Authorization: eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE2OTQ1MjIwNTksImRhZCI6ImNoTTlvVTVLNXQzbDlWMFRsL1ZZdDlLU1J4YmNOSUdzM1FtazNlNktWOWpWcTBkeUhjUDU2Mm82Qk0zSitxeTRwRVg2d0EvWUFsdW9EdGptYnYxZlJoN3VmVmsvQjNONzhBMUhyZ01ENnk2enFsK1BEYzBXa00yTm9ycUJWQUl0TWpVNEFNbGhFMXE1Ym9EQ1lWcVRsQVZnbm9uTlB5MmlVUzVSVTJHTkZtOWFkZVZYR1ZLaDFDWEMzVDV0RkRCS21EMjExWVZYdDExRUlXbCtIU3VISm1PL0xwUUdibFkvaGFicXZ6aUZ0YlppbGlKSDNLdGVhZTZQRkdQTjNWT1Z4YlFrZTNmODNRN3VNeStBNzV4YS9VR1BMcjJlQkJzb0ZVbTBYeFFJS2dBOUROdGxXcnBuR3hwdG9tL1VWY00wQ1RwcWM5eFRRdGlnK3JMVlJ4dUhrb2RreG5KUXhiSENVMnNObnFhdXZJcDV4L04rbGdJN0F1amhtQWxiN2NwUWs0RDhSWWtZSnkvVUZGdGZmZUJLU2k2MnZDeC9QSFJsSERlUGM4VldDaEJTNFF1Q1FXY1pOK2oyUjR5b2Q2a3JlN2JtUStFK3pLUmYva3JhQkJkR041TDR5ZVdIYU0wS3oraGxiSVR5WHg2bjdrQ0VkVVVSREtCUHY3SHdzbHhLTzlxN05ReHplMHFDM0phR2pyWVdHZmJHTzB4SDlJRndsSWpqclZHMzE0WUVxNGdSTjNNPSIsImNpZCI6Ik1RPT06TVE9PTpOV0ZqTTJJeVkyWXRNRGt4WkMwME9UQmxMV0poTXpNdE1ERmxNRGhtTUdNNU5tVTIifQ.2UT3_mIjchrC242TqlLFWoyYPiCOPLLivaN5Xd4_MxhcQkxRkOxrK0IXkXVuRVjC1ReGPi3iaco9LDUxvF3FPw' 
+--header 'Authorization: eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE2OTQ1MjIwNTksImRhZCI6ImNoTTlvVTVLNXQzbDlWMFRsL1ZZdDlLU1J4YmNOSUdzM1FtazNlNktWOWpWcTBkeUhjUDU2Mm82Qk0zSitxeTRwRVg2d0EvWUFsdW9EdGptYnYxZlJoN3VmVmsvQjNONzhBMUhyZ01ENnk2enFsK1BEYzBXa00yTm9ycUJWQUl0TWpVNEFNbGhFMXE1Ym9EQ1lWcVRsQVZnbm9uTlB5MmlVUzVSVTJHTkZtOWFkZVZYR1ZLaDFDWEMzVDV0RkRCS21EMjExWVZYdDExRUlXbCtIU3VISm1PL0xwUUdibFkvaGFicXZ6aUZ0YlppbGlKSDNLdGVhZTZQRkdQTjNWT1Z4YlFrZTNmODNRN3VNeStBNzV4YS9VR1BMcjJlQkJzb0ZVbTBYeFFJS2dBOUROdGxXcnBuR3hwdG9tL1VWY00wQ1RwcWM5eFRRdGlnK3JMVlJ4dUhrb2RreG5KUXhiSENVMnNObnFhdXZJcDV4L04rbGdJN0F1amhtQWxiN2NwUWs0RDhSWWtZSnkvVUZGdGZmZUJLU2k2MnZDeC9QSFJsSERlUGM4VldDaEJTNFF1Q1FXY1pOK2oyUjR5b2Q2a3JlN2JtUStFK3pLUmYva3JhQkJkR041TDR5ZVdIYU0wS3oraGxiSVR5WHg2bjdrQ0VkVVVSREtCUHY3SHdzbHhLTzlxN05ReHplMHFDM0phR2pyWVdHZmJHTzB4SDlJRndsSWpqclZHMzE0WUVxNGdSTjNNPSIsImNpZCI6Ik1RPT06TVE9PTpOV0ZqTTJJeVkyWXRNRGt4WkMwME9UQmxMV0poTXpNdE1ERmxNRGhtTUdNNU5tVTIifQ.2UT3_mIjchrC242TqlLFWoyYPiCOPLLivaN5Xd4_MxhcQkxRkOxrK0IXkXVuRVjC1ReGPi3iaco9LDUxvF3FPw' | jq
 ```
 
+and the response will look like this:
+
+``` json
+[
+    {
+        "userId": 1,
+        "id": 1,
+        "title": "delectus aut autem",
+        "completed": false
+    },
+    {
+        "userId": 1,
+        "id": 2,
+        "title": "quis ut nam facilis et officia qui",
+        "completed": false
+    },
+    {
+        "userId": 1,
+        "id": 3,
+        "title": "fugiat veniam minus",
+        "completed": false
+    },
+    ...
+]
+```
+
+The provider receives the token, does some security checks and if all it's good it forwards the request to the configured
+baseUrl in the DataAddress of Asset, which in this case will do a `GET` request to `https://jsonplaceholder.typicode.com/todos`.
+
+> Replace the Authorization header with the negotiated one.
+
+> The endpoint in the curl above is different from the one returned by the EDR GET API for testing purpose and deployment reason.
+
+#### Consumer data-plane (proxy)
+
+This option is a simplification of the above one. At this point we know that we negotiated an EDR with the EDR API with a provider for an `assetId`, and
+that EDR will be automatically renewed.
+
+We can simply use the `proxy` API for fetching the data with a `POST` request:
 
 ``` shell
 curl --location 'http://localhost/bob/proxy/aas/request' \
@@ -578,8 +638,66 @@ curl --location 'http://localhost/bob/proxy/aas/request' \
 --data '{
     "assetId": "1",
     "providerId": "BPNL000000000001"
-}'
+}' | jq
 ```
+
+and get the same results as the provider data-plane option:
+
+``` json
+[
+    {
+        "userId": 1,
+        "id": 1,
+        "title": "delectus aut autem",
+        "completed": false
+    },
+    {
+        "userId": 1,
+        "id": 2,
+        "title": "quis ut nam facilis et officia qui",
+        "completed": false
+    },
+    {
+        "userId": 1,
+        "id": 3,
+        "title": "fugiat veniam minus",
+        "completed": false
+    },
+    ...
+]
+```
+
+The consumer proxy will fetch the `EDR` associated with the `assetId` and the `provider` id in the local storage, and it will
+do a `GET` request to the provider data-plane for us.
+
+> Note that if multiple `EDRs` are associated to the `assetId` and `providerId`, the proxy will fail to fulfill the request. In this case the `transferprocessid` should be used
+
+Since the `DataAddress` of the asset has been configured to proxy also `pathSegments`, we could add another
+parameter in the request to fetch exactly one item from the list:
+
+``` shell
+curl --location 'http://localhost/bob/proxy/aas/request' \
+--header 'Content-Type: application/json' \
+--header 'X-Api-Key: password' \
+--data '{
+    "assetId": "1",
+    "providerId": "BPNL000000000001",
+    "pathSegments": "/1"
+}' | jq
+```
+
+which will give us:
+
+``` json
+{
+  "userId": 1,
+  "id": 1,
+  "title": "delectus aut autem",
+  "completed": false
+}
+```
+
+and the proxied URL will be `https://jsonplaceholder.typicode.com/todos/1`.
 
 ## 7. Add new participant Trudy
 
