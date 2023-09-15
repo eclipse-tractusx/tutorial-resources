@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "294c5d0c-6677-4eb5-9f87-48596666b666",
+		"_postman_id": "54c1f694-b885-4b7d-b069-5d394be398fa",
 		"name": "tractusx-edc-mgmt-api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "27652630"
@@ -524,7 +524,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"@context\": {\n        \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n    },\n    \"assetId\": \"{{ASSET_ID}}\",\n    \"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n    \"connectorId\": \"{{PROVIDER_ID}}\",\n    \"contractId\": \"MQ==:MQ==:OGIxZmY5ODgtMzIwMy00OWY5LWFjMjMtN2RmN2JiYjQ1NzQx\",\n    \"dataDestination\": {\n        \"type\": \"HttpProxy\"\n    },\n    \"privateProperties\": {\n        \"receiverHttpEndpoint\": \"{{BACKEND_SERVICE}}\"\n    },\n    \"protocol\": \"dataspace-protocol-http\",\n    \"transferType\": {\n        \"contentType\": \"application/octet-stream\",\n        \"isFinite\": true\n    }\n}",
+					"raw": "{\n    \"@context\": {\n        \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n    },\n    \"assetId\": \"{{ASSET_ID}}\",\n    \"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n    \"connectorId\": \"{{PROVIDER_ID}}\",\n    \"contractId\": \"<contractAgreementId>\",\n    \"dataDestination\": {\n        \"type\": \"HttpProxy\"\n    },\n    \"privateProperties\": {\n        \"receiverHttpEndpoint\": \"{{BACKEND_SERVICE}}\"\n    },\n    \"protocol\": \"dataspace-protocol-http\",\n    \"transferType\": {\n        \"contentType\": \"application/octet-stream\",\n        \"isFinite\": true\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -650,7 +650,9 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"exec": [],
+						"exec": [
+							""
+						],
 						"type": "text/javascript"
 					}
 				}
@@ -668,12 +670,11 @@
 					}
 				},
 				"url": {
-					"raw": "{{CONSUMER_ADAPTER_URL}}/v2/edrs",
+					"raw": "{{CONSUMER_MANAGEMENT_URL}}/edrs",
 					"host": [
-						"{{CONSUMER_ADAPTER_URL}}"
+						"{{CONSUMER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
 						"edrs"
 					]
 				}
@@ -699,7 +700,9 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"exec": [],
+						"exec": [
+							""
+						],
 						"type": "text/javascript"
 					}
 				}
@@ -720,12 +723,11 @@
 					}
 				},
 				"url": {
-					"raw": "{{CONSUMER_ADAPTER_URL}}/v2/edrs?assetId={{ASSET_ID}}",
+					"raw": "{{CONSUMER_MANAGEMENT_URL}}/edrs?assetId={{ASSET_ID}}",
 					"host": [
-						"{{CONSUMER_ADAPTER_URL}}"
+						"{{CONSUMER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
 						"edrs"
 					],
 					"query": [
@@ -757,7 +759,9 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"exec": [],
+						"exec": [
+							""
+						],
 						"type": "text/javascript"
 					}
 				}
@@ -778,12 +782,11 @@
 					}
 				},
 				"url": {
-					"raw": "{{CONSUMER_ADAPTER_URL}}/v2/edrs/e1e986be-3ac3-4166-8fa9-b44be00a37ba",
+					"raw": "{{CONSUMER_MANAGEMENT_URL}}/edrs/e1e986be-3ac3-4166-8fa9-b44be00a37ba",
 					"host": [
-						"{{CONSUMER_ADAPTER_URL}}"
+						"{{CONSUMER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
 						"edrs",
 						"e1e986be-3ac3-4166-8fa9-b44be00a37ba"
 					]
@@ -792,7 +795,58 @@
 			"response": []
 		},
 		{
-			"name": "Get Asset Data with proxy",
+			"name": "Del EDR by tp ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Body matches string\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.collectionVariables.set(\"NEGOTIATION_ID\", jsonData.id);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{CONSUMER_MANAGEMENT_URL}}/edrs/eb97391e-b30d-4da8-a5ff-8f865ac1d622",
+					"host": [
+						"{{CONSUMER_MANAGEMENT_URL}}"
+					],
+					"path": [
+						"edrs",
+						"eb97391e-b30d-4da8-a5ff-8f865ac1d622"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Data with proxy",
 			"event": [
 				{
 					"listen": "test",
@@ -813,7 +867,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"assetId\": \"{{ASSET_ID}}\",\n    \"endpointUrl\": \"http://plato-dataplane:8080/api/gateway/aas/1\"\n}",
+					"raw": "{\n    \"assetId\": \"{{ASSET_ID}}\",\n    \"providerId\": \"{{PROVIDER_ID}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -821,16 +875,102 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8186/proxy/aas/request",
-					"protocol": "http",
+					"raw": "{{CONSUMER_PROXY_URL}}/aas/request",
 					"host": [
-						"localhost"
+						"{{CONSUMER_PROXY_URL}}"
 					],
-					"port": "8186",
 					"path": [
-						"proxy",
 						"aas",
 						"request"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Data with proxy  (PathSegments)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Body matches string\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.collectionVariables.set(\"NEGOTIATION_ID\", jsonData.id);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"assetId\": \"{{ASSET_ID}}\",\n    \"providerId\": \"{{PROVIDER_ID}}\",\n    \"pathSegments\": \"/1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{CONSUMER_PROXY_URL}}/aas/request",
+					"host": [
+						"{{CONSUMER_PROXY_URL}}"
+					],
+					"path": [
+						"aas",
+						"request"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Data with provider dataplane",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Body matches string\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.collectionVariables.set(\"NEGOTIATION_ID\", jsonData.id);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE2OTQ1MjMxNDcsImRhZCI6IkFLdHNGbnIyZy8vZytyMFZPak56ekM0RzVhd3VMeFBLTjNTUVJERHExU3ZUTUxuMjlRSk1YQUwyNmkyaitsNDZsSlNYbmlibVhJeldBT3RMVUhsOWw1dVdrajRyY1VRbzFidWdHdHpIeWFKenh4d2pZYlVIYms1NzRaWFhVMGlMaEE0N2MrbExaeXRubmEwVFFqVkJ2V21McjdkY0IxWGJRYVorNi9aZ1l4SExhWHdnYkhDRWNMcGE3WFh2RG9xY3V3VExyNDFOZ1pyRHkrY3lDT3BSZmRIbml6ZnRtS2cxYWxXL2RrdUtlK29FbUhQM1NGNEtaVi84YTNrTjAvREZMQXR2ZHhaYzFpVHhSQVY3enJtSU5jVmZCRjdqd3NtRk1hdU5GaW1YbktVNzB3OC9nUzlDazNQVlZ3NjU1czU1Tjk0RkF5R1ZGd3VDTXpFNGhLcGU2ZEFSbjdUWmJHbVBUdEt1OUg3VEV2L2VOT1E4RWhHQVNZWkNRSHlaTTZlbmg3Sld5Qm55UFFDOXZJR1dhcTFRTVdLUzJ6OXNpUEhVM0dnWElOSEhtN1lVdjREWXpybitJSEZYMzRGMWxWUzlzQ3ltMC9LTVdhdjY4ZHU2L0VjM2FqNlMzaFpNaXZNc3NGTEhHamNibHRYSVBoTFJvVEtER3V4ckJkdFZpYVpnemx3b1RpOTRkeTdYbFBZalR0RXo3VysxVE1XRjhPaFBSelNhT3BxYWMwdzRWUGJ0anVVPSIsImNpZCI6Ik1RPT06TVE9PTpOV0ZqTTJJeVkyWXRNRGt4WkMwME9UQmxMV0poTXpNdE1ERmxNRGhtTUdNNU5tVTIifQ.4VwEdEmmuHTObxYDAIn-C_mq-UKxxQWRMTD0Vi5L02WORRzga5TjlJp28_7-jcDufxN1j7S7AJRoNm5VWjGhZA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROVIDER_PUBLIC_URL}}",
+					"host": [
+						"{{PROVIDER_PUBLIC_URL}}"
 					]
 				}
 			},
@@ -875,7 +1015,7 @@
 	"variable": [
 		{
 			"key": "CONSUMER_MANAGEMENT_URL",
-			"value": "http://localhost/bob/management/"
+			"value": "http://localhost/bob/management"
 		},
 		{
 			"key": "PROVIDER_PROTOCOL_URL",
@@ -883,7 +1023,7 @@
 		},
 		{
 			"key": "PROVIDER_MANAGEMENT_URL",
-			"value": "http://localhost/alice/management/"
+			"value": "http://localhost/alice/management"
 		},
 		{
 			"key": "ASSET_ID",
@@ -955,8 +1095,13 @@
 			"type": "string"
 		},
 		{
-			"key": "CONSUMER_ADAPTER_URL",
-			"value": "http://localhost:31364/management",
+			"key": "CONSUMER_PROXY_URL",
+			"value": "http://localhost/bob/proxy",
+			"type": "string"
+		},
+		{
+			"key": "PROVIDER_PUBLIC_URL",
+			"value": "http://localhost/alice/api/public",
 			"type": "string"
 		}
 	]

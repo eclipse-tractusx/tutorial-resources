@@ -32,8 +32,11 @@ output "urls" {
   value = {
     management = local.management_url
     health     = local.health_url
+    proxy      = local.proxy_url
+    public     = local.public_url
   }
 }
+
 output "node-ip" {
   value = kubernetes_service.controlplane-service.spec.0.cluster_ip
 }
