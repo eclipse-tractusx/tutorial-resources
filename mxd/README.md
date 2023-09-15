@@ -248,7 +248,7 @@ the "simple-asset" from [step 3.1](#31-add-a-basic-asset-policy-and-contract-def
 
 We can fetch Alice's catalog with this `curl` command:
 
-``` shell
+```shell
 curl --location 'http://localhost/bob/management/v2/catalog/request' --header 'Content-Type: application/json' --header 'X-Api-Key: password' \
 --data-raw '{
     "@context": {
@@ -271,7 +271,7 @@ More information about the catalog [here](https://eclipse-edc.github.io/docs/#/d
 
 The catalog response will look like this:
 
-``` json
+```json
 {
     "@id": "736199e5-5b9e-4944-8568-46af97bde862",
     "@type": "dcat:Catalog",
@@ -375,7 +375,7 @@ for us, and it will store it locally for future usage. The API for starting a ne
 
 We can start a new EDR negotiation with this `curl` command:
 
-``` shell
+```shell
 curl --location 'http://localhost/bob/management/edrs' \
 --header 'Content-Type: application/json' \
 --header 'X-Api-Key: password' \
@@ -401,9 +401,7 @@ curl --location 'http://localhost/bob/management/edrs' \
 				"odrl:constraint": {
 					"odrl:or": {
 						"odrl:leftOperand": "BusinessPartnerNumber",
-						"odrl:operator": {
-              "@id": "odrl:eq"
-            },
+						"odrl:operator": { "@id": "odrl:eq" },
 						"odrl:rightOperand": "BPNL000000000002"
 					}
 				}
@@ -424,7 +422,7 @@ For requesting an EDR we have to specify:
 
 If everithing is ok, we'll get this as response:
 
-``` json
+```json
 {
   "@type": "edc:IdResponse",
   "@id": "2f911118-657d-4001-b36c-73cb45222a4a",
@@ -447,7 +445,7 @@ In order to be notified without polling, we could configure the EDC callbacks fo
 
 We could for example add this in the original request:
 
-``` json
+```json
 {
   ...
   "callbackAddresses": [
@@ -466,13 +464,13 @@ and be notified when the transfer process transition to the state `STARTED` (EDR
 
 For having a list of the negotiatied EDR for the `assedId` `1` we can use this `curl` command:
 
-``` shell
+```shell
 curl --location 'http://localhost/bob/management/edrs?assetId=1' --header 'X-Api-Key: password' | jq
 ```
 
 and the response should look like this:
 
-``` json
+```json
 [
   {
     "@type": "tx:EndpointDataReferenceEntry",
@@ -497,14 +495,14 @@ and the response should look like this:
 To be able to fetch the data with only the `assetId` via consumer data plane proxy (see more later), only one
 `EndPointDataReferenceEntry` associated with an `assetId` should be valid (`Negotiated` or `Refreshing`) at one point in time.
 This will allow the proxy to fetch the right `EDR` while requesting data with the `assetId`. Alternatively if we negotiated multiple
-`EDRs` for the same `assetId` for some reason, we should use the `transferprocessid` for transferring the data.
+`EDRs` for the same `assetId` for some reason, we should use the `transferprocessId` for transferring the data.
 
 The renewal of the token is automatically handled by the `EDR` extension, we just need to fire the first EDR negotiation
 and start fetching the data.
 
 Since the EDR is renewed automatically, it can happen that while fetching the EDRs for a particular `assetId` we can see multiple entries like this:
 
-``` json
+```json
 [
   {
     "@type": "tx:EndpointDataReferenceEntry",
@@ -547,7 +545,7 @@ which means that the second `EDR` is now expired and marked for removal later in
 
 The EDR itself is stored in the configured vault. To retrieve it we can use this `curl` command:
 
-``` shell
+```shell
 curl --location 'http://localhost/bob/management/edrs/ff468685-0f9b-49a1-8ec6-ea40d5a2dc88' --header 'X-Api-Key: password' | jq
 ```
 
@@ -556,7 +554,7 @@ and the automatic EDR renewal process will just fire another transfer request wi
 
 The response will look like this:
 
-``` json
+```json
 {
   "@type": "edc:DataAddress",
   "edc:type": "EDR",
@@ -586,14 +584,14 @@ For fetching the data we can use two strategies depending on the use case:
 
 Once the right EDR has been identified using the EDR management API, we can use the `endpont`, `authCode` and `authKey` to make the data request:
 
-``` shell
+```shell
 curl --location 'http://localhost/alice/api/public' \
 --header 'Authorization: eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE2OTQ1MjIwNTksImRhZCI6ImNoTTlvVTVLNXQzbDlWMFRsL1ZZdDlLU1J4YmNOSUdzM1FtazNlNktWOWpWcTBkeUhjUDU2Mm82Qk0zSitxeTRwRVg2d0EvWUFsdW9EdGptYnYxZlJoN3VmVmsvQjNONzhBMUhyZ01ENnk2enFsK1BEYzBXa00yTm9ycUJWQUl0TWpVNEFNbGhFMXE1Ym9EQ1lWcVRsQVZnbm9uTlB5MmlVUzVSVTJHTkZtOWFkZVZYR1ZLaDFDWEMzVDV0RkRCS21EMjExWVZYdDExRUlXbCtIU3VISm1PL0xwUUdibFkvaGFicXZ6aUZ0YlppbGlKSDNLdGVhZTZQRkdQTjNWT1Z4YlFrZTNmODNRN3VNeStBNzV4YS9VR1BMcjJlQkJzb0ZVbTBYeFFJS2dBOUROdGxXcnBuR3hwdG9tL1VWY00wQ1RwcWM5eFRRdGlnK3JMVlJ4dUhrb2RreG5KUXhiSENVMnNObnFhdXZJcDV4L04rbGdJN0F1amhtQWxiN2NwUWs0RDhSWWtZSnkvVUZGdGZmZUJLU2k2MnZDeC9QSFJsSERlUGM4VldDaEJTNFF1Q1FXY1pOK2oyUjR5b2Q2a3JlN2JtUStFK3pLUmYva3JhQkJkR041TDR5ZVdIYU0wS3oraGxiSVR5WHg2bjdrQ0VkVVVSREtCUHY3SHdzbHhLTzlxN05ReHplMHFDM0phR2pyWVdHZmJHTzB4SDlJRndsSWpqclZHMzE0WUVxNGdSTjNNPSIsImNpZCI6Ik1RPT06TVE9PTpOV0ZqTTJJeVkyWXRNRGt4WkMwME9UQmxMV0poTXpNdE1ERmxNRGhtTUdNNU5tVTIifQ.2UT3_mIjchrC242TqlLFWoyYPiCOPLLivaN5Xd4_MxhcQkxRkOxrK0IXkXVuRVjC1ReGPi3iaco9LDUxvF3FPw' | jq
 ```
 
 and the response will look like this:
 
-``` json
+```json
 [
     {
         "userId": 1,
@@ -631,7 +629,7 @@ that EDR will be automatically renewed.
 
 We can simply use the `proxy` API for fetching the data with a `POST` request:
 
-``` shell
+```shell
 curl --location 'http://localhost/bob/proxy/aas/request' \
 --header 'Content-Type: application/json' \
 --header 'X-Api-Key: password' \
@@ -643,7 +641,7 @@ curl --location 'http://localhost/bob/proxy/aas/request' \
 
 and get the same results as the provider data-plane option:
 
-``` json
+```json
 [
     {
         "userId": 1,
@@ -675,7 +673,7 @@ do a `GET` request to the provider data-plane for us.
 Since the `DataAddress` of the asset has been configured to proxy also `pathSegments`, we could add another
 parameter in the request to fetch exactly one item from the list:
 
-``` shell
+```shell
 curl --location 'http://localhost/bob/proxy/aas/request' \
 --header 'Content-Type: application/json' \
 --header 'X-Api-Key: password' \
@@ -688,7 +686,7 @@ curl --location 'http://localhost/bob/proxy/aas/request' \
 
 which will give us:
 
-``` json
+```json
 {
   "userId": 1,
   "id": 1,
