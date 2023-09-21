@@ -793,7 +793,7 @@ npm/npmjs/@angular-devkit/build-angular/16.2.1, , restricted, clearlydefined
 npm/npmjs/@angular-devkit/build-webpack/0.1602.1, MIT, approved, clearlydefined
 npm/npmjs/@angular-devkit/core/16.2.1, MIT, approved, clearlydefined
 npm/npmjs/@angular-devkit/schematics/16.2.1, MIT, approved, clearlydefined
-npm/npmjs/@angular-eslint/builder/16.1.1, , restricted, clearlydefined
+npm/npmjs/@angular-eslint/builder/16.2.0, , restricted, clearlydefined
 npm/npmjs/@angular-eslint/bundled-angular-compiler/16.1.0, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/bundled-angular-compiler/16.1.1, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/eslint-plugin-template/16.1.0, MIT, approved, clearlydefined
