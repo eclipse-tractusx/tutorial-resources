@@ -802,6 +802,7 @@ npm/npmjs/@angular-eslint/bundled-angular-compiler/16.2.0, , restricted, clearly
 npm/npmjs/@angular-eslint/eslint-plugin-template/16.1.1, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/eslint-plugin-template/16.2.0, , restricted, clearlydefined
 npm/npmjs/@angular-eslint/eslint-plugin/16.1.1, MIT, approved, clearlydefined
+npm/npmjs/@angular-eslint/eslint-plugin/16.2.0, , restricted, clearlydefined
 npm/npmjs/@angular-eslint/schematics/16.1.1, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/template-parser/16.1.1, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/utils/16.1.1, MIT, approved, clearlydefined
