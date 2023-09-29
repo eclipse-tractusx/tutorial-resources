@@ -30,6 +30,7 @@ jobs:
   Deploy-with-Terraform:
     runs-on: ubuntu-latest
     steps:
+
       - name: "Setup Helm"
         uses: azure/setup-helm@v3.5
         with:
@@ -67,10 +68,13 @@ jobs:
         run: |-
           terraform apply "$GITHUB_SHA.out"
 
-      - name: "Run tests"
+      - name: "Run Health Checks"
         run: |-
           curl --fail http://localhost/bob/health/api/check/readiness
           curl --fail http://localhost/alice/health/api/check/readiness
+
+      - name: "Run Tests"
+        uses: ./.github/actions/mxd-test-action
 
       - name: "Destroy the KinD cluster"
         run: >-
