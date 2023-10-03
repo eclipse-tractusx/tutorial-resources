@@ -16,7 +16,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 ###############################################################
-poduct: "tutorial-resources"
+product: "tutorial-resources"
 leadingRepository: "https://github.com/eclipse-tractusx/tutorial-resources"
 repoCategory: "support"
 repositories:
