@@ -9,6 +9,7 @@ once and are accessible by all participants.
 For the most bare-bones installation of the dataspace, execute the following commands in a shell:
 
 ```shell
+cd <path/of/mxd>
 kind create cluster -n mxd --config kind.config.yaml
 # the next step is specific to KinD and will be different for other Kubernetes runtimes!
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
@@ -17,7 +18,6 @@ kubectl wait --namespace ingress-nginx \
   --for=condition=ready pod \
   --selector=app.kubernetes.io/component=controller \
   --timeout=90s
-cd <path/of/mxd>
 terraform init
 terraform apply
 # type "yes" and press enter when prompted to do so 
@@ -127,53 +127,58 @@ Once we've established the basic readiness of our connectors, we can move on to 
 curl -X POST http://localhost/bob/management/v3/assets/request -H "x-api-key: password" -H "content-type: application/json" | jq
 ```
 
-this queries the `/assets` endpoint returning the entire list of assets that `bob` currently maintains. You should see
+If you do not have access to the jq command line tool you can download it from this [link](https://jqlang.github.io/jq/download/).
+This queries the `/assets` endpoint returning the entire list of assets that `bob` currently maintains. You should see
 something like
 
 ```json
 [
-  {
-    "@id": "1",
-    "@type": "edc:Asset",
-    "edc:properties": {
-      "edc:description": "Product EDC Demo Asset 1",
-      "edc:id": "1"
+    {
+        "@id": "1",
+        "@type": "edc:Asset",
+        "edc:properties": {
+            "edc:description": "Product EDC Demo Asset 1",
+            "edc:id": "1"
+        },
+        "edc:dataAddress": {
+            "@type": "edc:DataAddress",
+            "edc:proxyPath": "true",
+            "edc:type": "HttpData",
+            "edc:proxyQueryParams": "true",
+            "edc:baseUrl": "https://jsonplaceholder.typicode.com/todos"
+        },
+        "@context": {
+            "dct": "https://purl.org/dc/terms/",
+            "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+            "edc": "https://w3id.org/edc/v0.0.1/ns/",
+            "dcat": "https://www.w3.org/ns/dcat/",
+            "odrl": "http://www.w3.org/ns/odrl/2/",
+            "dspace": "https://w3id.org/dspace/v0.8/"
+        }
     },
-    "edc:dataAddress": {
-      "@type": "edc:DataAddress",
-      "edc:type": "HttpData",
-      "edc:baseUrl": "https://jsonplaceholder.typicode.com/todos"
-    },
-    "@context": {
-      "dct": "https://purl.org/dc/terms/",
-      "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
-      "edc": "https://w3id.org/edc/v0.0.1/ns/",
-      "dcat": "https://www.w3.org/ns/dcat/",
-      "odrl": "http://www.w3.org/ns/odrl/2/",
-      "dspace": "https://w3id.org/dspace/v0.8/"
+    {
+        "@id": "2",
+        "@type": "edc:Asset",
+        "edc:properties": {
+            "edc:description": "Product EDC Demo Asset 2",
+            "edc:id": "2"
+        },
+        "edc:dataAddress": {
+            "@type": "edc:DataAddress",
+            "edc:proxyPath": "true",
+            "edc:type": "HttpData",
+            "edc:proxyQueryParams": "true",
+            "edc:baseUrl": "https://jsonplaceholder.typicode.com/todos"
+        },
+        "@context": {
+            "dct": "https://purl.org/dc/terms/",
+            "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+            "edc": "https://w3id.org/edc/v0.0.1/ns/",
+            "dcat": "https://www.w3.org/ns/dcat/",
+            "odrl": "http://www.w3.org/ns/odrl/2/",
+            "dspace": "https://w3id.org/dspace/v0.8/"
+        }
     }
-  },
-  {
-    "@id": "2",
-    "@type": "edc:Asset",
-    "edc:properties": {
-      "edc:description": "Product EDC Demo Asset 2",
-      "edc:id": "2"
-    },
-    "edc:dataAddress": {
-      "@type": "edc:DataAddress",
-      "edc:type": "HttpData",
-      "edc:baseUrl": "https://jsonplaceholder.typicode.com/todos"
-    },
-    "@context": {
-      "dct": "https://purl.org/dc/terms/",
-      "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
-      "edc": "https://w3id.org/edc/v0.0.1/ns/",
-      "dcat": "https://www.w3.org/ns/dcat/",
-      "odrl": "http://www.w3.org/ns/odrl/2/",
-      "dspace": "https://w3id.org/dspace/v0.8/"
-    }
-  }
 ]
 ```
 
