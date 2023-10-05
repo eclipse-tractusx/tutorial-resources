@@ -8,9 +8,9 @@ This tutorial is designed for companies that want to perform data exchange in a 
 Who should execute the tutorial?
 IT-Employees with the following skills and previous experience:
 
-- Replace with skill 1
-- Replace with skill 2
-- Replace with skill 3
+- Beginner level docker and kubernetes
+- Beginner level terraform
+- Basic linux system commands
 
 ## 1.1 Components & Architecture
 
@@ -27,9 +27,7 @@ In order to run the Minimum Tractus-X Dataspace "MXD" on your local machine, ple
 preconditions are met.
 
 - Have a local Kubernetes runtime ready. We've tested this setup with [KinD](https://kind.sigs.k8s.io/), but other
-  runtimes such
-  as [Minikube](https://minikube.sigs.k8s.io/docs/start/) may work as well, we just haven't tested them. All following
-  instructions will assume KinD.
+  runtimes such as [Minikube](https://minikube.sigs.k8s.io/docs/start/) may work as well, we just haven't tested them. All following instructions will assume KinD.
 - Install [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli).
 - a POSIX-compliant shell, e.g. `bash` or `zsh` unless stated otherwise
 - basic knowledge about Helm and Kubernetes

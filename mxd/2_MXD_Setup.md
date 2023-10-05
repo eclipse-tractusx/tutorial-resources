@@ -124,10 +124,9 @@ which should return something similar to this, the important part being the `isS
 Once we've established the basic readiness of our connectors, we can move on to inspect a few data items:
 
 ```shell
-curl -X POST http://localhost/bob/management/v3/assets/request -H "x-api-key: password" -H "content-type: application/json" | jq
+curl -X POST http://localhost/bob/management/v3/assets/request -H "x-api-key: password" -H "content-type: application/json"
 ```
 
-If you do not have access to the jq command line tool you can download it from this [link](https://jqlang.github.io/jq/download/).
 This queries the `/assets` endpoint returning the entire list of assets that `bob` currently maintains. You should see
 something like
 
@@ -186,9 +185,9 @@ Note: the same thing can be done to inspect policies and contract definitions. T
 
 ```shell
 # policies:
-curl -X POST http://localhost/bob/management/v2/policydefinitions/request -H "x-api-key: password" -H "content-type: application/json" | jq
+curl -X POST http://localhost/bob/management/v2/policydefinitions/request -H "x-api-key: password" -H "content-type: application/json"
 # contract defs:
-curl -X POST http://localhost/bob/management/v2/contractdefinitions/request -H "x-api-key: password" -H "content-type: application/json" | jq
+curl -X POST http://localhost/bob/management/v2/contractdefinitions/request -H "x-api-key: password" -H "content-type: application/json"
 ```
 
 Alternatively, please check out the [Postman collections here](./postman)
