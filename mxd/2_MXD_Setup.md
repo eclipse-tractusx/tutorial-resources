@@ -191,3 +191,13 @@ curl -X POST http://localhost/bob/management/v2/contractdefinitions/request -H "
 ```
 
 Alternatively, please check out the [Postman collections here](./postman)
+
+## Notice
+
+This work is licensed under the [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/legalcode).
+
+- SPDX-License-Identifier: CC-BY-4.0
+- SPDX-FileCopyrightText: 2023 sovity GmbH
+- SPDX-FileCopyrightText: 2023 SAP SE
+- SPDX-FileCopyrightText: 2023 msg systems AG
+- Source URL: [https://github.com/eclipse-tractusx/tutorial-resources](https://github.com/eclipse-tractusx/tutorial-resources)
