@@ -765,14 +765,14 @@ npm/npmjs/@angular-eslint/schematics/16.2.0, , restricted, clearlydefined
 npm/npmjs/@angular-eslint/template-parser/16.2.0, , restricted, clearlydefined
 npm/npmjs/@angular-eslint/utils/16.2.0, MIT, approved, clearlydefined
 npm/npmjs/@angular/animations/16.2.7, , restricted, clearlydefined
-npm/npmjs/@angular/cdk/16.2.6, , restricted, clearlydefined
+npm/npmjs/@angular/cdk/16.2.7, , restricted, clearlydefined
 npm/npmjs/@angular/cli/16.2.4, , restricted, clearlydefined
 npm/npmjs/@angular/common/16.2.7, , restricted, clearlydefined
 npm/npmjs/@angular/compiler-cli/16.2.7, , restricted, clearlydefined
 npm/npmjs/@angular/compiler/16.2.7, , restricted, clearlydefined
 npm/npmjs/@angular/core/16.2.7, , restricted, clearlydefined
 npm/npmjs/@angular/forms/16.2.7, , restricted, clearlydefined
-npm/npmjs/@angular/material/16.2.6, , restricted, clearlydefined
+npm/npmjs/@angular/material/16.2.7, , restricted, clearlydefined
 npm/npmjs/@angular/platform-browser-dynamic/16.2.7, , restricted, clearlydefined
 npm/npmjs/@angular/platform-browser/16.2.7, , restricted, clearlydefined
 npm/npmjs/@angular/router/16.2.7, , restricted, clearlydefined
@@ -792,7 +792,7 @@ npm/npmjs/@babel/helper-define-polyfill-provider/0.4.2, MIT, approved, #9314
 npm/npmjs/@babel/helper-environment-visitor/7.22.20, MIT, approved, #8934
 npm/npmjs/@babel/helper-function-name/7.23.0, MIT, approved, clearlydefined
 npm/npmjs/@babel/helper-hoist-variables/7.22.5, MIT, approved, #8957
-npm/npmjs/@babel/helper-member-expression-to-functions/7.23.0, , restricted, clearlydefined
+npm/npmjs/@babel/helper-member-expression-to-functions/7.23.0, MIT AND (BSD-2-Clause AND ISC AND MIT) AND BSD-2-Clause AND BSD-3-Clause, approved, #10960
 npm/npmjs/@babel/helper-module-imports/7.22.15, MIT, approved, #8944
 npm/npmjs/@babel/helper-module-transforms/7.23.0, MIT, approved, clearlydefined
 npm/npmjs/@babel/helper-optimise-call-expression/7.22.5, MIT, approved, #9011
