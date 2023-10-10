@@ -34,4 +34,4 @@ runs:
 
     - name: Run Newman
       shell: bash
-      run: newman run mxd/postman/MXD_Management_API.json
+      run: newman run mxd/postman/management_api_tests.json
