@@ -1,29 +1,29 @@
 # 1 Introduction
 
-With the Minimum Tractus-X Dataspace, IT departments can set up their own little data space to perform a data exchange between two parties (Bob and Alice in our example). The MXD can be used as a sandbox for testing.
+With the Minimum Tractus-X Dataspace (MXD), IT departments can set up their own data space to perform a data exchange between two parties (Bob and Alice in our example). The MXD can be used as a sandbox for testing.
 
-For whom is that relevant?
-This tutorial is designed for companies that want to perform data exchange in a "real" Catena-X data space infrastructure.
+## 1.1 Intended Audience
 
-Who should execute the tutorial?
-IT-Employees with the following skills and previous experience:
+This tutorial is designed for developers who want to get their hands dirty, for companies that want to perform data exchange in actual Catena-X data space infrastructure and generally for curious minds who want to explore dataspaces.
+
+Required knowledge and skills:
 
 - Beginner level docker and kubernetes
 - Beginner level terraform
 - Basic linux system commands
 
-## 1.1 Components & Architecture
+## 1.2 Components & Architecture
 
 By performing this tutorial a data space will be set up including the following components:
 
-- 2 EDC Connectors (Called Bob and Alice)
-- 1 Managed Identity Wallet
-- 1 Keycloak instance
-- 1 Postgres data base
+- 2 Tractus-X EDC Connectors (Called Bob and Alice). The EDC is the key component to exchanging data within data spaces.
+- 1 Managed Identity Wallet. The Managed Identity Wallet (MIW) service is a central component storing technical identities. Connectors can request the identity, including properties, in order to take decisions if a contract-offer will be made, a contract agreement will be negotiated, or a data-exchange will be processed.
+- 1 Keycloak instance. Keycloak is used for Identiy and Access Management of technical users.
+- 1 Postgres data base. A data base building the foundation for the MXD setup.
 
-## 1.2 Prerequisites
+## 1.3 Prerequisites
 
-In order to run the Minimum Tractus-X Dataspace "MXD" on your local machine, please make sure the following
+In order to run the MXD on your local machine, please make sure the following
 preconditions are met.
 
 - Have a local Kubernetes runtime ready. We've tested this setup with [KinD](https://kind.sigs.k8s.io/), but other
