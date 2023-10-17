@@ -186,7 +186,7 @@ npm/npmjs/-/escape-html/1.0.3, MIT, approved, clearlydefined
 npm/npmjs/-/escape-string-regexp/1.0.5, MIT, approved, clearlydefined
 npm/npmjs/-/escape-string-regexp/4.0.0, MIT, approved, clearlydefined
 npm/npmjs/-/escodegen/2.1.0, BSD-2-Clause AND (BSD-2-Clause AND BSD-3-Clause), approved, #9306
-npm/npmjs/-/eslint-plugin-prettier/5.0.0, MIT, approved, clearlydefined
+npm/npmjs/-/eslint-plugin-prettier/5.0.1, MIT, approved, clearlydefined
 npm/npmjs/-/eslint-scope/5.1.1, BSD-2-Clause, approved, clearlydefined
 npm/npmjs/-/eslint-scope/7.2.2, BSD-2-Clause, approved, #9916
 npm/npmjs/-/eslint-visitor-keys/3.4.3, Apache-2.0, approved, #7729
