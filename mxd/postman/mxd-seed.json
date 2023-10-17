@@ -369,6 +369,47 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Create Trudy wallet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201 (if wallet created) or 409 Conflict (if wallet already exists)\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 409])\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Trudy-Wallet\",\n    \"bpn\": \"{{TRUDY_BPN}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{MIW_URL}}/api/wallets",
+							"host": [
+								"{{MIW_URL}}"
+							],
+							"path": [
+								"api",
+								"wallets"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"auth": {
@@ -549,6 +590,11 @@
 		{
 			"key": "BOB_BPN",
 			"value": "BPNL000000000002",
+			"type": "string"
+		},
+		{
+			"key": "TRUDY_BPN",
+			"value": "BPNL000000000003",
 			"type": "string"
 		},
 		{

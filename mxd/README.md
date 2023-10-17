@@ -699,6 +699,41 @@ and the proxied URL will be `https://jsonplaceholder.typicode.com/todos/1`.
 
 ## 7. Add new participant Trudy
 
+In our current setup, there are two connectors named alice and bob. Now we will be adding a new connector named trudy.  
+Following are the steps needed to accomplish this.
+
+### 7.1 Create Keycloak Client
+Currently, Alice and Bob each have a keycloak client name `alice-private-client` and `bob-private-client`.  
+We need to create a client for Trudy as well.  
+A client named `trudy-private-client` has already been created.
+
+### 7.2 Create Wallet in MIW
+A wallet needs to be created for Trudy associated with its BPN number (`BPNL000000000003`).
+It has been already created along with Alice and Bob's wallet.
+
+### 7.3 Create a database for Trudy  
+A database needs to be created for Trudy.
+A database named `trudy` has already been created.
+
+### 7.4 Deploy Trudy Connector  
+A terraform config has already been defined in (./trudy.tfignore).  
+Run the following commands to deploy trudy connector.
+```shell
+mv ./trudy.tfignore ./trudy.tfignore # Rename the file
+terraform init                 # Let terraform init this new trudy config
+terraform apply                # Apply changes for this new trudy config
+# type "yes" and press enter when prompted to do so 
+```
+
+### 7.5 Verify Trudy Connector Deployment  
+If `terraform apply` command in the previous step runs successfully,  execute following command to check connector health.
+```shell
+curl --fail http://localhost/trudy/health/api/check/readiness
+```
+
+### 7.6 Create Assets / Access Policy / Contract Definition  
+Follow existing tutorials to create assets / access policy / contract definitions for trudy connector.
+
 ## 8. Improving the setup
 
 Improvements can be made to these aspects:
