@@ -114,6 +114,8 @@ server. We will show in [later sections](#8-improving-the-setup), how the databa
 inspect all the databases and tables, but there is not much data in there yet. There is just a few automatically seeded
 assets, policies and contract definitions.
 
+> Please be aware that among the list of databases, there is one named "trudy" which is designated for a new participant named Trudy. You can refer [here](#7-add-new-participant-trudy) for additional information about adding this new participant.
+
 ### Verify your local installation
 
 In order to check that the connectors were deployed successfully, please execute the following commands in a shell:
@@ -699,21 +701,21 @@ and the proxied URL will be `https://jsonplaceholder.typicode.com/todos/1`.
 
 ## 7. Add new participant Trudy
 
-In our current setup, there are two connectors named alice and bob. Now we will be adding a new connector named trudy.  
+In our current setup, there are two participants named "Alice" and "Bob". Now we will add a new participant named "Trudy".  
 Following are the steps needed to accomplish this.
 
 ### 7.1 Create Keycloak Client
-Currently, Alice and Bob each have a keycloak client name `alice-private-client` and `bob-private-client`.  
-We need to create a client for Trudy as well.  
-A client named `trudy-private-client` has already been created.
+Presently, Alice and Bob each have a Keycloak client name `alice-private-client` and `bob-private-client`.  
+Trudy should be assigned a Keycloak client as well. 
+For simplicity, a client named `trudy-private-client` has already been created.
 
 ### 7.2 Create Wallet in MIW
-A wallet needs to be created for Trudy associated with its BPN number (`BPNL000000000003`).
+A wallet is needed for Trudy associated with its BPN number (`BPNL000000000003`).
 It has been already created along with Alice and Bob's wallet.
 
 ### 7.3 Create a database for Trudy  
-A database needs to be created for Trudy.
-A database named `trudy` has already been created.
+We need a database for Trudy.
+A database named `trudy` has already been created on the existing PostgreSQL server.
 
 ### 7.4 Deploy Trudy Connector  
 A terraform config has already been defined in [trudy.tfignore](./trudy.tfignore).  
