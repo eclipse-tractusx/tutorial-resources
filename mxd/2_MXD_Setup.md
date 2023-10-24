@@ -1,9 +1,9 @@
 # Basic dataspace setup
 
 The "MXD" dataspace initially consists of several components: `Alice` and `Bob` (two Tractus-X EDC connectors),
-a `vault` instance each, a Postgres database, a Managed Identity Wallet app, a Keycloak instance. `Alice` and `Bob` will
-be our dataspace participants. Each of them stores their secrets in their "private" vault instance, and there is a
-shared Postgres server, where each of them has a database. MIW and Keycloak are "central" components, they only exist
+a Vault instance each, a Postgres database, a Managed Identity Wallet app, a Keycloak instance. `Alice` and `Bob` will
+be our dataspace participants. Each of them stores their secrets in their respective vault instances, and there is a
+shared Postgres server, where each of them has a database. MIW and Keycloak are central components, they only exist
 once and are accessible by all participants.
 
 For the most bare-bones installation of the dataspace, execute the following commands in a shell:
@@ -36,7 +36,7 @@ potato, it'll take even longer. Just get a coffee. Eventually, it should look si
 ## Inspect terraform output
 
 After the `terraform` command has successfully completed, it will output a few configuration and setup values
-that we will need in later steps. Please note that most values will be different on your local system.
+that we will need in later steps. Please note that some values will be different on your local system.
 
 ```shell
 Outputs:
