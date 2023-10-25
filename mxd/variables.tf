@@ -53,3 +53,7 @@ variable "alice-bpn" {
 variable "bob-bpn" {
   default = "BPNL000000000002"
 }
+
+variable "trudy-bpn" {
+  default = "BPNL000000000003"
+}

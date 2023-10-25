@@ -84,6 +84,7 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
             "--env-var", "MIW_CLIENT_SECRET=miw_private_client",
             "--env-var", "ALICE_BPN=${var.alice-bpn}",
             "--env-var", "BOB_BPN=${var.bob-bpn}",
+            "--env-var", "TRUDY_BPN=${var.trudy-bpn}",
             "/opt/collection/${local.newman_collection_name}"
           ]
           volume_mount {

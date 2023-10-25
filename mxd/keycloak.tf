@@ -122,6 +122,7 @@ resource "kubernetes_config_map" "keycloak_env" {
     MIW_BPN           = var.miw-bpn
     ALICE_BPN         = var.alice-bpn
     BOB_BPN           = var.bob-bpn
+    TRUDY_BPN         = var.trudy-bpn
   }
 }
 

@@ -1,0 +1,39 @@
+#
+#  Copyright (c) 2023 Contributors to the Eclipse Foundation
+#
+#  See the NOTICE file(s) distributed with this work for additional
+#  information regarding copyright ownership.
+#
+#  This program and the accompanying materials are made available under the
+#  terms of the Apache License, Version 2.0 which is available at
+#  https://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+#  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+#  License for the specific language governing permissions and limitations
+#  under the License.
+#
+#  SPDX-License-Identifier: Apache-2.0
+#
+
+# Trudy connector
+module "trudy-connector" {
+  source            = "./modules/connector"
+  humanReadableName = "trudy"
+  participantId     = var.trudy-bpn
+  database-host     = local.pg-ip
+  database-name     = "trudy"
+  database-credentials = {
+    user     = "postgres"
+    password = "postgres"
+  }
+  ssi-config = {
+    miw-url            = "http://${kubernetes_service.miw.metadata.0.name}:${var.miw-api-port}"
+    miw-authorityId    = var.miw-bpn
+    oauth-tokenUrl     = "http://${kubernetes_service.keycloak.metadata.0.name}:${var.keycloak-port}/realms/miw_test/protocol/openid-connect/token"
+    oauth-clientid     = "trudy_private_client"
+    oauth-secretalias  = "client_secret_alias"
+    oauth-clientsecret = "trudy_private_client"
+  }
+}
