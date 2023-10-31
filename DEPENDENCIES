@@ -192,7 +192,7 @@ npm/npmjs/-/eslint-plugin-prettier/5.0.1, MIT, approved, clearlydefined
 npm/npmjs/-/eslint-scope/5.1.1, BSD-2-Clause, approved, clearlydefined
 npm/npmjs/-/eslint-scope/7.2.2, BSD-2-Clause, approved, #9916
 npm/npmjs/-/eslint-visitor-keys/3.4.3, Apache-2.0, approved, #7729
-npm/npmjs/-/eslint/8.52.0, MIT, restricted, clearlydefined
+npm/npmjs/-/eslint/8.52.0, MIT AND (LGPL-2.0-or-later AND MIT) AND ISC AND OFL-1.1 AND CC-BY-SA-2.0 AND (LicenseRef-scancode-proprietary-license AND MIT), restricted, #11188
 npm/npmjs/-/espree/9.6.1, BSD-2-Clause AND BSD-3-Clause AND MIT AND BSD-2-Clause, approved, #9308
 npm/npmjs/-/esprima/4.0.1, BSD-2-Clause, approved, #995
 npm/npmjs/-/esquery/1.5.0, BSD-3-Clause, approved, #7469
@@ -900,7 +900,7 @@ npm/npmjs/@codemirror/lang-json/6.0.1, MIT, approved, clearlydefined
 npm/npmjs/@codemirror/language/6.9.2, , restricted, clearlydefined
 npm/npmjs/@codemirror/lint/6.4.2, MIT, approved, clearlydefined
 npm/npmjs/@codemirror/search/6.5.4, MIT, approved, clearlydefined
-npm/npmjs/@codemirror/state/6.3.1, , restricted, clearlydefined
+npm/npmjs/@codemirror/state/6.3.1, MIT, approved, clearlydefined
 npm/npmjs/@codemirror/view/6.21.4, , restricted, clearlydefined
 npm/npmjs/@colors/colors/1.5.0, MIT, approved, clearlydefined
 npm/npmjs/@discoveryjs/json-ext/0.5.7, MIT, approved, clearlydefined
@@ -1034,7 +1034,7 @@ npm/npmjs/@tootallnate/once/2.0.0, MIT, approved, clearlydefined
 npm/npmjs/@tufjs/canonical-json/1.0.0, Apache-2.0 AND MIT, approved, #8047
 npm/npmjs/@tufjs/models/1.0.4, MIT, approved, #7600
 npm/npmjs/@types/body-parser/1.19.4, MIT, approved, #10831
-npm/npmjs/@types/bonjour/3.5.12, , restricted, clearlydefined
+npm/npmjs/@types/bonjour/3.5.12, MIT, approved, clearlydefined
 npm/npmjs/@types/connect-history-api-fallback/1.5.2, MIT, approved, #8395
 npm/npmjs/@types/connect/3.4.37, MIT, approved, clearlydefined
 npm/npmjs/@types/cookie/0.4.1, MIT, approved, clearlydefined
@@ -1059,24 +1059,24 @@ npm/npmjs/@types/serve-index/1.9.3, MIT, approved, #10976
 npm/npmjs/@types/serve-static/1.15.4, MIT, approved, #9188
 npm/npmjs/@types/sockjs/0.3.35, MIT, approved, #10984
 npm/npmjs/@types/ws/8.5.8, MIT, approved, #6016
-npm/npmjs/@typescript-eslint/eslint-plugin/6.7.4, BSD-2-Clause AND (BSD-2-Clause AND ISC AND MIT) AND MIT, approved, #10585
+npm/npmjs/@typescript-eslint/eslint-plugin/6.9.1, MIT, restricted, clearlydefined
 npm/npmjs/@typescript-eslint/parser/6.8.0, BSD-2-Clause, approved, clearlydefined
 npm/npmjs/@typescript-eslint/scope-manager/5.62.0, MIT, approved, clearlydefined
-npm/npmjs/@typescript-eslint/scope-manager/6.7.4, BSD-2-Clause AND (BSD-2-Clause AND ISC AND MIT) AND MIT, approved, #10791
 npm/npmjs/@typescript-eslint/scope-manager/6.8.0, MIT, approved, clearlydefined
+npm/npmjs/@typescript-eslint/scope-manager/6.9.1, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/type-utils/5.62.0, MIT, approved, clearlydefined
-npm/npmjs/@typescript-eslint/type-utils/6.7.4, BSD-2-Clause AND (BSD-2-Clause AND ISC AND MIT) AND MIT, approved, #10825
+npm/npmjs/@typescript-eslint/type-utils/6.9.1, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/types/5.62.0, MIT, approved, clearlydefined
-npm/npmjs/@typescript-eslint/types/6.7.4, BSD-2-Clause AND (BSD-2-Clause AND ISC AND MIT) AND MIT, approved, #10807
 npm/npmjs/@typescript-eslint/types/6.8.0, MIT, approved, clearlydefined
+npm/npmjs/@typescript-eslint/types/6.9.1, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/typescript-estree/5.62.0, BSD-2-Clause, approved, clearlydefined
-npm/npmjs/@typescript-eslint/typescript-estree/6.7.4, BSD-2-Clause AND (BSD-2-Clause AND ISC AND MIT) AND MIT, approved, #10586
 npm/npmjs/@typescript-eslint/typescript-estree/6.8.0, BSD-2-Clause, restricted, clearlydefined
+npm/npmjs/@typescript-eslint/typescript-estree/6.9.1, BSD-2-Clause, restricted, clearlydefined
 npm/npmjs/@typescript-eslint/utils/5.62.0, MIT, approved, clearlydefined
-npm/npmjs/@typescript-eslint/utils/6.7.4, BSD-2-Clause AND (BSD-2-Clause AND ISC AND MIT) AND MIT, approved, #10801
+npm/npmjs/@typescript-eslint/utils/6.9.1, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/visitor-keys/5.62.0, MIT, approved, clearlydefined
-npm/npmjs/@typescript-eslint/visitor-keys/6.7.4, BSD-2-Clause AND (BSD-2-Clause AND ISC AND MIT) AND MIT, approved, #10830
 npm/npmjs/@typescript-eslint/visitor-keys/6.8.0, MIT, approved, clearlydefined
+npm/npmjs/@typescript-eslint/visitor-keys/6.9.1, MIT, approved, clearlydefined
 npm/npmjs/@ungap/structured-clone/1.2.0, ISC, approved, clearlydefined
 npm/npmjs/@vitejs/plugin-basic-ssl/1.0.1, MIT, restricted, clearlydefined
 npm/npmjs/@webassemblyjs/ast/1.11.6, MIT, approved, #7953
