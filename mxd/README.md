@@ -31,6 +31,10 @@ once and are accessible by all participants.
 For the most bare-bones installation of the dataspace, execute the following commands in a shell:
 
 ```shell
+# We first clone the default branch of this repo
+git clone https://github.com/eclipse-tractusx/tutorial-resources.git
+# Then go to the folder containing this tutorial
+cd <path/of/mxd>
 kind create cluster -n mxd --config kind.config.yaml
 # the next step is specific to KinD and will be different for other Kubernetes runtimes!
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
@@ -39,7 +43,6 @@ kubectl wait --namespace ingress-nginx \
   --for=condition=ready pod \
   --selector=app.kubernetes.io/component=controller \
   --timeout=90s
-cd <path/of/mxd>
 terraform init
 terraform apply
 # type "yes" and press enter when prompted to do so 
