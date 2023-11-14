@@ -22,3 +22,9 @@ jmeter -t MXD_Performance_Test.jmx
 - JMeter window will open like this.
 ![apache-jmeter-ui.png](../assets/apache-jmeter-ui.png)
 - Update the components as per your requirements and save it.
+
+## Resources
+- [JMeter Getting Started](https://jmeter.apache.org/usermanual/get-started.html)
+- [JMeter Component Reference](https://jmeter.apache.org/usermanual/component_reference.html)
+- [JMeter Functions Reference](https://jmeter.apache.org/usermanual/functions.html)
+- [JMeter Generating Report](https://jmeter.apache.org/usermanual/generating-dashboard.html)
