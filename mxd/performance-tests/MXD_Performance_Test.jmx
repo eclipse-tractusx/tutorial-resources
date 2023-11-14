@@ -39,7 +39,7 @@
           <elementProp name="BACKEND_SERVICE" elementType="Argument">
             <stringProp name="Argument.name">BACKEND_SERVICE</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.value">${__P(BACKEND_SERVICE, https://requestbin.myworkato.com/z8zu6nz9)}</stringProp>
+            <stringProp name="Argument.value">${__P(BACKEND_SERVICE, https://requestbin.myworkato.com/1qykac61)}</stringProp>
           </elementProp>
           <elementProp name="EDC_NAMESPACE" elementType="Argument">
             <stringProp name="Argument.name">EDC_NAMESPACE</stringProp>
@@ -49,6 +49,11 @@
           <elementProp name="PROVIDER_API_KEY" elementType="Argument">
             <stringProp name="Argument.name">PROVIDER_API_KEY</stringProp>
             <stringProp name="Argument.value">${__P(PROVIDER_API_KEY, password)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="CONSUMER_API_KEY" elementType="Argument">
+            <stringProp name="Argument.name">CONSUMER_API_KEY</stringProp>
+            <stringProp name="Argument.value">${__P(CONSUMER_API_KEY, password)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="MAX_NEGOTIATION_POLL_COUNT" elementType="Argument">
@@ -63,7 +68,7 @@
           </elementProp>
           <elementProp name="LOOP_COUNT" elementType="Argument">
             <stringProp name="Argument.name">LOOP_COUNT</stringProp>
-            <stringProp name="Argument.value">${__P(LOOP_COUNT, 5)}</stringProp>
+            <stringProp name="Argument.value">${__P(LOOP_COUNT, 10)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -353,7 +358,7 @@
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">X-Api-Key</stringProp>
-                <stringProp name="Header.value">${PROVIDER_API_KEY}</stringProp>
+                <stringProp name="Header.value">${CONSUMER_API_KEY}</stringProp>
               </elementProp>
               <elementProp name="Content-Type" elementType="Header">
                 <stringProp name="Header.name">Content-Type</stringProp>
@@ -426,7 +431,7 @@
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">X-Api-Key</stringProp>
-                <stringProp name="Header.value">${PROVIDER_API_KEY}</stringProp>
+                <stringProp name="Header.value">${CONSUMER_API_KEY}</stringProp>
               </elementProp>
               <elementProp name="Content-Type" elementType="Header">
                 <stringProp name="Header.name">Content-Type</stringProp>
@@ -480,7 +485,7 @@ ${__jm__Negotiation_State_Loop__idx} &lt; ${MAX_NEGOTIATION_POLL_COUNT})}</strin
                 <collectionProp name="HeaderManager.headers">
                   <elementProp name="" elementType="Header">
                     <stringProp name="Header.name">X-Api-Key</stringProp>
-                    <stringProp name="Header.value">${PROVIDER_API_KEY}</stringProp>
+                    <stringProp name="Header.value">${CONSUMER_API_KEY}</stringProp>
                   </elementProp>
                   <elementProp name="Content-Type" elementType="Header">
                     <stringProp name="Header.name">Content-Type</stringProp>
@@ -535,7 +540,7 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">X-Api-Key</stringProp>
-                <stringProp name="Header.value">${PROVIDER_API_KEY}</stringProp>
+                <stringProp name="Header.value">${CONSUMER_API_KEY}</stringProp>
               </elementProp>
               <elementProp name="Content-Type" elementType="Header">
                 <stringProp name="Header.name">Content-Type</stringProp>
@@ -599,7 +604,7 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">X-Api-Key</stringProp>
-                <stringProp name="Header.value">${PROVIDER_API_KEY}</stringProp>
+                <stringProp name="Header.value">${CONSUMER_API_KEY}</stringProp>
               </elementProp>
               <elementProp name="Content-Type" elementType="Header">
                 <stringProp name="Header.name">Content-Type</stringProp>
@@ -653,7 +658,7 @@ ${__jm__Transfer_State_Loop__idx} &lt; ${MAX_TRANSFER_POLL_COUNT})}</stringProp>
                 <collectionProp name="HeaderManager.headers">
                   <elementProp name="" elementType="Header">
                     <stringProp name="Header.name">X-Api-Key</stringProp>
-                    <stringProp name="Header.value">${PROVIDER_API_KEY}</stringProp>
+                    <stringProp name="Header.value">${CONSUMER_API_KEY}</stringProp>
                   </elementProp>
                   <elementProp name="Content-Type" elementType="Header">
                     <stringProp name="Header.name">Content-Type</stringProp>
