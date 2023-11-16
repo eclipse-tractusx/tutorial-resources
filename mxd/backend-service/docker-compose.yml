@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+  db:
+    container_name: my-postgres-db
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: test
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - dbdata:/var/lib/postgresql/data
+    command: ["postgres", "-c", "log_statement=all", "-c", "shared_preload_libraries=pg_stat_statements"]
+    stdin_open: true
+    tty: true
+
+  backend-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "9990:9990"
+    container_name: backend-service
+
+volumes:
+  dbdata:

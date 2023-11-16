@@ -1,0 +1,22 @@
+apply plugin: 'war'
+
+group = 'org.assertdevelopments'
+version = '0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'jakarta.platform:jakarta.jakartaee-api:8.0.0'
+    implementation 'org.postgresql:postgresql:42.3.1' // Add the PostgreSQL driver
+}
+
+compileJava {
+    targetCompatibility = '11'
+    sourceCompatibility = '11'
+}
+
+war{
+    archiveName 'backend-service.war'
+}
