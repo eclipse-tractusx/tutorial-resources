@@ -1,10 +1,13 @@
 package org.eclipse.mxd.model;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
+
+import java.sql.Timestamp;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonRootName("contents")
-public class ContentsModel {
+@JsonRootName("transfer")
+public class TransfersModel {
 	public int getId() {
 		return id;
 	}
@@ -19,6 +22,23 @@ public class ContentsModel {
 
 	public void setAsset(String asset) {
 		this.asset = asset;
+	}
+
+	public TransfersModel(int id, String asset, String contents, Timestamp createdDate, Timestamp updatedDate) {
+		super();
+		this.id = id;
+		this.asset = asset;
+		this.contents = contents;
+		this.createdDate = createdDate;
+		this.updatedDate = updatedDate;
+	}
+
+	public String getContents() {
+		return contents;
+	}
+
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
 
 	public java.sql.Timestamp getCreatedDate() {
@@ -41,21 +61,12 @@ public class ContentsModel {
 	private int id;
 	@JsonProperty("asset")
 	private String asset;
+	@JsonProperty("contents")
+	private String contents;
 	@JsonProperty("createdDate")
 	private java.sql.Timestamp createdDate;
 	@JsonProperty("updatedDate")
 	private java.sql.Timestamp updatedDate;
 
-	public ContentsModel(int id, String asset, java.sql.Timestamp createdDate, java.sql.Timestamp updatedDate) {
-		this.id = id;
-		this.asset = asset;
-		this.createdDate = createdDate;
-		this.updatedDate = updatedDate;
-	}
-
-	@Override
-	public String toString() {
-		return "Asset{" + "id=" + id + ", asset='" + asset + '\'' + ", createdDate=" + createdDate + ", updatedDate="
-				+ updatedDate + '}';
-	}
+	
 }

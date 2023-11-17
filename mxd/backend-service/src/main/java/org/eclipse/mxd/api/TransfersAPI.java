@@ -1,9 +1,11 @@
 package org.eclipse.mxd.api;
 
 import org.eclipse.mxd.database.DatabaseConnector;
-import org.eclipse.mxd.database.SqlQuery;
+import org.eclipse.mxd.database.SqlQueryContents;
+import org.eclipse.mxd.database.SqlQueryTransfer;
 import org.eclipse.mxd.model.ContentsModel;
 import org.eclipse.mxd.model.ReceivedModel;
+import org.eclipse.mxd.model.TransfersModel;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.*;
@@ -56,7 +58,7 @@ public class TransfersAPI {
         connection.disconnect();
 
         Connection conn = DatabaseConnector.connect();
-        SqlQuery.createAsset(receivedModel.toString(), conn);
+        SqlQueryContents.createAsset(receivedModel.toString(), conn);
 
     }catch (Exception e){
         e.printStackTrace();
@@ -70,10 +72,10 @@ public class TransfersAPI {
     public Response getTransfer(@PathParam("id") int id) {
         try {
             Connection conn = DatabaseConnector.connect();
-            ContentsModel contents = SqlQuery.getAssetById(id, conn);
+            TransfersModel contents = SqlQueryTransfer.getTransferById(id, conn);
 
             if (contents != null) {
-                return Response.ok(contents).build();
+                return Response.ok(contents.getAsset()).build();
             } else {
                 return Response.status(Response.Status.NOT_FOUND).entity("Asset not found").build();
             }
@@ -88,10 +90,10 @@ public class TransfersAPI {
     public Response getTransferContents(@PathParam("id") int id) {
         try {
             Connection conn = DatabaseConnector.connect();
-            ContentsModel contents = SqlQuery.getAssetById(id, conn);
+            TransfersModel contents = SqlQueryTransfer.getTransferById(id, conn);
 
             if (contents != null) {
-                return Response.ok(contents).build();
+                return Response.ok(contents.getContents()).build();
             } else {
                 return Response.status(Response.Status.NOT_FOUND).entity("Asset not found").build();
             }

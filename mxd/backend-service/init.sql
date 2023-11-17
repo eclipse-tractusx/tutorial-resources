@@ -1,5 +1,23 @@
-CREATE TABLE example_table (
-    id serial PRIMARY KEY,
-    response_data VARCHAR (50)
+CREATE TABLE assets (
+    id SERIAL PRIMARY KEY,
+    asset VARCHAR(255), -- Adjust the data type and length accordingly
+    createdDate TIMESTAMP DEFAULT NOW(),
+    updatedDate TIMESTAMP DEFAULT NOW()
 );
-SELECT example_table FROM information_schema.tables WHERE table_schema = 'public';
+
+
+CREATE TABLE transfer (
+    id SERIAL PRIMARY KEY,
+    asset text, -- Adjust the data type and length accordingly
+    contents text ,
+    createdDate TIMESTAMP DEFAULT NOW(),
+    updatedDate TIMESTAMP DEFAULT NOW()
+);
+
+
+
+INSERT INTO assets (asset) VALUES ('your_asset_value') RETURNING id;
+INSERT INTO transfer  (asset,contents) VALUES ('your_asset_value','contents') RETURNING id;
+
+
+select * from transfer;
