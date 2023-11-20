@@ -63,3 +63,15 @@ variable "ssi-config" {
     oauth-secretalias  = ""
   }
 }
+
+variable "azure-account-name" {
+  description = "Azure Account Name for the connector"
+}
+
+variable "azure-account-key" {
+  description = "Azure Account Key for the connector"
+}
+
+variable "azure-url" {
+  description = "Azure Url"
+}

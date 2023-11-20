@@ -57,3 +57,19 @@ variable "bob-bpn" {
 variable "trudy-bpn" {
   default = "BPNL000000000003"
 }
+
+variable "alice-azure-account-name" {
+  default = "aliceazureaccount"
+}
+
+variable "alice-azure-account-key" {
+  default = "aliceazurekey"
+}
+
+variable "bob-azure-account-name" {
+  default = "bobazureaccount"
+}
+
+variable "bob-azure-account-key" {
+  default = "bobazurekey"
+}

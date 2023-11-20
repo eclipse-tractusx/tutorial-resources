@@ -24,6 +24,10 @@
 participant:
   id: "test-participant"
 controlplane:
+#  livenessProbe:
+#    enabled: false
+#  readinessProbe:
+#    enabled: false
   debug:
     enabled: true
     port: 1044
@@ -47,6 +51,10 @@ controlplane:
       client:
         secretAlias: "client-secret"
 dataplane:
+#  livenessProbe:
+#    enabled: false
+#  readinessProbe:
+#    enabled: false
   debug:
     enabled: true
     port: 1044
