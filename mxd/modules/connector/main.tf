@@ -37,7 +37,7 @@ resource "helm_release" "connector" {
           "postStart" : [
             "sh",
             "-c",
-            "sleep 5 && /bin/vault kv put secret/client-secret content=${local.client_secret} && /bin/vault kv put secret/aes-keys content=${local.aes_key_b64} && /bin/vault kv put secret/${var.ssi-config.oauth-secretalias} content=${var.ssi-config.oauth-clientsecret} && /bin/vault kv put secret/${var.azure-account-name}-key content=${var.azure-account-key}"
+            "sleep 5 && /bin/vault kv put secret/client-secret content=${local.client_secret} && /bin/vault kv put secret/aes-keys content=${local.aes_key_b64} && /bin/vault kv put secret/${var.ssi-config.oauth-secretalias} content=${var.ssi-config.oauth-clientsecret} && /bin/vault kv put secret/${var.azure-account-name}-key content=${var.azure-account-key} && /bin/vault kv put secret/${var.azure-account-name}-sas content='${local.azure-sas-token}'"
           ]
         }
       }
@@ -123,4 +123,5 @@ locals {
   client_secret                   = base64encode(random_string.kc_client_secret.result)
   jdbcUrl                         = "jdbc:postgresql://${var.database-host}:${var.database-port}/${var.database-name}"
   edc-blobstore-endpoint-template = "${var.azure-url}/%s"
+  azure-sas-token                 = jsonencode({ edctype = "dataspaceconnector:azuretoken", sas = var.azure-account-key-sas })
 }

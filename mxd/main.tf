@@ -66,9 +66,10 @@ module "alice-connector" {
     oauth-secretalias  = "client_secret_alias"
     oauth-clientsecret = "alice_private_client"
   }
-  azure-account-name = var.alice-azure-account-name
-  azure-account-key  = local.alice-azure-key-base64
-  azure-url          = module.azurite.azurite-url
+  azure-account-name    = var.alice-azure-account-name
+  azure-account-key     = local.alice-azure-key-base64
+  azure-account-key-sas = var.alice-azure-key-sas
+  azure-url             = module.azurite.azurite-url
 }
 
 # Second connector
@@ -90,9 +91,10 @@ module "bob-connector" {
     oauth-secretalias  = "client_secret_alias"
     oauth-clientsecret = "bob_private_client"
   }
-  azure-account-name = var.bob-azure-account-name
-  azure-account-key  = local.bob-azure-key-base64
-  azure-url          = module.azurite.azurite-url
+  azure-account-name    = var.bob-azure-account-name
+  azure-account-key     = local.bob-azure-key-base64
+  azure-account-key-sas = var.bob-azure-key-sas
+  azure-url             = module.azurite.azurite-url
 }
 
 module "azurite" {
