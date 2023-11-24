@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "f510a19c-4214-480b-a79a-55796d03d286",
-		"name": "MXD Management API 11-sep-2023",
+		"_postman_id": "b553c707-e4ab-4f7e-b79f-781865f610a2",
+		"name": "Management API Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "29243509"
+		"_exporter_id": "252261",
+		"_collection_link": "https://winter-rocket-884715.postman.co/workspace/SAP~ff4cf631-05f4-48ab-a1e0-f716cf2efc25/collection/252261-b553c707-e4ab-4f7e-b79f-781865f610a2?action=share&source=collection_link&creator=252261"
 	},
 	"item": [
 		{
@@ -31,7 +32,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"@context\": {},\n    \"asset\": {\n        \"@type\": \"Asset\",\n        \"@id\": \"2222\", \n        \"properties\": {\n            \"description\": \"Product EDC Demo Asset 1\"\n        }\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\"\n    }\n}",
+					"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"2222\",\n    \"description\": \"Product EDC Demo Asset 1\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\"\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -39,11 +40,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{BOB_MANAGEMENT_URL}}/assets",
+					"raw": "{{BOB_MANAGEMENT_URL}}/v3/assets",
 					"host": [
 						"{{BOB_MANAGEMENT_URL}}"
 					],
 					"path": [
+						"v3",
 						"assets"
 					]
 				}
@@ -75,7 +77,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"@context\": {},\n    \"asset\": {\n        \"@type\": \"Asset\",\n        \"@id\": \"2222\", \n        \"properties\": {\n            \"description\": \"Product EDC Demo Asset 2\"\n        }\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\"\n    }\n}",
+					"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"2222\",\n    \"description\": \"Product EDC Demo Asset 2\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\"\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -83,11 +85,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{Alice_MANAGEMENT_URL}}/assets",
+					"raw": "{{Alice_MANAGEMENT_URL}}/v3/assets",
 					"host": [
 						"{{Alice_MANAGEMENT_URL}}"
 					],
 					"path": [
+						"v3",
 						"assets"
 					]
 				}
@@ -127,11 +130,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{BOB_MANAGEMENT_URL}}/policydefinitions",
+					"raw": "{{BOB_MANAGEMENT_URL}}/v2/policydefinitions",
 					"host": [
 						"{{BOB_MANAGEMENT_URL}}"
 					],
 					"path": [
+						"v2",
 						"policydefinitions"
 					]
 				}
@@ -172,11 +176,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{Alice_MANAGEMENT_URL}}/policydefinitions",
+					"raw": "{{Alice_MANAGEMENT_URL}}/v2/policydefinitions",
 					"host": [
 						"{{Alice_MANAGEMENT_URL}}"
 					],
 					"path": [
+						"v2",
 						"policydefinitions"
 					]
 				}
@@ -217,11 +222,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{BOB_MANAGEMENT_URL}}/contractdefinitions",
+					"raw": "{{BOB_MANAGEMENT_URL}}/v2/contractdefinitions",
 					"host": [
 						"{{BOB_MANAGEMENT_URL}}"
 					],
 					"path": [
+						"v2",
 						"contractdefinitions"
 					]
 				}
@@ -261,11 +267,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{Alice_MANAGEMENT_URL}}/contractdefinitions",
+					"raw": "{{Alice_MANAGEMENT_URL}}/v2/contractdefinitions",
 					"host": [
 						"{{Alice_MANAGEMENT_URL}}"
 					],
 					"path": [
+						"v2",
 						"contractdefinitions"
 					]
 				}
@@ -305,11 +312,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{BOB_MANAGEMENT_URL}}/policydefinitions/request",
+					"raw": "{{BOB_MANAGEMENT_URL}}/v2/policydefinitions/request",
 					"host": [
 						"{{BOB_MANAGEMENT_URL}}"
 					],
 					"path": [
+						"v2",
 						"policydefinitions",
 						"request"
 					]
@@ -341,11 +349,12 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "{{BOB_MANAGEMENT_URL}}/assets/request",
+					"raw": "{{BOB_MANAGEMENT_URL}}/v3/assets/request",
 					"host": [
 						"{{BOB_MANAGEMENT_URL}}"
 					],
 					"path": [
+						"v3",
 						"assets",
 						"request"
 					]
@@ -394,11 +403,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{BOB_MANAGEMENT_URL}}/catalog/request",
+					"raw": "{{BOB_MANAGEMENT_URL}}/v2/catalog/request",
 					"host": [
 						"{{BOB_MANAGEMENT_URL}}"
 					],
 					"path": [
+						"v2",
 						"catalog",
 						"request"
 					]
@@ -445,11 +455,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{BOB_MANAGEMENT_URL}}/catalog/request",
+					"raw": "{{BOB_MANAGEMENT_URL}}/v2/catalog/request",
 					"host": [
 						"{{BOB_MANAGEMENT_URL}}"
 					],
 					"path": [
+						"v2",
 						"catalog",
 						"request"
 					]
