@@ -22,12 +22,25 @@ resource "kubernetes_deployment" "backend-service" {
       spec {
         container {
           name              = "backend-service"
-          image             = "backend-service:latest"
-          image_pull_policy = "Never"
+          image             = "ravinderkumar02095/backend-service:latest"
+          image_pull_policy = "Always"
 
           port {
-            container_port = 9090
+            container_port = 8080
             name           = "backend-port"
+          }
+          env {
+            name  = "backend-service-host"
+            value = "jdbc:postgresql://${local.pg-ip}:${var.postgres-port}/backendservicedb"
+          }
+
+          env {
+            name  = "backend-service-username"
+            value = "postgres"
+          }
+          env {
+            name  = "backend-service-password"
+            value = "postgres"
           }
         }
       }
@@ -44,8 +57,12 @@ resource "kubernetes_service" "backend-service" {
       app = "backend-service"
     }
     port {
-      port = 9090
+      port = 8080
       name = "backend-port"
     }
   }
 }
+
+
+
+

@@ -10,13 +10,14 @@ import java.util.List;
 import org.eclipse.mxd.model.TransfersModel;
 public class SqlQueryTransfer {
 	
-	  public static int createTransfer(String asset, String contents, Connection connection) {
+	  public static int createTransferWithID(String asset, String contents, Connection connection,String id) {
 	        try {
-	            String query = "INSERT INTO transfer (asset, contents, createdDate, updatedDate) VALUES (?, ?, now(), now()) RETURNING id";
+	            String query = "INSERT INTO transfer (id, asset, contents, createdDate, updatedDate) VALUES (?,?, ?, now(), now()) RETURNING id";
 
 	            try (PreparedStatement statement = connection.prepareStatement(query)) {
-	                statement.setString(1, asset);
-	                statement.setString(2, contents);
+					statement.setString(1, id);
+	                statement.setString(2, asset);
+	                statement.setString(3, contents);
 
 	                try (ResultSet resultSet = statement.executeQuery()) {
 	                    if (resultSet.next()) {

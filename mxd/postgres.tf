@@ -116,9 +116,30 @@ resource "kubernetes_config_map" "postgres-config" {
       CREATE DATABASE ${module.bob-connector.database-name};
       CREATE DATABASE trudy;
 
+      CREATE DATABASE backendservicedb;
+      \c backendservicedb;
+
+      -- Create your tables in the backendservicedb database
+      CREATE TABLE IF NOT EXISTS assets (
+        id SERIAL PRIMARY KEY,
+        asset text,
+        createdDate TIMESTAMP,
+        updatedDate TIMESTAMP
+      );
+
+      CREATE TABLE IF NOT EXISTS transfer (
+        id SERIAL PRIMARY KEY,
+        asset text,
+        contents text,
+        createdDate TIMESTAMP,
+        updatedDate TIMESTAMP
+      );
+
     EOT
   }
 }
+
+
 
 # K8S ClusterIP so Keycloak and MIW can access postgres
 resource "kubernetes_service" "pg-service" {
@@ -152,3 +173,5 @@ locals {
   pg-ip      = kubernetes_service.pg-service.spec.0.cluster_ip
   pg-host    = "${local.pg-ip}:${var.postgres-port}"
 }
+
+
