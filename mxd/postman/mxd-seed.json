@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "32ff5491-8811-41ba-9560-60b90175f5cb",
+		"_postman_id": "f7ae8abb-bac9-4ba6-89e2-e5cfb86c0b23",
 		"name": "MXD Management API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "27652630"
+		"_exporter_id": "252261",
+		"_collection_link": "https://winter-rocket-884715.postman.co/workspace/SAP~ff4cf631-05f4-48ab-a1e0-f716cf2efc25/collection/252261-f7ae8abb-bac9-4ba6-89e2-e5cfb86c0b23?action=share&source=collection_link&creator=252261"
 	},
 	"item": [
 		{
@@ -29,7 +30,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": {},\n    \"asset\": {\n        \"@type\": \"Asset\",\n        \"@id\": \"1\",\n        \"properties\": {\n            \"description\": \"Product EDC Demo Asset 1\"\n        }\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\",\n        \"proxyPath\": \"true\",\n        \"proxyQueryParams\": \"true\"\n    }\n}",
+							"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"1\",\n    \"description\": \"Product EDC Demo Asset 1\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos/1\",\n    \"proxyPath\": \"true\",\n    \"proxyQueryParams\": \"true\"\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -37,11 +38,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{MANAGEMENT_URL}}/assets",
+							"raw": "{{MANAGEMENT_URL}}/v3/assets",
 							"host": [
 								"{{MANAGEMENT_URL}}"
 							],
 							"path": [
+								"v3",
 								"assets"
 							]
 						}
@@ -68,7 +70,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": {},\n    \"asset\": {\n        \"@type\": \"Asset\",\n        \"@id\": \"2\",\n        \"properties\": {\n            \"description\": \"Product EDC Demo Asset 2\"\n        }\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\",\n        \"proxyPath\": \"true\",\n        \"proxyQueryParams\": \"true\"\n    }\n}",
+							"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"2\",\n    \"description\": \"Product EDC Demo Asset 2\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos/2\",\n    \"proxyPath\": \"true\",\n    \"proxyQueryParams\": \"true\"\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -76,11 +78,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{MANAGEMENT_URL}}/assets",
+							"raw": "{{MANAGEMENT_URL}}/v3/assets",
 							"host": [
 								"{{MANAGEMENT_URL}}"
 							],
 							"path": [
+								"v3",
 								"assets"
 							]
 						}
@@ -115,11 +118,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{MANAGEMENT_URL}}/policydefinitions",
+							"raw": "{{MANAGEMENT_URL}}/v2/policydefinitions",
 							"host": [
 								"{{MANAGEMENT_URL}}"
 							],
 							"path": [
+								"v2",
 								"policydefinitions"
 							]
 						}
@@ -154,11 +158,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{MANAGEMENT_URL}}/contractdefinitions",
+							"raw": "{{MANAGEMENT_URL}}/v2/contractdefinitions",
 							"host": [
 								"{{MANAGEMENT_URL}}"
 							],
 							"path": [
+								"v2",
 								"contractdefinitions"
 							]
 						}
@@ -193,11 +198,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{MANAGEMENT_URL}}/contractdefinitions",
+							"raw": "{{MANAGEMENT_URL}}/v2/contractdefinitions",
 							"host": [
 								"{{MANAGEMENT_URL}}"
 							],
 							"path": [
+								"v2",
 								"contractdefinitions"
 							]
 						}
@@ -482,36 +488,7 @@
 	"variable": [
 		{
 			"key": "MANAGEMENT_URL",
-			"value": "http://localhost/bob/management/v2"
-		},
-		{
-			"key": "PROVIDER_PROTOCOL_URL",
-			"value": "http://plato-controlplane:8084/api/v1/dsp"
-		},
-		{
-			"key": "ASSET_ID",
-			"value": "1",
-			"type": "default"
-		},
-		{
-			"key": "POLICY_ID",
-			"value": "1",
-			"type": "default"
-		},
-		{
-			"key": "CONTRACT_POLICY_ID",
-			"value": "1",
-			"type": "default"
-		},
-		{
-			"key": "ACCESS_POLICY_ID",
-			"value": "1",
-			"type": "default"
-		},
-		{
-			"key": "CONTRACT_DEFINITION_ID",
-			"value": "1",
-			"type": "default"
+			"value": "http://localhost/bob/management"
 		},
 		{
 			"key": "POLICY_BPN",
@@ -519,47 +496,8 @@
 			"type": "default"
 		},
 		{
-			"key": "NEGOTIATION_ID",
-			"value": ""
-		},
-		{
-			"key": "AGREEMENT_ID",
-			"value": ""
-		},
-		{
-			"key": "TRANSFER_ID",
-			"value": ""
-		},
-		{
-			"key": "TRANSFER_PROCESS_ID",
-			"value": ""
-		},
-		{
-			"key": "BACKEND_SERVICE",
-			"value": "http://backend:8080",
-			"type": "string"
-		},
-		{
-			"key": "AGREEMENT-ID",
-			"value": ""
-		},
-		{
-			"key": "authCode",
-			"value": ""
-		},
-		{
-			"key": "PROVIDER_ID",
-			"value": "BPNPLATO",
-			"type": "string"
-		},
-		{
 			"key": "EDC_NAMESPACE",
 			"value": "https://w3id.org/edc/v0.0.1/ns/",
-			"type": "string"
-		},
-		{
-			"key": "CONSUMER_ADAPTER_URL",
-			"value": "http://localhost:31364/management",
 			"type": "string"
 		},
 		{
