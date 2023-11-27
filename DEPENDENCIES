@@ -764,12 +764,12 @@ npm/npmjs/-/zone.js/0.13.3, MIT, approved, clearlydefined
 npm/npmjs/@aashutoshrathi/word-wrap/1.2.6, MIT, approved, #9212
 npm/npmjs/@ampproject/remapping/2.2.1, Apache-2.0, approved, clearlydefined
 npm/npmjs/@angular-devkit/architect/0.1602.10, , restricted, clearlydefined
-npm/npmjs/@angular-devkit/architect/0.1700.1, , restricted, clearlydefined
+npm/npmjs/@angular-devkit/architect/0.1700.3, , restricted, clearlydefined
 npm/npmjs/@angular-devkit/build-angular/16.2.10, , restricted, clearlydefined
 npm/npmjs/@angular-devkit/build-webpack/0.1602.10, , restricted, clearlydefined
 npm/npmjs/@angular-devkit/core/16.2.10, , restricted, clearlydefined
-npm/npmjs/@angular-devkit/core/17.0.1, , restricted, clearlydefined
-npm/npmjs/@angular-devkit/schematics/17.0.1, , restricted, clearlydefined
+npm/npmjs/@angular-devkit/core/17.0.3, , restricted, clearlydefined
+npm/npmjs/@angular-devkit/schematics/17.0.3, , restricted, clearlydefined
 npm/npmjs/@angular-eslint/builder/17.1.0, , restricted, clearlydefined
 npm/npmjs/@angular-eslint/bundled-angular-compiler/16.2.0, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/bundled-angular-compiler/17.1.0, , restricted, clearlydefined
@@ -782,7 +782,7 @@ npm/npmjs/@angular-eslint/utils/16.2.0, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/utils/17.1.0, , restricted, clearlydefined
 npm/npmjs/@angular/animations/16.2.12, , restricted, clearlydefined
 npm/npmjs/@angular/cdk/16.2.12, , restricted, clearlydefined
-npm/npmjs/@angular/cli/17.0.1, , restricted, clearlydefined
+npm/npmjs/@angular/cli/17.0.3, , restricted, clearlydefined
 npm/npmjs/@angular/common/16.2.12, , restricted, clearlydefined
 npm/npmjs/@angular/compiler-cli/16.2.12, , restricted, clearlydefined
 npm/npmjs/@angular/compiler/16.2.12, , restricted, clearlydefined
@@ -1036,7 +1036,7 @@ npm/npmjs/@nx/nx-win32-arm64-msvc/17.1.2, , restricted, clearlydefined
 npm/npmjs/@nx/nx-win32-x64-msvc/17.1.2, , restricted, clearlydefined
 npm/npmjs/@pkgjs/parseargs/0.11.0, Apache-2.0 AND MIT, approved, #8236
 npm/npmjs/@pkgr/utils/2.4.2, MIT, approved, clearlydefined
-npm/npmjs/@schematics/angular/17.0.1, , restricted, clearlydefined
+npm/npmjs/@schematics/angular/17.0.3, , restricted, clearlydefined
 npm/npmjs/@sigstore/bundle/2.1.0, Apache-2.0, approved, clearlydefined
 npm/npmjs/@sigstore/protobuf-specs/0.2.1, Apache-2.0, approved, clearlydefined
 npm/npmjs/@sigstore/sign/2.2.0, Apache-2.0, approved, clearlydefined
