@@ -54,6 +54,9 @@ jobs:
             --selector=app.kubernetes.io/component=controller \
             --timeout=90s
 
+      - name: "Run Backend-service"
+        uses: ./.github/actions/backend-service
+
       - name: "Terraform init"
         working-directory: mxd
         run: |-

@@ -1,6 +1,9 @@
 package org.eclipse.mxd.model;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
+
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonRootName("contents")
@@ -21,7 +24,7 @@ public class ContentsModel {
 		this.asset = asset;
 	}
 
-	public java.sql.Timestamp getCreatedDate() {
+	public java.util.Date getCreatedDate() {
 		return createdDate;
 	}
 
@@ -29,7 +32,7 @@ public class ContentsModel {
 		this.createdDate = createdDate;
 	}
 
-	public java.sql.Timestamp getUpdatedDate() {
+	public java.util.Date getUpdatedDate() {
 		return updatedDate;
 	}
 
@@ -42,16 +45,18 @@ public class ContentsModel {
 	@JsonProperty("asset")
 	private String asset;
 	@JsonProperty("createdDate")
-	private java.sql.Timestamp createdDate;
+	private java.util.Date createdDate;
 	@JsonProperty("updatedDate")
-	private java.sql.Timestamp updatedDate;
+	private java.util.Date updatedDate;
 
-	public ContentsModel(int id, String asset, java.sql.Timestamp createdDate, java.sql.Timestamp updatedDate) {
+	public ContentsModel(int id, String asset, Date createdDate, Date updatedDate) {
 		this.id = id;
 		this.asset = asset;
 		this.createdDate = createdDate;
 		this.updatedDate = updatedDate;
 	}
+
+	
 
 	@Override
 	public String toString() {

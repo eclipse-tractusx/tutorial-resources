@@ -1,0 +1,24 @@
+name: Dockerize Application
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  dockerize:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Build and Dockerize
+        run: |
+          ./gradlew dockerize

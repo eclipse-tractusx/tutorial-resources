@@ -120,20 +120,23 @@ resource "kubernetes_config_map" "postgres-config" {
       \c backendservicedb;
 
       -- Create your tables in the backendservicedb database
-      CREATE TABLE IF NOT EXISTS assets (
-        id SERIAL PRIMARY KEY,
-        asset text,
-        createdDate TIMESTAMP,
-        updatedDate TIMESTAMP
-      );
+        CREATE TABLE transfer (
+        id SERIAL PRIMARY key,
+        asset text, -- Adjust the data type and length accordingly
+        contents text ,
+        transferid text ,
+        createdDate TIMESTAMP DEFAULT NOW(),
+        updatedDate TIMESTAMP DEFAULT NOW()
+        );
 
-      CREATE TABLE IF NOT EXISTS transfer (
-        id SERIAL PRIMARY KEY,
-        asset text,
-        contents text,
-        createdDate TIMESTAMP,
-        updatedDate TIMESTAMP
-      );
+        CREATE TABLE assets (
+          id SERIAL PRIMARY KEY,
+          asset text, -- Adjust the data type and length accordingly
+          createdDate TIMESTAMP DEFAULT NOW(),
+          updatedDate TIMESTAMP DEFAULT NOW()
+          );
+
+
 
     EOT
   }
