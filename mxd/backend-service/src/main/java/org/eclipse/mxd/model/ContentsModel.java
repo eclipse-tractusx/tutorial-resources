@@ -8,6 +8,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonRootName("contents")
 public class ContentsModel {
+
+	@JsonProperty("id")
+	private int id;
+	@JsonProperty("asset")
+	private String asset;
+	@JsonProperty("createdDate")
+	private java.util.Date createdDate;
+	@JsonProperty("updatedDate")
+	private java.util.Date updatedDate;
+
+	public ContentsModel(int id, String asset, Date createdDate, Date updatedDate) {
+		this.id = id;
+		this.asset = asset;
+		this.createdDate = createdDate;
+		this.updatedDate = updatedDate;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -39,24 +56,6 @@ public class ContentsModel {
 	public void setUpdatedDate(java.sql.Timestamp updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-
-	@JsonProperty("id")
-	private int id;
-	@JsonProperty("asset")
-	private String asset;
-	@JsonProperty("createdDate")
-	private java.util.Date createdDate;
-	@JsonProperty("updatedDate")
-	private java.util.Date updatedDate;
-
-	public ContentsModel(int id, String asset, Date createdDate, Date updatedDate) {
-		this.id = id;
-		this.asset = asset;
-		this.createdDate = createdDate;
-		this.updatedDate = updatedDate;
-	}
-
-	
 
 	@Override
 	public String toString() {

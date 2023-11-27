@@ -1,0 +1,16 @@
+stages:
+  - dockerize
+
+variables:
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+dockerize:
+  stage: dockerize
+  image:
+    name: adoptopenjdk/openjdk17:latest
+  script:
+    - ./gradlew dockerize
+    - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+    - docker build -t $DOCKERHUB_USERNAME/your-repo-name:latest .
+    - docker push $DOCKERHUB_USERNAME/your-repo-name:latest

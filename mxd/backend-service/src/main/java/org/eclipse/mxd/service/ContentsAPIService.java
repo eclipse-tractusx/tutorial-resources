@@ -5,11 +5,9 @@ import javax.ws.rs.core.UriInfo;
 
 public interface ContentsAPIService {
 
-    String getAppAbsolutePath(UriInfo uriInfo);
+	Response getAll();
 
-    Response getAll();
+	Response getById(int id);
 
-    Response getById(int id);
-
-    Response postContent(String receivedModel, UriInfo uriInfo);
+	Response postContent(String requestBody, UriInfo uriInfo);
 }

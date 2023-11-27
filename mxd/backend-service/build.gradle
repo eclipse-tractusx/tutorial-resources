@@ -13,7 +13,7 @@ war {
 }
 
 group = 'org.assertdevelopments'
-//version = '0.1-SNAPSHOT'
+version = '0.0.1'
 
 repositories {
     mavenCentral()
@@ -28,6 +28,7 @@ dependencies {
     implementation 'org.hibernate:hibernate-entitymanager:5.6.4.Final'
     implementation 'org.reflections:reflections:0.9.12'
     implementation 'com.zaxxer:HikariCP:4.0.3'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.10.1'
 }
 
 sourceCompatibility = '11'
@@ -40,8 +41,7 @@ task createDockerfile(type: Dockerfile) {
 
 task dockerize(type: DockerBuildImage) {
     dependsOn createDockerfile
-    images.add('ravinderkumar02095/backend-service:latest')
+    images.add('tractusx/mxd-backend-service:0.0.1,latest')
 }
-
 
 

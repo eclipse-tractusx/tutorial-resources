@@ -1,7 +1,6 @@
 package org.eclipse.mxd.repository.impl;
 
 import org.eclipse.mxd.dao.TransferDAO;
-import org.eclipse.mxd.entity.TransfersEntity;
 import org.eclipse.mxd.model.TransfersModel;
 import org.eclipse.mxd.repository.TransfersAPIRepository;
 
@@ -18,8 +17,7 @@ public class TransfersAPIRepositroyImpl implements TransfersAPIRepository {
 	TransferDAO transferDAO;
 
 	public String createTransferWithID(String asset, String contents, String id) {
-		
-		
+
 		return transferDAO.createTransferWithID(asset, contents, id);
 	}
 

@@ -1,16 +1,15 @@
 package org.eclipse.mxd.service;
 
-import org.eclipse.mxd.model.ReceivedModel;
+import org.eclipse.mxd.model.TransferRequest;
 
 import javax.ws.rs.core.Response;
 
 public interface TransfersAPIService {
-	
-	Response acceptTransfer(ReceivedModel receivedModel);
+
+	Response acceptTransfer(TransferRequest transferRequest);
 
 	Response getTransfer(String id);
 
 	Response getTransferContents(String id);
 
-	Response test();
 }

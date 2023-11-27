@@ -1,7 +1,6 @@
 package org.eclipse.mxd.repository;
 
 import org.eclipse.mxd.model.TransfersModel;
-
 import java.util.List;
 
 public interface TransfersAPIRepository {

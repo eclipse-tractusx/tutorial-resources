@@ -8,13 +8,13 @@ import java.util.List;
 @Local
 public interface ContentsAPIServiceRepository {
 
-    int createAsset(String assetName);
+	int createAsset(String assetName);
 
-    ContentsModel getAssetById(int id);
+	ContentsModel getAssetById(int id);
 
-    void updateAsset(int id, String newAssetName);
+	void updateAsset(int id, String newAssetName);
 
-    void deleteAsset(int id);
+	void deleteAsset(int id);
 
-    List<ContentsModel> getAllAssets();
+	List<ContentsModel> getAllAssets();
 }

@@ -2,7 +2,7 @@ package org.eclipse.mxd.util;
 
 public class Constants {
 
-    public static final String BACKEND_SERVICE_HOST = "backend-service-host";
-    public static final String BACKEND_SERVICE_USERNAME = "backend-service-username";
-    public static final String BACKEND_SERVICE_PASSWORD = "backend-service-password";
+    public static final String BACKEND_SERVICE_HOST = "database-connection-url";
+    public static final String BACKEND_SERVICE_USERNAME = "database-username";
+    public static final String BACKEND_SERVICE_PASSWORD = "database-password";
 }
