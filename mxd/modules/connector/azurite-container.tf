@@ -17,7 +17,7 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-resource "kubernetes_job" "azurite-container" {
+resource "kubernetes_job" "azurite-init" {
 
   metadata {
     name = local.appName
@@ -66,10 +66,11 @@ resource "kubernetes_config_map" "document" {
 }
 
 locals {
-  appName              = "${var.humanReadableName}-container"
+  appName              = "${var.humanReadableName}-azurite-init"
+  container-name       =  "${var.humanReadableName}-container"
   file-name            = "test-document.txt"
   file-mount-path      = "/opt/documents"
   connection-string    = "AccountName=${var.azure-account-name};AccountKey=${var.azure-account-key};DefaultEndpointsProtocol=http;BlobEndpoint=${var.azure-url}/${var.azure-account-name}"
-  cmd-container-create = "az storage container create --verbose --debug --name ${local.appName} --connection-string '${local.connection-string}'"
-  cmd-file-upload      = "az storage blob upload --verbose --debug --container-name ${local.appName} --name ${var.humanReadableName}-${local.file-name} --file ${local.file-mount-path}/${local.file-name} --overwrite --connection-string '${local.connection-string}'"
+  cmd-container-create = "az storage container create --verbose --debug --name ${local.container-name} --connection-string '${local.connection-string}'"
+  cmd-file-upload      = "az storage blob upload --verbose --debug --container-name ${local.container-name} --name ${var.humanReadableName}-${local.file-name} --file ${local.file-mount-path}/${local.file-name} --overwrite --connection-string '${local.connection-string}'"
 }
