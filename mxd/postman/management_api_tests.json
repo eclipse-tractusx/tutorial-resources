@@ -557,12 +557,12 @@
 		},
 		{
 			"key": "BOB_MANAGEMENT_URL",
-			"value": "http://localhost/bob/management/v2",
+			"value": "http://localhost/bob/management",
 			"type": "string"
 		},
 		{
 			"key": "Alice_MANAGEMENT_URL",
-			"value": "http://localhost/alice/management/v2",
+			"value": "http://localhost/alice/management",
 			"type": "string"
 		},
 		{
