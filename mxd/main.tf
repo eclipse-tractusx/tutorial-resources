@@ -49,7 +49,7 @@ provider "helm" {
 
 # First connector
 module "alice-connector" {
-  depends_on = [module.azurite]
+  depends_on        = [module.azurite]
   source            = "./modules/connector"
   humanReadableName = "alice"
   participantId     = var.alice-bpn
@@ -75,7 +75,7 @@ module "alice-connector" {
 
 # Second connector
 module "bob-connector" {
-  depends_on = [module.azurite]
+  depends_on        = [module.azurite]
   source            = "./modules/connector"
   humanReadableName = "bob"
   participantId     = var.bob-bpn

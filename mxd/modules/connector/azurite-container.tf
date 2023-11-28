@@ -67,7 +67,7 @@ resource "kubernetes_config_map" "document" {
 
 locals {
   appName              = "${var.humanReadableName}-azurite-init"
-  container-name       =  "${var.humanReadableName}-container"
+  container-name       = "${var.humanReadableName}-container"
   file-name            = "test-document.txt"
   file-mount-path      = "/opt/documents"
   connection-string    = "AccountName=${var.azure-account-name};AccountKey=${var.azure-account-key};DefaultEndpointsProtocol=http;BlobEndpoint=${var.azure-url}/${var.azure-account-name}"
