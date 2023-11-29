@@ -1,21 +1,22 @@
-# File Transfer: Azure Storage to Azure Storage
+# File Transfer: Azure Blob Storage to Azure Blob Storage
 
 ## 1. Description
-This tutorial illustrates the process through which a provider participant can transfer a file stored in its Azure Storage to another Azure Storage belonging to a consumer participant.  
-We assume `Alice` as a provider participant and `Bob` as consumer participant.
+This tutorial illustrates the process through which a provider participant can transfer a file stored in its Azure Blob Storage to another Azure Blob Storage belonging to a consumer participant.  
+For this tutorial, we assume `Alice` as a provider participant and `Bob` as consumer participant.  
+We use a self-contained version of Azure Blob Storage named [Azurite](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=docker-hub), and we deploy single `Azurite` instance for both connectors, due to `a limitation in overriding endpoints during trasfer process`.
 
 ## 2. Existing Resources
 
 Following resources have already been configured.
 
-| Resource                        | Alice                   | Bob                   | Description                                                                                                                                                                                                                                                                                                                                    |
-|---------------------------------|-------------------------|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Azure Account Name              | aliceazureaccount       | bobazureaccount       | Configured Azure Account Name                                                                                                                                                                                                                                                                                                                  |
-| Azure Account Key               | YWxpY2VhenVyZWtleQ==    | Ym9iYXp1cmVrZXk=      | Configured Azure Account key                                                                                                                                                                                                                                                                                                                   |
-| Azure Account Key Name in Vault | aliceazureaccount-key   | bobazureaccount-key   | Key Name against which Account Key has been stored in the participant's vault. This key name will be used while creating asset. It has been done to avoid leaking secret keys.                                                                                                                                                                 |
-| Azure Account SAS Key in Vault  | aliceazureaccount-sas   | bobazureaccount-sas   | Key Name against which a temp account key has been stored in the participant's vault. Participants can share this key to other participants to provide temporary access to their Azure Storage Containers, so that other participants could transfer the files. For more details see [Initiate Transfer](#11-initiate-transfer) section below. |
-| Azure Container                 | alice-container         | bob-container         | Azure Container to store files                                                                                                                                                                                                                                                                                                                 |
-| Sample File                     | alice-test-document.txt | bob-test-document.txt | A sample file already uploaded                                                                                                                                                                                                                                                                                                                 |
+| Resource                                     | Alice                   | Bob                   | Description                                                                                                                                                                                                                                                                                                                                                                                 |
+|----------------------------------------------|-------------------------|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Azure Blob Storage Account Name              | aliceazureaccount       | bobazureaccount       | Configured Azure Blob Storage Account Name                                                                                                                                                                                                                                                                                                                                                  |
+| Azure Blob Storage Account Key               | YWxpY2VhenVyZWtleQ==    | Ym9iYXp1cmVrZXk=      | Configured Azure Blob Storage Account key                                                                                                                                                                                                                                                                                                                                                   |
+| Azure Blob Storage Account Key Name in Vault | aliceazureaccount-key   | bobazureaccount-key   | The alias under which the Azure Blob Storage Account Key has been stored in the participant's vault. This alias will be used while creating assets. It has been done to avoid leaking secret keys.                                                                                                                                                                                          |
+| Azure Blob Storage Account SAS Key in Vault  | aliceazureaccount-sas   | bobazureaccount-sas   | The alias under which a temp Azure Blob Storage Key (Shared Access Signature Key) has been stored in the participant's vault. Participants can share this key to other participants to provide temporary access to their Azure Blob Storage containers, so that other participants could transfer the files. For more details see [Initiate Transfer](#11-initiate-transfer) section below. |
+| Azure Blob Storage Container                 | alice-container         | bob-container         | Azure Blob Storage container to store files                                                                                                                                                                                                                                                                                                                                                 |
+| Sample File                                  | alice-test-document.txt | bob-test-document.txt | A sample file already uploaded in the container                                                                                                                                                                                                                                                                                                                                             |
 
 ## 3. Connect to Azurite
 To access azurite locally we need to expose the port outside our kubernetes cluster.
@@ -26,7 +27,7 @@ kubectl port-forward service/azurite 10000:10000
 ## 4. Upload file in Azurite
 > You can skip this step entirely if you want to use existing uploaded files.
 
-We can upload files either via Azure Storage Explorer or Azure CLI.
+We can upload files either via [Azure Storage Explorer](https://azure.microsoft.com/en-in/products/storage/storage-explorer) or Azure CLI.
 
 ### 4.1 Via Azure Storage Explorer
 Connect to Azurite using following details.  
@@ -48,19 +49,18 @@ To create another container, we can run below command.
 az storage container create --name another-alice-container --connection-string $ALICE_CONN_STR
 ```
 
-
 ## 5. Create Azure Asset
 
-While creating asset, we need to provide the file name, container where it is stored and azure credential to access the file.
-> Please note, a reference key (against which the real key is stored in participant's vault) in the field `dataAddress#keyName` has been passed. 
+While creating asset, we need to provide the file name, container where it is stored and Azure credential to access the file.
+> Please note, an alias (under which the real key is stored in participant's vault) in the field `dataAddress#keyName` has been passed. 
 ```shell
 curl --location 'http://localhost/alice/management/v3/assets' \
 --header 'Content-Type: application/json' \
 --header 'X-Api-Key: password' \
 --data-raw '{
   "@context": {},
+  "@id": "10",
   "properties": {
-    "id": "10",
     "name": "alice-test-document",
     "description": "Product EDC Demo Azure Asset",
     "contenttype": "text/plain",
@@ -78,6 +78,8 @@ curl --location 'http://localhost/alice/management/v3/assets' \
 ```
 
 ## 6. Create Policy
+
+### 6.1 Create Access Policy
 ```shell
 curl --location 'http://localhost/alice/management/v2/policydefinitions' \
 --header 'Content-Type: application/json' \
@@ -87,7 +89,41 @@ curl --location 'http://localhost/alice/management/v2/policydefinitions' \
     "odrl": "http://www.w3.org/ns/odrl/2/"
   },
   "@type": "PolicyDefinitionRequestDto",
-  "@id": "10",
+  "@id": "101",
+  "policy": {
+    "@type": "Policy",
+    "odrl:permission": [
+      {
+        "odrl:action": "USE",
+        "odrl:constraint": {
+          "@type": "LogicalConstraint",
+          "odrl:or": [
+            {
+              "@type": "Constraint",
+              "odrl:leftOperand": "BpnCredential",
+              "odrl:operator": {
+                "@id": "odrl:eq"
+              },
+              "odrl:rightOperand": "active"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}'
+```
+### 6.2 Create Contract Policy
+```shell
+curl --location 'http://localhost/alice/management/v2/policydefinitions' \
+--header 'Content-Type: application/json' \
+--header 'X-Api-Key: password' \
+--data-raw '{
+  "@context": {
+    "odrl": "http://www.w3.org/ns/odrl/2/"
+  },
+  "@type": "PolicyDefinitionRequestDto",
+  "@id": "102",
   "policy": {
     "@type": "Policy",
     "odrl:permission": [
@@ -121,8 +157,8 @@ curl --location 'http://localhost/alice/management/v2/contractdefinitions' \
   "@context": {},
   "@id": "10",
   "@type": "ContractDefinition",
-  "accessPolicyId": "10",
-  "contractPolicyId": "10",
+  "accessPolicyId": "101",
+  "contractPolicyId": "102",
   "assetsSelector": {
     "@type": "CriterionDto",
     "operandLeft": "https://w3id.org/edc/v0.0.1/ns/id",
@@ -313,9 +349,9 @@ Please note:
 Now, we are about to initiate file transfer. Alice will fetch the file from its container `alice-container` and upload it to provided container which belongs to Bob.
 
 ### 11.1 Provide Temporary Access to Destination Azure Container
-Since Bob doesn't want to share its azure credentials to Alice. Hence, he generates a temporary credential and provides it to Alice.
-> A temporary token for both Alice and Bob has been already generated and stored in their respective vaults against key name `aliceazureaccount-sas` and `bobazureaccount-sas`.
-> You can skip this step and directly, refer those key names in initiate transfer.
+Since Bob doesn't want to share its Azure credentials to Alice. Hence, he generates a temporary credential and provides it to Alice.
+> A temporary token for both Alice and Bob has been already generated and stored in their respective vaults under aliases `aliceazureaccount-sas` and `bobazureaccount-sas`.
+> You can skip this step and directly refer those aliases in initiate transfer.
 
 Using Azure CLI, we can generate a shared access signature (`sas`) with limited permissions and expiry.
 ```shell
