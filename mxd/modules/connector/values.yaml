@@ -24,13 +24,13 @@
 participant:
   id: "test-participant"
 controlplane:
-#  livenessProbe:
-#    enabled: false
-#  readinessProbe:
-#    enabled: false
   debug:
     enabled: true
     port: 1044
+  livenessProbe:
+    enabled: true
+  readinessProbe:
+    enabled: true
   service:
     type: NodePort
   endpoints:
@@ -51,13 +51,13 @@ controlplane:
       client:
         secretAlias: "client-secret"
 dataplane:
-#  livenessProbe:
-#    enabled: false
-#  readinessProbe:
-#    enabled: false
   debug:
     enabled: true
     port: 1044
+  livenessProbe:
+    enabled: true
+  readinessProbe:
+    enabled: true
   image:
     pullPolicy: Never
     tag: "latest"
