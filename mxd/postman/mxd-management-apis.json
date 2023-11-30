@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "54c1f694-b885-4b7d-b069-5d394be398fa",
+		"_postman_id": "ee10f4ab-1bdb-464a-8418-f7f6e3325a2d",
 		"name": "tractusx-edc-mgmt-api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "27652630"
+		"_exporter_id": "252261",
+		"_collection_link": "https://winter-rocket-884715.postman.co/workspace/SAP~ff4cf631-05f4-48ab-a1e0-f716cf2efc25/collection/252261-ee10f4ab-1bdb-464a-8418-f7f6e3325a2d?action=share&source=collection_link&creator=252261"
 	},
 	"item": [
 		{
@@ -23,7 +24,9 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"exec": [],
+						"exec": [
+							""
+						],
 						"type": "text/javascript"
 					}
 				}
@@ -33,7 +36,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"@context\": {},\n    \"asset\": {\n        \"@type\": \"Asset\",\n        \"@id\": \"{{ASSET_ID}}\", \n        \"properties\": {\n            \"description\": \"Product EDC Demo Asset\"\n        }\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\"\n    }\n}",
+					"raw": "{\n    \"@context\": {},\n    \"@id\": \"{{ASSET_ID}}\", \n    \"properties\": {\n        \"description\": \"Product EDC Demo Asset\"\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
