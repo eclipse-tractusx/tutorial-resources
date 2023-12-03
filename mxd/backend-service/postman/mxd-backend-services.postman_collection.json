@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "64d8cc24-47b2-4fc3-a94a-6faf5c3408d6",
+		"name": "Backend-Services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31550443"
+	},
+	"item": [
+		{
+			"name": "Get All Contents",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{backend-service-url}}/api/v1/content/",
+					"host": [
+						"{{backend-service-url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"content",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Contents",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"userId\": 1,\r\n        \"id\": 1,\r\n        \"title\": \"Testing Testing\",\r\n        \"completed\": false\r\n    }\r\n   \r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{backend-service-url}}/api/v1/content/",
+					"host": [
+						"{{backend-service-url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"content",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Contents By ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"java\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{backend-service-url}}/api/v1/content/1",
+					"host": [
+						"{{backend-service-url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"content",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Transfer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"52ba4b2f-ae3a-46ae-96f2-6781aa819386\",\r\n    \"endpoint\": \"http://alice-tractusx-connector-dataplane:8081/api/public\",\r\n    \"authKey\": \"Authorization\",\r\n    \"authCode\": \"eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE2OTg5OTQ1MzUsImRhZCI6Ii9VTUY0R1d1cVlDMmJZdGp1TlkvR1BXaE9rZTlEdEE4czl5emptS3RNdk81RUNYMWRIWlVBZzNYRFVPd0tiajlmT1JwODh3WSsxQk5ScTZXbFZGVTRDOHBqc2lQendsVU5Nb3BDSUl1Q2VKYXc4THhHWU5GVXVISjJ3ZVp1TlRpZHk5N0JjdUVEMWVPS3VtdHA1aVdXUWlFc2VEUWh4SkJaTFVzVWErMW9TMVV6azVJRE0wamRpTm5jR2tPanlCSTVKOWY2K1RzOGQ0VzJuMFAzUTByOEJIdG9mN25pY241VFlFUlF4eXVac3lHbVFscTAxYitvSUNxQ0pUTmdRUEM4WG5nYytxWFU4WDlva04yNjVlYTZQMmJTeWVEcTJMbURDbW1RVE9QWkpEV1lWQ0cxYnJpSlZqaUtJRTQ2b3loWjVsZDAvQjNQOWlKa3k5UUpsODdXWDJuQk05cWF2NE9HT3ErSSswTzJaNS94VTV5cVRDeE00cDZ5SjEzc3VOZWRDNlZzZHM9IiwiY2lkIjoiYTZhMDY5YjUtNmVkYS00ZjM5LWJhYTYtZTc4N2ZiNDkxODkzIn0.vpRrZOW_AZSyggWfhRTYMJRexRx8WP7fCxmVre-G-76_koa71cf3DC9t6w6VRjej__Bni2-NAY5iIdUQDIOAuA\",\r\n    \"properties\": {}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{backend-service-url}}/api/v1/transfer/",
+					"host": [
+						"{{backend-service-url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transfer",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Transfer Content By ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{backend-service-url}}/api/v1/transfer/52ba4b2f-ae3a-46ae-96f2-6781aa819386/contents/",
+					"host": [
+						"{{backend-service-url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transfer",
+						"52ba4b2f-ae3a-46ae-96f2-6781aa819386",
+						"contents",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Transfer By ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{backend-service-url}}/api/v1/transfer/52ba4b2f-ae3a-46ae-96f2-6781aa819386/",
+					"host": [
+						"{{backend-service-url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transfer",
+						"52ba4b2f-ae3a-46ae-96f2-6781aa819386",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Random Content",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{backend-service-url}}/api/v1/content/random",
+					"host": [
+						"{{backend-service-url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"content",
+						"random"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "backend-service-url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
