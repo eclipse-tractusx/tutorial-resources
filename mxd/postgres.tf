@@ -115,14 +115,12 @@ resource "kubernetes_config_map" "postgres-config" {
       CREATE DATABASE ${module.alice-connector.database-name};
       CREATE DATABASE ${module.bob-connector.database-name};
       CREATE DATABASE trudy;
-
+      
       CREATE DATABASE backendservicedb;
       \c backendservicedb;
     EOT
   }
 }
-
-
 
 # K8S ClusterIP so Keycloak and MIW can access postgres
 resource "kubernetes_service" "pg-service" {
