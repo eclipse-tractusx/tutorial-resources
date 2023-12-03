@@ -94,7 +94,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"\",\r\n    \"endpoint\": \"\",\r\n    \"authKey\": \"Authorization\",\r\n    \"authCode\": \"\",\r\n    \"properties\": {}\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
