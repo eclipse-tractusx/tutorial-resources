@@ -33,7 +33,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "[\r\n    {\r\n        \"userId\": 1,\r\n        \"id\": 1,\r\n        \"title\": \"Testing Testing\",\r\n        \"completed\": false\r\n    }\r\n   \r\n]",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -122,15 +122,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{backend-service-url}}/api/v1/transfer/52ba4b2f-ae3a-46ae-96f2-6781aa819386/contents/",
+					"raw": "{{backend-service-url}}/api/v1/id/contents/",
 					"host": [
 						"{{backend-service-url}}"
 					],
 					"path": [
 						"api",
 						"v1",
-						"transfer",
-						"52ba4b2f-ae3a-46ae-96f2-6781aa819386",
+						"id",
 						"contents",
 						""
 					]
@@ -144,7 +143,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{backend-service-url}}/api/v1/transfer/52ba4b2f-ae3a-46ae-96f2-6781aa819386/",
+					"raw": "{{backend-service-url}}/api/v1/transfer/id/",
 					"host": [
 						"{{backend-service-url}}"
 					],
@@ -152,7 +151,7 @@
 						"api",
 						"v1",
 						"transfer",
-						"52ba4b2f-ae3a-46ae-96f2-6781aa819386",
+						"id",
 						""
 					]
 				}
