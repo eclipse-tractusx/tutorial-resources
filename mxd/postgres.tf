@@ -118,26 +118,6 @@ resource "kubernetes_config_map" "postgres-config" {
 
       CREATE DATABASE backendservicedb;
       \c backendservicedb;
-
-      -- Create your tables in the backendservicedb database
-        CREATE TABLE transfer (
-        id SERIAL PRIMARY key,
-        asset text, -- Adjust the data type and length accordingly
-        contents text ,
-        transferid text ,
-        createdDate TIMESTAMP DEFAULT NOW(),
-        updatedDate TIMESTAMP DEFAULT NOW()
-        );
-
-        CREATE TABLE assets (
-          id SERIAL PRIMARY KEY,
-          asset text, -- Adjust the data type and length accordingly
-          createdDate TIMESTAMP DEFAULT NOW(),
-          updatedDate TIMESTAMP DEFAULT NOW()
-          );
-
-
-
     EOT
   }
 }
@@ -176,5 +156,3 @@ locals {
   pg-ip      = kubernetes_service.pg-service.spec.0.cluster_ip
   pg-host    = "${local.pg-ip}:${var.postgres-port}"
 }
-
-
