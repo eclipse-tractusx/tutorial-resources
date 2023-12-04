@@ -42,7 +42,7 @@ resource "kubernetes_deployment" "backend-service" {
       spec {
         container {
           name              = "backend-service"
-          image             = "backend-service:latest"
+          image             = "backend-services:latest"
           image_pull_policy = "Never"
 
           port {
@@ -50,16 +50,16 @@ resource "kubernetes_deployment" "backend-service" {
             name           = "backend-port"
           }
           env {
-            name  = "database-connection-url"
+            name  = "BACKEND-SERVICE-DATABASE_URL"
             value = "jdbc:postgresql://${local.pg-ip}:${var.postgres-port}/backendservicedb"
           }
 
           env {
-            name  = "database-username"
+            name  = "BACKEND-SERVICE-DATABASE_USER"
             value = "postgres"
           }
           env {
-            name  = "database-password"
+            name  = "BACKEND-SERVICE-DATABASE_PASSWORD"
             value = "postgres"
           }
           env {
