@@ -1,0 +1,165 @@
+
+/*******************************************************************************
+ * Copyright (c) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+ * Copyright (c) 2023 Contributors to the Eclipse Foundation
+ *
+ * See the NOTICE file(s) distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Apache License, Version 2.0 which is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *    Contributors:Ravinder Kumar
+ *    Backend-API and implementation
+ *
+ ******************************************************************************/
+
+package org.eclipse.mxd.service.Impl;
+
+import jakarta.ws.rs.core.MediaType;
+import org.eclipse.mxd.model.*;
+import org.eclipse.mxd.repository.ContentsRepository;
+import org.eclipse.mxd.repository.Impl.ContentsRepositoryImpl;
+import org.eclipse.mxd.service.ContentService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
+
+@ApplicationScoped
+public class ContentServiceImpl implements ContentService {
+
+    private static final Logger logger = Logger.getLogger(ContentServiceImpl.class.getName());
+
+    private final ContentsRepository contentServiceRepository = new ContentsRepositoryImpl();
+
+    @Override
+    public Response getAll(UriInfo uriInfo) {
+        try {
+            List<ContentsRequest> contentResponse = this.contentServiceRepository.getAllAssets();
+            if (contentResponse != null && !contentResponse.isEmpty()) {
+                List<ContentModelResponse> contentsModels = new ArrayList<ContentModelResponse>();
+                for (ContentsRequest contentsRequest : contentResponse) {
+                    JsonNode jsonNode = new ObjectMapper().readTree(contentsRequest.getAsset());
+                    ContentModelResponse contentsModelRes = new ContentModelResponse();
+                    contentsModelRes.setId(contentsRequest.getId());
+                    contentsModelRes.setAsset(jsonNode);
+                    contentsModelRes.setUrl(uriInfo.getAbsolutePath().toString() + contentsRequest.getId());
+                    contentsModelRes.setCreatedDate(contentsRequest.getCreatedDate());
+                    contentsModelRes.setUpdatedDate(contentsRequest.getUpdatedDate());
+                    contentsModels.add(contentsModelRes);
+                }
+                return Response.ok(new ObjectMapper().writeValueAsString(contentsModels)).build();
+
+            } else {
+                ErrorModel errorModel = new ErrorModel(404, "Resource Not Found", "Requested Resource Not Found");
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .type(MediaType.APPLICATION_JSON)
+                        .build();
+            }
+        } catch (Exception e) {
+            try {
+                logger.info(e.getMessage());
+                ErrorModel errorModel = new ErrorModel(500, "Internal Server Error", e.getMessage());
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .type(MediaType.APPLICATION_JSON)
+                        .build();
+            } catch (Exception ex) {
+                logger.info(ex.getMessage());
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                        .entity("Internal Server Error")
+                        .type(MediaType.APPLICATION_JSON)
+                        .build();
+            }
+        }
+
+
+    }
+
+    @Override
+    public Response getById(Long id, UriInfo uriInfo) {
+        try {
+            ContentsRequest content = this.contentServiceRepository.getAssetById(id);
+            if (content != null && content.getId() != null) {
+                ContentJsonResponse contentModelRes = new ContentJsonResponse();
+                contentModelRes.setAsset(new ObjectMapper().readTree(content.getAsset()));
+                return Response.ok(new ObjectMapper().writeValueAsString(contentModelRes.getAsset())).build();
+            } else {
+                ErrorModel errorModel = new ErrorModel(404, "Resource Not Found", "Requested Resource Not Found");
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .type(MediaType.APPLICATION_JSON)
+                        .build();
+            }
+        } catch (Exception e) {
+            try {
+                logger.info(e.getMessage());
+                ErrorModel errorModel = new ErrorModel(500, "Internal Server Error", e.getMessage());
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .type(MediaType.APPLICATION_JSON)
+                        .build();
+            } catch (Exception ex) {
+                logger.info(ex.getMessage());
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                        .entity("Internal Server Error")
+                        .type(MediaType.APPLICATION_JSON)
+                        .build();
+            }
+        }
+
+
+    }
+
+    @Override
+    public Response postContent(String requestBody, UriInfo uriInfo) {
+        try {
+            Long id = contentServiceRepository.createAsset(requestBody);
+            if (id != null) {
+                logger.info(uriInfo.getAbsolutePath() + "");
+                ContentsResponse contentsResponse = new ContentsResponse();
+                contentsResponse.setId(id);
+                contentsResponse.setUrl(uriInfo.getAbsolutePath() + "" + id);
+                return Response.ok(new ObjectMapper().writeValueAsString(contentsResponse)).build();
+            } else {
+
+                ErrorModel errorModel = new ErrorModel(400, "Resource Not Created", "Requested Resource Not Created");
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .type(MediaType.APPLICATION_JSON)
+                        .build();
+            }
+        } catch (Exception e) {
+            try {
+                logger.info(e.getMessage());
+                ErrorModel errorModel = new ErrorModel(500, "Internal Server Error", e.getMessage());
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .type(MediaType.APPLICATION_JSON)
+                        .build();
+            } catch (Exception ex) {
+                logger.info(ex.getMessage());
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("Internal Server Error")
+                        .type(MediaType.APPLICATION_JSON)
+                        .build();
+            }
+        }
+    }
+}
