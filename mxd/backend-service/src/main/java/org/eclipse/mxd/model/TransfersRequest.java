@@ -26,16 +26,18 @@ package org.eclipse.mxd.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class TransferRequest {
+import java.util.Map;
+
+public class TransfersRequest {
 
     private String id;
     private String endpoint;
     private String authKey;
     private String authCode;
     @JsonIgnore
-    private PropertiesModel properties;
+    private Map<String, Object> properties;
 
-    public TransferRequest(String id, String endpoint, String authKey, String authCode, PropertiesModel properties) {
+    public TransfersRequest(String id, String endpoint, String authKey, String authCode, Map<String, Object> properties) {
         this.id = id;
         this.endpoint = endpoint;
         this.authKey = authKey;
@@ -43,7 +45,7 @@ public class TransferRequest {
         this.properties = properties;
     }
 
-    public TransferRequest() {
+    public TransfersRequest() {
     }
 
     public String getId() {
@@ -62,7 +64,7 @@ public class TransferRequest {
         return authCode;
     }
 
-    public PropertiesModel getProperties() {
+    public  Map<String, Object> getProperties() {
         return properties;
     }
 
@@ -82,13 +84,18 @@ public class TransferRequest {
         this.authCode = authCode;
     }
 
-    public void setProperties(PropertiesModel properties) {
+    public void setProperties( Map<String, Object> properties) {
         this.properties = properties;
     }
 
     @Override
     public String toString() {
-        return "TransferRequest{" + "id='" + id + '\'' + ", endpoint='" + endpoint + '\'' + ", authKey='" + authKey + '\''
-                + ", authCode='" + authCode + '\'' + ", properties=" + properties + '}';
+        return "TransfersRequest{" +
+                "id='" + id + '\'' +
+                ", endpoint='" + endpoint + '\'' +
+                ", authKey='" + authKey + '\'' +
+                ", authCode='" + authCode + '\'' +
+                ", properties=" + properties +
+                '}';
     }
 }

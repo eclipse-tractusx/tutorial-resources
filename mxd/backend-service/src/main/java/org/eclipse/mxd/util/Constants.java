@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright (c) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
  * Copyright (c) 2023 Contributors to the Eclipse Foundation
@@ -19,10 +18,12 @@
  * SPDX-License-Identifier: Apache-2.0
  *    Contributors:Ravinder Kumar
  *    Backend-API and implementation
- * 
+ *
  ******************************************************************************/
 
-package org.eclipse.mxd.model;
+package org.eclipse.mxd.util;
 
-public class PropertiesModel {
+public class Constants {
+
+    public  static final String EMPTYSTRING="";
 }

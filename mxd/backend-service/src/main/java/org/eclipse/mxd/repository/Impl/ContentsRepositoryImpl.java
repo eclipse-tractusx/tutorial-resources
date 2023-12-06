@@ -26,12 +26,12 @@ import org.eclipse.mxd.util.HibernateUtil;
 import org.eclipse.mxd.entity.Content;
 import org.eclipse.mxd.model.ContentsRequest;
 import org.eclipse.mxd.repository.ContentsRepository;
-import org.eclipse.mxd.util.DateTimeUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.Query;
 import org.hibernate.Session;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -59,17 +59,21 @@ public class ContentsRepositoryImpl implements ContentsRepository {
     }
 
     public Content saveContent(String asset) {
+        logger.info("line no 62 saveContent : "+asset);
         Content content = new Content();
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
+            logger.info("line no 66 saveContent get Session ");
             if (session != null) {
                 content.setAsset(asset);
-                content.setCreatedDate(DateTimeUtil.getCurrentDateTimeInAsiaKolkata());
-                content.setUpdatedDate(DateTimeUtil.getCurrentDateTimeInAsiaKolkata());
+                content.setCreatedDate(new Date());
+                content.setUpdatedDate(new Date());
                 session.getTransaction().begin();
                 session.persist(content);
                 session.getTransaction().commit();
                 session.close();
+
+                logger.info("line no 76 saved content : "+content.toString());
             }
 
         } catch (Exception e) {

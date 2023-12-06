@@ -22,23 +22,20 @@
  *
  ******************************************************************************/
 
-package org.eclipse.mxd.repository.Impl;
+package org.eclipse.mxd.util;
 
-import org.eclipse.mxd.model.ContentRandomResponse;
-import org.eclipse.mxd.repository.ContentRamdomRepository;
-import org.eclipse.mxd.util.RandomWordUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.mxd.model.ContentRandomResponse;
 
 import java.util.Random;
 import java.util.logging.Logger;
 
 @ApplicationScoped
-public class ContentRandomRepositoryImpl implements ContentRamdomRepository {
-    private static final Logger logger = Logger.getLogger(ContentRandomRepositoryImpl.class.getName());
+public class ContentsRandom {
+    private static final Logger logger = Logger.getLogger(ContentsRandom.class.getName());
 
-    @Override
     public Response getRandomContent() {
         try {
             Random random = new Random();
@@ -49,7 +46,7 @@ public class ContentRandomRepositoryImpl implements ContentRamdomRepository {
             contentRandomResponse.setId(random_number);
             contentRandomResponse.setText(text);
             contentRandomResponse.setTitle(title);
-            ObjectMapper objectMapper = new ObjectMapper();
+            ObjectMapper objectMapper = SingletonObjectMapper.getObjectMapper();
             return Response.ok(objectMapper.writeValueAsString(contentRandomResponse)).build();
 
         } catch (Exception e) {

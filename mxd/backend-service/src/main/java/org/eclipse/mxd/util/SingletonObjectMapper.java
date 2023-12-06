@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright (c) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
  * Copyright (c) 2023 Contributors to the Eclipse Foundation
@@ -22,39 +21,26 @@
  *
  ******************************************************************************/
 
-package org.eclipse.mxd.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class TransferContentResponse {
 
-    @JsonProperty("content")
-    private JsonNode asset;
+package org.eclipse.mxd.util;
 
-    public JsonNode getAsset() {
-        return asset;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class SingletonObjectMapper {
+
+    private static ObjectMapper objectMapper = new ObjectMapper();
+
+    private SingletonObjectMapper() {
     }
 
-    public void setAsset(JsonNode asset) {
-        this.asset = asset;
-    }
-
-    public TransferContentResponse(JsonNode asset) {
-        this.asset = asset;
-    }
-
-    public TransferContentResponse() {
-    }
-
-    @Override
-    public String toString() {
-        return "TransferResponse{" +
-                "asset=" + asset +
-                '}';
+    public static ObjectMapper getObjectMapper() {
+        if (objectMapper == null) {
+                if (objectMapper == null) {
+                    objectMapper = SingletonObjectMapper.getObjectMapper();
+                }
+        }
+        return objectMapper;
     }
 }
-
-

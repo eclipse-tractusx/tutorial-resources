@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ContentModelResponse {
+public class ContentGetAllResponse {
 
     @JsonProperty("id")
     private Long id;
@@ -43,10 +43,10 @@ public class ContentModelResponse {
     @JsonProperty("updatedDate")
     private Date updatedDate;
 
-    public ContentModelResponse() {
+    public ContentGetAllResponse() {
     }
 
-    public ContentModelResponse(Long id, String url, JsonNode asset, Date createdDate, Date updatedDate) {
+    public ContentGetAllResponse(Long id, String url, JsonNode asset, Date createdDate, Date updatedDate) {
         this.id = id;
         this.url = url;
         this.asset = asset;
@@ -97,7 +97,7 @@ public class ContentModelResponse {
 
     @Override
     public String toString() {
-        return "ContentModelResponse{" +
+        return "ContentGetAllResponse{" +
                 "id=" + id +
                 ", url='" + url + '\'' +
                 ", asset=" + asset +

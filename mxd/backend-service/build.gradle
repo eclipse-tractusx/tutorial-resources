@@ -5,19 +5,23 @@ plugins {
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 
-group 'org.eclipse.mxd'
-version '0.0.1'
-
-repositories {
-    mavenCentral()
-}
 
 ext {
     junitVersion = '5.9.2'
     jerseyVersion = '3.0.3'
     jettyVersion = '11.0.7'
     hibernateVersion = '6.0.2.Final'
+    appVersion = '1.0.0'
 }
+
+group 'org.eclipse.mxd'
+version "${appVersion}"
+
+repositories {
+    mavenCentral()
+}
+
+
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -76,7 +80,6 @@ dependencies {
 test {
     useJUnitPlatform()
 }
-
-tasks.register('dockerize', DockerBuildImage) {
-    images.add('mxd-backend-service-' + version + ':latest')
+task dockerize(type: DockerBuildImage) {
+    images.add("tractusx/mxd-backend-service:${appVersion}")
 }

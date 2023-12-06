@@ -23,8 +23,7 @@
 
 package org.eclipse.mxd.service.Impl;
 
-import org.eclipse.mxd.repository.ContentRamdomRepository;
-import org.eclipse.mxd.repository.Impl.ContentRandomRepositoryImpl;
+import org.eclipse.mxd.util.ContentsRandom;
 import org.eclipse.mxd.service.ContentRandomService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.core.Response;
@@ -36,12 +35,12 @@ public class ContentRandomServiceImpl implements ContentRandomService {
 
     private static final Logger logger = Logger.getLogger(ContentRandomServiceImpl.class.getName());
 
-    private final ContentRamdomRepository contentRamdomRepository = new ContentRandomRepositoryImpl();
+    private final ContentsRandom contentsRandom = new ContentsRandom();
 
     @Override
     public Response getRandomContent() {
         try {
-            return contentRamdomRepository.getRandomContent();
+            return contentsRandom.getRandomContent();
         } catch (Exception e) {
             logger.info(e.getMessage());
             return Response.ok(e.getMessage()).build();

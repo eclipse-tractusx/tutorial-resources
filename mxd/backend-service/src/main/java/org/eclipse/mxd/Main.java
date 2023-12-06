@@ -29,6 +29,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.mxd.util.HibernateUtil;
+import org.eclipse.mxd.util.SettingResolver;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.hibernate.cfg.Configuration;
 
@@ -51,7 +52,9 @@ public class Main {
         } catch (Exception e) {
             logger.info(" error " + e.getMessage());
         }
-        String port = System.getenv("server-port") != null ? System.getenv("server-port") : appProperties.getProperty("server.port");
+        SettingResolver settingResolver = new SettingResolver();
+        settingResolver.initialize();
+        String port = settingResolver.getSetting("server.port");
         Server server = new Server(Integer.parseInt(port));
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");

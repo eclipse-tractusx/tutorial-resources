@@ -32,19 +32,15 @@ import java.util.Date;
 @Entity
 public class Transfer {
 
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Transfer_SEQ")
-    @SequenceGenerator(name = "Transfer_SEQ", sequenceName = "Transfer_SEQ", allocationSize = 1)
-    private Long id;
+    private String transferID;
 
     @Column(columnDefinition = "TEXT")
     private String asset;
     @Column(columnDefinition = "TEXT")
     private String contents;
-
-    @Column(unique = true)
-    private String transferID;
-
+    
     @Temporal(TemporalType.TIMESTAMP)
     @Column
     private Date createdDate;
@@ -57,21 +53,12 @@ public class Transfer {
     }
 
 
-    public Transfer(Long id, String asset, String contents, String transferID, Date createdDate, Date updatedDate) {
-        this.id = id;
+    public Transfer(String asset, String contents, String transferID, Date createdDate, Date updatedDate) {
         this.asset = asset;
         this.contents = contents;
         this.transferID = transferID;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getAsset() {
@@ -117,10 +104,9 @@ public class Transfer {
     @Override
     public String toString() {
         return "Transfer{" +
-                "id=" + id +
+                "transferID='" + transferID + '\'' +
                 ", asset='" + asset + '\'' +
                 ", contents='" + contents + '\'' +
-                ", transferID='" + transferID + '\'' +
                 ", createdDate=" + createdDate +
                 ", updatedDate=" + updatedDate +
                 '}';

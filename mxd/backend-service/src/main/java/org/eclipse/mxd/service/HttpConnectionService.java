@@ -24,7 +24,7 @@
 package org.eclipse.mxd.service;
 
 
-import org.eclipse.mxd.model.TransferRequest;
+import org.eclipse.mxd.model.TransfersRequest;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -32,10 +32,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.logging.Logger;
 
-public class HttpServiceConnection {
-    private static final Logger logger = Logger.getLogger(HttpServiceConnection.class.getName());
+public class HttpConnectionService {
+    private static final Logger logger = Logger.getLogger(HttpConnectionService.class.getName());
 
-    public static String getUrlAssets(TransferRequest receivedModel) {
+    public static String getUrlAssets(TransfersRequest receivedModel) {
         String res = null;
         try {
             URL url = new URL(receivedModel.getEndpoint());

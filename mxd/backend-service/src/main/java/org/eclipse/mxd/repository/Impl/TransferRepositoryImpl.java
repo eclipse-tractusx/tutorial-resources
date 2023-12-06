@@ -23,17 +23,18 @@
 
 package org.eclipse.mxd.repository.Impl;
 
+import org.eclipse.mxd.model.TransfersResponse;
+import org.eclipse.mxd.util.Constants;
 import org.eclipse.mxd.util.HibernateUtil;
 import org.eclipse.mxd.entity.Content;
 import org.eclipse.mxd.entity.Transfer;
-import org.eclipse.mxd.model.TransfersModel;
 import org.eclipse.mxd.repository.TransferRepository;
-import org.eclipse.mxd.util.DateTimeUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.Query;
 import org.hibernate.Session;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -43,24 +44,24 @@ public class TransferRepositoryImpl implements TransferRepository {
     private static final Logger logger = Logger.getLogger(TransferRepositoryImpl.class.getName());
 
     @Override
-    public Long createTransferWithID(String asset, String contents, String id) {
+    public String createTransferWithID(String asset, String contents, String id) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             if (session != null) {
                 Transfer transfer = new Transfer();
                 transfer.setTransferID(id);
                 transfer.setAsset(asset);
-                transfer.setCreatedDate(DateTimeUtil.getCurrentDateTimeInAsiaKolkata());
-                transfer.setUpdatedDate(DateTimeUtil.getCurrentDateTimeInAsiaKolkata());
+                transfer.setCreatedDate(new Date());
+                transfer.setUpdatedDate(new Date());
                 transfer.setContents(contents);
                 session.getTransaction().begin();
                 session.persist(transfer);
                 session.getTransaction().commit();
                 session.close();
-                if (transfer.getId() != null) {
-                    return transfer.getId();
+                if (transfer.getTransferID() != null) {
+                    return transfer.getTransferID();
                 } else {
-                    return -1L;
+                    return Constants.EMPTYSTRING;
                 }
             }
 
@@ -68,22 +69,21 @@ public class TransferRepositoryImpl implements TransferRepository {
         } catch (Exception e) {
             logger.info(e.getMessage());
         }
-        return -1L;
+        return Constants.EMPTYSTRING;
     }
 
     @Override
-    public TransfersModel getTransferById(String id) {
+    public TransfersResponse getTransferById(String id) {
         Transfer transfer = new Transfer();
-        TransfersModel transfersData = new TransfersModel();
+        TransfersResponse transfersData = new TransfersResponse();
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             if (session != null) {
-                transfer = session.createQuery("SELECT t FROM Transfer t WHERE t.transferID = :transferID", Transfer.class)
-                        .setParameter("transferID", id)
-                        .getSingleResult();
+                transfer = session.find(Transfer.class, id);
+              logger.info("line 83 transferRepoImpl "+transfer.toString());
                 session.close();
             }
-            transfersData = new TransfersModel(transfer.getId(), transfer.getAsset(), transfer.getContents(), transfer.getCreatedDate(), transfer.getUpdatedDate());
+            transfersData = new TransfersResponse(transfer.getAsset(), transfer.getContents(), transfer.getTransferID(), transfer.getCreatedDate(), transfer.getUpdatedDate());
         } catch (Exception e) {
             logger.info(e.getMessage());
         }
@@ -123,16 +123,16 @@ public class TransferRepositoryImpl implements TransferRepository {
     }
 
     @Override
-    public List<TransfersModel> getAllTransfers() {
-        List<TransfersModel> response = new ArrayList<TransfersModel>();
+    public List<TransfersResponse> getAllTransfers() {
+        List<TransfersResponse> response = new ArrayList<TransfersResponse>();
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             if (session != null) {
                 Query query = session.createQuery("select e from Content e", Content.class);
                 List<Transfer> transferList = query.getResultList();
                 transferList.forEach(data -> {
-                    TransfersModel transfersModel = new TransfersModel(data.getId(), data.getAsset(), data.getContents(), data.getCreatedDate(), data.getCreatedDate());
-                    response.add(transfersModel);
+                    TransfersResponse transfersResponse = new TransfersResponse(data.getAsset(), data.getContents(), data.getCreatedDate(), data.getCreatedDate());
+                    response.add(transfersResponse);
                 });
                 session.close();
             }

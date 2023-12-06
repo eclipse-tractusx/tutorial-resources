@@ -23,9 +23,6 @@
 # * 
 # ******************************************************************************/
 
-
-
-
 # Use the official OpenJDK 17 image as the base image
 FROM openjdk:17
 

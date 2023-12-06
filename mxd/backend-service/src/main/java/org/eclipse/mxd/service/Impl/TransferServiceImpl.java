@@ -24,17 +24,17 @@
 package org.eclipse.mxd.service.Impl;
 
 import jakarta.ws.rs.core.MediaType;
-import org.eclipse.mxd.entity.Transfer;
 import org.eclipse.mxd.model.*;
 import org.eclipse.mxd.repository.Impl.TransferRepositoryImpl;
 import org.eclipse.mxd.repository.TransferRepository;
-import org.eclipse.mxd.service.HttpServiceConnection;
+import org.eclipse.mxd.service.HttpConnectionService;
 import org.eclipse.mxd.service.TransferService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.mxd.util.Constants;
+import org.eclipse.mxd.util.SingletonObjectMapper;
 
 import java.util.logging.Logger;
 
@@ -48,20 +48,18 @@ public class TransferServiceImpl implements TransferService {
 
     @Override
     public Response acceptTransfer(String transferRequest) {
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = SingletonObjectMapper.getObjectMapper();
         try {
-            TransferRequest transferRequestData = objectMapper.readValue(transferRequest, TransferRequest.class);
-            String assetsUrl = HttpServiceConnection.getUrlAssets(transferRequestData);
-            Long id = this.transferRepository.createTransferWithID(new ObjectMapper().writeValueAsString(transferRequestData), assetsUrl,
-                    transferRequestData.getId());
-            if (id != -1) {
-                TransferModelsResponse transferModelsResponse = new TransferModelsResponse();
-                transferModelsResponse.setAsset(new ObjectMapper().readTree(transferRequest));
-                return Response.ok(new ObjectMapper().writeValueAsString(transferModelsResponse.getAsset())).build();
+            TransfersRequest transfersRequestData = objectMapper.readValue(transferRequest, TransfersRequest.class);
+            String assetsUrl = HttpConnectionService.getUrlAssets(transfersRequestData);
+            String transferId = this.transferRepository.createTransferWithID(SingletonObjectMapper.getObjectMapper().writeValueAsString(transfersRequestData), assetsUrl,
+                    transfersRequestData.getId());
+            if (!Constants.EMPTYSTRING.equalsIgnoreCase(transferId) && !transferId.isEmpty()) {
+                return Response.ok(SingletonObjectMapper.getObjectMapper().writeValueAsString((SingletonObjectMapper.getObjectMapper().readTree(transferRequest)))).build();
             } else {
                 ErrorModel errorModel = new ErrorModel(400, "Resource Not Created", "Requested Resource Not Created");
                 return Response.status(Response.Status.BAD_REQUEST)
-                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .entity(SingletonObjectMapper.getObjectMapper().writeValueAsString(errorModel))
                         .type(MediaType.APPLICATION_JSON)
                         .build();
             }
@@ -70,7 +68,7 @@ public class TransferServiceImpl implements TransferService {
                 logger.info(e.getMessage());
                 ErrorModel errorModel = new ErrorModel(500, "Internal Server Error", e.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .entity(SingletonObjectMapper.getObjectMapper().writeValueAsString(errorModel))
                         .type(MediaType.APPLICATION_JSON)
                         .build();
             } catch (Exception ex) {
@@ -87,16 +85,17 @@ public class TransferServiceImpl implements TransferService {
     @Override
     public Response getTransfer(String id) {
         try {
-            TransfersModel transfersModel = this.transferRepository.getTransferById(id);
-            if (transfersModel != null && transfersModel.getId() != null) {
-                JsonNode jsonNode = new ObjectMapper().readTree(transfersModel.getAsset());
-                TransferModelsResponse transferModelsResponse = new TransferModelsResponse();
-                transferModelsResponse.setAsset(jsonNode);
-                return Response.ok(new ObjectMapper().writeValueAsString(transferModelsResponse.getAsset())).build();
+            TransfersResponse transfersResponse = this.transferRepository.getTransferById(id);
+            logger.info("line 89 transferImpl : "+transfersResponse);
+            if (transfersResponse != null && transfersResponse.getTransferID() != null) {
+                logger.info("line 91 transferImpl : "+transfersResponse.getAsset());
+                JsonNode jsonNode = SingletonObjectMapper.getObjectMapper().readTree(transfersResponse.getAsset());
+                logger.info("line 93 transferImpl : "+jsonNode.toString());
+                return Response.ok(SingletonObjectMapper.getObjectMapper().writeValueAsString(jsonNode)).build();
             } else {
                 ErrorModel errorModel = new ErrorModel(404, "Resource Not Found", "Requested Resource Not Found");
                 return Response.status(Response.Status.NOT_FOUND)
-                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .entity(SingletonObjectMapper.getObjectMapper().writeValueAsString(errorModel))
                         .type(MediaType.APPLICATION_JSON)
                         .build();
             }
@@ -105,7 +104,7 @@ public class TransferServiceImpl implements TransferService {
                 logger.info(e.getMessage());
                 ErrorModel errorModel = new ErrorModel(500, "Internal Server Error", e.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .entity(SingletonObjectMapper.getObjectMapper().writeValueAsString(errorModel))
                         .type(MediaType.APPLICATION_JSON)
                         .build();
             } catch (Exception ex) {
@@ -121,16 +120,14 @@ public class TransferServiceImpl implements TransferService {
     @Override
     public Response getTransferContents(String id) {
         try {
-            TransfersModel transfersModel = this.transferRepository.getTransferById(id);
-            if (transfersModel != null && transfersModel.getContents() != null) {
-                JsonNode jsonNode = new ObjectMapper().readTree(transfersModel.getContents());
-                TransferModelsResponse transferModelsResponse = new TransferModelsResponse();
-                transferModelsResponse.setAsset(jsonNode);
-                return Response.ok(new ObjectMapper().writeValueAsString(transferModelsResponse.getAsset())).build();
+            TransfersResponse transfersResponse = this.transferRepository.getTransferById(id);
+            if (transfersResponse != null && transfersResponse.getContents() != null) {
+                JsonNode jsonNode = SingletonObjectMapper.getObjectMapper().readTree(transfersResponse.getContents());
+                return Response.ok(SingletonObjectMapper.getObjectMapper().writeValueAsString(jsonNode)).build();
             } else {
                 ErrorModel errorModel = new ErrorModel(404, "Resource Not Found", "Requested Resource Not Found ");
                 return Response.status(Response.Status.NOT_FOUND)
-                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .entity(SingletonObjectMapper.getObjectMapper().writeValueAsString(errorModel))
                         .type(MediaType.APPLICATION_JSON)
                         .build();
             }
@@ -139,7 +136,7 @@ public class TransferServiceImpl implements TransferService {
                 logger.info(e.getMessage());
                 ErrorModel errorModel = new ErrorModel(500, "Internal Server Error", e.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .entity(SingletonObjectMapper.getObjectMapper().writeValueAsString(errorModel))
                         .type(MediaType.APPLICATION_JSON)
                         .build();
             } catch (Exception ex) {

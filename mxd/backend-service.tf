@@ -42,7 +42,7 @@ resource "kubernetes_deployment" "backend-service" {
       spec {
         container {
           name              = "backend-service"
-          image             = "backend-services:latest"
+          image             = "tractusx/mxd-backend-service:1.0.0"
           image_pull_policy = "Never"
 
           port {

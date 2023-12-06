@@ -24,16 +24,17 @@
 
 package org.eclipse.mxd.service.Impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.mxd.model.*;
 import org.eclipse.mxd.repository.ContentsRepository;
 import org.eclipse.mxd.repository.Impl.ContentsRepositoryImpl;
 import org.eclipse.mxd.service.ContentService;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import org.eclipse.mxd.util.SingletonObjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,10 +53,10 @@ public class ContentServiceImpl implements ContentService {
         try {
             List<ContentsRequest> contentResponse = this.contentServiceRepository.getAllAssets();
             if (contentResponse != null && !contentResponse.isEmpty()) {
-                List<ContentModelResponse> contentsModels = new ArrayList<ContentModelResponse>();
+                List<ContentGetAllResponse> contentsModels = new ArrayList<ContentGetAllResponse>();
                 for (ContentsRequest contentsRequest : contentResponse) {
-                    JsonNode jsonNode = new ObjectMapper().readTree(contentsRequest.getAsset());
-                    ContentModelResponse contentsModelRes = new ContentModelResponse();
+                    JsonNode jsonNode = SingletonObjectMapper.getObjectMapper().readTree(contentsRequest.getAsset());
+                    ContentGetAllResponse contentsModelRes = new ContentGetAllResponse();
                     contentsModelRes.setId(contentsRequest.getId());
                     contentsModelRes.setAsset(jsonNode);
                     contentsModelRes.setUrl(uriInfo.getAbsolutePath().toString() + contentsRequest.getId());
@@ -63,12 +64,12 @@ public class ContentServiceImpl implements ContentService {
                     contentsModelRes.setUpdatedDate(contentsRequest.getUpdatedDate());
                     contentsModels.add(contentsModelRes);
                 }
-                return Response.ok(new ObjectMapper().writeValueAsString(contentsModels)).build();
+                return Response.ok(SingletonObjectMapper.getObjectMapper().writeValueAsString(contentsModels)).build();
 
             } else {
                 ErrorModel errorModel = new ErrorModel(404, "Resource Not Found", "Requested Resource Not Found");
                 return Response.status(Response.Status.NOT_FOUND)
-                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .entity(SingletonObjectMapper.getObjectMapper().writeValueAsString(errorModel))
                         .type(MediaType.APPLICATION_JSON)
                         .build();
             }
@@ -77,7 +78,7 @@ public class ContentServiceImpl implements ContentService {
                 logger.info(e.getMessage());
                 ErrorModel errorModel = new ErrorModel(500, "Internal Server Error", e.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .entity(SingletonObjectMapper.getObjectMapper().writeValueAsString(errorModel))
                         .type(MediaType.APPLICATION_JSON)
                         .build();
             } catch (Exception ex) {
@@ -97,13 +98,11 @@ public class ContentServiceImpl implements ContentService {
         try {
             ContentsRequest content = this.contentServiceRepository.getAssetById(id);
             if (content != null && content.getId() != null) {
-                ContentJsonResponse contentModelRes = new ContentJsonResponse();
-                contentModelRes.setAsset(new ObjectMapper().readTree(content.getAsset()));
-                return Response.ok(new ObjectMapper().writeValueAsString(contentModelRes.getAsset())).build();
+                return Response.ok(SingletonObjectMapper.getObjectMapper().writeValueAsString(SingletonObjectMapper.getObjectMapper().readTree(content.getAsset()))).build();
             } else {
                 ErrorModel errorModel = new ErrorModel(404, "Resource Not Found", "Requested Resource Not Found");
                 return Response.status(Response.Status.NOT_FOUND)
-                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .entity(SingletonObjectMapper.getObjectMapper().writeValueAsString(errorModel))
                         .type(MediaType.APPLICATION_JSON)
                         .build();
             }
@@ -112,7 +111,7 @@ public class ContentServiceImpl implements ContentService {
                 logger.info(e.getMessage());
                 ErrorModel errorModel = new ErrorModel(500, "Internal Server Error", e.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .entity(SingletonObjectMapper.getObjectMapper().writeValueAsString(errorModel))
                         .type(MediaType.APPLICATION_JSON)
                         .build();
             } catch (Exception ex) {
@@ -131,17 +130,18 @@ public class ContentServiceImpl implements ContentService {
     public Response postContent(String requestBody, UriInfo uriInfo) {
         try {
             Long id = contentServiceRepository.createAsset(requestBody);
+            logger.info("line no 132 contentId : "+id);
             if (id != null) {
-                logger.info(uriInfo.getAbsolutePath() + "");
+                logger.info("line no 134 "+uriInfo.getAbsolutePath() + "");
                 ContentsResponse contentsResponse = new ContentsResponse();
                 contentsResponse.setId(id);
                 contentsResponse.setUrl(uriInfo.getAbsolutePath() + "" + id);
-                return Response.ok(new ObjectMapper().writeValueAsString(contentsResponse)).build();
+                return Response.ok(SingletonObjectMapper.getObjectMapper().writeValueAsString(contentsResponse)).build();
             } else {
 
                 ErrorModel errorModel = new ErrorModel(400, "Resource Not Created", "Requested Resource Not Created");
                 return Response.status(Response.Status.BAD_REQUEST)
-                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .entity(SingletonObjectMapper.getObjectMapper().writeValueAsString(errorModel))
                         .type(MediaType.APPLICATION_JSON)
                         .build();
             }
@@ -150,7 +150,7 @@ public class ContentServiceImpl implements ContentService {
                 logger.info(e.getMessage());
                 ErrorModel errorModel = new ErrorModel(500, "Internal Server Error", e.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                        .entity(new ObjectMapper().writeValueAsString(errorModel))
+                        .entity(SingletonObjectMapper.getObjectMapper().writeValueAsString(errorModel))
                         .type(MediaType.APPLICATION_JSON)
                         .build();
             } catch (Exception ex) {

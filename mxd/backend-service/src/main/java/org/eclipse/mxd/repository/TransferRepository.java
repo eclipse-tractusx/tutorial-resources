@@ -23,20 +23,20 @@
 
 package org.eclipse.mxd.repository;
 
-import org.eclipse.mxd.model.TransfersModel;
+import org.eclipse.mxd.model.TransfersResponse;
 
 import java.util.List;
 
 public interface TransferRepository {
 
-    Long createTransferWithID(String asset, String contents, String id);
+    String createTransferWithID(String asset, String contents, String id);
 
-    TransfersModel getTransferById(String id);
+    TransfersResponse getTransferById(String id);
 
     void updateTransfer(Long id, String asset);
 
     void deleteTransfer(Long id);
 
-    List<TransfersModel> getAllTransfers();
+    List<TransfersResponse> getAllTransfers();
 
 }

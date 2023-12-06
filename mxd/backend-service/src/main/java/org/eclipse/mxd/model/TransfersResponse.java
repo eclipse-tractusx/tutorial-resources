@@ -24,24 +24,31 @@
 
 package org.eclipse.mxd.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
-public class TransfersModel {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class TransfersResponse {
 
-    private Long id;
+    @JsonProperty("asset")
     private String asset;
+    @JsonProperty("contents")
     private String contents;
+    @JsonProperty("transferID")
     private String transferID;
+    @JsonProperty("createdDate")
     private Date createdDate;
+    @JsonProperty("updatedDate")
     private Date updatedDate;
 
-    public TransfersModel() {
+    public TransfersResponse() {
 
     }
 
-    public TransfersModel(Long id, String asset, String contents, String transferID, Date createdDate,
-                          Date updatedDate) {
-        this.id = id;
+    public TransfersResponse(String asset, String contents, String transferID, Date createdDate,
+                             Date updatedDate) {
         this.asset = asset;
         this.contents = contents;
         this.transferID = transferID;
@@ -49,21 +56,11 @@ public class TransfersModel {
         this.updatedDate = updatedDate;
     }
 
-    public TransfersModel(Long id, String asset, String contents, Date createdDate, Date updatedDate) {
-        this.id = id;
+    public TransfersResponse(String asset, String contents, Date createdDate, Date updatedDate) {
         this.asset = asset;
         this.contents = contents;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(int Long) {
-        this.id = id;
     }
 
     public String getAsset() {
@@ -108,7 +105,12 @@ public class TransfersModel {
 
     @Override
     public String toString() {
-        return "TransfersModel [id=" + id + ", asset=" + asset + ", contents=" + contents + ", transferID=" + transferID
-                + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + "]";
+        return "TransfersResponse{" +
+                "asset='" + asset + '\'' +
+                ", contents='" + contents + '\'' +
+                ", transferID='" + transferID + '\'' +
+                ", createdDate=" + createdDate +
+                ", updatedDate=" + updatedDate +
+                '}';
     }
 }
