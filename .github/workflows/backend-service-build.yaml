@@ -1,0 +1,84 @@
+#
+#  Copyright (c) 2023 Bayerische Motoren Werke Aktiengesellschaft
+#
+#  See the NOTICE file(s) distributed with this work for additional
+#  information regarding copyright ownership.
+#
+#  This program and the accompanying materials are made available under the
+#  terms of the Apache License, Version 2.0 which is available at
+#  https://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+#  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+#  License for the specific language governing permissions and limitations
+#  under the License.
+#
+#  SPDX-License-Identifier: Apache-2.0
+#
+
+---
+name: Build MXD Backend Service
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'mxd/backend-service/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'mxd/backend-service/**'
+  workflow_dispatch:
+
+env:
+  IMAGE_NAMESPACE: "tractusx"
+  IMAGE_NAME: "mxd-backend-service"
+
+jobs:
+  Build-And-Push-Backend-Service:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Gradle Build
+        working-directory: mxd/backend-service
+        run: |-
+          ./gradlew clean build
+
+      - name: Docker Meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}
+          # Automatically prepare image tags; See action docs for more examples.
+          # semver patter will generate tags like these for example :1 :1.2 :1.2.3
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}
+            type=semver,pattern={{major}}.{{minor}}
+
+      - name: DockerHub login
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          # Use existing DockerHub credentials present as secrets
+          username: ${{ secrets.DOCKER_HUB_USER }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: Docker Push Image
+        uses: docker/build-push-action@v5
+        with:
+          context: mxd/backend-service
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
