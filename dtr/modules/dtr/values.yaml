@@ -1,0 +1,15 @@
+# enables the default postgres database
+enablePostgres: true
+# enables the default keycloak identity provider
+# relies on a postgres instance
+enableKeycloak: false
+
+registry:
+  imagePullPolicy: Always
+  containerPort: 4243
+  ## If 'authentication' is set to false, no OAuth authentication is enforced
+  authentication: false
+
+  ingress:
+    enabled: false
+    urlPrefix: /semantics/registry
