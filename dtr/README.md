@@ -6,7 +6,7 @@ The Bob EDC will be used as the data provider part and Alice can be used as the 
 
 ## Prerequisites
 
-You just need the MXD Kubernetes cluster with the EDCs (and MIW and Keycloak). Instruction can be found in the [mxd documentation](../mxd/README.md)).
+You just need the MXD Kubernetes cluster with the EDCs (and MIW and Keycloak). Instruction can be found in the [mxd documentation](../mxd/README.md).
 
 ## Deploying everything
 
