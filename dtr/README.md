@@ -21,11 +21,11 @@ terraform apply
 >
 > In the following we try to describe the flow, but don't get confused by the order we are referencing the scripts. Please use the order of the file names when executing them! 😉
 
-As a data provider you need to host/store somewhere your submodels, which you want to share. For this reason we created a service that is called ["backend-data-service" (short `bds`)](#backend-data-service). This service can store any text based data (e.g. JSON, XML, plain text) under a specific ID. This data can be received again, by using the same ID. As the data provider we will use this service to host our data (`./1-create-data.sh`).
+As a data provider you need to host/store somewhere your submodels, which you want to share. For this reason we created a service that is called ["backend-data-service" (short `bds`)](#backend-data-service). This service can store any text based data (e.g. JSON, XML, plain text) under a specific ID. This data can be received again, by using the same ID. As the data provider we will use this service to host our data ([`./1-create-data.sh`](./1-create-data.sh)).
 
-The dDTR is a registry in which the consumer can search for the information where and how to get the data he wants. Therefor the provider needs to register his submodels in the DTR (`./3-create-dtr-entry.sh`). As we want a sovereign data exchange we can't link directly to the bds. Therefor we need to create an Contract Offer (EDC Asset, Policy, Contract Definition) in the EDC first (see `./2-create-edc-objects.sh`) to provide the access to our data.
+The dDTR is a registry in which the consumer can search for the information where and how to get the data he wants. Therefor the provider needs to register his submodels in the DTR ([`./3-create-dtr-entry.sh`](./3-create-dtr-entry.sh)). As we want a sovereign data exchange we can't link directly to the bds. Therefor we need to create an Contract Offer (EDC Asset, Policy, Contract Definition) in the EDC first (see [`./2-create-edc-objects.sh`](./2-create-edc-objects.sh)) to provide the access to our data.
 
-As we are talking about decentralization and sovereign data exchange, we also want to restrict the access to our DTR and will keep it behind the EDC too. This is done `./4-create-edc-objects-for-dtr-access.sh`.
+As we are talking about decentralization and sovereign data exchange, we also want to restrict the access to our DTR and will keep it behind the EDC too. This is done [`./4-create-edc-objects-for-dtr-access.sh`](./4-create-edc-objects-for-dtr-access.sh).
 
 ## Data Consuming
 
@@ -35,8 +35,6 @@ On the consumer side (Alice EDC) we now need to do two steps:
 2. Receive the data from this EDC
 
 To keep it simple we simply used the same EDC (bob) for providing the access to the DTR and the data itself. In a real world scenario they could be different EDCs.
-
-### Step 1
 
 For getting the access to the DTR simply follow the consumer flow from the MXD. Only while picking the Contract Offer which you want to use you need to pick the right one and at the end, the call through the DataPlanes is a little different, because you can put `http://.../public` anything (path, query params) you want to interact with the DTR api. But this is again already described in the [Digitial Twin KIT](https://eclipse-tractusx.github.io/docs-kits/next/kits/Digital%20Twin%20Kit/Software%20Development%20View/Specification%20Digital%20Twin%20KIT).
 
