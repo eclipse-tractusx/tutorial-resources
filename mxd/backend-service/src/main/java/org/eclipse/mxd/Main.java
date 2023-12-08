@@ -38,7 +38,6 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 public class Main {
-    private final static ContentService contentService = new ContentServiceImpl();
     private static final Logger logger = Logger.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
@@ -46,15 +45,10 @@ public class Main {
     }
 
     private static void startJettyServer() {
-        Properties appProperties = new Properties();
-        try (InputStream input = HibernateUtil.class.getClassLoader().getResourceAsStream("application.properties")) {
-            appProperties.load(input);
-        } catch (Exception e) {
-            logger.info(" error " + e.getMessage());
-        }
-        SettingResolver settingResolver = new SettingResolver();
-        settingResolver.initialize();
-        String port = settingResolver.getSetting("server.port");
+        SettingResolver settingResolver = SettingResolver.getInstance() ;
+        String port = (String) settingResolver.getSetting("server.port");
+        Object ports = settingResolver.getSetting("server.port");
+
         Server server = new Server(Integer.parseInt(port));
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");

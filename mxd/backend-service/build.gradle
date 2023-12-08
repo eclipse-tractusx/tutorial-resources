@@ -80,6 +80,8 @@ dependencies {
 test {
     useJUnitPlatform()
 }
-task dockerize(type: DockerBuildImage) {
+
+tasks.register('dockerize', DockerBuildImage) {
+    dependsOn createDockerfile
     images.add("tractusx/mxd-backend-service:${appVersion}")
 }

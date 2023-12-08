@@ -24,8 +24,6 @@
 
 package org.eclipse.mxd.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.Map;
 
 public class TransfersRequest {
@@ -34,7 +32,7 @@ public class TransfersRequest {
     private String endpoint;
     private String authKey;
     private String authCode;
-    @JsonIgnore
+
     private Map<String, Object> properties;
 
     public TransfersRequest(String id, String endpoint, String authKey, String authCode, Map<String, Object> properties) {
@@ -64,7 +62,7 @@ public class TransfersRequest {
         return authCode;
     }
 
-    public  Map<String, Object> getProperties() {
+    public Map<String, Object> getProperties() {
         return properties;
     }
 
@@ -84,7 +82,7 @@ public class TransfersRequest {
         this.authCode = authCode;
     }
 
-    public void setProperties( Map<String, Object> properties) {
+    public void setProperties(Map<String, Object> properties) {
         this.properties = properties;
     }
 

@@ -59,11 +59,10 @@ public class ContentsRepositoryImpl implements ContentsRepository {
     }
 
     public Content saveContent(String asset) {
-        logger.info("line no 62 saveContent : "+asset);
         Content content = new Content();
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            logger.info("line no 66 saveContent get Session ");
+
             if (session != null) {
                 content.setAsset(asset);
                 content.setCreatedDate(new Date());
@@ -72,8 +71,6 @@ public class ContentsRepositoryImpl implements ContentsRepository {
                 session.persist(content);
                 session.getTransaction().commit();
                 session.close();
-
-                logger.info("line no 76 saved content : "+content.toString());
             }
 
         } catch (Exception e) {

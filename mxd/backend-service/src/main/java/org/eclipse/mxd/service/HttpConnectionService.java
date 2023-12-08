@@ -53,7 +53,7 @@ public class HttpConnectionService {
                 response.append(inputLine);
             }
             in.close();
-            logger.info("Response Body: " + response.toString());
+            logger.info("Response Body: " + response);
             connection.disconnect();
             return response.toString();
         } catch (Exception e) {

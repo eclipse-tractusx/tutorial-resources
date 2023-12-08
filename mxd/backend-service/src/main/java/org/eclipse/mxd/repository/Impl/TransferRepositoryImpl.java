@@ -80,7 +80,7 @@ public class TransferRepositoryImpl implements TransferRepository {
             Session session = HibernateUtil.getSessionFactory().openSession();
             if (session != null) {
                 transfer = session.find(Transfer.class, id);
-              logger.info("line 83 transferRepoImpl "+transfer.toString());
+                logger.info("transferRepoImpl " + transfer);
                 session.close();
             }
             transfersData = new TransfersResponse(transfer.getAsset(), transfer.getContents(), transfer.getTransferID(), transfer.getCreatedDate(), transfer.getUpdatedDate());

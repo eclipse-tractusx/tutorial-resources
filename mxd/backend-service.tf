@@ -43,27 +43,27 @@ resource "kubernetes_deployment" "backend-service" {
         container {
           name              = "backend-service"
           image             = "tractusx/mxd-backend-service:1.0.0"
-          image_pull_policy = "Never"
+          image_pull_policy = "Always"
 
           port {
             container_port = 8080
             name           = "backend-port"
           }
           env {
-            name  = "BACKEND-SERVICE-DATABASE_URL"
+            name  = "database.url"
             value = "jdbc:postgresql://${local.pg-ip}:${var.postgres-port}/backendservicedb"
           }
 
           env {
-            name  = "BACKEND-SERVICE-DATABASE_USER"
+            name  = "database.user"
             value = "postgres"
           }
           env {
-            name  = "BACKEND-SERVICE-DATABASE_PASSWORD"
+            name  = "database.password"
             value = "postgres"
           }
           env {
-            name  = "server-port"
+            name  = "server.port"
             value = 8080
           }
         }

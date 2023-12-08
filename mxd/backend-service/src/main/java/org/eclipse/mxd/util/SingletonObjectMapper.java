@@ -30,17 +30,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SingletonObjectMapper {
 
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     private SingletonObjectMapper() {
     }
 
     public static ObjectMapper getObjectMapper() {
-        if (objectMapper == null) {
-                if (objectMapper == null) {
-                    objectMapper = SingletonObjectMapper.getObjectMapper();
-                }
-        }
         return objectMapper;
     }
 }

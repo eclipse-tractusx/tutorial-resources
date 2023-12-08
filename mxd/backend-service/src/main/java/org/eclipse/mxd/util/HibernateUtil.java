@@ -46,15 +46,14 @@ public class HibernateUtil {
             try {
                 Configuration configuration = new Configuration();
                 Properties settings = new Properties();
-                SettingResolver settingResolver = new SettingResolver();
-                settingResolver.initialize();
-                logger.info("database.url = "+settingResolver.getSetting("database.url"));
-                logger.info("database.user = "+settingResolver.getSetting("database.user"));
-                logger.info("database.password = "+settingResolver.getSetting("database.password"));
+                SettingResolver settingResolver = SettingResolver.getInstance();
+                logger.info(Constants.DATABASE_URL+settingResolver.getSetting("database.url"));
+                logger.info(Constants.DATABASE_USER+settingResolver.getSetting("database.user"));
+                logger.info(Constants.DATABASE_PASSWORD+settingResolver.getSetting("database.password"));
 
-                settings.put(Environment.URL, settingResolver.getSetting("database.url"));
-                settings.put(Environment.USER, settingResolver.getSetting("database.user"));
-                settings.put(Environment.PASS, settingResolver.getSetting("database.password"));
+                settings.put(Environment.URL, settingResolver.getSetting(Constants.DATABASE_URL));
+                settings.put(Environment.USER, settingResolver.getSetting(Constants.DATABASE_USER));
+                settings.put(Environment.PASS, settingResolver.getSetting(Constants.DATABASE_PASSWORD));
                 settings.put(Environment.DRIVER, "org.postgresql.Driver");
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
                 settings.put(Environment.SHOW_SQL, "true");

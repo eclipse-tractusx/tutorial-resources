@@ -26,4 +26,7 @@ package org.eclipse.mxd.util;
 public class Constants {
 
     public  static final String EMPTYSTRING="";
+    public  static final String DATABASE_URL="database.url";
+    public  static final String DATABASE_USER="database.user";
+    public  static final String DATABASE_PASSWORD="database.password";
 }

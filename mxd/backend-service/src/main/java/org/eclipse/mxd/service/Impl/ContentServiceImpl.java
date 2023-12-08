@@ -130,9 +130,9 @@ public class ContentServiceImpl implements ContentService {
     public Response postContent(String requestBody, UriInfo uriInfo) {
         try {
             Long id = contentServiceRepository.createAsset(requestBody);
-            logger.info("line no 132 contentId : "+id);
+            logger.info("Saving contentId : " + id);
             if (id != null) {
-                logger.info("line no 134 "+uriInfo.getAbsolutePath() + "");
+                logger.info("Path  " + uriInfo.getAbsolutePath() + "");
                 ContentsResponse contentsResponse = new ContentsResponse();
                 contentsResponse.setId(id);
                 contentsResponse.setUrl(uriInfo.getAbsolutePath() + "" + id);

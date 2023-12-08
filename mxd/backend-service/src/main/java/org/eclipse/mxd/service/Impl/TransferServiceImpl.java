@@ -86,11 +86,9 @@ public class TransferServiceImpl implements TransferService {
     public Response getTransfer(String id) {
         try {
             TransfersResponse transfersResponse = this.transferRepository.getTransferById(id);
-            logger.info("line 89 transferImpl : "+transfersResponse);
+            logger.info("transferImpl : "+transfersResponse);
             if (transfersResponse != null && transfersResponse.getTransferID() != null) {
-                logger.info("line 91 transferImpl : "+transfersResponse.getAsset());
                 JsonNode jsonNode = SingletonObjectMapper.getObjectMapper().readTree(transfersResponse.getAsset());
-                logger.info("line 93 transferImpl : "+jsonNode.toString());
                 return Response.ok(SingletonObjectMapper.getObjectMapper().writeValueAsString(jsonNode)).build();
             } else {
                 ErrorModel errorModel = new ErrorModel(404, "Resource Not Found", "Requested Resource Not Found");
