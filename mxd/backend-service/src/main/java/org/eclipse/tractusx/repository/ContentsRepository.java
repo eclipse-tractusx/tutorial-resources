@@ -1,5 +1,5 @@
 
-<!--/*******************************************************************************
+/*******************************************************************************
  *
  * Copyright (c) 2023 Contributors to the Eclipse Foundation
  *
@@ -19,12 +19,22 @@
  * SPDX-License-Identifier: Apache-2.0
  *
  ******************************************************************************/
-!-->
 
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="https://jakarta.ee/xml/ns/jakartaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
-       bean-discovery-mode="annotated">
+package org.eclipse.tractusx.repository;
 
-</beans>
+import org.eclipse.tractusx.model.ContentsRequest;
+
+import java.util.List;
+
+public interface ContentsRepository {
+
+    Long createAsset(String asset);
+
+    ContentsRequest getAssetById(Long id);
+
+    void updateAsset(Long id, String asset);
+
+    void deleteAsset(Long id);
+
+    List<ContentsRequest> getAllAssets();
+}

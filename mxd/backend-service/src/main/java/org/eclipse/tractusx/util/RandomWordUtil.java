@@ -1,5 +1,5 @@
 
-<!--/*******************************************************************************
+/*******************************************************************************
  *
  * Copyright (c) 2023 Contributors to the Eclipse Foundation
  *
@@ -19,12 +19,24 @@
  * SPDX-License-Identifier: Apache-2.0
  *
  ******************************************************************************/
-!-->
 
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="https://jakarta.ee/xml/ns/jakartaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
-       bean-discovery-mode="annotated">
+package org.eclipse.tractusx.util;
 
-</beans>
+import java.security.SecureRandom;
+
+public class RandomWordUtil {
+
+    public static String generateRandomWord() {
+        String characters = "abcdefghijklmnopqrstuvwxyz";
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder();
+
+        int length = random.nextInt(8) + 1;
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(characters.length());
+            sb.append(characters.charAt(index));
+        }
+        return sb.toString();
+    }
+
+}

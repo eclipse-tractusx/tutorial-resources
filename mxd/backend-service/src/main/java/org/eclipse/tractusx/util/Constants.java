@@ -1,5 +1,5 @@
 
-<!--/*******************************************************************************
+/*******************************************************************************
  *
  * Copyright (c) 2023 Contributors to the Eclipse Foundation
  *
@@ -19,12 +19,13 @@
  * SPDX-License-Identifier: Apache-2.0
  *
  ******************************************************************************/
-!-->
 
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="https://jakarta.ee/xml/ns/jakartaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
-       bean-discovery-mode="annotated">
+package org.eclipse.tractusx.util;
 
-</beans>
+public class Constants {
+
+    public  static final String EMPTYSTRING="";
+    public  static final String DATABASE_URL="database.url";
+    public  static final String DATABASE_USER="database.user";
+    public  static final String DATABASE_PASSWORD="database.password";
+}
