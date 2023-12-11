@@ -14,7 +14,7 @@ ext {
     appVersion = '1.0.0'
 }
 
-group 'org.eclipse.tractusx'
+group 'org.eclipse.tractusx.mxd'
 version "${appVersion}"
 
 repositories {
@@ -31,7 +31,7 @@ jar {
     duplicatesStrategy = 'INCLUDE'
     manifest {
         attributes(
-                'Main-Class': 'org.eclipse.tractusx.Main'
+                'Main-Class': 'org.eclipse.tractusx.mxd.Main'
         )
     }
     from {
