@@ -740,23 +740,20 @@ Let's insert some data into `Trudy` connector.
 #### 7.6.1 Create Asset
 Create an asset using the following `curl` command:
 ```shell
-curl --location 'http://localhost/trudy/management/v2/assets' \
+curl --location 'http://localhost/trudy/management/v3/assets' \
 --header 'Content-Type: application/json' \
 --header 'X-Api-Key: password' \
 --data-raw '{
-    "@context": {},
-    "asset": {
-        "@type": "Asset",
-        "@id": "1", 
-        "properties": {
-            "description": "Product EDC Demo Asset 1"
-        }
-    },
-    "dataAddress": {
-        "@type": "DataAddress",
-        "type": "HttpData",
-        "baseUrl": "https://jsonplaceholder.typicode.com/todos/1"
-    }
+  "@context": {},
+  "@id": "1",
+  "properties": {
+    "description": "Product EDC Demo Asset 1"
+  },
+  "dataAddress": {
+    "@type": "DataAddress",
+    "type": "HttpData",
+    "baseUrl": "https://jsonplaceholder.typicode.com/todos/1"
+  }
 }'
 ```
 This `curl` command can be used to fetch Trudy's assets:
@@ -846,13 +843,7 @@ curl --location 'http://localhost/alice/management/v2/catalog/request' \
     "counterPartyAddress": "http://trudy-controlplane:8084/api/v1/dsp",
     "querySpec": {
         "offset": 0,
-        "limit": 100,
-        "filter": "",
-        "range": {
-            "from": 0,
-            "to": 100
-        },
-        "criterion": ""
+        "limit": 50
     }
 }'
 ```
@@ -936,13 +927,7 @@ curl --location 'http://localhost/bob/management/v2/catalog/request' \
     "counterPartyAddress": "http://trudy-controlplane:8084/api/v1/dsp",
     "querySpec": {
         "offset": 0,
-        "limit": 100,
-        "filter": "",
-        "range": {
-            "from": 0,
-            "to": 100
-        },
-        "criterion": ""
+        "limit": 50
     }
 }'
 ```
