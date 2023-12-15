@@ -66,6 +66,10 @@ module "alice-connector" {
     oauth-secretalias  = "client_secret_alias"
     oauth-clientsecret = "alice_private_client"
   }
+  minio-config = {
+    minio-username = "aliceawsclient"
+    minio-password = "aliceawssecret"
+  }
 }
 
 # Second connector
@@ -86,5 +90,9 @@ module "bob-connector" {
     oauth-clientid     = "bob_private_client"
     oauth-secretalias  = "client_secret_alias"
     oauth-clientsecret = "bob_private_client"
+  }
+  minio-config = {
+    minio-username = "bobawsclient"
+    minio-password = "bobawssecret"
   }
 }

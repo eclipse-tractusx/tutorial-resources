@@ -17,6 +17,13 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
+module "minio" {
+  source            = "../minio"
+  humanReadableName = lower(var.humanReadableName)
+  minio-username    = var.minio-config.minio-username
+  minio-password    = var.minio-config.minio-password
+}
+
 resource "helm_release" "connector" {
   name              = lower(var.humanReadableName)
   force_update      = true
@@ -37,7 +44,7 @@ resource "helm_release" "connector" {
           "postStart" : [
             "sh",
             "-c",
-            "sleep 5 && /bin/vault kv put secret/client-secret content=${local.client_secret} && /bin/vault kv put secret/aes-keys content=${local.aes_key_b64} && /bin/vault kv put secret/${var.ssi-config.oauth-secretalias} content=${var.ssi-config.oauth-clientsecret}"
+            "sleep 5 && /bin/vault kv put secret/client-secret content=${local.client_secret} && /bin/vault kv put secret/aes-keys content=${local.aes_key_b64} && /bin/vault kv put secret/${var.ssi-config.oauth-secretalias} content=${var.ssi-config.oauth-clientsecret} && /bin/vault kv put secret/${var.minio-config.minio-username}-alias content='${local.minio-secret}' "
           ]
         }
       }
@@ -60,6 +67,13 @@ resource "helm_release" "connector" {
               secretAlias : var.ssi-config.oauth-secretalias
             }
           }
+        }
+      }
+      dataplane : {
+        aws : {
+          endpointOverride : "http://${local.minio-url}"
+          accessKeyId : var.minio-config.minio-username
+          secretAccessKey : var.minio-config.minio-password
         }
       }
     })
@@ -113,4 +127,11 @@ locals {
   aes_key_b64   = base64encode(random_string.aes_key_raw.result)
   client_secret = base64encode(random_string.kc_client_secret.result)
   jdbcUrl       = "jdbc:postgresql://${var.database-host}:${var.database-port}/${var.database-name}"
+
+  minio-url = module.minio.minio-url
+  minio-secret = jsonencode({
+    edctype         = "dataspaceconnector:secrettoken"
+    accessKeyId     = var.minio-config.minio-username
+    secretAccessKey = var.minio-config.minio-password
+  })
 }
