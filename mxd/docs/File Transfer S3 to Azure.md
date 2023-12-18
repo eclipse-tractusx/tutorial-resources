@@ -90,6 +90,6 @@ It should return below response:
   }
 }
 ```
-> Please note, `state` should be `COMPLETED`. If it is `TERMINATED`, it means, transfer has been failed. Please check logs for more details.
+> Please note, `state` should be `COMPLETED`. If it is `TERMINATED`, it means, transfer has failed. Please check logs for more details.
 
-Once transfer state is complete, asset file should be available in `bob-container`.
+Once transfer has completed, the asset file should be available in `bob-container`.
