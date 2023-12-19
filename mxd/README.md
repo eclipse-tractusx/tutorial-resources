@@ -100,7 +100,7 @@ Naturally there are several ways to enable access to those services (Load balanc
 of simplicity we will use a plain Kubernetes port-forwarding:
 
 ```shell
-kubectl port-forward postgres-5b788f6bdd-bvt9b 5432:5423
+kubectl port-forward postgres-5b788f6bdd-bvt9b 5432:5432
 ``` 
 
 > Note that the actual pod name will be slightly different in your local cluster.
@@ -122,8 +122,8 @@ assets, policies and contract definitions.
 In order to check that the connectors were deployed successfully, please execute the following commands in a shell:
 
 ```shell
-curl -X GET http://localhost/bob/health/api/check/liveness
-curl -X GET http://localhost/alice/health/api/check/liveness
+curl -X GET http://localhost/bob/health/api/check/liveness | jq
+curl -X GET http://localhost/alice/health/api/check/liveness | jq
 ```
 
 which should return something similar to this, the important part being the `isSystemHealthy: true` bit:
@@ -227,7 +227,62 @@ There will not be any restrictions on that asset, meaning, every dataspace membe
 
 > TODO: add link to policy generator tool
 
-> TODO: curl commands
+**Asset:**
+```shell
+curl --location 'http://localhost/alice/management/v3/assets' \
+--header 'Content-Type: application/json' \
+--header 'X-Api-Key: password' \
+--data-raw '{
+    "@context": {},
+    "@type": "Asset",
+    "@id": "3", 
+    "properties": {
+        "description": "Product EDC Demo Asset 3"
+    },
+    "dataAddress": {
+        "@type": "DataAddress",
+        "type": "HttpData",
+        "baseUrl": "https://jsonplaceholder.typicode.com/todos/3"
+    }
+}' | jq
+```
+
+**Policy:**
+```shell
+curl --location 'http://localhost/alice/management/v2/policydefinitions' \
+--header 'Content-Type: application/json' \
+--header 'X-Api-Key: password' \
+--data-raw '{
+  "@context": {
+    "odrl": "http://www.w3.org/ns/odrl/2/"
+  },
+  "@type": "PolicyDefinitionRequestDto",
+  "@id": "3",
+  "policy": {
+    "@type": "Policy"
+  }
+}' | jq
+```
+
+**Contract definition:**
+```shell
+curl --location 'http://localhost/alice/management/v2/contractdefinitions' \
+--header 'Content-Type: application/json' \
+--header 'X-Api-Key: password' \
+--data-raw '{
+  "@context": {},
+  "@id": "3",
+  "@type": "ContractDefinition",
+  "accessPolicyId": "3",
+  "contractPolicyId": "3",
+  "assetsSelector": {
+    "@type": "CriterionDto",
+    "operandLeft": "https://w3id.org/edc/v0.0.1/ns/id",
+    "operator": "=",
+    "operandRight": "3"
+  }
+}' | jq
+```
 
 ### 3.2 Add a restricted `asset`
 
@@ -236,7 +291,80 @@ credential will be able to see it. Technically, that means, that the access poli
 
 > TODO: add link to policy generator tool
 
-> TODO: curl commands
+**Asset:**
+```shell
+curl --location 'http://localhost/alice/management/v3/assets' \
+--header 'Content-Type: application/json' \
+--header 'X-Api-Key: password' \
+--data-raw '{
+    "@context": {},
+    "@type": "Asset",
+    "@id": "4", 
+    "properties": {
+        "description": "Product EDC Demo Asset 4"
+    },
+    "dataAddress": {
+        "@type": "DataAddress",
+        "type": "HttpData",
+        "baseUrl": "https://jsonplaceholder.typicode.com/todos/4"
+    }
+}' | jq
+```
+
+**Policy:**
+```shell
+curl --location 'http://localhost/alice/management/v2/policydefinitions' \
+--header 'Content-Type: application/json' \
+--header 'X-Api-Key: password' \
+--data-raw '{
+  "@context": {
+    "odrl": "http://www.w3.org/ns/odrl/2/"
+  },
+  "@type": "PolicyDefinitionRequestDto",
+  "@id": "4",
+  "policy": {
+    "@type": "Policy",
+    "odrl:permission": [
+      {
+        "odrl:action": "USE",
+        "odrl:constraint": {
+          "@type": "LogicalConstraint",
+          "odrl:or": [
+            {
+              "@type": "Constraint",
+              "odrl:leftOperand": "BusinessPartnerNumber",
+              "odrl:operator": {
+                "@id": "odrl:eq"
+              },
+              "odrl:rightOperand": "BPNL00000000004X"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}' | jq
+```
+
+**Contract definition:**
+```shell
+curl --location 'http://localhost/alice/management/v2/contractdefinitions' \
+--header 'Content-Type: application/json' \
+--header 'X-Api-Key: password' \
+--data-raw '{
+  "@context": {},
+  "@id": "4",
+  "@type": "ContractDefinition",
+  "accessPolicyId": "4",
+  "contractPolicyId": "4",
+  "assetsSelector": {
+    "@type": "CriterionDto",
+    "operandLeft": "https://w3id.org/edc/v0.0.1/ns/id",
+    "operator": "=",
+    "operandRight": "4"
+  }
+}' | jq
+```
 
 ### 3.3 [Optional] Add Kubernetes deployment for a `newman` container
 
@@ -349,17 +477,191 @@ restriction. Those informations will be used for negotiating a contract with the
 ## 5. Bob transfers data from Alice
 
 Now that Bob knows what Alice is offering, he wants to transmit data. Before Bob can actually request data, he needs to
-negotiate a contract with Alice. We'll do this using the management API:
+negotiate a contract with Alice. We'll do this using the management API.
 
-> TODO: curl commands, example response, show how IDs correlate
+### 5.1 Negotiate a contract
+To do this, he uses the following `curl` command:
 
-Once Bob and Alice have reached an agreement, Bob can start requesting data from Alice. Keeping in mind that he is only
+```shell
+curl --location 'http://localhost/bob/management/v2/contractnegotiations' \
+--header 'Content-Type: application/json' \
+--header 'X-Api-Key: password' \
+--data-raw '{
+ "@context": {
+    "odrl": "http://www.w3.org/ns/odrl/2/"
+ },
+ "@type": "NegotiationInitiateRequestDto",
+ "connectorAddress": "http://alice-controlplane:8084/api/v1/dsp",
+ "protocol": "dataspace-protocol-http",
+ "providerId": "BPNL000000000001",
+ "offer": {
+    "offerId": "Mw==:Mw==:ZDE2ZjdjM2UtMDdiOC00Y2E5LTgxMGYtMmFjNGJlN2ExNzUx",
+    "assetId": "3",
+    "policy": {
+        "@type": "odrl:Set",
+        "odrl:permission": [],
+        "odrl:prohibition": [],
+        "odrl:obligation": [],
+        "odrl:target": "3"
+    }
+ }
+}' | jq
+```
+
+In the response, Bob gets a UUID. This is the ID of the created contract negotiation. Bob can now use this ID to see the current status of the negotiation and - if the negotiation was successful - the ID of the created contract agreement.
+
+
+> Make sure to replace `<ID>` in the URL with the UUID you just received.
+
+```shell
+curl --location 'http://localhost/bob/management/v2/contractnegotiations/<ID>' \
+--header 'X-Api-Key: password' | jq
+```
+
+- If the negotiation was **successful**, Bob will see an ouput as shown below.
+- If the negotiation was **unsuccessful**, the negotiation state will be `TERMINATED` and no contract agreement ID will be present.
+```json
+{
+  "@type": "edc:ContractNegotiation",
+  "@id": "4e74a632-94bc-4bfb-acf5-230f7d18b080",
+  "edc:type": "CONSUMER",
+  "edc:protocol": "dataspace-protocol-http",
+  "edc:state": "FINALIZED",
+  "edc:counterPartyId": "BPNL000000000001",
+  "edc:counterPartyAddress": "http://alice-controlplane:8084/api/v1/dsp",
+  "edc:callbackAddresses": [],
+  "edc:createdAt": 1702989093837,
+  "edc:contractAgreementId": "Mw==:Mw==:NmY5MDA4OGEtOWY1ZC00YmYyLWFiZjMtMjRiNzY0YzEyOTk4",
+  "@context": {
+    "dct": "https://purl.org/dc/terms/",
+    "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+    "edc": "https://w3id.org/edc/v0.0.1/ns/",
+    "dcat": "https://www.w3.org/ns/dcat/",
+    "odrl": "http://www.w3.org/ns/odrl/2/",
+    "dspace": "https://w3id.org/dspace/v0.8/"
+  }
+}
+```
+
+Bob now has a contract with Alice and can begin transferring the asset's data.
+
+### 5.2 Transfer data
+
+Once Alice and Bob have reached an agreement, Bob can start requesting data from Alice. Keeping in mind that he is only
 permitted to see the "simple-asset", so that's what he'll request. The "simple-asset" is actually a REST API that is
 hosted in Alice's private network realm. Alice will proxy the access to this API. We call this a "
 consumer-pull-transfer"
 and it is the most basic transfer available.
 
-> TODO: curl commands, show data response
+Bob wants to send the data to his backend application ("<http://backend:8080>"). So he uses the following command to direct the data from Asset 3 to his desired data sink.
+
+> For testing purposes, you should replace `backend:8080` with your own test API or use [webhook. site](https://webhook.site/) as your backend system. 
+> If you do not change this, you will not be able to view the received token, which is required for requesting the data!
+> If you are using webhook.site, please make sure that you use "Your unique URL" and that you do not transfer any sensitive information to webhook.
+> 
+> Replace `<contractAgreementId>` with the contract agreement ID you received in the previous step.
+
+```shell
+curl --location 'http://localhost/bob/management/v2/transferprocesses' \
+--header 'Content-Type: application/json' \
+--header 'X-Api-Key: password' \
+--data-raw '{
+    "@context": {
+        "odrl": "http://www.w3.org/ns/odrl/2/"
+    },
+    "assetId": "3",
+    "connectorAddress": "http://alice-controlplane:8084/api/v1/dsp",
+    "connectorId": "BPNL000000000001",
+    "contractId": "<contractAgreementId>",
+    "dataDestination": {
+        "type": "HttpProxy"
+    },
+    "privateProperties": {
+        "receiverHttpEndpoint": "http://backend:8080"
+    },
+    "protocol": "dataspace-protocol-http",
+    "transferType": {
+        "contentType": "application/octet-stream",
+        "isFinite": true
+    }
+}' | jq
+```
+
+Just to make sure everything worked, Bob uses another `curl` command to check if the transfer was successful.
+
+In the response, Bob gets a UUID. This is the ID of the created transfer. Bob can now use this ID to see the current status of the transfer.
+
+> Make sure to replace `<ID>` in the URL with the UUID you just received.
+
+
+```shell
+curl --location 'http://localhost/bob/management/v2/transferprocesses/<ID>' \
+--header 'X-Api-Key: password' | jq
+```
+
+- If the transfer was **successful**, Bob will see an ouput as shown below.
+- If the transfer was **unsuccessful**, the transfer state will be `TERMINATED`.
+```json
+{
+  "@id": "6d6bca4e-4da5-4ed3-9fe5-2b98623d9a59",
+  "@type": "edc:TransferProcess",
+  "edc:correlationId": "6d6bca4e-4da5-4ed3-9fe5-2b98623d9a59",
+  "edc:state": "STARTED",
+  "edc:stateTimestamp": 1702990026966,
+  "edc:type": "CONSUMER",
+  "edc:assetId": "3",
+  "edc:contractId": "Mw==:Mw==:NmY5MDA4OGEtOWY1ZC00YmYyLWFiZjMtMjRiNzY0YzEyOTk4",
+  "edc:callbackAddresses": [],
+  "edc:dataDestination": {
+    "@type": "edc:DataAddress",
+    "edc:type": "HttpProxy"
+  },
+  "edc:connectorId": "BPNL000000000001",
+  "@context": {
+    "dct": "https://purl.org/dc/terms/",
+    "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+    "edc": "https://w3id.org/edc/v0.0.1/ns/",
+    "dcat": "https://www.w3.org/ns/dcat/",
+    "odrl": "http://www.w3.org/ns/odrl/2/",
+    "dspace": "https://w3id.org/dspace/v0.8/"
+  }
+}
+```
+
+The response shows him that he has a `STARTED` transfer with the type `CONSUMER` of the asset with the ID `3`.
+Note, that a consumer pull transfer will **not** advance to the `COMPLETED` state, but instead will stay in state `STARTED`.
+This means, that Bob can now request the data using the information received by his backend.
+
+```shell
+curl --location 'http://localhost/bob/management/edrs?assetId=3' \
+--header 'X-Api-Key: password' | jq
+```
+
+### 5.3 Consume the data
+
+In his backend, Bob can now see the following output:
+```json
+{
+  "id": "841e3cd7-add0-47fd-adef-ea8074ec50af",
+  "endpoint": "http://alice-tractusx-connector-dataplane:8081/api/public",
+  "authKey": "Authorization",
+  "authCode": "eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3MDI5OTE2NTUsImRhZCI6InIyaVpYUE9kSGJvUHBMTXZTS1hlSjgrc05WSThuS0V6WnhHa3hrSHN0YVJ1Z3l3TTlNRkxQbWJaT0toOUFXKzRwMlVZT3hEQitGMlNsbEFnTGZ0c1IyVVIxbE5RZEhNeFVDYkM3Nm12U0xmdkw4RFpZM2E0bG1pTXU4VUU3Zk92aXczaGlyKy9zWFRtNDU5M3EweXBHRmRaZ1VORko3ZnFRbjI2OStyWmZzWnZtaitLaWZZMURJcEQ5ZEQ1NkNURW1naTczU1VyRWF5RWtlc3dTWTJRZEluNWxOSFVReDdJMWNkZFZJdXkyZkMzYVJVWENqK003MjVmZ2ZERkwwR2N0ZTFkSWVjOUhHYTRyVW5WL0ZWbVJnUURUZSsza0thaGQ3WjVDTE5wcVVtREx5SGpBNHV3U1dkWHZ3emxDeGlxRzZ4eDg0amZtVDZlMzNLeG9NT1RVUUpnbWZyQWtJUkJ5a0dPa3BvN2p1a2dWVWk1bGNyUVEyMjQxYW5xa3ZzbWh5cnN1dUdTcnBxdEl4ZzQrd1lSSDYvTnBvRUUvemRxS0xLaE9hcz0iLCJjaWQiOiJNdz09Ok13PT06Tm1ZNU1EQTRPR0V0T1dZMVpDMDBZbVl5TFdGaVpqTXRNalJpTnpZMFl6RXlPVGs0In0.RvbdPWKIrBmMqIN7kvPnwoAOJMug-VKfREKrHWPOmfp0VGSsVuma7SAJaMb9cPT7X4lNZilw36GYWDh92FHSVA",
+  "properties": {}
+}
+```
+Bob can now request the data using the provided information as follows:
+```shell
+curl -X GET -H '<authKey>: <authCode>' <endpoint>
+```
+
+
+> In this example, we can not use the endpoint URL as is, because we are working with a local Kubernetes cluster and can not use the cluster internal URL.  
+> Therefore, we have to use the ingress URL instead. 
+
+In this example, this results in the following request:
+```shell
+curl -X GET -H 'Authorization: eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3MDI5OTE2NTUsImRhZCI6InIyaVpYUE9kSGJvUHBMTXZTS1hlSjgrc05WSThuS0V6WnhHa3hrSHN0YVJ1Z3l3TTlNRkxQbWJaT0toOUFXKzRwMlVZT3hEQitGMlNsbEFnTGZ0c1IyVVIxbE5RZEhNeFVDYkM3Nm12U0xmdkw4RFpZM2E0bG1pTXU4VUU3Zk92aXczaGlyKy9zWFRtNDU5M3EweXBHRmRaZ1VORko3ZnFRbjI2OStyWmZzWnZtaitLaWZZMURJcEQ5ZEQ1NkNURW1naTczU1VyRWF5RWtlc3dTWTJRZEluNWxOSFVReDdJMWNkZFZJdXkyZkMzYVJVWENqK003MjVmZ2ZERkwwR2N0ZTFkSWVjOUhHYTRyVW5WL0ZWbVJnUURUZSsza0thaGQ3WjVDTE5wcVVtREx5SGpBNHV3U1dkWHZ3emxDeGlxRzZ4eDg0amZtVDZlMzNLeG9NT1RVUUpnbWZyQWtJUkJ5a0dPa3BvN2p1a2dWVWk1bGNyUVEyMjQxYW5xa3ZzbWh5cnN1dUdTcnBxdEl4ZzQrd1lSSDYvTnBvRUUvemRxS0xLaE9hcz0iLCJjaWQiOiJNdz09Ok13PT06Tm1ZNU1EQTRPR0V0T1dZMVpDMDBZbVl5TFdGaVpqTXRNalJpTnpZMFl6RXlPVGs0In0.RvbdPWKIrBmMqIN7kvPnwoAOJMug-VKfREKrHWPOmfp0VGSsVuma7SAJaMb9cPT7X4lNZilw36GYWDh92FHSVA' http://localhost/alice/api/public
+```
 
 ## 6. Simplify negotiation and transfer using the EDR API
 
