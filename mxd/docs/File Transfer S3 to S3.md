@@ -3,7 +3,7 @@
 ## 1. Description
 This tutorial illustrates the process through which a provider participant can transfer a file stored in its Amazon S3 to another Amazon S3 belonging to a consumer participant.  
 For this tutorial, we assume `Alice` as a provider participant and `Bob` as consumer participant.  
-We use a self-contained version of Amazon S3 named [MinIO](https://github.com/minio/minio), and we deploy two instances each `Alice` and `Bob`.
+We use a self-contained version of Amazon S3 named [MinIO](https://github.com/minio/minio), and we deploy two instances, one each for `Alice` and `Bob`.
 
 ## 2. Existing Resources
 

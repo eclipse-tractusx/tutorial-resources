@@ -44,7 +44,14 @@ resource "helm_release" "connector" {
           "postStart" : [
             "sh",
             "-c",
-            "sleep 5 && /bin/vault kv put secret/client-secret content=${local.client_secret} && /bin/vault kv put secret/aes-keys content=${local.aes_key_b64} && /bin/vault kv put secret/${var.ssi-config.oauth-secretalias} content=${var.ssi-config.oauth-clientsecret} && /bin/vault kv put secret/${var.minio-config.minio-username}-alias content='${local.minio-secret}' "
+            join(" && ", [
+              "sleep 5",
+              "/bin/vault kv put secret/client-secret content=${local.client_secret}",
+              "/bin/vault kv put secret/aes-keys content=${local.aes_key_b64}",
+              "/bin/vault kv put secret/${var.ssi-config.oauth-secretalias} content=${var.ssi-config.oauth-clientsecret}",
+              "/bin/vault kv put secret/edc.aws.access.key content=${var.minio-config.minio-username}",
+              "/bin/vault kv put secret/edc.aws.secret.access.key content=${var.minio-config.minio-password}",
+            ])
           ]
         }
       }
@@ -72,8 +79,6 @@ resource "helm_release" "connector" {
       dataplane : {
         aws : {
           endpointOverride : "http://${local.minio-url}"
-          accessKeyId : var.minio-config.minio-username
-          secretAccessKey : var.minio-config.minio-password
         }
       }
     })
@@ -129,9 +134,4 @@ locals {
   jdbcUrl       = "jdbc:postgresql://${var.database-host}:${var.database-port}/${var.database-name}"
 
   minio-url = module.minio.minio-url
-  minio-secret = jsonencode({
-    edctype         = "dataspaceconnector:secrettoken"
-    accessKeyId     = var.minio-config.minio-username
-    secretAccessKey = var.minio-config.minio-password
-  })
 }
