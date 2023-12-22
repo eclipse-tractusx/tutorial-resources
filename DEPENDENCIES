@@ -768,7 +768,7 @@ npm/npmjs/@angular-eslint/eslint-plugin-template/17.1.0, MIT, approved, clearlyd
 npm/npmjs/@angular-eslint/eslint-plugin-template/17.1.1, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/eslint-plugin/17.1.0, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/schematics/17.1.0, MIT, approved, clearlydefined
-npm/npmjs/@angular-eslint/template-parser/17.1.0, MIT, approved, clearlydefined
+npm/npmjs/@angular-eslint/template-parser/17.1.1, , restricted, clearlydefined
 npm/npmjs/@angular-eslint/utils/17.1.0, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/utils/17.1.1, MIT, approved, clearlydefined
 npm/npmjs/@angular/animations/17.0.6, , restricted, clearlydefined
