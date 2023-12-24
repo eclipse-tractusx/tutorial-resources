@@ -295,6 +295,7 @@ credential will be able to see it. Technically, that means, that the access poli
 > TODO: add link to policy generator tool
 
 **Asset:**
+
 ```shell
 curl --location 'http://localhost/alice/management/v3/assets' \
 --header 'Content-Type: application/json' \
