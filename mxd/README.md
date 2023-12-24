@@ -228,6 +228,7 @@ There will not be any restrictions on that asset, meaning, every dataspace membe
 > TODO: add link to policy generator tool
 
 **Asset:**
+
 ```shell
 curl --location 'http://localhost/alice/management/v3/assets' \
 --header 'Content-Type: application/json' \
