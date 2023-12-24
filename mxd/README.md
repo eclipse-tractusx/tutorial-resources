@@ -633,7 +633,7 @@ curl --location 'http://localhost/bob/management/v2/transferprocesses/<ID>' \
 ```
 
 The response shows him that he has a `STARTED` transfer with the type `CONSUMER` of the asset with the ID `3`.
-Note, that a consumer pull transfer will **not** advance to the `COMPLETED` state, but instead will stay in state `STARTED`.
+Note, that a consumer pull transfer will **not** advance to the `COMPLETED` state, but instead remains in the `STARTED` state.
 This means, that Bob can now request the data using the information received by his backend.
 
 ```shell
