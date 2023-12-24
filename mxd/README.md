@@ -644,6 +644,7 @@ curl --location 'http://localhost/bob/management/edrs?assetId=3' \
 ### 5.3 Consume the data
 
 In his backend, Bob can now see the following output:
+
 ```json
 {
   "id": "841e3cd7-add0-47fd-adef-ea8074ec50af",
