@@ -654,7 +654,9 @@ In his backend, Bob can now see the following output:
   "properties": {}
 }
 ```
+
 Bob can now request the data using the provided information as follows:
+
 ```shell
 curl -X GET -H '<authKey>: <authCode>' <endpoint>
 ```
