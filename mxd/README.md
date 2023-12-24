@@ -267,6 +267,7 @@ curl --location 'http://localhost/alice/management/v2/policydefinitions' \
 ```
 
 **Contract definition:**
+
 ```shell
 curl --location 'http://localhost/alice/management/v2/contractdefinitions' \
 --header 'Content-Type: application/json' \
