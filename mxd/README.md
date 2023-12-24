@@ -249,6 +249,7 @@ curl --location 'http://localhost/alice/management/v3/assets' \
 ```
 
 **Policy:**
+
 ```shell
 curl --location 'http://localhost/alice/management/v2/policydefinitions' \
 --header 'Content-Type: application/json' \
