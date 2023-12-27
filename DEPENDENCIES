@@ -775,14 +775,14 @@ npm/npmjs/@angular-eslint/template-parser/17.1.1, , restricted, clearlydefined
 npm/npmjs/@angular-eslint/utils/17.1.0, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/utils/17.1.1, MIT, approved, clearlydefined
 npm/npmjs/@angular/animations/17.0.6, MIT, approved, clearlydefined
-npm/npmjs/@angular/cdk/17.0.3, , restricted, clearlydefined
+npm/npmjs/@angular/cdk/17.0.4, , restricted, clearlydefined
 npm/npmjs/@angular/cli/17.0.6, MIT, approved, clearlydefined
 npm/npmjs/@angular/common/17.0.6, MIT, approved, clearlydefined
 npm/npmjs/@angular/compiler-cli/17.0.6, , restricted, clearlydefined
 npm/npmjs/@angular/compiler/17.0.6, MIT, approved, clearlydefined
 npm/npmjs/@angular/core/17.0.6, MIT, approved, clearlydefined
 npm/npmjs/@angular/forms/17.0.6, MIT, approved, clearlydefined
-npm/npmjs/@angular/material/17.0.3, , restricted, clearlydefined
+npm/npmjs/@angular/material/17.0.4, , restricted, clearlydefined
 npm/npmjs/@angular/platform-browser-dynamic/17.0.6, MIT, approved, clearlydefined
 npm/npmjs/@angular/platform-browser/17.0.6, MIT, approved, clearlydefined
 npm/npmjs/@angular/router/17.0.6, MIT, approved, clearlydefined
