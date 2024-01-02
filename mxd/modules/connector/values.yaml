@@ -27,6 +27,10 @@ controlplane:
   debug:
     enabled: true
     port: 1044
+  livenessProbe:
+    enabled: true
+  readinessProbe:
+    enabled: true
   service:
     type: NodePort
   endpoints:
@@ -50,6 +54,10 @@ dataplane:
   debug:
     enabled: true
     port: 1044
+  livenessProbe:
+    enabled: true
+  readinessProbe:
+    enabled: true
   image:
     pullPolicy: Never
     tag: "latest"
