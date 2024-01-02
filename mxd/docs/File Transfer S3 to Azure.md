@@ -3,7 +3,7 @@
 ## 1. Description
 This tutorial illustrates the process through which a provider participant can transfer a file stored in its Amazon S3 to Azure Blob Storage belonging to a consumer participant.  
 For this tutorial, we assume `Alice` as a provider participant and `Bob` as consumer participant.  
-- We use a self-contained version of Amazon S3 named [MinIO](https://github.com/minio/minio), and we deploy two instances each `Alice` and `Bob`.  
+- We use a self-contained version of Amazon S3 named [MinIO](https://github.com/minio/minio), and we deploy two instances, one each for `Alice` and `Bob`.  
 - We also use a self-contained version of Azure Blob Storage named [Azurite](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=docker-hub), and we deploy single `Azurite` instance for both connectors, due to `a limitation in overriding endpoints during trasfer process`.
 
 ## 2. Prerequisites
