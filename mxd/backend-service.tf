@@ -57,7 +57,7 @@ resource "kubernetes_deployment" "backend-service" {
             value = "postgres"
           }
           env {
-            name  = "database.password"
+            name  = "edc.datasource.backendservice..password"
             value = "postgres"
           }
           env {
