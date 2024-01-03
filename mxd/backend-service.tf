@@ -16,11 +16,9 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 #
-
-
 resource "kubernetes_deployment" "backend-service" {
   metadata {
-    name   = "backend-service"
+    name = "backend-service"
     labels = {
       App = "backend-service"
     }
@@ -59,20 +57,18 @@ resource "kubernetes_deployment" "backend-service" {
             value = "postgres"
           }
           env {
-            name  = "edc.datasource.backendservice.password"
+            name  = "database.password"
             value = "postgres"
           }
           env {
             name  = "web.http.port"
             value = 8080
           }
-
         }
       }
     }
   }
 }
-
 resource "kubernetes_service" "backend-service" {
   metadata {
     name = "backend-service"
