@@ -23,14 +23,14 @@
 # * 
 # ******************************************************************************/
 
-# Use the official OpenJDK 17 image as the base image
-FROM openjdk:17
-
+# Use the eclipse-temurin:17.0.8.1_1-jre-alpine as the base image
+FROM eclipse-temurin:17.0.8.1_1-jre-alpine
+ARG JAR
 # Set the working directory
 WORKDIR /app
 
 # Copy your JAR file from the local build context to the image
-COPY build/libs/backend-service.jar /app/backend-service.jar
+COPY backend-service.jar /app/backend-service.jar
 
 # Expose the port your application is running on
 EXPOSE 8080

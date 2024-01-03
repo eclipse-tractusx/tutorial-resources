@@ -19,20 +19,23 @@
  *
  ******************************************************************************/
 
-package org.eclipse.tractusx.mxd.util;
+package org.eclipse.tractusx.mxd.backendservice.service;
 
-public class Constants {
+import org.eclipse.edc.spi.result.ServiceResult;
+import org.eclipse.edc.spi.result.StoreResult;
+import org.eclipse.tractusx.mxd.backendservice.entity.Transfer;
+import org.eclipse.tractusx.mxd.backendservice.entity.TransferResponse;
 
-    public static final String DEFAULTERRORMESSAGE = "Something Went Wrong";
-    public static final String DEFAULT_DRIVE = "org.postgresql.Driver";
-    public static final String DATASOURCE_NAME_SETTING = "edc.datasource.backendservice.name";
+import java.util.List;
 
-    public static final String DATA_SOURCE_NAME = "default";
+public interface TransferService {
 
-    public static final String SCHEMA_PATH = "schema.sql";
+    ServiceResult<Transfer> create(Transfer asset);
 
-    public static final String DATABASE_URL = "edc.datasource.backendservice.url";
-    public static final String DATABASE_USER = "edc.datasource.backendservice.user";
-    public static final String DATABASE_PASSWORD = "edc.datasource.backendservice.password";
+    List<TransferResponse> getAllTransfer();
+
+    StoreResult<TransferResponse> getTransfer(String transferId);
+
+    StoreResult<TransferResponse> getTransferContent(String transferId);
 
 }

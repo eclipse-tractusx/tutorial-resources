@@ -20,7 +20,7 @@
 
 resource "kubernetes_deployment" "backend-service" {
   metadata {
-    name = "backend-service"
+    name   = "backend-service"
     labels = {
       App = "backend-service"
     }
@@ -50,22 +50,23 @@ resource "kubernetes_deployment" "backend-service" {
             name           = "backend-port"
           }
           env {
-            name  = "database.url"
+            name  = "edc.datasource.backendservice.url"
             value = "jdbc:postgresql://${local.pg-ip}:${var.postgres-port}/backendservicedb"
           }
 
           env {
-            name  = "database.user"
+            name  = "edc.datasource.backendservice.user"
             value = "postgres"
           }
           env {
-            name  = "database.password"
+            name  = "edc.datasource.backendservice.password"
             value = "postgres"
           }
           env {
-            name  = "server.port"
+            name  = "web.http.port"
             value = 8080
           }
+
         }
       }
     }

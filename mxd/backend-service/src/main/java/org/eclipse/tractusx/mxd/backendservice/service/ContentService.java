@@ -19,20 +19,19 @@
  *
  ******************************************************************************/
 
-package org.eclipse.tractusx.mxd.util;
+package org.eclipse.tractusx.mxd.backendservice.service;
 
-public class Constants {
+import org.eclipse.edc.spi.result.StoreResult;
+import org.eclipse.tractusx.mxd.backendservice.entity.ContentResponse;
 
-    public static final String DEFAULTERRORMESSAGE = "Something Went Wrong";
-    public static final String DEFAULT_DRIVE = "org.postgresql.Driver";
-    public static final String DATASOURCE_NAME_SETTING = "edc.datasource.backendservice.name";
+public interface ContentService {
 
-    public static final String DATA_SOURCE_NAME = "default";
+    String create(Object content);
 
-    public static final String SCHEMA_PATH = "schema.sql";
+    String getAllContent();
 
-    public static final String DATABASE_URL = "edc.datasource.backendservice.url";
-    public static final String DATABASE_USER = "edc.datasource.backendservice.user";
-    public static final String DATABASE_PASSWORD = "edc.datasource.backendservice.password";
+    StoreResult<ContentResponse> getContent(String contentId);
+
+    String getRandomContent();
 
 }

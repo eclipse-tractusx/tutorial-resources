@@ -19,20 +19,44 @@
  *
  ******************************************************************************/
 
-package org.eclipse.tractusx.mxd.util;
+package org.eclipse.tractusx.mxd.backendservice.statements;
 
-public class Constants {
+import org.eclipse.edc.spi.query.QuerySpec;
+import org.eclipse.edc.sql.statement.SqlStatements;
+import org.eclipse.edc.sql.translation.SqlQueryStatement;
 
-    public static final String DEFAULTERRORMESSAGE = "Something Went Wrong";
-    public static final String DEFAULT_DRIVE = "org.postgresql.Driver";
-    public static final String DATASOURCE_NAME_SETTING = "edc.datasource.backendservice.name";
+public interface ContentStatementsService extends SqlStatements {
 
-    public static final String DATA_SOURCE_NAME = "default";
+    default String getContentTable() {
+        return "content";
+    }
 
-    public static final String SCHEMA_PATH = "schema.sql";
+    default String getIdColumn() {
+        return "id";
+    }
 
-    public static final String DATABASE_URL = "edc.datasource.backendservice.url";
-    public static final String DATABASE_USER = "edc.datasource.backendservice.user";
-    public static final String DATABASE_PASSWORD = "edc.datasource.backendservice.password";
+    default String getAssetColumn() {
+        return "asset";
+    }
+
+    default String getCreatedDateColumn() {
+        return "createddate";
+    }
+
+    default String getUpdatedDateColumn() {
+        return "updateddate";
+    }
+
+    String getDeleteByIdTemplate();
+
+    String getFindByTemplate();
+
+    String getInsertTemplate();
+
+    String getCountTemplate();
+
+    String getUpdateTemplate();
+
+    SqlQueryStatement createQuery(QuerySpec querySpec);
 
 }
