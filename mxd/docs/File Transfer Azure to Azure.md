@@ -408,7 +408,7 @@ This API should return below response.
 ```
 > Please take note of the transfer process id (`@id` field) in the response.
 
-## 13. Get Transfer
+## 12. Get Transfer
 Just wait for few seconds and check the transfer state.
 Please replace transfer process id before running command.
 ```shell
@@ -441,10 +441,10 @@ It should return below response:
 ```
 > Please note, `state` should be `COMPLETED`. If it is `TERMINATED`, it means, transfer has been failed. Please check logs for more details.
 
-## 14. Validate Transfer
+## 13. Validate Transfer
 Now we can validate whether file has been transferred in `bob-container` or not.  
 Once transfer is complete, it should look like this.
-[](../assets/bob-azure-container.png)
+![](../assets/bob-azure-container.png)
 
 We can also list files in container using Azure CLI.
 ```shell
