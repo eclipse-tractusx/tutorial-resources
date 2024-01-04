@@ -40,7 +40,7 @@ resource "kubernetes_deployment" "backend-service" {
       spec {
         container {
           name              = "backend-service"
-          image             = "tractusx/mxd-backend-service:1.0.0"
+          image             = "tractusx/backend-service"
           image_pull_policy = "Always"
 
           port {
@@ -57,7 +57,7 @@ resource "kubernetes_deployment" "backend-service" {
             value = "postgres"
           }
           env {
-            name  = "edc.datasource.backendservice..password"
+            name  = "edc.datasource.backendservice.password"
             value = "postgres"
           }
           env {

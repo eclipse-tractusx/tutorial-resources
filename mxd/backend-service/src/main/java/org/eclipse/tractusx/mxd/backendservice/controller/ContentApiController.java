@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.UriInfo;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.tractusx.mxd.backendservice.service.ContentService;
@@ -43,9 +44,12 @@ public class ContentApiController {
 
     private final ContentService service;
 
-    public ContentApiController(ContentService service, Monitor monitor) {
+    private final ObjectMapper objectMapper;
+
+    public ContentApiController(ContentService service, Monitor monitor, ObjectMapper objectMapper) {
         this.service = service;
         this.monitor = monitor;
+        this.objectMapper = objectMapper;
     }
 
 
@@ -78,10 +82,13 @@ public class ContentApiController {
 
 
     private String createJsonResponse(String id, UriInfo uriInfo) {
-        ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonResponse = objectMapper.createObjectNode()
                 .put("id", id)
-                .put("url", uriInfo.getBaseUri() + "v1/contents/" + id);
+                .put("url", UriBuilder.fromUri(uriInfo.getBaseUri())
+                        .path("v1")
+                        .path("contents")
+                        .path(String.valueOf(id))
+                        .build().toString());
         try {
             return objectMapper.writeValueAsString(jsonResponse);
         } catch (IOException e) {

@@ -21,6 +21,7 @@
 
 package org.eclipse.tractusx.mxd.backendservice;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.failsafe.RetryPolicy;
 import okhttp3.EventListener;
 import okhttp3.OkHttpClient;
@@ -33,6 +34,7 @@ import org.eclipse.edc.runtime.metamodel.annotation.Inject;
 import org.eclipse.edc.runtime.metamodel.annotation.Provider;
 import org.eclipse.edc.spi.EdcException;
 import org.eclipse.edc.spi.http.EdcHttpClient;
+import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.types.TypeManager;
@@ -43,10 +45,7 @@ import org.eclipse.edc.transform.spi.TypeTransformerRegistry;
 import org.eclipse.edc.web.spi.WebService;
 import org.eclipse.tractusx.mxd.backendservice.controller.ContentApiController;
 import org.eclipse.tractusx.mxd.backendservice.controller.TransferApiController;
-import org.eclipse.tractusx.mxd.backendservice.service.ContentService;
-import org.eclipse.tractusx.mxd.backendservice.service.ContentServiceImpl;
-import org.eclipse.tractusx.mxd.backendservice.service.TransferService;
-import org.eclipse.tractusx.mxd.backendservice.service.TransferServiceImpl;
+import org.eclipse.tractusx.mxd.backendservice.service.*;
 import org.eclipse.tractusx.mxd.backendservice.statements.ContentStatementsService;
 import org.eclipse.tractusx.mxd.backendservice.statements.ContentStatementsServiceImpl;
 import org.eclipse.tractusx.mxd.backendservice.statements.TransferStatementsService;
@@ -147,9 +146,9 @@ public class BackendServiceExtension implements ServiceExtension {
             //register content controller and dependencies services here
             ContentService contentService = new ContentServiceImpl(sqlContentStore, context.getMonitor());
             context.registerService(ContentService.class, contentService);
-            webService.registerResource(new ContentApiController(contentService, context.getMonitor()));
+            webService.registerResource(new ContentApiController(contentService, context.getMonitor(), getObjectMapper()));
             //register transfer controller and dependencies services here
-            TransferService transferService = new TransferServiceImpl(sqlTransferStore, edcHttpClient(context), context.getMonitor());
+            TransferService transferService = new TransferServiceImpl(sqlTransferStore, edcHttpClient(context), context.getMonitor(), getHttConnectionService(edcHttpClient(context), context.getMonitor()));
             context.registerService(TransferService.class, transferService);
             webService.registerResource(new TransferApiController(transferService));
         } catch (Exception e) {
@@ -197,5 +196,13 @@ public class BackendServiceExtension implements ServiceExtension {
 
     public int runQuery(String query, Connection connection) {
         return transactionContext.execute(() -> queryExecutor.execute(connection, query));
+    }
+
+    public ObjectMapper getObjectMapper() {
+        return new ObjectMapper();
+    }
+
+    public HttpConnectionService getHttConnectionService(EdcHttpClient httpClient, Monitor monitor) {
+        return new HttpConnectionService(httpClient, monitor);
     }
 }

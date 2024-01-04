@@ -82,8 +82,6 @@ val copyJar = tasks.create("copyJar", Copy::class) {
 }
 
 val dockerTask: DockerBuildImage = tasks.create("dockerize", DockerBuildImage::class) {
-    buildArgs.put("JAR", "${project.buildDir}/libs/${project.name}.jar")
-    println("build 1 : ${buildArgs.get()}")
     images.add("${project.name}:${project.version}")
     images.add("${project.name}:latest")
 }

@@ -48,15 +48,17 @@ public class TransferServiceImpl implements TransferService {
 
     private Monitor monitor;
 
-    public TransferServiceImpl(TransferStoreService transferStoreService, EdcHttpClient edcHttpClient, Monitor monitor) {
+    private HttpConnectionService httpConnectionService;
+
+    public TransferServiceImpl(TransferStoreService transferStoreService, EdcHttpClient edcHttpClient, Monitor monitor, HttpConnectionService httpConnectionService) {
         this.transferStoreService = transferStoreService;
         this.edcHttpClient = edcHttpClient;
         this.monitor = monitor;
+        this.httpConnectionService = httpConnectionService;
     }
 
     @Override
     public ServiceResult<Transfer> create(Transfer asset) {
-        HttpConnectionService httpConnectionService = new HttpConnectionService(edcHttpClient);
         String content = httpConnectionService.getUrlAssets(asset);
         transferStoreService.save(asset, content);
         return ServiceResult.success(asset);

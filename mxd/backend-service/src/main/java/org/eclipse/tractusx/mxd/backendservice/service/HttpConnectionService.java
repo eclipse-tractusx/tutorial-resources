@@ -23,6 +23,7 @@ package org.eclipse.tractusx.mxd.backendservice.service;
 
 import okhttp3.Request;
 import org.eclipse.edc.spi.http.EdcHttpClient;
+import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.tractusx.mxd.backendservice.entity.Transfer;
 
 public class HttpConnectionService {
@@ -30,8 +31,11 @@ public class HttpConnectionService {
 
     private EdcHttpClient httpClient;
 
-    public HttpConnectionService(EdcHttpClient httpClient) {
+    private Monitor monitor;
+
+    public HttpConnectionService(EdcHttpClient httpClient, Monitor monitor) {
         this.httpClient = httpClient;
+        this.monitor = monitor;
     }
 
     public HttpConnectionService() {
@@ -55,7 +59,7 @@ public class HttpConnectionService {
             }
 
         } catch (Exception e) {
-
+            this.monitor.info(e.getMessage());
         }
         return res;
     }
