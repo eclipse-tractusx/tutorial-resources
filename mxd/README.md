@@ -31,6 +31,8 @@ once and are accessible by all participants.
 For the most bare-bones installation of the dataspace, execute the following commands in a shell:
 
 ```shell
+cd <path/of/mxd/backend-service>
+./gradlew clean dockerize
 # firstly go to the folder containing the config files
 cd <path/of/mxd>
 kind create cluster -n mxd --config kind.config.yaml

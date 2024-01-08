@@ -53,10 +53,6 @@ jobs:
             --for=condition=ready pod \
             --selector=app.kubernetes.io/component=controller \
             --timeout=90s
-      - name: "Backend-Service Build"
-        working-directory: mxd/backend-service
-        run: |-
-          ./gradlew clean dockerize
       - name: "Terraform init"
         working-directory: mxd
         run: |-
