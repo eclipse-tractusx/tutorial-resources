@@ -14,9 +14,19 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 #
-#  SPDX-License-Identifier: Apache-2.0
-#
+provider "null" {
+  version = "3.0.0"
+}
+
+
+resource "null_resource" "kind_load" {
+  provisioner "local-exec" {
+    command = "kind load docker-image backend-service:1.0.0 --name mxd"
+  }
+}
+
 resource "kubernetes_deployment" "backend-service" {
+  depends_on = [null_resource.kind_load]
   metadata {
     name = "backend-service"
     labels = {
@@ -40,8 +50,8 @@ resource "kubernetes_deployment" "backend-service" {
       spec {
         container {
           name              = "backend-service"
-          image             = "tractusx/backend-service"
-          image_pull_policy = "Always"
+          image             = "backend-service:1.0.0"
+          image_pull_policy = "Never"
 
           port {
             container_port = 8080
@@ -69,6 +79,7 @@ resource "kubernetes_deployment" "backend-service" {
     }
   }
 }
+
 resource "kubernetes_service" "backend-service" {
   metadata {
     name = "backend-service"
@@ -83,3 +94,4 @@ resource "kubernetes_service" "backend-service" {
     }
   }
 }
+
