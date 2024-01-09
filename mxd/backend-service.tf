@@ -17,11 +17,6 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-provider "null" {
-  version = "3.0.0"
-}
-
-
 resource "null_resource" "kind_load" {
   provisioner "local-exec" {
     command = "kind load docker-image backend-service:1.0.0 --name mxd"
