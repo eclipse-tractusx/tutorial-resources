@@ -44,7 +44,7 @@ jobs:
         uses: helm/kind-action@v1.8.0
         with:
           config: mxd/kind.config.yaml
-
+          cluster_name: mxd
       - name: "Install nginx ingress controller"
         run: |-
           echo "::notice title=nginx ingress on KinD::For details how to run nginx ingress on KinD check https://kind.sigs.k8s.io/docs/user/ingress/#ingress-nginx"
