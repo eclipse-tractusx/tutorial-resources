@@ -53,6 +53,11 @@ jobs:
             --for=condition=ready pod \
             --selector=app.kubernetes.io/component=controller \
             --timeout=90s
+      - name: Setup JDK 17
+        uses: actions/setup-java@v3.13.0
+        with:
+          java-version: '17'
+          distribution: 'temurin'
       - name: "Backend-Service Build"
         working-directory: mxd/backend-service
         run: |-
