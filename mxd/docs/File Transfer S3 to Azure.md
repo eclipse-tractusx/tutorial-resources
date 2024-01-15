@@ -56,7 +56,7 @@ This API should return below response.
 
 ## 4. Get Transfer
 Just wait for few seconds and check the transfer state.
-Please replace transfer process id before running command.
+Please replace the transfer process id before executing the command.
 ```shell
 curl --location 'http://localhost/bob/management/v2/transferprocesses/<TRANSFER_PROCESS_ID>' \
 --header 'X-Api-Key: password'
