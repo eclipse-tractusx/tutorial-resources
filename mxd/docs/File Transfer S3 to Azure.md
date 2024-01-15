@@ -11,10 +11,10 @@ For this tutorial, we assume `Alice` as a provider participant and `Bob` as cons
 - [File Transfer: Azure Blob Storage to Azure Blob Storage](./File Transfer Azure to Azure.md)
 
 This tutorial is similar to existing tutorial [File Transfer: Amazon S3 to Amazon S3](./File Transfer S3 to S3.md).
-Only difference is in the initiate transfer process. So please follow existing tutorial to initiate negotiation.
+The only difference is in the initiate transfer process. So please follow existing tutorial to initiate negotiation.
 
 ## 3. Initiate Transfer
-While initiating transfer, we need to provide a data destination, so in this case we will be providing an Azure Blob Storage destination.
+When initiating the transfer, we need to provide a data destination, so in this case we will be providing an Azure Blob Storage destination.
 ```shell
 curl --location 'http://localhost/bob/management/v2/transferprocesses' \
 --header 'Content-Type: application/json' \
@@ -62,7 +62,7 @@ curl --location 'http://localhost/bob/management/v2/transferprocesses/<TRANSFER_
 --header 'X-Api-Key: password'
 ```
 
-It should return below response:
+It should return a response similar to this (IDs will be different):
 ```json
 {
   "@id": "26e02359-56a1-4d94-afad-61319799675a",
@@ -90,6 +90,6 @@ It should return below response:
   }
 }
 ```
-> Please note, `state` should be `COMPLETED`. If it is `TERMINATED`, it means, transfer has failed. Please check logs for more details.
+> Please note, `state` should be `COMPLETED`. If it is `TERMINATED`, that means the transfer has failed. Please check logs for more details.
 
-Once transfer has completed, the asset file should be available in `bob-container`.
+Once the transfer has completed, the asset file should be available in `bob-container`.
