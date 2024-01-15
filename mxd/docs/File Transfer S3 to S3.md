@@ -430,8 +430,8 @@ It should return below response:
 > Please note, `state` should be `COMPLETED`. If it is `TERMINATED`, it means, transfer has been failed. Please check logs for more details.
 
 ## 13. Validate Transfer
-Now, we can validate whether file has been transferred in `bob-bucket` or not.  
-Once transfer is complete, file `alice-test-document.txt` should be present in `bob-bucket`.
+Now we can validate that file has been transferred to `bob-bucket`.  
+Once transfer is complete, `alice-test-document.txt` should be present in `bob-bucket`.
 
 Open Bob's MinIO Console and browse files in `bob-bucket`. It should look like this.
 ![bob_bucket_content_after_transfer.png](../assets/bob_bucket_content_after_transfer.png)
