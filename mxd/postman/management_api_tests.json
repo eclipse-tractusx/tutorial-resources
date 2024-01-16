@@ -1,14 +1,13 @@
 {
 	"info": {
-		"_postman_id": "b553c707-e4ab-4f7e-b79f-781865f610a2",
-		"name": "Management API Tests",
+		"_postman_id": "fcffd254-e40a-4c7d-b9fb-d7ea516b7d75",
+		"name": "tractusx-edc-mgmt-api-final-with-test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "252261",
-		"_collection_link": "https://winter-rocket-884715.postman.co/workspace/SAP~ff4cf631-05f4-48ab-a1e0-f716cf2efc25/collection/252261-b553c707-e4ab-4f7e-b79f-781865f610a2?action=share&source=collection_link&creator=252261"
+		"_exporter_id": "31550443"
 	},
 	"item": [
 		{
-			"name": "Create Assets BOB Management",
+			"name": "Create Asset Alice to Bob",
 			"event": [
 				{
 					"listen": "test",
@@ -19,9 +18,20 @@
 							"});",
 							"pm.test(\"Asessts Created for BOB\", function () {",
 							"   var jsonData = pm.response.json();",
-							"   console.log(jsonData[\"@id\"]);",
-							"   pm.expect(jsonData[\"@id\"]).to.eql(\"2222\")",
+							"   var expectedId = \"100003\";",
+							"   console.log(\"expected Id : \"+expectedId);",
+							"   console.log(\"acctual Id  : \"+jsonData[\"@id\"]);",
+							"   pm.expect(jsonData[\"@id\"]).to.eql(expectedId)",
 							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -32,7 +42,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"2222\",\n    \"description\": \"Product EDC Demo Asset 1\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\"\n  }\n}",
+					"raw": "{\n    \"@context\": {},\n    \"@id\": \"{{ASSET_ID}}\", \n    \"properties\": {\n        \"description\": \"Product EDC Demo Asset\"\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"http://localhost:8080/api/v1/contents/1\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -40,9 +50,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{BOB_MANAGEMENT_URL}}/v3/assets",
+					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v3/assets",
 					"host": [
-						"{{BOB_MANAGEMENT_URL}}"
+						"{{PROVIDER_MANAGEMENT_URL}}"
 					],
 					"path": [
 						"v3",
@@ -53,7 +63,7 @@
 			"response": []
 		},
 		{
-			"name": "Create Asset Alice MANAGEMENT",
+			"name": "Create Asset Bob to Alice",
 			"event": [
 				{
 					"listen": "test",
@@ -62,11 +72,22 @@
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
-							"pm.test(\"Asessts Created for Alice\", function () {",
+							"pm.test(\"Asessts Created for BOB\", function () {",
 							"   var jsonData = pm.response.json();",
-							"   console.log(jsonData[\"@id\"]);",
-							"   pm.expect(jsonData[\"@id\"]).to.eql(\"2222\")",
+							"   var expectedId = \"100003\";",
+							"   console.log(\"expected Id : \"+expectedId);",
+							"   console.log(\"acctual Id  : \"+jsonData[\"@id\"]);",
+							"   pm.expect(jsonData[\"@id\"]).to.eql(expectedId)",
 							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -77,7 +98,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"2222\",\n    \"description\": \"Product EDC Demo Asset 2\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\"\n  }\n}",
+					"raw": "{\n    \"@context\": {},\n    \"@id\": \"{{ASSET_ID}}\", \n    \"properties\": {\n        \"description\": \"Product EDC Demo Asset\"\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"http://localhost:8080/api/v1/contents/1\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -85,9 +106,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{Alice_MANAGEMENT_URL}}/v3/assets",
+					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v3/assets",
 					"host": [
-						"{{Alice_MANAGEMENT_URL}}"
+						"{{CONSUMER_MANAGEMENT_URL}}"
 					],
 					"path": [
 						"v3",
@@ -98,19 +119,82 @@
 			"response": []
 		},
 		{
-			"name": "Create Policy BOB_MANAGEMENT_URL",
+			"name": "Get all Assets",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Policy Created  for BOB\", function () {",
-							"   var jsonData = pm.response.json();",
-							"   console.log(jsonData[\"@id\"]);",
-							"   pm.expect(jsonData[\"@id\"]).to.eql(\"2222\")",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var expectedId = \"100003\";\r",
+							"pm.test(\"Recored is matched with expcedId : \"+expectedId, function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							" \r",
+							"    let status = false;\r",
+							"    jsonData.forEach((item) => {\r",
+							"        if (item[\"@id\"] == expectedId) {\r",
+							"            // Check if the item has the expected @id\r",
+							"            pm.expect(item[\"@id\"]).to.eql(expectedId);\r",
+							"            status = true;\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    // If status is still false, it means no match was found\r",
+							"    if (!status) {\r",
+							"        pm.expect.fail('Failed : No any record matched with expectedId : '+expectedId);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v3/assets/request",
+					"host": [
+						"{{PROVIDER_MANAGEMENT_URL}}"
+					],
+					"path": [
+						"v3",
+						"assets",
+						"request"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Policy Alice to Bob",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Asessts Created for BOB\", function () {\r",
+							"   var jsonData = pm.response.json();\r",
+							"   var expectedId = \"200003\";\r",
+							"   console.log(\"expected Id : \"+expectedId);\r",
+							"   console.log(\"acctual Id  : \"+jsonData[\"@id\"]);\r",
+							"   pm.expect(jsonData[\"@id\"]).to.eql(expectedId)\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -122,7 +206,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"@context\": {\n        \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n    },\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"2222\",\n    \"policy\": {\n\t\t\"@type\": \"Policy\",\n\t\t\"odrl:permission\" : [{\n\t\t\t\"odrl:action\" : \"USE\",\n\t\t\t\"odrl:constraint\" : {\n\t\t\t\t\"@type\": \"LogicalConstraint\",\n\t\t\t\t\"odrl:or\" : [{\n\t\t\t\t\t\"@type\" : \"Constraint\",\n\t\t\t\t\t\"odrl:leftOperand\" : \"BusinessPartnerNumber\",\n\t\t\t\t\t\"odrl:operator\" : {\n                        \"@id\": \"odrl:eq\"\n                    },\n\t\t\t\t\t\"odrl:rightOperand\" : \"{{POLICY_BPN}}\"\n\t\t\t\t}]\n\t\t\t}\n\t\t}]\n    }\n}",
+					"raw": "{\n    \"@context\": {\n        \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n    },\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"{{POLICY_ID}}\",\n    \"policy\": {\n\t\t\"@type\": \"Policy\",\n\t\t\"odrl:permission\" : [{\n\t\t\t\"odrl:action\" : \"USE\",\n\t\t\t\"odrl:constraint\" : {\n\t\t\t\t\"@type\": \"LogicalConstraint\",\n\t\t\t\t\"odrl:or\" : [{\n\t\t\t\t\t\"@type\" : \"Constraint\",\n\t\t\t\t\t\"odrl:leftOperand\" : \"BusinessPartnerNumber\",\n\t\t\t\t\t\"odrl:operator\" : {\n                        \"@id\": \"odrl:eq\"\n                    },\n\t\t\t\t\t\"odrl:rightOperand\" : \"{{POLICY_BPN}}\"\n\t\t\t\t}]\n\t\t\t}\n\t\t}]\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -130,9 +214,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{BOB_MANAGEMENT_URL}}/v2/policydefinitions",
+					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/policydefinitions",
 					"host": [
-						"{{BOB_MANAGEMENT_URL}}"
+						"{{PROVIDER_MANAGEMENT_URL}}"
 					],
 					"path": [
 						"v2",
@@ -143,20 +227,21 @@
 			"response": []
 		},
 		{
-			"name": "Create Policy Alice_MANAGEMENT_URL",
+			"name": "Create Policy Bob to Alice",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"",
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Policy Created  for Alice\", function () {",
-							"   var jsonData = pm.response.json();",
-							"   console.log(jsonData[\"@id\"]);",
-							"   pm.expect(jsonData[\"@id\"]).to.eql(\"2222\")",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Asessts Created for BOB\", function () {\r",
+							"   var jsonData = pm.response.json();\r",
+							"   var expectedId = \"200003\";\r",
+							"   console.log(\"expected Id : \"+expectedId);\r",
+							"   console.log(\"acctual Id  : \"+jsonData[\"@id\"]);\r",
+							"   pm.expect(jsonData[\"@id\"]).to.eql(expectedId)\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -168,7 +253,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"@context\": {\n        \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n    },\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"2222\",\n    \"policy\": {\n\t\t\"@type\": \"Policy\",\n\t\t\"odrl:permission\" : [{\n\t\t\t\"odrl:action\" : \"USE\",\n\t\t\t\"odrl:constraint\" : {\n\t\t\t\t\"@type\": \"LogicalConstraint\",\n\t\t\t\t\"odrl:or\" : [{\n\t\t\t\t\t\"@type\" : \"Constraint\",\n\t\t\t\t\t\"odrl:leftOperand\" : \"BusinessPartnerNumber\",\n\t\t\t\t\t\"odrl:operator\" : {\n                        \"@id\": \"odrl:eq\"\n                    },\n\t\t\t\t\t\"odrl:rightOperand\" : \"{{POLICY_BPN}}\"\n\t\t\t\t}]\n\t\t\t}\n\t\t}]\n    }\n}",
+					"raw": "{\n    \"@context\": {\n        \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n    },\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"{{POLICY_ID}}\",\n    \"policy\": {\n\t\t\"@type\": \"Policy\",\n\t\t\"odrl:permission\" : [{\n\t\t\t\"odrl:action\" : \"USE\",\n\t\t\t\"odrl:constraint\" : {\n\t\t\t\t\"@type\": \"LogicalConstraint\",\n\t\t\t\t\"odrl:or\" : [{\n\t\t\t\t\t\"@type\" : \"Constraint\",\n\t\t\t\t\t\"odrl:leftOperand\" : \"BusinessPartnerNumber\",\n\t\t\t\t\t\"odrl:operator\" : {\n                        \"@id\": \"odrl:eq\"\n                    },\n\t\t\t\t\t\"odrl:rightOperand\" : \"{{POLICY_BPN}}\"\n\t\t\t\t}]\n\t\t\t}\n\t\t}]\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -176,104 +261,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{Alice_MANAGEMENT_URL}}/v2/policydefinitions",
+					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/policydefinitions",
 					"host": [
-						"{{Alice_MANAGEMENT_URL}}"
+						"{{CONSUMER_MANAGEMENT_URL}}"
 					],
 					"path": [
 						"v2",
 						"policydefinitions"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create Contract Definition BOB_MANAGEMENT_URL",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"",
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Contract Definition for BOB\", function () {",
-							"   var jsonData = pm.response.json();",
-							"   console.log(jsonData[\"@id\"]);",
-							"   pm.expect(jsonData[\"@id\"]).to.eql(\"2222\")",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"@context\": {},\n    \"@id\": \"2222\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"1\",\n    \"contractPolicyId\": \"1\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"{{EDC_NAMESPACE}}id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"1\"\n    }\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{BOB_MANAGEMENT_URL}}/v2/contractdefinitions",
-					"host": [
-						"{{BOB_MANAGEMENT_URL}}"
-					],
-					"path": [
-						"v2",
-						"contractdefinitions"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create Contract Definition Alice_MANAGEMENT_URL",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Contract Definition for Alice\", function () {",
-							"   var jsonData = pm.response.json();",
-							"   console.log(jsonData[\"@id\"]);",
-							"   pm.expect(jsonData[\"@id\"]).to.eql(\"2222\")",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"@context\": {},\n    \"@id\": \"2222\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"1\",\n    \"contractPolicyId\": \"1\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"{{EDC_NAMESPACE}}id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"1\"\n    }\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{Alice_MANAGEMENT_URL}}/v2/contractdefinitions",
-					"host": [
-						"{{Alice_MANAGEMENT_URL}}"
-					],
-					"path": [
-						"v2",
-						"contractdefinitions"
 					]
 				}
 			},
@@ -289,11 +283,25 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"pm.test(\"Get the All Created Policies \", function () {\r",
-							"   var jsonData = pm.response.json();\r",
-							"   console.log(jsonData[0][\"@id\"]);\r",
-							"   pm.expect(jsonData[0][\"@id\"]).to.eql(\"1\");\r",
-							"});"
+							"var expectedId = \"200003\";\r",
+							"pm.test(\"Recored is matched with expcedId : \"+expectedId, function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    let status = false;\r",
+							"    jsonData.forEach((item) => {\r",
+							"        if (item[\"@id\"] == expectedId) {\r",
+							"            // Check if the item has the expected @id\r",
+							"            pm.expect(item[\"@id\"]).to.eql(expectedId);\r",
+							"            status = true;\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    // If status is still false, it means no match was found\r",
+							"    if (!status) {\r",
+							"        pm.expect.fail('Failed : No any record matched with expectedId : '+expectedId);\r",
+							"    }\r",
+							"});\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -312,9 +320,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{BOB_MANAGEMENT_URL}}/v2/policydefinitions/request",
+					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/policydefinitions/request",
 					"host": [
-						"{{BOB_MANAGEMENT_URL}}"
+						"{{PROVIDER_MANAGEMENT_URL}}"
 					],
 					"path": [
 						"v2",
@@ -326,19 +334,22 @@
 			"response": []
 		},
 		{
-			"name": "Get all Assets",
+			"name": "Create Contract Definitiion Alice to Bob",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
+							"\r",
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"pm.test(\"Get the All Created Policies\", function () {\r",
+							"pm.test(\"Contract Definition Created for BOB\", function () {\r",
 							"   var jsonData = pm.response.json();\r",
-							"   console.log(jsonData[0][\"@id\"]);\r",
-							"   pm.expect(jsonData[0][\"@id\"]).to.eql(\"1\");\r",
+							"   var expectedId = \"300003\";\r",
+							"   console.log(\"expected Id : \"+expectedId);\r",
+							"   console.log(\"acctual Id  : \"+jsonData[\"@id\"]);\r",
+							"   pm.expect(jsonData[\"@id\"]).to.eql(expectedId);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -348,22 +359,78 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"@context\": {},\n    \"@id\": \"{{CONTRACT_DEFINITION_ID}}\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"{{ACCESS_POLICY_ID}}\",\n    \"contractPolicyId\": \"{{CONTRACT_POLICY_ID}}\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"{{EDC_NAMESPACE}}id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"{{ASSET_ID}}\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{BOB_MANAGEMENT_URL}}/v3/assets/request",
+					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/contractdefinitions",
 					"host": [
-						"{{BOB_MANAGEMENT_URL}}"
+						"{{PROVIDER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v3",
-						"assets",
-						"request"
+						"v2",
+						"contractdefinitions"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Query Catalog Bob to Alice",
+			"name": "Create Contract Definitiion Bob to Alice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Contract Definition Created for BOB\", function () {\r",
+							"   var jsonData = pm.response.json();\r",
+							"   var expectedId = \"300003\";\r",
+							"   console.log(\"expected Id : \"+expectedId);\r",
+							"   console.log(\"acctual Id  : \"+jsonData[\"@id\"]);\r",
+							"   pm.expect(jsonData[\"@id\"]).to.eql(expectedId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"@context\": {},\n    \"@id\": \"{{CONTRACT_DEFINITION_ID}}\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"{{ACCESS_POLICY_ID}}\",\n    \"contractPolicyId\": \"{{CONTRACT_POLICY_ID}}\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"{{EDC_NAMESPACE}}id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"{{ASSET_ID}}\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/contractdefinitions",
+					"host": [
+						"{{CONSUMER_MANAGEMENT_URL}}"
+					],
+					"path": [
+						"v2",
+						"contractdefinitions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Contract Definitiions",
 			"event": [
 				{
 					"listen": "test",
@@ -372,11 +439,23 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
+							"var expectedId = \"300003\";\r",
+							"pm.test(\"Recored is matched with expcedId : \"+expectedId, function () {\r",
+							"    var jsonData = pm.response.json();\r",
 							"\r",
-							"pm.test(\"Query Catalog Fetch Successful\", function () {\r",
-							"   var jsonData = pm.response.json();\r",
-							"   console.log(jsonData[\"dcat:dataset\"][0][\"@id\"]);\r",
-							"   pm.expect(jsonData[\"dcat:dataset\"][0][\"@id\"]).to.eql(\"1\");\r",
+							"    let status = false;\r",
+							"    jsonData.forEach((item) => {\r",
+							"        if (item[\"@id\"] == expectedId) {\r",
+							"            // Check if the item has the expected @id\r",
+							"            pm.expect(item[\"@id\"]).to.eql(expectedId);\r",
+							"            status = true;\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    // If status is still false, it means no match was found\r",
+							"    if (!status) {\r",
+							"        pm.expect.fail('Failed : No any record matched with expectedId : '+expectedId);\r",
+							"    }\r",
 							"});\r",
 							""
 						],
@@ -386,16 +465,10 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [
-					{
-						"key": "X-Api-Key",
-						"value": "password",
-						"type": "text"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"@context\": {\r\n        \"edc\": \"https://w3id.org/edc/v0.0.1/ns/\"\r\n    },\r\n    \"@type\": \"CatalogRequest\",\r\n    \"providerUrl\": \"\",\r\n    \"counterPartyAddress\":\"{{Alice_PROVIDER_PROTOCOL_URL}}\",\r\n    \"protocol\": \"dataspace-protocol-http\",\r\n    \"querySpec\": {\r\n        \"offset\": 0,\r\n        \"limit\": 50\r\n    }\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -403,13 +476,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{BOB_MANAGEMENT_URL}}/v2/catalog/request",
+					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/contractdefinitions/request",
 					"host": [
-						"{{BOB_MANAGEMENT_URL}}"
+						"{{PROVIDER_MANAGEMENT_URL}}"
 					],
 					"path": [
 						"v2",
-						"catalog",
+						"contractdefinitions",
 						"request"
 					]
 				}
@@ -417,7 +490,7 @@
 			"response": []
 		},
 		{
-			"name": "Query Catalog Alice to BOB",
+			"name": "Query Catalog",
 			"event": [
 				{
 					"listen": "test",
@@ -426,10 +499,23 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"pm.test(\"Query Catalog Fetch Successful\", function () {\r",
-							"   var jsonData = pm.response.json();\r",
-							"   console.log(jsonData[\"dcat:dataset\"][0][\"@id\"]);\r",
-							"   pm.expect(jsonData[\"dcat:dataset\"][0][\"@id\"]).to.eql(\"1\");\r",
+							"var expectedId = \"100003\";\r",
+							"pm.test(\"Query Catalog asset recored is matched with expcedId : \"+expectedId, function () {\r",
+							"\r",
+							"    var status = false;\r",
+							"    var jsonData = pm.response.json();\r",
+							"    \r",
+							"    jsonData[\"dcat:dataset\"].map((item)=>{\r",
+							"        if(item[\"@id\"] == expectedId){\r",
+							"            status = true;\r",
+							"            pm.expect(item[\"@id\"]).to.eql(expectedId);\r",
+							"        }\r",
+							"    })\r",
+							"\r",
+							"    if(!status){\r",
+							"    pm.expect.fail('Failed : No any record matched with expectedId : '+expectedId);\r",
+							"    }\r",
+							"   \r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -438,16 +524,10 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [
-					{
-						"key": "X-Api-Key",
-						"value": "password",
-						"type": "text"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"@context\": {\r\n        \"edc\": \"https://w3id.org/edc/v0.0.1/ns/\"\r\n    },\r\n    \"@type\": \"CatalogRequest\",\r\n    \"providerUrl\": \"\",\r\n    \"counterPartyAddress\":\"{{Alice_PROVIDER_PROTOCOL_URL}}\",\r\n    \"protocol\": \"dataspace-protocol-http\",\r\n    \"querySpec\": {\r\n        \"offset\": 0,\r\n        \"limit\": 50\r\n    }\r\n}",
+					"raw": "{\r\n    \"@context\": {\r\n        \"edc\": \"https://w3id.org/edc/v0.0.1/ns/\"\r\n    },\r\n    \"@type\": \"CatalogRequest\",\r\n    \"counterPartyAddress\":\"{{PROVIDER_PROTOCOL_URL}}\",\r\n    \"protocol\": \"dataspace-protocol-http\",\r\n    \"querySpec\": {\r\n        \"offset\": 0,\r\n        \"limit\": 50\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -455,9 +535,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{BOB_MANAGEMENT_URL}}/v2/catalog/request",
+					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/catalog/request",
 					"host": [
-						"{{BOB_MANAGEMENT_URL}}"
+						"{{CONSUMER_MANAGEMENT_URL}}"
 					],
 					"path": [
 						"v2",
@@ -506,73 +586,60 @@
 	],
 	"variable": [
 		{
+			"key": "CONSUMER_MANAGEMENT_URL",
+			"value": "http://localhost/bob/management"
+		},
+		{
+			"key": "PROVIDER_PROTOCOL_URL",
+			"value": "http://alice-controlplane:8084/api/v1/dsp"
+		},
+		{
+			"key": "PROVIDER_MANAGEMENT_URL",
+			"value": "http://localhost/alice/management"
+		},
+		{
 			"key": "ASSET_ID",
-			"value": "1",
+			"value": "100003",
 			"type": "default"
 		},
 		{
 			"key": "POLICY_ID",
-			"value": "1",
+			"value": "200003",
 			"type": "default"
 		},
 		{
 			"key": "CONTRACT_POLICY_ID",
-			"value": "1",
+			"value": "200003",
 			"type": "default"
 		},
 		{
 			"key": "ACCESS_POLICY_ID",
-			"value": "1",
+			"value": "200003",
 			"type": "default"
 		},
 		{
 			"key": "CONTRACT_DEFINITION_ID",
-			"value": "1",
+			"value": "300003",
 			"type": "default"
 		},
 		{
 			"key": "POLICY_BPN",
-			"value": "BPNBOB",
+			"value": "BPNL000000000002",
 			"type": "default"
 		},
 		{
 			"key": "BACKEND_SERVICE",
-			"value": "http://backend:8080",
+			"value": "https://ene5zfqvkbqvv.x.pipedream.net/",
 			"type": "string"
 		},
 		{
 			"key": "PROVIDER_ID",
-			"value": "BPNPLATO",
+			"value": "BPNL000000000001",
 			"type": "string"
 		},
 		{
 			"key": "EDC_NAMESPACE",
 			"value": "https://w3id.org/edc/v0.0.1/ns/",
-			"type": "string"
-		},
-		{
-			"key": "CONSUMER_ADAPTER_URL",
-			"value": "http://localhost:31364/management",
-			"type": "string"
-		},
-		{
-			"key": "BOB_MANAGEMENT_URL",
-			"value": "http://localhost/bob/management",
-			"type": "string"
-		},
-		{
-			"key": "Alice_MANAGEMENT_URL",
-			"value": "http://localhost/alice/management",
-			"type": "string"
-		},
-		{
-			"key": "BOB_PROVIDER_PROTOCOL_URL",
-			"value": "http://bob-controlplane:8084/api/v1/dsp",
-			"type": "string"
-		},
-		{
-			"key": "Alice_PROVIDER_PROTOCOL_URL",
-			"value": "http://alice-controlplane:8084/api/v1/dsp",
 			"type": "string"
 		}
 	]
