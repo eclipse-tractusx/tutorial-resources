@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "Create Asset Alice to Bob",
+			"name": "Create Asset",
 			"event": [
 				{
 					"listen": "test",
@@ -16,12 +16,10 @@
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
-							"pm.test(\"Asessts Created for BOB\", function () {",
-							"   var jsonData = pm.response.json();",
-							"   var expectedId = \"100003\";",
-							"   console.log(\"expected Id : \"+expectedId);",
-							"   console.log(\"acctual Id  : \"+jsonData[\"@id\"]);",
-							"   pm.expect(jsonData[\"@id\"]).to.eql(expectedId)",
+							"pm.test(\"Asset Created\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var expectedId = pm.variables.get(\"ASSET_ID\");",
+							"    pm.expect(jsonData[\"@id\"]).to.eql(expectedId)",
 							"});"
 						],
 						"type": "text/javascript"
@@ -42,7 +40,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"@context\": {},\n    \"@id\": \"{{ASSET_ID}}\", \n    \"properties\": {\n        \"description\": \"Product EDC Demo Asset\"\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"http://localhost:8080/api/v1/contents/1\"\n    }\n}",
+					"raw": "{\n  \"@context\": {},\n  \"@id\": \"{{ASSET_ID}}\",\n  \"properties\": {\n    \"description\": \"Product EDC Demo Asset\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\"\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -63,88 +61,31 @@
 			"response": []
 		},
 		{
-			"name": "Create Asset Bob to Alice",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Asessts Created for BOB\", function () {",
-							"   var jsonData = pm.response.json();",
-							"   var expectedId = \"100003\";",
-							"   console.log(\"expected Id : \"+expectedId);",
-							"   console.log(\"acctual Id  : \"+jsonData[\"@id\"]);",
-							"   pm.expect(jsonData[\"@id\"]).to.eql(expectedId)",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"@context\": {},\n    \"@id\": \"{{ASSET_ID}}\", \n    \"properties\": {\n        \"description\": \"Product EDC Demo Asset\"\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"http://localhost:8080/api/v1/contents/1\"\n    }\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v3/assets",
-					"host": [
-						"{{CONSUMER_MANAGEMENT_URL}}"
-					],
-					"path": [
-						"v3",
-						"assets"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Get all Assets",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
+							"pm.test(\"Status Code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"var expectedId = \"100003\";\r",
-							"pm.test(\"Recored is matched with expcedId : \"+expectedId, function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"\r",
-							" \r",
-							"    let status = false;\r",
-							"    jsonData.forEach((item) => {\r",
-							"        if (item[\"@id\"] == expectedId) {\r",
-							"            // Check if the item has the expected @id\r",
-							"            pm.expect(item[\"@id\"]).to.eql(expectedId);\r",
-							"            status = true;\r",
-							"        }\r",
+							"pm.test(\"Body String Match Test\", function () {\r",
+							"    var responseData = pm.response.json();\r",
+							"    responseData.forEach(function (asset) {\r",
+							"        pm.expect(asset).to.have.property('@id');\r",
+							"        pm.expect(asset).to.have.property('@type', 'Asset');\r",
+							"        pm.expect(asset).to.have.property('properties').to.be.an('object');\r",
+							"        pm.expect(asset.properties).to.have.property('id');\r",
 							"    });\r",
-							"\r",
-							"    // If status is still false, it means no match was found\r",
-							"    if (!status) {\r",
-							"        pm.expect.fail('Failed : No any record matched with expectedId : '+expectedId);\r",
+							"});\r",
+							"var expectedId = pm.variables.get(\"ASSET_ID\");\r",
+							"pm.test(\"Expected Test Asset ID\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    if (jsonData.some((item) => item[\"@id\"] == expectedId)) {\r",
+							"        pm.expect(true).to.be.true;\r",
+							"    } else {\r",
+							"        pm.expect.fail('Failed: No record Matched With Expected Asset ID');\r",
 							"    }\r",
 							"});\r",
 							""
@@ -156,15 +97,6 @@
 			"request": {
 				"method": "POST",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
 					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v3/assets/request",
 					"host": [
@@ -180,21 +112,19 @@
 			"response": []
 		},
 		{
-			"name": "Create Policy Alice to Bob",
+			"name": "Create Policy",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
+							"pm.test(\"Status Code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"pm.test(\"Asessts Created for BOB\", function () {\r",
-							"   var jsonData = pm.response.json();\r",
-							"   var expectedId = \"200003\";\r",
-							"   console.log(\"expected Id : \"+expectedId);\r",
-							"   console.log(\"acctual Id  : \"+jsonData[\"@id\"]);\r",
-							"   pm.expect(jsonData[\"@id\"]).to.eql(expectedId)\r",
+							"pm.test(\"Policy Created\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var expectedId = pm.variables.get(\"POLICY_ID\");\r",
+							"    pm.expect(jsonData[\"@id\"]).to.eql(expectedId)\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -206,7 +136,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"@context\": {\n        \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n    },\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"{{POLICY_ID}}\",\n    \"policy\": {\n\t\t\"@type\": \"Policy\",\n\t\t\"odrl:permission\" : [{\n\t\t\t\"odrl:action\" : \"USE\",\n\t\t\t\"odrl:constraint\" : {\n\t\t\t\t\"@type\": \"LogicalConstraint\",\n\t\t\t\t\"odrl:or\" : [{\n\t\t\t\t\t\"@type\" : \"Constraint\",\n\t\t\t\t\t\"odrl:leftOperand\" : \"BusinessPartnerNumber\",\n\t\t\t\t\t\"odrl:operator\" : {\n                        \"@id\": \"odrl:eq\"\n                    },\n\t\t\t\t\t\"odrl:rightOperand\" : \"{{POLICY_BPN}}\"\n\t\t\t\t}]\n\t\t\t}\n\t\t}]\n    }\n}",
+					"raw": "{\n  \"@context\": {\n    \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n  },\n  \"@type\": \"PolicyDefinitionRequestDto\",\n  \"@id\": \"{{POLICY_ID}}\",\n  \"policy\": {\n    \"@type\": \"Policy\",\n    \"odrl:permission\": [\n      {\n        \"odrl:action\": \"USE\",\n        \"odrl:constraint\": {\n          \"@type\": \"LogicalConstraint\",\n          \"odrl:or\": [\n            {\n              \"@type\": \"Constraint\",\n              \"odrl:leftOperand\": \"BusinessPartnerNumber\",\n              \"odrl:operator\": {\n                \"@id\": \"odrl:eq\"\n              },\n              \"odrl:rightOperand\": \"{{PROVIDER_POLICY_BPN}}\"\n            }\n          ]\n        }\n      }\n    ]\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -227,53 +157,6 @@
 			"response": []
 		},
 		{
-			"name": "Create Policy Bob to Alice",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"pm.test(\"Asessts Created for BOB\", function () {\r",
-							"   var jsonData = pm.response.json();\r",
-							"   var expectedId = \"200003\";\r",
-							"   console.log(\"expected Id : \"+expectedId);\r",
-							"   console.log(\"acctual Id  : \"+jsonData[\"@id\"]);\r",
-							"   pm.expect(jsonData[\"@id\"]).to.eql(expectedId)\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"@context\": {\n        \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n    },\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"{{POLICY_ID}}\",\n    \"policy\": {\n\t\t\"@type\": \"Policy\",\n\t\t\"odrl:permission\" : [{\n\t\t\t\"odrl:action\" : \"USE\",\n\t\t\t\"odrl:constraint\" : {\n\t\t\t\t\"@type\": \"LogicalConstraint\",\n\t\t\t\t\"odrl:or\" : [{\n\t\t\t\t\t\"@type\" : \"Constraint\",\n\t\t\t\t\t\"odrl:leftOperand\" : \"BusinessPartnerNumber\",\n\t\t\t\t\t\"odrl:operator\" : {\n                        \"@id\": \"odrl:eq\"\n                    },\n\t\t\t\t\t\"odrl:rightOperand\" : \"{{POLICY_BPN}}\"\n\t\t\t\t}]\n\t\t\t}\n\t\t}]\n    }\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/policydefinitions",
-					"host": [
-						"{{CONSUMER_MANAGEMENT_URL}}"
-					],
-					"path": [
-						"v2",
-						"policydefinitions"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Get all Policies",
 			"event": [
 				{
@@ -283,22 +166,19 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"var expectedId = \"200003\";\r",
-							"pm.test(\"Recored is matched with expcedId : \"+expectedId, function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"\r",
-							"    let status = false;\r",
-							"    jsonData.forEach((item) => {\r",
-							"        if (item[\"@id\"] == expectedId) {\r",
-							"            // Check if the item has the expected @id\r",
-							"            pm.expect(item[\"@id\"]).to.eql(expectedId);\r",
-							"            status = true;\r",
-							"        }\r",
+							"pm.test(\"Body String Match Test\", function () {\r",
+							"    var responseData = pm.response.json();\r",
+							"    responseData.forEach(function (policy) {\r",
+							"        pm.expect(policy).to.have.property('@id');\r",
+							"        pm.expect(policy).to.have.property('@type', 'PolicyDefinition');\r",
+							"        pm.expect(policy).to.have.property('createdAt')\r",
 							"    });\r",
-							"\r",
-							"    // If status is still false, it means no match was found\r",
-							"    if (!status) {\r",
-							"        pm.expect.fail('Failed : No any record matched with expectedId : '+expectedId);\r",
+							"});\r",
+							"var expectedId = pm.variables.get(\"POLICY_ID\");\r",
+							"pm.test(\"Expected Test Policy ID\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    if (!jsonData.some((item) => item[\"@id\"] == expectedId)) {\r",
+							"        pm.expect.fail('Failed: No Record Matched With Expected ID');\r",
 							"    }\r",
 							"});\r",
 							""
@@ -310,15 +190,6 @@
 			"request": {
 				"method": "POST",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"@context\": {\n        \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n    },\n    \"id\": \"{{POLICY_ID}}\",\n    \"policy\": {\n        \"prohibitions\": [],\n        \"obligations\": [],\n        \"permissions\": [\n            {\n                \"edctype\": \"dataspaceconnector:permission\",\n                \"action\": {\n                    \"type\": \"USE\"\n                },\n                \"constraints\": []\n            }\n        ]\n    }\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
 					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/policydefinitions/request",
 					"host": [
@@ -334,7 +205,7 @@
 			"response": []
 		},
 		{
-			"name": "Create Contract Definitiion Alice to Bob",
+			"name": "Create Contract Definition",
 			"event": [
 				{
 					"listen": "test",
@@ -344,12 +215,10 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"pm.test(\"Contract Definition Created for BOB\", function () {\r",
-							"   var jsonData = pm.response.json();\r",
-							"   var expectedId = \"300003\";\r",
-							"   console.log(\"expected Id : \"+expectedId);\r",
-							"   console.log(\"acctual Id  : \"+jsonData[\"@id\"]);\r",
-							"   pm.expect(jsonData[\"@id\"]).to.eql(expectedId);\r",
+							"pm.test(\"Contract Definition Created\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var expectedId = pm.variables.get(\"CONTRACT_DEFINITION_ID\");\r",
+							"    pm.expect(jsonData[\"@id\"]).to.eql(expectedId)\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -361,7 +230,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"@context\": {},\n    \"@id\": \"{{CONTRACT_DEFINITION_ID}}\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"{{ACCESS_POLICY_ID}}\",\n    \"contractPolicyId\": \"{{CONTRACT_POLICY_ID}}\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"{{EDC_NAMESPACE}}id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"{{ASSET_ID}}\"\n    }\n}",
+					"raw": "{\n  \"@context\": {},\n  \"@id\": \"{{CONTRACT_DEFINITION_ID}}\",\n  \"@type\": \"ContractDefinition\",\n  \"accessPolicyId\": \"{{POLICY_ID}}\",\n  \"contractPolicyId\": \"{{POLICY_ID}}\",\n  \"assetsSelector\": {\n    \"@type\": \"CriterionDto\",\n    \"operandLeft\": \"{{EDC_NAMESPACE}}id\",\n    \"operator\": \"=\",\n    \"operandRight\": \"{{ASSET_ID}}\"\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -382,54 +251,6 @@
 			"response": []
 		},
 		{
-			"name": "Create Contract Definitiion Bob to Alice",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"\r",
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"pm.test(\"Contract Definition Created for BOB\", function () {\r",
-							"   var jsonData = pm.response.json();\r",
-							"   var expectedId = \"300003\";\r",
-							"   console.log(\"expected Id : \"+expectedId);\r",
-							"   console.log(\"acctual Id  : \"+jsonData[\"@id\"]);\r",
-							"   pm.expect(jsonData[\"@id\"]).to.eql(expectedId);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"@context\": {},\n    \"@id\": \"{{CONTRACT_DEFINITION_ID}}\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"{{ACCESS_POLICY_ID}}\",\n    \"contractPolicyId\": \"{{CONTRACT_POLICY_ID}}\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"{{EDC_NAMESPACE}}id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"{{ASSET_ID}}\"\n    }\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/contractdefinitions",
-					"host": [
-						"{{CONSUMER_MANAGEMENT_URL}}"
-					],
-					"path": [
-						"v2",
-						"contractdefinitions"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Get all Contract Definitiions",
 			"event": [
 				{
@@ -439,22 +260,20 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"var expectedId = \"300003\";\r",
-							"pm.test(\"Recored is matched with expcedId : \"+expectedId, function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"\r",
-							"    let status = false;\r",
-							"    jsonData.forEach((item) => {\r",
-							"        if (item[\"@id\"] == expectedId) {\r",
-							"            // Check if the item has the expected @id\r",
-							"            pm.expect(item[\"@id\"]).to.eql(expectedId);\r",
-							"            status = true;\r",
-							"        }\r",
+							"pm.test(\"Body String Match Test\", function () {\r",
+							"    var responseData = pm.response.json();\r",
+							"    responseData.forEach(function (contract) {\r",
+							"        pm.expect(contract).to.have.property('@id');\r",
+							"        pm.expect(contract).to.have.property('@type', 'ContractDefinition');\r",
+							"        pm.expect(contract).to.have.property('accessPolicyId');\r",
+							"        pm.expect(contract).to.have.property('contractPolicyId')\r",
 							"    });\r",
-							"\r",
-							"    // If status is still false, it means no match was found\r",
-							"    if (!status) {\r",
-							"        pm.expect.fail('Failed : No any record matched with expectedId : '+expectedId);\r",
+							"});\r",
+							"var expectedId = pm.variables.get(\"CONTRACT_DEFINITION_ID\");\r",
+							"pm.test(\"Expected Test Contract ID\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"  if (!jsonData.some((item) => item[\"@id\"] == expectedId)) {\r",
+							"        pm.expect.fail('Failed: No Record Matched With Expected ID');\r",
 							"    }\r",
 							"});\r",
 							""
@@ -466,15 +285,6 @@
 			"request": {
 				"method": "POST",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
 					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/contractdefinitions/request",
 					"host": [
@@ -496,27 +306,25 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
+							"pm.test('Status code is 200', function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"pm.test(\"Body String Match Test\", function () {\r",
+							"    var responseData = pm.response.json();\r",
+							"    responseData['dcat:dataset'].forEach(function (catalog) {\r",
+							"        pm.expect(catalog).to.have.property('@id');\r",
+							"        pm.expect(catalog).to.have.property('@type');\r",
+							"    });\r",
 							"});\r",
-							"var expectedId = \"100003\";\r",
-							"pm.test(\"Query Catalog asset recored is matched with expcedId : \"+expectedId, function () {\r",
-							"\r",
-							"    var status = false;\r",
+							"var expectedId = pm.variables.get(\"ASSET_ID\");\r",
+							"pm.test(\"Expected Test Asset ID\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    \r",
-							"    jsonData[\"dcat:dataset\"].map((item)=>{\r",
-							"        if(item[\"@id\"] == expectedId){\r",
-							"            status = true;\r",
-							"            pm.expect(item[\"@id\"]).to.eql(expectedId);\r",
-							"        }\r",
-							"    })\r",
-							"\r",
-							"    if(!status){\r",
-							"    pm.expect.fail('Failed : No any record matched with expectedId : '+expectedId);\r",
+							"    if (!jsonData['dcat:dataset'].some(item => item['@id'] == expectedId)) {\r",
+							"        pm.expect.fail('Failed: No Record Matched With Expected ID');\r",
 							"    }\r",
-							"   \r",
-							"});"
+							"});\r",
+							"\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -527,7 +335,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"@context\": {\r\n        \"edc\": \"https://w3id.org/edc/v0.0.1/ns/\"\r\n    },\r\n    \"@type\": \"CatalogRequest\",\r\n    \"counterPartyAddress\":\"{{PROVIDER_PROTOCOL_URL}}\",\r\n    \"protocol\": \"dataspace-protocol-http\",\r\n    \"querySpec\": {\r\n        \"offset\": 0,\r\n        \"limit\": 50\r\n    }\r\n}",
+					"raw": "{\r\n  \"@context\": {\r\n    \"edc\": \"https://w3id.org/edc/v0.0.1/ns/\"\r\n  },\r\n  \"@type\": \"CatalogRequest\",\r\n  \"counterPartyAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\r\n  \"protocol\": \"dataspace-protocol-http\",\r\n  \"querySpec\": {\r\n    \"offset\": 0,\r\n    \"limit\": 50\r\n  }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -599,38 +407,23 @@
 		},
 		{
 			"key": "ASSET_ID",
-			"value": "100003",
+			"value": "100004",
 			"type": "default"
 		},
 		{
 			"key": "POLICY_ID",
-			"value": "200003",
-			"type": "default"
-		},
-		{
-			"key": "CONTRACT_POLICY_ID",
-			"value": "200003",
-			"type": "default"
-		},
-		{
-			"key": "ACCESS_POLICY_ID",
-			"value": "200003",
+			"value": "200004",
 			"type": "default"
 		},
 		{
 			"key": "CONTRACT_DEFINITION_ID",
-			"value": "300003",
+			"value": "300006",
 			"type": "default"
 		},
 		{
-			"key": "POLICY_BPN",
+			"key": "PROVIDER_POLICY_BPN",
 			"value": "BPNL000000000002",
 			"type": "default"
-		},
-		{
-			"key": "BACKEND_SERVICE",
-			"value": "https://ene5zfqvkbqvv.x.pipedream.net/",
-			"type": "string"
 		},
 		{
 			"key": "PROVIDER_ID",
