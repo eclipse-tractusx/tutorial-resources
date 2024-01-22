@@ -228,6 +228,7 @@ There will not be any restrictions on that asset, meaning, every dataspace membe
 > TODO: add link to policy generator tool
 
 **Asset:**
+
 ```shell
 curl --location 'http://localhost/alice/management/v3/assets' \
 --header 'Content-Type: application/json' \
@@ -248,6 +249,7 @@ curl --location 'http://localhost/alice/management/v3/assets' \
 ```
 
 **Policy:**
+
 ```shell
 curl --location 'http://localhost/alice/management/v2/policydefinitions' \
 --header 'Content-Type: application/json' \
@@ -265,6 +267,7 @@ curl --location 'http://localhost/alice/management/v2/policydefinitions' \
 ```
 
 **Contract definition:**
+
 ```shell
 curl --location 'http://localhost/alice/management/v2/contractdefinitions' \
 --header 'Content-Type: application/json' \
@@ -292,6 +295,7 @@ from **trudy** will be able to see it. Technically, that means, that the access 
 > TODO: add link to policy generator tool
 
 **Asset:**
+
 ```shell
 curl --location 'http://localhost/alice/management/v3/assets' \
 --header 'Content-Type: application/json' \
@@ -629,7 +633,7 @@ curl --location 'http://localhost/bob/management/v2/transferprocesses/<ID>' \
 ```
 
 The response shows him that he has a `STARTED` transfer with the type `CONSUMER` of the asset with the ID `3`.
-Note, that a consumer pull transfer will **not** advance to the `COMPLETED` state, but instead will stay in state `STARTED`.
+Note, that a consumer pull transfer will **not** advance to the `COMPLETED` state, but instead remains in the `STARTED` state.
 This means, that Bob can now request the data using the information received by his backend.
 
 ```shell
@@ -640,6 +644,7 @@ curl --location 'http://localhost/bob/management/edrs?assetId=3' \
 ### 5.3 Consume the data
 
 In his backend, Bob can now see the following output:
+
 ```json
 {
   "id": "841e3cd7-add0-47fd-adef-ea8074ec50af",
@@ -649,13 +654,14 @@ In his backend, Bob can now see the following output:
   "properties": {}
 }
 ```
+
 Bob can now request the data using the provided information as follows:
+
 ```shell
 curl -X GET -H '<authKey>: <authCode>' <endpoint>
 ```
 
-
-> In this example, we can not use the endpoint URL as is, because we are working with a local Kubernetes cluster and can not use the cluster internal URL.  
+> In this example, we can not use the endpoint URL as is, because we are working with a local Kubernetes cluster and can not use the cluster internal URL.
 > Therefore, we have to use the ingress URL instead. 
 
 In this example, this results in the following request:
