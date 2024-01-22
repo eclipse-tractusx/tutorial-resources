@@ -63,3 +63,10 @@ variable "ssi-config" {
     oauth-secretalias  = ""
   }
 }
+
+variable "minio-config" {
+  default = {
+    minio-username = ""
+    minio-password = ""
+  }
+}
