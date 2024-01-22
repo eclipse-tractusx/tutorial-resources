@@ -76,7 +76,13 @@ variable "azure-account-key-sas" {
   description = "A temporary Azure Account Key to let other participant access our azure storage"
 }
 
-
 variable "azure-url" {
   description = "Azure Url"
+}
+
+variable "minio-config" {
+  default = {
+    minio-username = ""
+    minio-password = ""
+  }
 }

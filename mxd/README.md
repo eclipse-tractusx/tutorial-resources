@@ -387,9 +387,9 @@ curl --location 'http://localhost/bob/management/edrs' \
 		"odrl": "http://www.w3.org/ns/odrl/2/"
 	},
 	"@type": "NegotiationInitiateRequestDto",
-	"connectorAddress": "http://alice-controlplane:8084/api/v1/dsp",
+	"counterPartyAddress": "http://alice-controlplane:8084/api/v1/dsp",
 	"protocol": "dataspace-protocol-http",
-	"connectorId": "BPNL000000000001",
+	"counterPartyId": "BPNL000000000001",
 	"providerId": "BPNL000000000001",
 	"offer": {
 		"offerId": "MQ==:MQ==:MDJlMGRlOWUtNzdhZS00N2FhLTg5ODktYzEyMTdhMDE4ZjJh",
