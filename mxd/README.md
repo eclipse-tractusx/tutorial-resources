@@ -286,8 +286,8 @@ curl --location 'http://localhost/alice/management/v2/contractdefinitions' \
 
 ### 3.2 Add a restricted `asset`
 
-We will add another asset, but this time we'll put a restriction on it: only participants that have the `Dismantler`
-credential will be able to see it. Technically, that means, that the access policy contains a restriction.
+We will add another asset, but this time we'll put a restriction on it: only participants that have the `BPN`
+from **trudy** will be able to see it. Technically, that means, that the access policy contains a restriction.
 
 > TODO: add link to policy generator tool
 
@@ -336,7 +336,7 @@ curl --location 'http://localhost/alice/management/v2/policydefinitions' \
               "odrl:operator": {
                 "@id": "odrl:eq"
               },
-              "odrl:rightOperand": "BPNL00000000004X"
+              "odrl:rightOperand": "BPNL000000000003"
             }
           ]
         }
