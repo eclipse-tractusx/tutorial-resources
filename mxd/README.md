@@ -100,7 +100,7 @@ Naturally there are several ways to enable access to those services (Load balanc
 of simplicity we will use a plain Kubernetes port-forwarding:
 
 ```shell
-kubectl port-forward postgres-5b788f6bdd-bvt9b 5432:5423
+kubectl port-forward postgres-5b788f6bdd-bvt9b 5432:5432
 ``` 
 
 > Note that the actual pod name will be slightly different in your local cluster.
@@ -111,11 +111,11 @@ and `password=postgres`:
 ![img_1.png](assets/scr_pgadmin1.png)
 
 Every service in the cluster has their own database, but for the sake of simplicity, they are hosted in one Postgres
-server. We will show in [later sections](#8-improving-the-setup), how the databases can be segregated out. Feel free to
+server. We will show in [later sections](#4-improving-the-setup), how the databases can be segregated out. Feel free to
 inspect all the databases and tables, but there is not much data in there yet. There is just a few automatically seeded
 assets, policies and contract definitions.
 
-> Please be aware that among the list of databases, there is one named "trudy" which is designated for a new participant named Trudy. You can refer [here](#7-add-new-participant-trudy) for additional information about adding this new participant.
+> Please be aware that among the list of databases, there is one named "trudy" which is designated for a new participant named Trudy. You can refer [here](./docs/Trudy%20Connector%20Tutorial.md) for additional information about adding this new participant.
 
 ### Verify your local installation
 
