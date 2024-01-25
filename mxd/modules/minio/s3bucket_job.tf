@@ -37,6 +37,7 @@ resource "kubernetes_job" "create_minio_bucket" {
           command = ["/bin/sh", "-c"]
           args    = ["mc config host add minio http://${local.minio-url} ${var.minio-username} ${var.minio-password} && mc mb --ignore-existing minio/${local.bucket-name}"]
         }
+        restart_policy = "OnFailure"
       }
     }
   }
@@ -86,7 +87,7 @@ resource "kubernetes_job" "minio-upload-document" {
             name = kubernetes_config_map.document.metadata.0.name
           }
         }
-        restart_policy = "Never"
+        restart_policy = "OnFailure"
       }
     }
   }

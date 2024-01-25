@@ -101,6 +101,10 @@ module "bob-connector" {
   azure-account-key     = local.bob-azure-key-base64
   azure-account-key-sas = var.bob-azure-key-sas
   azure-url             = module.azurite.azurite-url
+  minio-config = {
+    minio-username = "bobawsclient"
+    minio-password = "bobawssecret"
+  }
 }
 
 module "azurite" {
@@ -111,8 +115,4 @@ module "azurite" {
 locals {
   alice-azure-key-base64 = base64encode(var.alice-azure-account-key)
   bob-azure-key-base64   = base64encode(var.bob-azure-account-key)
-  minio-config = {
-    minio-username = "bobawsclient"
-    minio-password = "bobawssecret"
-  }
 }
