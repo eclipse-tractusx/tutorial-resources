@@ -112,11 +112,11 @@ and `password=postgres`:
 ![img_1.png](assets/scr_pgadmin1.png)
 
 Every service in the cluster has their own database, but for the sake of simplicity, they are hosted in one Postgres
-server. We will show in [later sections](#8-improving-the-setup), how the databases can be segregated out. Feel free to
+server. We will show in [later sections](#4-improving-the-setup), how the databases can be segregated out. Feel free to
 inspect all the databases and tables, but there is not much data in there yet. There is just a few automatically seeded
 assets, policies and contract definitions.
 
-> Please be aware that among the list of databases, there is one named "trudy" which is designated for a new participant named Trudy. You can refer [here](#7-add-new-participant-trudy) for additional information about adding this new participant.
+> Please be aware that among the list of databases, there is one named "trudy" which is designated for a new participant named Trudy. You can refer [here](./docs/Trudy%20Connector%20Tutorial.md) for additional information about adding this new participant.
 
 ### Verify your local installation
 
@@ -214,7 +214,14 @@ curl -X POST http://localhost/bob/management/v2/contractdefinitions/request -H "
 
 Alternatively, please check out the [Postman collections here](./postman)
 
-## 3. Add some data
+## 3. Tutorials
+* [Restrict Asset Using Access Policies](./docs/Access%20Policies%20Tutorial.md)
+* [File Transfer: Azure Blob Storage to Azure Blob Storage](./docs/File%20Transfer%20Azure%20to%20Azure.md)
+* [File Transfer: Azure Blob Storage to Amazon S3](./docs/File%20Transfer%20Azure%20to%20S3.md)
+* [File Transfer: Amazon S3 to Amazon S3](./docs/File%20Transfer%20S3%20to%20S3.md)
+* [File Transfer: Amazon S3 to Azure Blob Storage](./docs/File%20Transfer%20S3%20to%20Azure.md)
+* [Simplify negotiation and transfer using the EDR API](./docs/EDR%20Transfer%20Tutorial.md)
+* [Add a new Participant](./docs/Trudy%20Connector%20Tutorial.md)
 
 In this step we will focus on inserting data into our participant Alice using
 the [Management API](https://app.swaggerhub.com/apis/eclipse-edc-bot/management-api/0.1.4-SNAPSHOT). We will use plain

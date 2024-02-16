@@ -29,7 +29,7 @@ terraform {
 
     keycloak = {
       source  = "mrparkers/keycloak"
-      version = "4.3.1"
+      version = "4.4.0"
     }
     kubernetes = {
       source = "hashicorp/kubernetes"
@@ -49,6 +49,7 @@ provider "helm" {
 
 # First connector
 module "alice-connector" {
+  depends_on        = [module.azurite]
   source            = "./modules/connector"
   humanReadableName = "alice"
   participantId     = var.alice-bpn
@@ -66,10 +67,19 @@ module "alice-connector" {
     oauth-secretalias  = "client_secret_alias"
     oauth-clientsecret = "alice_private_client"
   }
+  azure-account-name    = var.alice-azure-account-name
+  azure-account-key     = local.alice-azure-key-base64
+  azure-account-key-sas = var.alice-azure-key-sas
+  azure-url             = module.azurite.azurite-url
+  minio-config = {
+    minio-username = "aliceawsclient"
+    minio-password = "aliceawssecret"
+  }
 }
 
 # Second connector
 module "bob-connector" {
+  depends_on        = [module.azurite]
   source            = "./modules/connector"
   humanReadableName = "bob"
   participantId     = var.bob-bpn
@@ -87,4 +97,22 @@ module "bob-connector" {
     oauth-secretalias  = "client_secret_alias"
     oauth-clientsecret = "bob_private_client"
   }
+  azure-account-name    = var.bob-azure-account-name
+  azure-account-key     = local.bob-azure-key-base64
+  azure-account-key-sas = var.bob-azure-key-sas
+  azure-url             = module.azurite.azurite-url
+  minio-config = {
+    minio-username = "bobawsclient"
+    minio-password = "bobawssecret"
+  }
+}
+
+module "azurite" {
+  source           = "./modules/azurite"
+  azurite-accounts = "${var.alice-azure-account-name}:${local.alice-azure-key-base64};${var.bob-azure-account-name}:${local.bob-azure-key-base64}"
+}
+
+locals {
+  alice-azure-key-base64 = base64encode(var.alice-azure-account-key)
+  bob-azure-key-base64   = base64encode(var.bob-azure-account-key)
 }
