@@ -19,6 +19,7 @@ preconditions are met.
   this guide are created off of PgAdmin.
 - [Optional] a graphical tool to send REST requests, such as [Postman](https://www.postman.com/). This sample will
   include Postman collections that can be imported.
+- [Optional] if you want to get formatted json output, you could use [jq](https://jqlang.github.io/jq/).
 
 ## 2. Basic dataspace setup
 
@@ -101,7 +102,7 @@ of simplicity we will use a plain Kubernetes port-forwarding:
 
 ```shell
 kubectl port-forward postgres-5b788f6bdd-bvt9b 5432:5432
-``` 
+```
 
 > Note that the actual pod name will be slightly different in your local cluster.
 
@@ -122,8 +123,8 @@ assets, policies and contract definitions.
 In order to check that the connectors were deployed successfully, please execute the following commands in a shell:
 
 ```shell
-curl -X GET http://localhost/bob/health/api/check/liveness | jq
-curl -X GET http://localhost/alice/health/api/check/liveness | jq
+curl -X GET http://localhost/bob/health/api/check/liveness
+curl -X GET http://localhost/alice/health/api/check/liveness
 ```
 
 which should return something similar to this, the important part being the `isSystemHealthy: true` bit:
@@ -149,7 +150,7 @@ which should return something similar to this, the important part being the `isS
 Once we've established the basic readiness of our connectors, we can move on to inspect a few data items:
 
 ```shell
-curl -X POST http://localhost/bob/management/v3/assets/request -H "x-api-key: password" -H "content-type: application/json" | jq
+curl -X POST http://localhost/bob/management/v3/assets/request -H "x-api-key: password" -H "content-type: application/json"
 ```
 
 this queries the `/assets` endpoint returning the entire list of assets that `bob` currently maintains. You should see
@@ -206,9 +207,9 @@ Note: the same thing can be done to inspect policies and contract definitions. T
 
 ```shell
 # policies:
-curl -X POST http://localhost/bob/management/v2/policydefinitions/request -H "x-api-key: password" -H "content-type: application/json" | jq
+curl -X POST http://localhost/bob/management/v2/policydefinitions/request -H "x-api-key: password" -H "content-type: application/json"
 # contract defs:
-curl -X POST http://localhost/bob/management/v2/contractdefinitions/request -H "x-api-key: password" -H "content-type: application/json" | jq
+curl -X POST http://localhost/bob/management/v2/contractdefinitions/request -H "x-api-key: password" -H "content-type: application/json"
 ```
 
 Alternatively, please check out the [Postman collections here](./postman)
@@ -245,7 +246,7 @@ curl --location 'http://localhost/alice/management/v3/assets' \
         "type": "HttpData",
         "baseUrl": "https://jsonplaceholder.typicode.com/todos/3"
     }
-}' | jq
+}'
 ```
 
 **Policy:**
@@ -263,7 +264,7 @@ curl --location 'http://localhost/alice/management/v2/policydefinitions' \
   "policy": {
     "@type": "Policy"
   }
-}' | jq
+}'
 ```
 
 **Contract definition:**
@@ -284,7 +285,7 @@ curl --location 'http://localhost/alice/management/v2/contractdefinitions' \
     "operator": "=",
     "operandRight": "3"
   }
-}' | jq
+}'
 ```
 
 ### 3.2 Add a restricted `asset`
@@ -312,10 +313,11 @@ curl --location 'http://localhost/alice/management/v3/assets' \
         "type": "HttpData",
         "baseUrl": "https://jsonplaceholder.typicode.com/todos/4"
     }
-}' | jq
+}'
 ```
 
 **Policy:**
+
 ```shell
 curl --location 'http://localhost/alice/management/v2/policydefinitions' \
 --header 'Content-Type: application/json' \
@@ -347,10 +349,11 @@ curl --location 'http://localhost/alice/management/v2/policydefinitions' \
       }
     ]
   }
-}' | jq
+}'
 ```
 
 **Contract definition:**
+
 ```shell
 curl --location 'http://localhost/alice/management/v2/contractdefinitions' \
 --header 'Content-Type: application/json' \
@@ -367,7 +370,7 @@ curl --location 'http://localhost/alice/management/v2/contractdefinitions' \
     "operator": "=",
     "operandRight": "4"
   }
-}' | jq
+}'
 ```
 
 ### 3.3 [Optional] Add Kubernetes deployment for a `newman` container
@@ -396,7 +399,7 @@ curl --location 'http://localhost/bob/management/v2/catalog/request' --header 'C
         "offset": 0,
         "limit": 50
     }
-}' | jq
+}'
 ```
 
 this requests the catalog from Alice using the `dsp` protocol with address `http://alice-controlplane:8084/api/v1/dsp`.
@@ -484,6 +487,7 @@ Now that Bob knows what Alice is offering, he wants to transmit data. Before Bob
 negotiate a contract with Alice. We'll do this using the management API.
 
 ### 5.1 Negotiate a contract
+
 To do this, he uses the following `curl` command:
 
 ```shell
@@ -509,21 +513,21 @@ curl --location 'http://localhost/bob/management/v2/contractnegotiations' \
         "odrl:target": "3"
     }
  }
-}' | jq
+}'
 ```
 
 In the response, Bob gets a UUID. This is the ID of the created contract negotiation. Bob can now use this ID to see the current status of the negotiation and - if the negotiation was successful - the ID of the created contract agreement.
-
 
 > Make sure to replace `<ID>` in the URL with the UUID you just received.
 
 ```shell
 curl --location 'http://localhost/bob/management/v2/contractnegotiations/<ID>' \
---header 'X-Api-Key: password' | jq
+--header 'X-Api-Key: password'
 ```
 
 - If the negotiation was **successful**, Bob will see an ouput as shown below.
 - If the negotiation was **unsuccessful**, the negotiation state will be `TERMINATED` and no contract agreement ID will be present.
+
 ```json
 {
   "@type": "edc:ContractNegotiation",
@@ -559,10 +563,10 @@ and it is the most basic transfer available.
 
 Bob wants to send the data to his backend application ("<http://backend:8080>"). So he uses the following command to direct the data from Asset 3 to his desired data sink.
 
-> For testing purposes, you should replace `backend:8080` with your own test API or use [webhook. site](https://webhook.site/) as your backend system. 
+> For testing purposes, you should replace `backend:8080` with your own test API or use [webhook. site](https://webhook.site/) as your backend system.
 > If you do not change this, you will not be able to view the received token, which is required for requesting the data!
 > If you are using webhook.site, please make sure that you use "Your unique URL" and that you do not transfer any sensitive information to webhook.
-> 
+>
 > Replace `<contractAgreementId>` with the contract agreement ID you received in the previous step.
 
 ```shell
@@ -588,7 +592,7 @@ curl --location 'http://localhost/bob/management/v2/transferprocesses' \
         "contentType": "application/octet-stream",
         "isFinite": true
     }
-}' | jq
+}'
 ```
 
 Just to make sure everything worked, Bob uses another `curl` command to check if the transfer was successful.
@@ -597,14 +601,14 @@ In the response, Bob gets a UUID. This is the ID of the created transfer. Bob ca
 
 > Make sure to replace `<ID>` in the URL with the UUID you just received.
 
-
 ```shell
 curl --location 'http://localhost/bob/management/v2/transferprocesses/<ID>' \
---header 'X-Api-Key: password' | jq
+--header 'X-Api-Key: password'
 ```
 
 - If the transfer was **successful**, Bob will see an ouput as shown below.
 - If the transfer was **unsuccessful**, the transfer state will be `TERMINATED`.
+
 ```json
 {
   "@id": "6d6bca4e-4da5-4ed3-9fe5-2b98623d9a59",
@@ -638,7 +642,7 @@ This means, that Bob can now request the data using the information received by 
 
 ```shell
 curl --location 'http://localhost/bob/management/edrs?assetId=3' \
---header 'X-Api-Key: password' | jq
+--header 'X-Api-Key: password'
 ```
 
 ### 5.3 Consume the data
@@ -662,9 +666,10 @@ curl -X GET -H '<authKey>: <authCode>' <endpoint>
 ```
 
 > In this example, we can not use the endpoint URL as is, because we are working with a local Kubernetes cluster and can not use the cluster internal URL.
-> Therefore, we have to use the ingress URL instead. 
+> Therefore, we have to use the ingress URL instead.
 
 In this example, this results in the following request:
+
 ```shell
 curl -X GET -H 'Authorization: eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3MDI5OTE2NTUsImRhZCI6InIyaVpYUE9kSGJvUHBMTXZTS1hlSjgrc05WSThuS0V6WnhHa3hrSHN0YVJ1Z3l3TTlNRkxQbWJaT0toOUFXKzRwMlVZT3hEQitGMlNsbEFnTGZ0c1IyVVIxbE5RZEhNeFVDYkM3Nm12U0xmdkw4RFpZM2E0bG1pTXU4VUU3Zk92aXczaGlyKy9zWFRtNDU5M3EweXBHRmRaZ1VORko3ZnFRbjI2OStyWmZzWnZtaitLaWZZMURJcEQ5ZEQ1NkNURW1naTczU1VyRWF5RWtlc3dTWTJRZEluNWxOSFVReDdJMWNkZFZJdXkyZkMzYVJVWENqK003MjVmZ2ZERkwwR2N0ZTFkSWVjOUhHYTRyVW5WL0ZWbVJnUURUZSsza0thaGQ3WjVDTE5wcVVtREx5SGpBNHV3U1dkWHZ3emxDeGlxRzZ4eDg0amZtVDZlMzNLeG9NT1RVUUpnbWZyQWtJUkJ5a0dPa3BvN2p1a2dWVWk1bGNyUVEyMjQxYW5xa3ZzbWh5cnN1dUdTcnBxdEl4ZzQrd1lSSDYvTnBvRUUvemRxS0xLaE9hcz0iLCJjaWQiOiJNdz09Ok13PT06Tm1ZNU1EQTRPR0V0T1dZMVpDMDBZbVl5TFdGaVpqTXRNalJpTnpZMFl6RXlPVGs0In0.RvbdPWKIrBmMqIN7kvPnwoAOJMug-VKfREKrHWPOmfp0VGSsVuma7SAJaMb9cPT7X4lNZilw36GYWDh92FHSVA' http://localhost/alice/api/public
 ```
@@ -677,7 +682,7 @@ API.
 Using this convenient tool, we don't have to care about the intricacies of negotiation and transfer anymore, we can
 simply request an API token to Alice's proxy, and start sucking data out of it.
 We don't even need to worry about token expiry - the EDR API has a little gizmo that automatically refreshes the token
-if it nears expiry. 
+if it nears expiry.
 
 A detailed documentation about the EDR API is available [here](https://github.com/eclipse-tractusx/tractusx-edc/blob/main/docs/samples/edr-api-overview/edr-api-overview.md).
 
@@ -691,44 +696,44 @@ curl --location 'http://localhost/bob/management/edrs' \
 --header 'Content-Type: application/json' \
 --header 'X-Api-Key: password' \
 --data-raw '{
-	"@context": {
-		"odrl": "http://www.w3.org/ns/odrl/2/"
-	},
-	"@type": "NegotiationInitiateRequestDto",
-	"connectorAddress": "http://alice-controlplane:8084/api/v1/dsp",
-	"protocol": "dataspace-protocol-http",
-	"connectorId": "BPNL000000000001",
-	"providerId": "BPNL000000000001",
-	"offer": {
-		"offerId": "MQ==:MQ==:MDJlMGRlOWUtNzdhZS00N2FhLTg5ODktYzEyMTdhMDE4ZjJh",
-		"assetId": "1",
-		"policy": {
-			"@type": "odrl:Set",
-			"odrl:permission": {
-				"odrl:target": "1",
-				"odrl:action": {
-					"odrl:type": "USE"
-				},
-				"odrl:constraint": {
-					"odrl:or": {
-						"odrl:leftOperand": "BusinessPartnerNumber",
-						"odrl:operator": { "@id": "odrl:eq" },
-						"odrl:rightOperand": "BPNL000000000002"
-					}
-				}
-			},
-			"odrl:prohibition": [],
-			"odrl:obligation": [],
-			"odrl:target": "1"
-		}
-	}
-}' | jq
+ "@context": {
+  "odrl": "http://www.w3.org/ns/odrl/2/"
+ },
+ "@type": "NegotiationInitiateRequestDto",
+ "connectorAddress": "http://alice-controlplane:8084/api/v1/dsp",
+ "protocol": "dataspace-protocol-http",
+ "connectorId": "BPNL000000000001",
+ "providerId": "BPNL000000000001",
+ "offer": {
+  "offerId": "MQ==:MQ==:MDJlMGRlOWUtNzdhZS00N2FhLTg5ODktYzEyMTdhMDE4ZjJh",
+  "assetId": "1",
+  "policy": {
+   "@type": "odrl:Set",
+   "odrl:permission": {
+    "odrl:target": "1",
+    "odrl:action": {
+     "odrl:type": "USE"
+    },
+    "odrl:constraint": {
+     "odrl:or": {
+      "odrl:leftOperand": "BusinessPartnerNumber",
+      "odrl:operator": { "@id": "odrl:eq" },
+      "odrl:rightOperand": "BPNL000000000002"
+     }
+    }
+   },
+   "odrl:prohibition": [],
+   "odrl:obligation": [],
+   "odrl:target": "1"
+  }
+ }
+}'
 ```
 
 For requesting an EDR we have to specify:
 
 - `connectorId` and `providerId`: the participantId returned from the catalog request
-- `connectorAddress`: in `dcat:service` field returned from the catalog request 
+- `connectorAddress`: in `dcat:service` field returned from the catalog request
 - `offer`: it's derived by the chosen `dcat:Dataset` returned from the catalog request
 
 If everithing is ok, we'll get this as response:
@@ -752,7 +757,7 @@ If everithing is ok, we'll get this as response:
 The `@id` here is the id of the contract negotiation that has been started.
 
 Since the EDR negotiation sits on top of two state machines, contract negotiation and transfer process, it's an asyncronous process itself.
-In order to be notified without polling, we could configure the EDC callbacks for being notified on state transition. 
+In order to be notified without polling, we could configure the EDC callbacks for being notified on state transition.
 
 We could for example add this in the original request:
 
@@ -776,7 +781,7 @@ and be notified when the transfer process transition to the state `STARTED` (EDR
 For having a list of the negotiatied EDR for the `assedId` `1` we can use this `curl` command:
 
 ```shell
-curl --location 'http://localhost/bob/management/edrs?assetId=1' --header 'X-Api-Key: password' | jq
+curl --location 'http://localhost/bob/management/edrs?assetId=1' --header 'X-Api-Key: password'
 ```
 
 and the response should look like this:
@@ -857,7 +862,7 @@ which means that the second `EDR` is now expired and marked for removal later in
 The EDR itself is stored in the configured vault. To retrieve it we can use this `curl` command:
 
 ```shell
-curl --location 'http://localhost/bob/management/edrs/ff468685-0f9b-49a1-8ec6-ea40d5a2dc88' --header 'X-Api-Key: password' | jq
+curl --location 'http://localhost/bob/management/edrs/ff468685-0f9b-49a1-8ec6-ea40d5a2dc88' --header 'X-Api-Key: password'
 ```
 
 where `ff468685-0f9b-49a1-8ec6-ea40d5a2dc88` is the transfer process id of negotiated EDR. Each EDR is bound to one and only transfer process,
@@ -897,7 +902,7 @@ Once the right EDR has been identified using the EDR management API, we can use 
 
 ```shell
 curl --location 'http://localhost/alice/api/public' \
---header 'Authorization: eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE2OTQ1MjIwNTksImRhZCI6ImNoTTlvVTVLNXQzbDlWMFRsL1ZZdDlLU1J4YmNOSUdzM1FtazNlNktWOWpWcTBkeUhjUDU2Mm82Qk0zSitxeTRwRVg2d0EvWUFsdW9EdGptYnYxZlJoN3VmVmsvQjNONzhBMUhyZ01ENnk2enFsK1BEYzBXa00yTm9ycUJWQUl0TWpVNEFNbGhFMXE1Ym9EQ1lWcVRsQVZnbm9uTlB5MmlVUzVSVTJHTkZtOWFkZVZYR1ZLaDFDWEMzVDV0RkRCS21EMjExWVZYdDExRUlXbCtIU3VISm1PL0xwUUdibFkvaGFicXZ6aUZ0YlppbGlKSDNLdGVhZTZQRkdQTjNWT1Z4YlFrZTNmODNRN3VNeStBNzV4YS9VR1BMcjJlQkJzb0ZVbTBYeFFJS2dBOUROdGxXcnBuR3hwdG9tL1VWY00wQ1RwcWM5eFRRdGlnK3JMVlJ4dUhrb2RreG5KUXhiSENVMnNObnFhdXZJcDV4L04rbGdJN0F1amhtQWxiN2NwUWs0RDhSWWtZSnkvVUZGdGZmZUJLU2k2MnZDeC9QSFJsSERlUGM4VldDaEJTNFF1Q1FXY1pOK2oyUjR5b2Q2a3JlN2JtUStFK3pLUmYva3JhQkJkR041TDR5ZVdIYU0wS3oraGxiSVR5WHg2bjdrQ0VkVVVSREtCUHY3SHdzbHhLTzlxN05ReHplMHFDM0phR2pyWVdHZmJHTzB4SDlJRndsSWpqclZHMzE0WUVxNGdSTjNNPSIsImNpZCI6Ik1RPT06TVE9PTpOV0ZqTTJJeVkyWXRNRGt4WkMwME9UQmxMV0poTXpNdE1ERmxNRGhtTUdNNU5tVTIifQ.2UT3_mIjchrC242TqlLFWoyYPiCOPLLivaN5Xd4_MxhcQkxRkOxrK0IXkXVuRVjC1ReGPi3iaco9LDUxvF3FPw' | jq
+--header 'Authorization: eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE2OTQ1MjIwNTksImRhZCI6ImNoTTlvVTVLNXQzbDlWMFRsL1ZZdDlLU1J4YmNOSUdzM1FtazNlNktWOWpWcTBkeUhjUDU2Mm82Qk0zSitxeTRwRVg2d0EvWUFsdW9EdGptYnYxZlJoN3VmVmsvQjNONzhBMUhyZ01ENnk2enFsK1BEYzBXa00yTm9ycUJWQUl0TWpVNEFNbGhFMXE1Ym9EQ1lWcVRsQVZnbm9uTlB5MmlVUzVSVTJHTkZtOWFkZVZYR1ZLaDFDWEMzVDV0RkRCS21EMjExWVZYdDExRUlXbCtIU3VISm1PL0xwUUdibFkvaGFicXZ6aUZ0YlppbGlKSDNLdGVhZTZQRkdQTjNWT1Z4YlFrZTNmODNRN3VNeStBNzV4YS9VR1BMcjJlQkJzb0ZVbTBYeFFJS2dBOUROdGxXcnBuR3hwdG9tL1VWY00wQ1RwcWM5eFRRdGlnK3JMVlJ4dUhrb2RreG5KUXhiSENVMnNObnFhdXZJcDV4L04rbGdJN0F1amhtQWxiN2NwUWs0RDhSWWtZSnkvVUZGdGZmZUJLU2k2MnZDeC9QSFJsSERlUGM4VldDaEJTNFF1Q1FXY1pOK2oyUjR5b2Q2a3JlN2JtUStFK3pLUmYva3JhQkJkR041TDR5ZVdIYU0wS3oraGxiSVR5WHg2bjdrQ0VkVVVSREtCUHY3SHdzbHhLTzlxN05ReHplMHFDM0phR2pyWVdHZmJHTzB4SDlJRndsSWpqclZHMzE0WUVxNGdSTjNNPSIsImNpZCI6Ik1RPT06TVE9PTpOV0ZqTTJJeVkyWXRNRGt4WkMwME9UQmxMV0poTXpNdE1ERmxNRGhtTUdNNU5tVTIifQ.2UT3_mIjchrC242TqlLFWoyYPiCOPLLivaN5Xd4_MxhcQkxRkOxrK0IXkXVuRVjC1ReGPi3iaco9LDUxvF3FPw'
 ```
 
 and the response will look like this:
@@ -929,8 +934,7 @@ and the response will look like this:
 The provider receives the token, does some security checks and if all it's good it forwards the request to the configured
 baseUrl in the DataAddress of Asset, which in this case will do a `GET` request to `https://jsonplaceholder.typicode.com/todos`.
 
-> Replace the Authorization header with the negotiated one.
-
+> Replace the Authorization header with the negotiated one.  
 > The endpoint in the curl above is different from the one returned by the EDR GET API for testing purpose and deployment reason.
 
 #### Consumer data-plane (proxy)
@@ -947,7 +951,7 @@ curl --location 'http://localhost/bob/proxy/aas/request' \
 --data '{
     "assetId": "1",
     "providerId": "BPNL000000000001"
-}' | jq
+}'
 ```
 
 and get the same results as the provider data-plane option:
@@ -992,7 +996,7 @@ curl --location 'http://localhost/bob/proxy/aas/request' \
     "assetId": "1",
     "providerId": "BPNL000000000001",
     "pathSegments": "/1"
-}' | jq
+}'
 ```
 
 which will give us:
@@ -1014,21 +1018,26 @@ In our current setup, there are two participants named "Alice" and "Bob". Now we
 Following are the steps needed to accomplish this.
 
 ### 7.1 Create Keycloak Client
+
 Presently, Alice and Bob each have a Keycloak client name `alice-private-client` and `bob-private-client`.  
-Trudy should be assigned a Keycloak client as well. 
+Trudy should be assigned a Keycloak client as well.
 For simplicity, a client named `trudy-private-client` has already been created.
 
 ### 7.2 Create Wallet in MIW
+
 A wallet is needed for Trudy associated with its BPN number (`BPNL000000000003`).
 It has been already created along with Alice and Bob's wallet.
 
 ### 7.3 Create a database for Trudy  
+
 We need a database for Trudy.
 A database named `trudy` has already been created on the existing PostgreSQL server.
 
 ### 7.4 Deploy Trudy Connector  
+
 A terraform config has already been defined in [trudy.tfignore](./trudy.tfignore).  
 Run the following commands to deploy trudy connector.
+
 ```shell
 mv ./trudy.tfignore ./trudy.tf # Rename the file
 terraform init                 # Let terraform init this new trudy config
@@ -1036,17 +1045,22 @@ terraform apply                # Apply changes for this new trudy config
 # type "yes" and press enter when prompted to do so 
 ```
 
-### 7.5 Verify Trudy Connector Deployment  
+### 7.5 Verify Trudy Connector Deployment
+
 If `terraform apply` command in the previous step runs successfully,  execute following command to check connector health.
+
 ```shell
 curl --fail http://localhost/trudy/health/api/check/readiness
 ```
 
-### 7.6 Create Assets / Access Policy / Contract Definition  
+### 7.6 Create Assets / Access Policy / Contract Definition
+
 Let's insert some data into `Trudy` connector.
 
 #### 7.6.1 Create Asset
+
 Create an asset using the following `curl` command:
+
 ```shell
 curl --location 'http://localhost/trudy/management/v3/assets' \
 --header 'Content-Type: application/json' \
@@ -1064,13 +1078,17 @@ curl --location 'http://localhost/trudy/management/v3/assets' \
   }
 }'
 ```
+
 This `curl` command can be used to fetch Trudy's assets:
+
 ```shell
 curl -X POST http://localhost/trudy/management/v3/assets/request -H "x-api-key: password" -H "content-type: application/json"
 ```
 
 #### 7.6.2 Create Access Policy
+
 Create an access policy using the following `curl` command:
+
 ```shell
 curl --location 'http://localhost/trudy/management/v2/policydefinitions' \
 --header 'Content-Type: application/json' \
@@ -1104,15 +1122,19 @@ curl --location 'http://localhost/trudy/management/v2/policydefinitions' \
   }
 }'
 ```
+
 Trudy defines an access policy which allows only Alice (with BPN Number `BPNL000000000001`) to view its catalog.
 
 This `curl` command can be used to fetch Trudy's access policies:
+
 ```shell
 curl -X POST http://localhost/trudy/management/v2/policydefinitions/request -H "x-api-key: password" -H "content-type: application/json"
 ```
 
 #### 7.6.3 Create Contract Definition
+
 Create a contract definition using the following `curl` command:
+
 ```shell
 curl --location 'http://localhost/trudy/management/v2/contractdefinitions' \
 --header 'Content-Type: application/json' \
@@ -1131,16 +1153,20 @@ curl --location 'http://localhost/trudy/management/v2/contractdefinitions' \
     }
 }'
 ```
+
 This `curl` command can be used to fetch Trudy's contract definitions:
+
 ```shell
 curl -X POST http://localhost/trudy/management/v2/contractdefinitions/request -H "x-api-key: password" -H "content-type: application/json"
 ```
 
 #### 7.6.4 Query Trudy's Catalog
+
 Now we have everything in place, we can now demonstrate connector to connector communications.  
 Trudy (Provider) wants to exchange data with Alice (Consumer).
 
 Alice executes this `curl` command to request Trudy's catalog:
+
 ```shell
 curl --location 'http://localhost/alice/management/v2/catalog/request' \
 --header 'Content-Type: application/json' \
@@ -1155,7 +1181,9 @@ curl --location 'http://localhost/alice/management/v2/catalog/request' \
     }
 }'
 ```
+
 It should return following response:
+
 ```json
 {
   "@id": "8c8e058d-57fc-4c45-9f76-03136e4e3368",
@@ -1221,10 +1249,12 @@ It should return following response:
   }
 }
 ```
+
 Alice can see data sets offered by Trudy.  
 Now what happens when Bob tries to request Trudy's catalog. Let's check it out.
 
 Bob executes this `curl` command to request Trudy's catalog:
+
 ```shell
 curl --location 'http://localhost/bob/management/v2/catalog/request' \
 --header 'Content-Type: application/json' \
@@ -1239,7 +1269,9 @@ curl --location 'http://localhost/bob/management/v2/catalog/request' \
     }
 }'
 ```
+
 It should return following response:
+
 ```json
 {
   "@id": "1bae8946-e44a-44ad-8d62-d70974a0cb89",
@@ -1262,6 +1294,7 @@ It should return following response:
   }
 }
 ```
+
 Bob receives an empty data set. But why?  
 That's because, Trudy had created the [access policy](#762-create-access-policy) which allowed only Alice to view its catalog.
 
