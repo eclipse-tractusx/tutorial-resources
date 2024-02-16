@@ -44,7 +44,7 @@ kubectl wait --namespace ingress-nginx \
   --timeout=90s
 terraform init
 terraform apply
-# type "yes" and press enter when prompted to do so 
+# type "yes" and press enter when prompted to do so
 ```
 
 Notice that the `kubectl apply` command deploys a Kubernetes Ingress Controller to the cluster and is required to reach
@@ -215,13 +215,15 @@ curl -X POST http://localhost/bob/management/v2/contractdefinitions/request -H "
 Alternatively, please check out the [Postman collections here](./postman)
 
 ## 3. Tutorials
-* [Restrict Asset Using Access Policies](./docs/Access%20Policies%20Tutorial.md)
-* [File Transfer: Azure Blob Storage to Azure Blob Storage](./docs/File%20Transfer%20Azure%20to%20Azure.md)
-* [File Transfer: Azure Blob Storage to Amazon S3](./docs/File%20Transfer%20Azure%20to%20S3.md)
-* [File Transfer: Amazon S3 to Amazon S3](./docs/File%20Transfer%20S3%20to%20S3.md)
-* [File Transfer: Amazon S3 to Azure Blob Storage](./docs/File%20Transfer%20S3%20to%20Azure.md)
-* [Simplify negotiation and transfer using the EDR API](./docs/EDR%20Transfer%20Tutorial.md)
-* [Add a new Participant](./docs/Trudy%20Connector%20Tutorial.md)
+
+- [Restrict Asset Using Access Policies](./docs/Access%20Policies%20Tutorial.md)
+
+- [File Transfer: Azure Blob Storage to Azure Blob Storage](./docs/File%20Transfer%20Azure%20to%20Azure.md)
+- [File Transfer: Azure Blob Storage to Amazon S3](./docs/File%20Transfer%20Azure%20to%20S3.md)
+- [File Transfer: Amazon S3 to Amazon S3](./docs/File%20Transfer%20S3%20to%20S3.md)
+- [File Transfer: Amazon S3 to Azure Blob Storage](./docs/File%20Transfer%20S3%20to%20Azure.md)
+- [Simplify negotiation and transfer using the EDR API](./docs/EDR%20Transfer%20Tutorial.md)
+- [Add a new Participant](./docs/Trudy%20Connector%20Tutorial.md)
 
 In this step we will focus on inserting data into our participant Alice using
 the [Management API](https://app.swaggerhub.com/apis/eclipse-edc-bot/management-api/0.1.4-SNAPSHOT). We will use plain
@@ -244,7 +246,7 @@ curl --location 'http://localhost/alice/management/v3/assets' \
 --data-raw '{
     "@context": {},
     "@type": "Asset",
-    "@id": "3", 
+    "@id": "3",
     "properties": {
         "description": "Product EDC Demo Asset 3"
     },
@@ -311,7 +313,7 @@ curl --location 'http://localhost/alice/management/v3/assets' \
 --data-raw '{
     "@context": {},
     "@type": "Asset",
-    "@id": "4", 
+    "@id": "4",
     "properties": {
         "description": "Product EDC Demo Asset 4"
     },
@@ -941,7 +943,7 @@ and the response will look like this:
 The provider receives the token, does some security checks and if all it's good it forwards the request to the configured
 baseUrl in the DataAddress of Asset, which in this case will do a `GET` request to `https://jsonplaceholder.typicode.com/todos`.
 
-> Replace the Authorization header with the negotiated one.  
+> Replace the Authorization header with the negotiated one.
 > The endpoint in the curl above is different from the one returned by the EDR GET API for testing purpose and deployment reason.
 
 #### Consumer data-plane (proxy)
@@ -1021,12 +1023,12 @@ and the proxied URL will be `https://jsonplaceholder.typicode.com/todos/1`.
 
 ## 7. Add new participant Trudy
 
-In our current setup, there are two participants named "Alice" and "Bob". Now we will add a new participant named "Trudy".  
+In our current setup, there are two participants named "Alice" and "Bob". Now we will add a new participant named "Trudy".
 Following are the steps needed to accomplish this.
 
 ### 7.1 Create Keycloak Client
 
-Presently, Alice and Bob each have a Keycloak client name `alice-private-client` and `bob-private-client`.  
+Presently, Alice and Bob each have a Keycloak client name `alice-private-client` and `bob-private-client`.
 Trudy should be assigned a Keycloak client as well.
 For simplicity, a client named `trudy-private-client` has already been created.
 
@@ -1035,21 +1037,21 @@ For simplicity, a client named `trudy-private-client` has already been created.
 A wallet is needed for Trudy associated with its BPN number (`BPNL000000000003`).
 It has been already created along with Alice and Bob's wallet.
 
-### 7.3 Create a database for Trudy  
+### 7.3 Create a database for Trudy
 
 We need a database for Trudy.
 A database named `trudy` has already been created on the existing PostgreSQL server.
 
-### 7.4 Deploy Trudy Connector  
+### 7.4 Deploy Trudy Connector
 
-A terraform config has already been defined in [trudy.tfignore](./trudy.tfignore).  
+A terraform config has already been defined in [trudy.tfignore](./trudy.tfignore).
 Run the following commands to deploy trudy connector.
 
 ```shell
 mv ./trudy.tfignore ./trudy.tf # Rename the file
 terraform init                 # Let terraform init this new trudy config
 terraform apply                # Apply changes for this new trudy config
-# type "yes" and press enter when prompted to do so 
+# type "yes" and press enter when prompted to do so
 ```
 
 ### 7.5 Verify Trudy Connector Deployment
@@ -1169,7 +1171,7 @@ curl -X POST http://localhost/trudy/management/v2/contractdefinitions/request -H
 
 #### 7.6.4 Query Trudy's Catalog
 
-Now we have everything in place, we can now demonstrate connector to connector communications.  
+Now we have everything in place, we can now demonstrate connector to connector communications.
 Trudy (Provider) wants to exchange data with Alice (Consumer).
 
 Alice executes this `curl` command to request Trudy's catalog:
@@ -1257,7 +1259,7 @@ It should return following response:
 }
 ```
 
-Alice can see data sets offered by Trudy.  
+Alice can see data sets offered by Trudy.
 Now what happens when Bob tries to request Trudy's catalog. Let's check it out.
 
 Bob executes this `curl` command to request Trudy's catalog:
@@ -1302,10 +1304,10 @@ It should return following response:
 }
 ```
 
-Bob receives an empty data set. But why?  
+Bob receives an empty data set. But why?
 That's because, Trudy had created the [access policy](#762-create-access-policy) which allowed only Alice to view its catalog.
 
-Can you create another access policy and contract definition which allows Bob to view Trudy's catalog?  
+Can you create another access policy and contract definition which allows Bob to view Trudy's catalog?
 `Hint:` Create an access policy using Bob's BPN Number (`BPNL000000000002`) and use this access policy id while creating contract definition.
 
 ## 8. Improving the setup
