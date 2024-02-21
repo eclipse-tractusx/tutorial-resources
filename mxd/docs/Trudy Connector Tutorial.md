@@ -73,7 +73,7 @@ curl --location 'http://localhost/trudy/management/v2/policydefinitions' \
   "@type": "PolicyDefinitionRequestDto",
   "@id": "1",
   "policy": {
-    "@type": "Policy",
+    "@type": "odrl:Set",
     "odrl:permission": [
       {
         "odrl:action": "USE",
