@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "8d919948-2f5f-4212-860e-d125e718f6aa",
+		"_postman_id": "a55d3708-8e12-4d95-86d2-0a90e00ce625",
 		"name": "tractusx-edc-mgmt-api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "252261",
-		"_collection_link": "https://winter-rocket-884715.postman.co/workspace/SAP~ff4cf631-05f4-48ab-a1e0-f716cf2efc25/collection/252261-8d919948-2f5f-4212-860e-d125e718f6aa?action=share&source=collection_link&creator=252261"
+		"_collection_link": "https://winter-rocket-884715.postman.co/workspace/SAP~ff4cf631-05f4-48ab-a1e0-f716cf2efc25/collection/252261-a55d3708-8e12-4d95-86d2-0a90e00ce625?action=share&source=collection_link&creator=252261"
 	},
 	"item": [
 		{
@@ -427,7 +427,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"@context\": {\n\t\t\"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n\t},\n\t\"@type\": \"NegotiationInitiateRequestDto\",\n\t\"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n\t\"protocol\": \"dataspace-protocol-http\",\n\t\"connectorId\": \"{{PROVIDER_ID}}\",\n\t\"providerId\": \"{{PROVIDER_ID}}\",\n\t\"offer\": {\n\t\t\"offerId\": \"{{OFFER_ID}}\",\n\t\t\"assetId\": \"{{ASSET_ID}}\",\n\t\t\"policy\": {\n\t\t\t\"@type\": \"odrl:Set\",\n\t\t\t\"odrl:permission\": {\n\t\t\t\t\"odrl:target\": \"{{ASSET_ID}}\",\n\t\t\t\t\"odrl:action\": {\n\t\t\t\t\t\"odrl:type\": \"USE\"\n\t\t\t\t},\n\t\t\t\t\"odrl:constraint\": {\n            \"odrl:or\": {\n              \"odrl:leftOperand\": \"{{TX_NAMESPACE}}BusinessPartnerGroup\",\n              \"odrl:operator\": {\n                \"@id\": \"odrl:eq\"\n              },\n              \"odrl:rightOperand\": \"{{BUSINESS_PARTNER_GROUP}}\"\n            }\n          }\n\t\t\t},\n\t\t\t\"odrl:prohibition\": [],\n\t\t\t\"odrl:obligation\": [],\n\t\t\t\"odrl:target\": \"{{ASSET_ID}}\"\n\t\t}\n\t}\n}",
+					"raw": "{\n\t\"@context\": {\n\t\t\"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n\t},\n\t\"@type\": \"NegotiationInitiateRequestDto\",\n\t\"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n\t\"protocol\": \"dataspace-protocol-http\",\n\t\"connectorId\": \"{{PROVIDER_ID}}\",\n\t\"providerId\": \"{{PROVIDER_ID}}\",\n\t\"offer\": {\n\t\t\"offerId\": \"{{OFFER_ID}}\",\n\t\t\"assetId\": \"{{ASSET_ID}}\",\n\t\t\"policy\": {\n\t\t\t\"@type\": \"odrl:Set\",\n\t\t\t\"odrl:permission\": {\n\t\t\t\t\"odrl:action\": {\n\t\t\t\t\t\"odrl:type\": \"USE\"\n\t\t\t\t},\n\t\t\t\t\"odrl:constraint\": {\n            \"odrl:or\": {\n              \"odrl:leftOperand\": \"{{TX_NAMESPACE}}BusinessPartnerGroup\",\n              \"odrl:operator\": {\n                \"@id\": \"odrl:eq\"\n              },\n              \"odrl:rightOperand\": \"{{BUSINESS_PARTNER_GROUP}}\"\n            }\n          }\n\t\t\t},\n\t\t\t\"odrl:prohibition\": [],\n\t\t\t\"odrl:obligation\": [],\n\t\t\t\"odrl:target\": \"{{ASSET_ID}}\"\n\t\t}\n\t}\n}",
 					"options": {
 						"raw": {
 							"language": "json"
