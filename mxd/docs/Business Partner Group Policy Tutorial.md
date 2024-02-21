@@ -93,7 +93,7 @@ curl --location 'http://localhost/alice/management/v2/policydefinitions' \
   "@type": "PolicyDefinitionRequestDto",
   "@id": "301",
   "policy": {
-    "@type": "Policy",
+    "@type": "odrl:Set",
     "odrl:permission": [
       {
         "odrl:action": "USE",
@@ -128,7 +128,7 @@ curl --location 'http://localhost/alice/management/v2/policydefinitions' \
   "@type": "PolicyDefinitionRequestDto",
   "@id": "302",
   "policy": {
-    "@type": "Policy",
+    "@type": "odrl:Set",
     "odrl:permission": [
       {
         "odrl:action": "USE",
