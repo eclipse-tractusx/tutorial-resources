@@ -7,43 +7,6 @@
 	},
 	"item": [
 		{
-			"name": "Get Random Content",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"pm.test(\"Generate Random Content\", function () {\r",
-							"     pm.collectionVariables.set('CONTENT', JSON.stringify(pm.response.json()));\r",
-							"  \r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{BACKEND_SERVICE_LOCAL}}/api/v1/contents/random",
-					"host": [
-						"{{BACKEND_SERVICE_LOCAL}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"contents",
-						"random"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Post Contents",
 			"event": [
 				{
@@ -66,7 +29,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{{CONTENT}}",
+					"raw": "{{JSON_CONTENT}}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -74,9 +37,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{BACKEND_SERVICE_LOCAL}}/api/v1/contents",
+					"raw": "{{BACKEND_SERVICE}}/api/v1/contents",
 					"host": [
-						"{{BACKEND_SERVICE_LOCAL}}"
+						"{{BACKEND_SERVICE}}"
 					],
 					"path": [
 						"api",
@@ -121,7 +84,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"@context\": {},\n  \"@id\": \"{{ASSET_ID}}\",\n  \"properties\": {\n    \"description\": \"Product EDC Demo Asset\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"{{BACKEND_SERVICE}}/{{CONTENT_URL}}/{{CONTENT_ID}}\"\n  }\n}",
+					"raw": "{\n  \"@context\": {},\n  \"@id\": \"{{ASSET_ID}}\",\n  \"properties\": {\n    \"description\": \"Product EDC Demo Asset\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"{{BACKEND_SERVICE_PROTOCOL}}/api/v1/contents/{{CONTENT_ID}}\"\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -153,7 +116,7 @@
 							"});\r",
 							"\r",
 							"var expectedId = pm.collectionVariables.get(\"ASSET_ID\");\r",
-							"pm.test(\"Get All Assests \", function () {\r",
+							"pm.test(\"Get All Assets \", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.some(asset => asset[\"@id\"] == expectedId)).to.be.true;\r",
 							"});\r",
@@ -213,14 +176,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/policydefinitions/",
+					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/policydefinitions",
 					"host": [
 						"{{PROVIDER_MANAGEMENT_URL}}"
 					],
 					"path": [
 						"v2",
-						"policydefinitions",
-						""
+						"policydefinitions"
 					]
 				}
 			},
@@ -432,7 +394,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"@context\": {\n    \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n  },\n  \"@type\": \"NegotiationInitiateRequestDto\",\n  \"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n  \"protocol\": \"dataspace-protocol-http\",\n  \"connectorId\": \"{{PROVIDER_ID}}\",\n  \"providerId\": \"{{PROVIDER_ID}}\",\n  \"offer\": {\n    \"offerId\": \"{{OFFER_ID}}\",\n    \"assetId\": \"{{ASSET_ID}}\",\n    \"policy\": {\n      \"@type\": \"odrl:Set\",\n      \"odrl:permission\": {\n        \"odrl:action\": {\n          \"odrl:target\":\"{{ASSET_ID}}\",\n          \"odrl:type\": \"USE\"\n        },\n        \"odrl:constraint\": {\n          \"odrl:or\": {\n            \"odrl:leftOperand\": \"BusinessPartnerNumber\",\n            \"odrl:operator\": {\n              \"@id\": \"odrl:eq\"\n            },\n            \"odrl:rightOperand\": \"{{CONSUMER_ID}}\"\n          }\n        }\n      },\n      \"odrl:prohibition\": [],\n      \"odrl:obligation\": [],\n      \"odrl:target\": \"{{ASSET_ID}}\"\n    }\n  }\n}",
+					"raw": "{\n  \"@context\": {\n    \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n  },\n  \"@type\": \"NegotiationInitiateRequestDto\",\n  \"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n  \"protocol\": \"dataspace-protocol-http\",\n  \"connectorId\": \"{{PROVIDER_ID}}\",\n  \"providerId\": \"{{PROVIDER_ID}}\",\n  \"offer\": {\n    \"offerId\": \"{{OFFER_ID}}\",\n    \"assetId\": \"{{ASSET_ID}}\",\n    \"policy\": {\n      \"@type\": \"odrl:Set\",\n      \"odrl:permission\": {\n        \"odrl:action\": {\n          \"odrl:type\": \"USE\"\n        },\n        \"odrl:constraint\": {\n          \"odrl:or\": {\n            \"odrl:leftOperand\": \"BusinessPartnerNumber\",\n            \"odrl:operator\": {\n              \"@id\": \"odrl:eq\"\n            },\n            \"odrl:rightOperand\": \"{{CONSUMER_ID}}\"\n          }\n        }\n      },\n      \"odrl:prohibition\": [],\n      \"odrl:obligation\": [],\n      \"odrl:target\": \"{{ASSET_ID}}\"\n    }\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -550,7 +512,7 @@
 							"  pm.response.to.have.status(200);",
 							"});",
 							"var jsonData = pm.response.json();",
-							"pm.test(\"Initaited Transfer \" , function () {",
+							"pm.test(\"Initiated Transfer \" , function () {",
 							"  pm.collectionVariables.set(\"TRANSFER_ID\", jsonData[\"@id\"]);",
 							"});",
 							""
@@ -564,7 +526,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"@context\": {\n    \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n  },\n  \"assetId\": \"{{ASSET_ID}}\",\n  \"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n  \"connectorId\": \"{{PROVIDER_ID}}\",\n  \"contractId\": \"{{CONTRACT_AGREEMENT_ID}}\",\n  \"dataDestination\": {\n    \"type\": \"HttpProxy\"\n  },\n  \"privateProperties\": {\n    \"receiverHttpEndpoint\": \"{{BACKEND_SERVICE}}/{{TRANSFER_URL}}\"\n  },\n  \"protocol\": \"dataspace-protocol-http\"\n}",
+					"raw": "{\n  \"@context\": {\n    \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n  },\n  \"assetId\": \"{{ASSET_ID}}\",\n  \"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n  \"connectorId\": \"{{PROVIDER_ID}}\",\n  \"contractId\": \"{{CONTRACT_AGREEMENT_ID}}\",\n  \"dataDestination\": {\n    \"type\": \"HttpProxy\"\n  },\n  \"privateProperties\": {\n    \"receiverHttpEndpoint\": \"{{BACKEND_SERVICE_PROTOCOL}}/api/v1/transfers\"\n  },\n  \"protocol\": \"dataspace-protocol-http\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -592,7 +554,7 @@
 					"script": {
 						"exec": [
 							"const API_KEY_HEADER = 'X-Api-Key';\r",
-							"\r",
+							"const URL=`${pm.collectionVariables.get(\"CONSUMER_MANAGEMENT_URL\")}/v2/transferprocesses/${pm.collectionVariables.get(\"TRANSFER_ID\")}/state`;\r",
 							"function delay(ms) {\r",
 							"  return new Promise(resolve => setTimeout(resolve, ms));\r",
 							"}\r",
@@ -601,7 +563,7 @@
 							"  for (let i = 0; i < 10; i++) {\r",
 							"    const response = await new Promise(resolve => {\r",
 							"      pm.sendRequest({\r",
-							"        url: `${pm.collectionVariables.get(\"CONSUMER_MANAGEMENT_URL\")}/v2/transferprocesses/${pm.collectionVariables.get(\"TRANSFER_ID\")}/state`,\r",
+							"        url: URL,\r",
 							"        method: 'GET',\r",
 							"        header: {\r",
 							"          ...pm.request.headers.toObject(),\r",
@@ -661,34 +623,12 @@
 			"response": []
 		},
 		{
-			"name": "Transfer Test",
+			"name": "Validate Transfer",
 			"event": [
 				{
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"const API_KEY_HEADER = 'X-Api-Key';\r",
-							"\r",
-							"function delay(ms) {\r",
-							"  return new Promise(resolve => setTimeout(resolve, ms));\r",
-							"}\r",
-							"\r",
-							"async function makeRequests() {\r",
-							"    const response = await new Promise(resolve => {\r",
-							"      pm.sendRequest({\r",
-							"        url: `${pm.collectionVariables.get(\"ASSET_URL\")}${pm.collectionVariables.get(\"CONTENT_ID\")}`,\r",
-							"        method: 'GET',\r",
-							"        header: {\r",
-							"          ...pm.request.headers.toObject(),\r",
-							"          [API_KEY_HEADER]: pm.collectionVariables.get(\"API_KEY_PASSWORD\"),\r",
-							"        },\r",
-							"      }, (error, response) => {\r",
-							"        resolve(response);\r",
-							"        pm.environment.set('prerequestResponse', response.json());\r",
-							"      });\r",
-							"    });\r",
-							"  }\r",
-							"makeRequests();\r",
 							""
 						],
 						"type": "text/javascript"
@@ -701,9 +641,11 @@
 							"pm.test('Response status code is 200', () => {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
+							"var expected = JSON.stringify(JSON.parse(pm.collectionVariables.get('JSON_CONTENT')));\r",
+							"var actual =  JSON.stringify(pm.response.json());\r",
 							"\r",
-							"pm.test('Transfer Test Completed', () => {\r",
-							"    pm.expect(pm.environment.get('prerequestResponse')).to.eql(pm.response.json());\r",
+							"pm.test('Validation Transfer ', () => {\r",
+							"    pm.expect(expected).to.eql(actual);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -714,13 +656,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost/backend-service/api/v1/transfers/{{TRANSFER_ID}}/contents/",
-					"protocol": "http",
+					"raw": "{{BACKEND_SERVICE}}/api/v1/transfers/{{TRANSFER_ID}}/contents/",
 					"host": [
-						"localhost"
+						"{{BACKEND_SERVICE}}"
 					],
 					"path": [
-						"backend-service",
 						"api",
 						"v1",
 						"transfers",
@@ -738,7 +678,7 @@
 		"apikey": [
 			{
 				"key": "value",
-				"value": "password",
+				"value": "{{API_KEY_PASSWORD}}",
 				"type": "string"
 			},
 			{
@@ -783,17 +723,17 @@
 		},
 		{
 			"key": "ASSET_ID",
-			"value": "2011",
+			"value": "200",
 			"type": "default"
 		},
 		{
 			"key": "POLICY_ID",
-			"value": "2011",
+			"value": "200",
 			"type": "default"
 		},
 		{
 			"key": "CONTRACT_DEFINITION_ID",
-			"value": "2011",
+			"value": "200",
 			"type": "default"
 		},
 		{
@@ -812,68 +752,23 @@
 			"type": "string"
 		},
 		{
-			"key": "NEGOTIATION_ID",
-			"value": ""
-		},
-		{
-			"key": "TRANSFER_ID",
-			"value": ""
-		},
-		{
-			"key": "TRANSFER_PROCESS_ID",
-			"value": ""
-		},
-		{
-			"key": "OFFER_ID",
-			"value": ""
-		},
-		{
-			"key": "CONTRACT_AGREEMENT_ID",
-			"value": ""
-		},
-		{
 			"key": "API_KEY_PASSWORD",
 			"value": "password",
 			"type": "string"
 		},
 		{
-			"key": "CONTENT_URL",
-			"value": "api/v1/contents",
-			"type": "string"
-		},
-		{
-			"key": "CONTENT_ID",
-			"value": "f10753cb-649a-425d-bca0-a889b001e980",
-			"type": "string"
-		},
-		{
-			"key": "BACKEND_SERVICE_LOCAL",
+			"key": "BACKEND_SERVICE",
 			"value": "http://localhost/backend-service",
 			"type": "string"
 		},
 		{
-			"key": "RANDOM_CONTENT_URL",
-			"value": "api/v1/contents/random",
-			"type": "string"
-		},
-		{
-			"key": "CONTENT",
-			"value": ""
-		},
-		{
-			"key": "TRANSFER_URL",
-			"value": "api/v1/transfers",
-			"type": "string"
-		},
-		{
-			"key": "BACKEND_SERVICE",
+			"key": "BACKEND_SERVICE_PROTOCOL",
 			"value": "http://backend-service:8080",
 			"type": "string"
 		},
 		{
-			"key": "ASSET_URL",
-			"value": "http://localhost/backend-service/api/v1/contents/",
-			"type": "string"
+			"key": "JSON_CONTENT",
+			"value": "{\"userId\": 1, \"text\": \"hello\"}"
 		}
 	]
 }
