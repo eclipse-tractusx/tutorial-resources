@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "9a5b3f65-5451-4b75-aa21-b0d293626a4a",
+		"_postman_id": "4f58fd00-bc92-4988-ab87-74eb8209fff3",
 		"name": "Management API Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "31550443"
+		"_exporter_id": "31550443",
 		"_collection_link": "https://winter-rocket-884715.postman.co/workspace/SAP~ff4cf631-05f4-48ab-a1e0-f716cf2efc25/collection/252261-485968ad-2ca0-49b1-b59d-ca2a892c3234?action=share&source=collection_link&creator=252261"
 	},
 	"item": [
