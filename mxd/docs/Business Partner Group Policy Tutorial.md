@@ -66,7 +66,12 @@ curl --location 'http://localhost/alice/management/v3/assets' \
 --header 'Content-Type: application/json' \
 --header 'X-Api-Key: password' \
 --data-raw '{
-    "@context": {},
+    "@context": {
+        "@vocab": "https://w3id.org/edc/v0.0.1/ns/",
+        "edc": "https://w3id.org/edc/v0.0.1/ns/",
+        "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+        "odrl": "http://www.w3.org/ns/odrl/2/"
+    },
     "@id": "30", 
     "properties": {
         "description": "Product EDC Demo Asset"
@@ -88,6 +93,9 @@ curl --location 'http://localhost/alice/management/v2/policydefinitions' \
 --header 'X-Api-Key: password' \
 --data-raw '{
   "@context": {
+    "@vocab": "https://w3id.org/edc/v0.0.1/ns/",
+    "edc": "https://w3id.org/edc/v0.0.1/ns/",
+    "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
     "odrl": "http://www.w3.org/ns/odrl/2/"
   },
   "@type": "PolicyDefinitionRequestDto",
@@ -96,7 +104,7 @@ curl --location 'http://localhost/alice/management/v2/policydefinitions' \
     "@type": "odrl:Set",
     "odrl:permission": [
       {
-        "odrl:action": "USE",
+        "odrl:action": "use",
         "odrl:constraint": {
           "@type": "LogicalConstraint",
           "odrl:or": [
@@ -123,6 +131,9 @@ curl --location 'http://localhost/alice/management/v2/policydefinitions' \
 --header 'X-Api-Key: password' \
 --data-raw '{
   "@context": {
+    "@vocab": "https://w3id.org/edc/v0.0.1/ns/",
+    "edc": "https://w3id.org/edc/v0.0.1/ns/",
+    "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
     "odrl": "http://www.w3.org/ns/odrl/2/"
   },
   "@type": "PolicyDefinitionRequestDto",
@@ -131,7 +142,7 @@ curl --location 'http://localhost/alice/management/v2/policydefinitions' \
     "@type": "odrl:Set",
     "odrl:permission": [
       {
-        "odrl:action": "USE",
+        "odrl:action": "use",
         "odrl:constraint": {
           "@type": "LogicalConstraint",
           "odrl:or": [
@@ -157,7 +168,12 @@ curl --location 'http://localhost/alice/management/v2/contractdefinitions' \
 --header 'Content-Type: application/json' \
 --header 'X-Api-Key: password' \
 --data-raw '{
-  "@context": {},
+  "@context": {
+    "@vocab": "https://w3id.org/edc/v0.0.1/ns/",
+    "edc": "https://w3id.org/edc/v0.0.1/ns/",
+    "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+    "odrl": "http://www.w3.org/ns/odrl/2/"
+  },
   "@id": "30",
   "@type": "ContractDefinition",
   "accessPolicyId": "301",
@@ -179,7 +195,10 @@ curl --location 'http://localhost/bob/management/v2/catalog/request' \
 --header 'X-Api-Key: password' \
 --data-raw '{
   "@context": {
-    "edc": "https://w3id.org/edc/v0.0.1/ns/"
+    "@vocab": "https://w3id.org/edc/v0.0.1/ns/",
+    "edc": "https://w3id.org/edc/v0.0.1/ns/",
+    "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+    "odrl": "http://www.w3.org/ns/odrl/2/"
   },
   "@type": "CatalogRequest",
   "counterPartyAddress": "http://alice-controlplane:8084/api/v1/dsp",
