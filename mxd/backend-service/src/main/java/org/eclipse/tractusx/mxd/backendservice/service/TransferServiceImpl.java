@@ -58,8 +58,8 @@ public class TransferServiceImpl implements TransferService {
     }
 
     @Override
-    public ServiceResult<Transfer> create(Transfer asset) {
-        String content = httpConnectionService.getUrlAssets(asset);
+    public ServiceResult<Transfer> create(Transfer asset,Monitor monitor) {
+        String content = httpConnectionService.getUrlAssets(asset,monitor);
         transferStoreService.save(asset, content);
         return ServiceResult.success(asset);
     }

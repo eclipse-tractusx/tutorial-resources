@@ -72,6 +72,10 @@ resource "kubernetes_deployment" "backend-service" {
             name  = "web.http.port"
             value = 8080
           }
+          env {
+            name  = "JAVA_TOOL_OPTIONS"
+            value = "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044"
+          }
         }
       }
     }
@@ -84,7 +88,7 @@ resource "kubernetes_service" "backend-service" {
   }
   spec {
     selector = {
-      app = "backend-service"
+      App = "backend-service"
     }
     port {
       port = 8080

@@ -24,6 +24,7 @@ package org.eclipse.tractusx.mxd.backendservice.controller;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.tractusx.mxd.backendservice.entity.Transfer;
 import org.eclipse.tractusx.mxd.backendservice.entity.TransferRequest;
 import org.eclipse.tractusx.mxd.backendservice.entity.TransferResponse;
@@ -41,16 +42,19 @@ import java.util.Optional;
 public class TransferApiController {
 
     private final TransferService transferService;
+    private final Monitor monitor;
 
-
-    public TransferApiController(TransferService transferService) {
+    public TransferApiController(TransferService transferService,Monitor monitor) {
         this.transferService = transferService;
+        this.monitor = monitor;
     }
 
     @POST
     @Produces((MediaType.APPLICATION_JSON))
     @Consumes((MediaType.APPLICATION_JSON))
     public TransferRequest insertTransfer(TransferRequest transferRequest) {
+        monitor.info("insertTransfer POST request "+transferRequest);
+
         Transfer transfer = new Transfer.Builder()
                 .id(transferRequest.getId())
                 .endpoint(transferRequest.getEndpoint())
@@ -58,7 +62,7 @@ public class TransferApiController {
                 .authCode(transferRequest.getAuthCode())
                 .properties(transferRequest.getProperties())
                 .build();
-        var transferResponse = this.transferService.create(transfer)
+        var transferResponse = this.transferService.create(transfer,monitor)
                 .map(a -> TransferRequest.builder()
                         .id(a.getId())
                         .endpoint(a.getEndpoint())

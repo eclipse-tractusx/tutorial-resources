@@ -21,6 +21,7 @@
 
 package org.eclipse.tractusx.mxd.backendservice.service;
 
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import org.eclipse.edc.spi.http.EdcHttpClient;
 import org.eclipse.edc.spi.monitor.Monitor;
@@ -41,25 +42,26 @@ public class HttpConnectionService {
     public HttpConnectionService() {
     }
 
-    public String getUrlAssets(Transfer receivedModel) {
+    public String getUrlAssets(Transfer receivedModel,Monitor monitor) {
         String res = null;
+        monitor.info("getUrlAssets "+receivedModel);
+        OkHttpClient client = new OkHttpClient();
         try {
-
             Request getRequest = new Request.Builder()
                     .url(receivedModel.getEndpoint())
-                    .header("authKey", receivedModel.getAuthKey())
-                    .header("authCode", receivedModel.getAuthCode())
+                    .header(receivedModel.getAuthKey(), receivedModel.getAuthCode())
                     .get()
                     .build();
-            var response = httpClient.execute(getRequest);
+            var response = client.newCall(getRequest).execute();
             var body = response.body();
             var resp = body.string();
+            monitor.info("response  "+resp);
             if (response.isSuccessful()) {
                 return resp;
             }
 
         } catch (Exception e) {
-            this.monitor.info(e.getMessage());
+            monitor.info(e.getMessage());
         }
         return res;
     }

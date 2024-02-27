@@ -56,7 +56,7 @@ public class ContentApiController {
     @POST
     public String createContent(Object contentJson, @Context UriInfo uriInfo) {
         var contentID = this.service.create(contentJson);
-        monitor.info(uriInfo.getAbsolutePath() + contentID);
+        monitor.info(uriInfo.getAbsolutePath() +"/"+ contentID);
         return createJsonResponse(contentID, uriInfo);
     }
 

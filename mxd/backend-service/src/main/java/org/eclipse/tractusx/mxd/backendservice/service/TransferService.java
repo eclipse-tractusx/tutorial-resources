@@ -21,6 +21,7 @@
 
 package org.eclipse.tractusx.mxd.backendservice.service;
 
+import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.result.ServiceResult;
 import org.eclipse.edc.spi.result.StoreResult;
 import org.eclipse.tractusx.mxd.backendservice.entity.Transfer;
@@ -30,7 +31,7 @@ import java.util.List;
 
 public interface TransferService {
 
-    ServiceResult<Transfer> create(Transfer asset);
+    ServiceResult<Transfer> create(Transfer asset, Monitor monitor);
 
     List<TransferResponse> getAllTransfer();
 
