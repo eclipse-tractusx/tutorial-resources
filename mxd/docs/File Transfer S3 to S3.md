@@ -100,7 +100,7 @@ curl --location 'http://localhost/alice/management/v2/policydefinitions' \
   "@type": "PolicyDefinitionRequestDto",
   "@id": "201",
   "policy": {
-    "@type": "Policy",
+    "@type": "odrl:Set",
     "odrl:permission": [
       {
         "odrl:action": "USE",
@@ -134,7 +134,7 @@ curl --location 'http://localhost/alice/management/v2/policydefinitions' \
   "@type": "PolicyDefinitionRequestDto",
   "@id": "202",
   "policy": {
-    "@type": "Policy",
+    "@type": "odrl:Set",
     "odrl:permission": [
       {
         "odrl:action": "USE",
@@ -282,7 +282,6 @@ curl --location 'http://localhost/bob/management/v2/contractnegotiations' \
     "policy": {
       "@type": "odrl:Set",
       "odrl:permission": {
-        "odrl:target": "20",
         "odrl:action": {
           "odrl:type": "USE"
         },

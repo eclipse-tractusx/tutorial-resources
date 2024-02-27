@@ -33,7 +33,6 @@ curl --location 'http://localhost/bob/management/edrs' \
 		"policy": {
 			"@type": "odrl:Set",
 			"odrl:permission": {
-				"odrl:target": "1",
 				"odrl:action": {
 					"odrl:type": "USE"
 				},

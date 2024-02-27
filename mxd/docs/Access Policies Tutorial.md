@@ -37,7 +37,7 @@ curl --location 'http://localhost/bob/management/v2/policydefinitions' \
   "@type": "PolicyDefinitionRequestDto",
   "@id": "41",
   "policy": {
-    "@type": "Policy",
+    "@type": "odrl:Set",
     "odrl:permission": [
       {
         "odrl:action": "USE",
@@ -75,7 +75,7 @@ curl --location 'http://localhost/bob/management/v2/policydefinitions' \
   "@type": "PolicyDefinitionRequestDto",
   "@id": "42",
   "policy": {
-    "@type": "Policy",
+    "@type": "odrl:Set",
     "odrl:permission": [
       {
         "odrl:action": "USE",
