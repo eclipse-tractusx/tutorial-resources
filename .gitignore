@@ -36,3 +36,8 @@ terraform.rc
 
 .idea/
 mxd/.terraform.lock.hcl
+#Ignore Java Classes and Gradle Build Files
+.class.*
+mxd/backend-service/.gradle
+.lock
+.bin
