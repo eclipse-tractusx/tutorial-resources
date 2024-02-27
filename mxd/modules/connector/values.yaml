@@ -86,6 +86,8 @@ vault:
     token: root
   secretNames:
     transferProxyTokenEncryptionAesKey: aes-keys
+    transferProxyTokenSignerPrivateKey: transferProxyTokenSignerPrivateKey
+    transferProxyTokenSignerPublicKey: transferProxyTokenSignerPublicKey
     # this must be set through CLI args: --set vault.secrets=$YOUR_VAULT_SECRETS where YOUR_VAULT_SECRETS should
     #    # be a string in the format "key1:secret1;key2:secret2;..."
     secrets:
