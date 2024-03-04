@@ -280,7 +280,6 @@ curl --location 'http://localhost/bob/management/v2/contractnegotiations' \
     "policy": {
       "@type": "odrl:Set",
       "odrl:permission": {
-        "odrl:target": "10",
         "odrl:action": {
           "odrl:type": "USE"
         },
