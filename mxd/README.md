@@ -217,7 +217,6 @@ Alternatively, please check out the [Postman collections here](./postman)
 ## 3. Tutorials
 
 - [Restrict Asset Using Access Policies](./docs/Access%20Policies%20Tutorial.md)
-
 - [File Transfer: Azure Blob Storage to Azure Blob Storage](./docs/File%20Transfer%20Azure%20to%20Azure.md)
 - [File Transfer: Azure Blob Storage to Amazon S3](./docs/File%20Transfer%20Azure%20to%20S3.md)
 - [File Transfer: Amazon S3 to Amazon S3](./docs/File%20Transfer%20S3%20to%20S3.md)
@@ -1311,8 +1310,12 @@ Can you create another access policy and contract definition which allows Bob to
 `Hint:` Create an access policy using Bob's BPN Number (`BPNL000000000002`) and use this access policy id while creating contract definition.
 
 ## 8. Improving the setup
-
-Improvements can be made to these aspects:
-
-- separate out databases: deploy one Postgres per connector, plus one Postgres each for MIW and KC
-- add ingresses for all the various connector endpoints, MIW and Keycloak
+=======
+* [Restrict Asset Using Access Policies](./docs/Access%20Policies%20Tutorial.md)
+* [Business Partner Group Policy](docs/Business%20Partner%20Group%20Policy%20Tutorial.md)
+* [File Transfer: Azure Blob Storage to Azure Blob Storage](./docs/File%20Transfer%20Azure%20to%20Azure.md)
+* [File Transfer: Azure Blob Storage to Amazon S3](./docs/File%20Transfer%20Azure%20to%20S3.md)
+* [File Transfer: Amazon S3 to Amazon S3](./docs/File%20Transfer%20S3%20to%20S3.md)
+* [File Transfer: Amazon S3 to Azure Blob Storage](./docs/File%20Transfer%20S3%20to%20Azure.md)
+* [Simplify negotiation and transfer using the EDR API](./docs/EDR%20Transfer%20Tutorial.md)
+* [Add a new Participant](./docs/Trudy%20Connector%20Tutorial.md)

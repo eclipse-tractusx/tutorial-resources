@@ -38,7 +38,6 @@ controlplane:
       authKey: password
   image:
     pullPolicy: Never
-    tag: "latest"
 #    repository: "edc-controlplane-postgresql-hashicorp-vault"
   securityContext:
     # avoids some errors in the log: cannot write temp files of large multipart requests when R/O
@@ -60,7 +59,6 @@ dataplane:
     enabled: true
   image:
     pullPolicy: Never
-    tag: "latest"
 #    repository: "edc-dataplane-hashicorp-vault"
   securityContext:
     # avoids some errors in the log: cannot write temp files of large multipart requests when R/O
@@ -86,6 +84,8 @@ vault:
     token: root
   secretNames:
     transferProxyTokenEncryptionAesKey: aes-keys
+    transferProxyTokenSignerPrivateKey: transferProxyTokenSignerPrivateKey
+    transferProxyTokenSignerPublicKey: transferProxyTokenSignerPublicKey
     # this must be set through CLI args: --set vault.secrets=$YOUR_VAULT_SECRETS where YOUR_VAULT_SECRETS should
     #    # be a string in the format "key1:secret1;key2:secret2;..."
     secrets:
