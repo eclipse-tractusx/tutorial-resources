@@ -1,6 +1,6 @@
 /*******************************************************************************
  *
- * Copyright (c) 2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -41,26 +41,29 @@ application {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+   testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter.params)
+    testImplementation(libs.restAssured)
+    implementation(libs.restAssured)
+    testImplementation(libs.assertj)
+    testImplementation(libs.edc.junit)
     implementation(libs.edc.configuration.filesystem)
-    implementation("org.eclipse.edc:boot:0.4.1")
-    implementation("org.eclipse.edc:connector-core:0.4.1")
-    implementation("org.eclipse.edc:http:0.4.1")
-    implementation("org.eclipse.edc:json-ld:0.4.0")
-    implementation("org.eclipse.edc:web-spi:0.4.1")
-    implementation("org.eclipse.edc:api-core:0.4.1")
-    implementation("org.eclipse.edc:core-spi:0.4.1")
-    implementation("org.eclipse.edc:http:0.4.1")
-    implementation("org.eclipse.edc:http-spi:0.4.1")
-    implementation("org.eclipse.edc:jersey-core:0.4.1")
-    implementation("io.swagger.core.v3:swagger-annotations:2.2.19")
-    implementation("org.eclipse.edc:transaction-spi:0.4.1")
-    implementation("org.eclipse.edc:connector-core:0.4.1")
-    implementation("org.eclipse.edc:sql-core:0.4.1")
-    implementation("org.apache.commons:commons-dbcp2:2.11.0")
-    implementation("org.postgresql:postgresql:42.7.1")
-    implementation("org.eclipse.edc:transform-core:0.4.1")
+    implementation(libs.edc.boot)
+    implementation(libs.edc.json.ld)
+    implementation(libs.edc.web.spi)
+    implementation(libs.edc.api.core)
+    implementation(libs.edc.core)
+    implementation(libs.edc.http)
+    implementation(libs.edc.http.spi)
+    implementation(libs.edc.jersey.core)
+    implementation(libs.swagger.core)
+    implementation(libs.edc.transaction.spi)
+    implementation(libs.edc.connector.core)
+    implementation(libs.edc.sql.core)
+    implementation(libs.apache.commons)
+    implementation(libs.postgresql)
+    implementation(libs.edc.transform)
+    implementation(libs.edc.transaction)
 
 
 }

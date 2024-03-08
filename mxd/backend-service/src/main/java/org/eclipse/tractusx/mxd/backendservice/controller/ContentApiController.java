@@ -1,6 +1,6 @@
 /*******************************************************************************
  *
- * Copyright (c) 2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -70,7 +70,7 @@ public class ContentApiController {
     public String getContentByID(@PathParam("contentId") String contentId) {
         return Optional.of(contentId)
                 .map(id -> service.getContent(contentId))
-                .map(content -> content.getContent() != null ? content.getContent().getData() : Converter.toJson(content.getFailure()))
+                .map(content -> content.getContent() != null ? content.getContent().getData() : Converter.toJson(content.getFailure(),objectMapper))
                 .orElse(Constants.DEFAULTERRORMESSAGE);
     }
 

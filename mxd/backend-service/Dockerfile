@@ -1,6 +1,6 @@
 #*******************************************************************************
-# * Copyright (c) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-# * Copyright (c) 2023 Contributors to the Eclipse Foundation
+# * Copyright (c) 2024 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# * Copyright (c) 2024 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -21,8 +21,8 @@
 # * 
 # ******************************************************************************/
 
-# Use the eclipse-temurin:17.0.8.1_1-jre-alpine as the base image
-FROM eclipse-temurin:17.0.8.1_1-jre-alpine
+# Use eclipse-temurin:21.0.2_13-jre-alpine as the base image
+FROM eclipse-temurin:21.0.2_13-jre-alpine
 
 # Set the working directory
 WORKDIR /app

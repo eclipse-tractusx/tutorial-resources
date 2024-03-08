@@ -1,6 +1,6 @@
 /*******************************************************************************
  *
- * Copyright (c) 2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -27,6 +27,8 @@ import org.eclipse.edc.spi.http.EdcHttpClient;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.tractusx.mxd.backendservice.entity.Transfer;
 
+import java.io.IOException;
+
 public class HttpConnectionService {
 
 
@@ -43,25 +45,26 @@ public class HttpConnectionService {
     }
 
     public String getUrlAssets(Transfer receivedModel,Monitor monitor) {
-        String res = null;
+        var res = "";
         monitor.info("getUrlAssets "+receivedModel);
-        OkHttpClient client = new OkHttpClient();
-        try {
-            Request getRequest = new Request.Builder()
-                    .url(receivedModel.getEndpoint())
-                    .header(receivedModel.getAuthKey(), receivedModel.getAuthCode())
-                    .get()
-                    .build();
-            var response = client.newCall(getRequest).execute();
-            var body = response.body();
-            var resp = body.string();
-            monitor.info("response  "+resp);
+        Request getRequest = new Request.Builder()
+                .url(receivedModel.getEndpoint())
+                .header(receivedModel.getAuthKey(), receivedModel.getAuthCode())
+                .get()
+                .build();
+        try (var response = httpClient.execute(getRequest)) {
             if (response.isSuccessful()) {
-                return resp;
+                if (response.body() != null) {
+                    monitor.info("response  " + response.body());
+                    return String.valueOf(response.body());
+                } else {
+                    monitor.warning("Response body is null");
+                }
+            } else {
+                monitor.warning("HTTP request failed with status code: " + response.code());
             }
-
-        } catch (Exception e) {
-            monitor.info(e.getMessage());
+        } catch (IOException e) {
+            monitor.warning("IOException occurred: " + e.getMessage());
         }
         return res;
     }

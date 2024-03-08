@@ -1,6 +1,6 @@
 /*******************************************************************************
  *
- * Copyright (c) 2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -22,6 +22,7 @@
 package org.eclipse.tractusx.mxd.backendservice.controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.edc.spi.monitor.Monitor;
@@ -44,9 +45,12 @@ public class TransferApiController {
     private final TransferService transferService;
     private final Monitor monitor;
 
-    public TransferApiController(TransferService transferService,Monitor monitor) {
+    private final ObjectMapper objectMapper;
+
+    public TransferApiController(TransferService transferService,Monitor monitor,ObjectMapper objectMapper) {
         this.transferService = transferService;
         this.monitor = monitor;
+        this.objectMapper=objectMapper;
     }
 
     @POST
@@ -84,7 +88,7 @@ public class TransferApiController {
     public String getTransfer(@PathParam("transferId") String transferId) {
         return Optional.of(transferId)
                 .map(id -> transferService.getTransfer(transferId))
-                .map(transfer -> transfer.getContent() != null ? transfer.getContent().getAsset() : Converter.toJson(transfer.getFailure()))
+                .map(transfer -> transfer.getContent() != null ? transfer.getContent().getAsset() : Converter.toJson(transfer.getFailure(),objectMapper))
                 .orElse(Constants.DEFAULTERRORMESSAGE);
     }
 
@@ -93,7 +97,7 @@ public class TransferApiController {
     public Object getTransferContents(@PathParam("id") String transferId) {
         return Optional.of(transferId)
                 .map(id -> transferService.getTransfer(transferId))
-                .map(transfer -> transfer.getContent() != null ? transfer.getContent().getContents() : Converter.toJson(transfer.getFailure()))
+                .map(transfer -> transfer.getContent() != null ? transfer.getContent().getContents() : Converter.toJson(transfer.getFailure(),objectMapper))
                 .orElse(Constants.DEFAULTERRORMESSAGE);
     }
 }

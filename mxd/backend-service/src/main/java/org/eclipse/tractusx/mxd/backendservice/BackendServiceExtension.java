@@ -142,15 +142,13 @@ public class BackendServiceExtension implements ServiceExtension {
                     getTransferStatementImpl(),
                     context.getMonitor());
             context.registerService(ContentStoreService.class, sqlContentStore);
-            context.registerService(TypeTransformerRegistry.class, transformerRegistry);
-            //register content controller and dependencies services here
             ContentService contentService = new ContentServiceImpl(sqlContentStore, context.getMonitor());
             context.registerService(ContentService.class, contentService);
             webService.registerResource(new ContentApiController(contentService, context.getMonitor(), getObjectMapper()));
             //register transfer controller and dependencies services here
             TransferService transferService = new TransferServiceImpl(sqlTransferStore, edcHttpClient(context), context.getMonitor(), getHttConnectionService(edcHttpClient(context), context.getMonitor()));
             context.registerService(TransferService.class, transferService);
-            webService.registerResource(new TransferApiController(transferService,context.getMonitor()));
+            webService.registerResource(new TransferApiController(transferService,context.getMonitor(),getObjectMapper()));
         } catch (Exception e) {
             context.getMonitor().severe(e.getMessage());
             throw new EdcException(e.getMessage());

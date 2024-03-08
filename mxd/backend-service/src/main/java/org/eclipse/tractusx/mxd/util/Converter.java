@@ -1,7 +1,7 @@
 package org.eclipse.tractusx.mxd.util;
 /*******************************************************************************
  *
- * Copyright (c) 2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -26,12 +26,12 @@ import org.eclipse.edc.spi.persistence.EdcPersistenceException;
 
 public class Converter {
 
-    public static String toJson(Object object) {
+    public static String toJson(Object object,ObjectMapper objectMapper) {
         if (object == null) {
             return null;
         }
         try {
-            return object instanceof String ? object.toString() : new ObjectMapper().writeValueAsString(object);
+            return object instanceof String ? object.toString() : objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
             throw new EdcPersistenceException(e);
         }
