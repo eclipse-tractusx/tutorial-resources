@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "4f58fd00-bc92-4988-ab87-74eb8209fff3",
+		"_postman_id": "4d995b9e-8460-4f77-9f94-cdc908aafe8f",
 		"name": "Management API Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "31550443",
-		"_collection_link": "https://winter-rocket-884715.postman.co/workspace/SAP~ff4cf631-05f4-48ab-a1e0-f716cf2efc25/collection/252261-485968ad-2ca0-49b1-b59d-ca2a892c3234?action=share&source=collection_link&creator=252261"
+		"_exporter_id": "31550443"
 	},
 	"item": [
 		{
@@ -213,15 +212,6 @@
 			"request": {
 				"method": "POST",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"@context\": {\n        \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n    },\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"2222\",\n    \"policy\": {\n\t\t\"@type\": \"odrl:Set\",\n\t\t\"odrl:permission\" : [{\n\t\t\t\"odrl:action\" : \"USE\",\n\t\t\t\"odrl:constraint\" : {\n\t\t\t\t\"@type\": \"LogicalConstraint\",\n\t\t\t\t\"odrl:or\" : [{\n\t\t\t\t\t\"@type\" : \"Constraint\",\n\t\t\t\t\t\"odrl:leftOperand\" : \"BusinessPartnerNumber\",\n\t\t\t\t\t\"odrl:operator\" : {\n                        \"@id\": \"odrl:eq\"\n                    },\n\t\t\t\t\t\"odrl:rightOperand\" : \"{{POLICY_BPN}}\"\n\t\t\t\t}]\n\t\t\t}\n\t\t}]\n    }\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
 					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/policydefinitions/request",
 					"host": [
@@ -404,7 +394,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"@context\": {\n    \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n  },\n  \"@type\": \"NegotiationInitiateRequestDto\",\n  \"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n  \"protocol\": \"dataspace-protocol-http\",\n  \"connectorId\": \"{{PROVIDER_ID}}\",\n  \"providerId\": \"{{PROVIDER_ID}}\",\n  \"offer\": {\n    \"offerId\": \"{{OFFER_ID}}\",\n    \"assetId\": \"{{ASSET_ID}}\",\n    \"policy\": {\n      \"@type\": \"odrl:Set\",\n      \"odrl:permission\": {\n        \"odrl:action\": {\n          \"odrl:type\": \"USE\"\n        },\n        \"odrl:constraint\": {\n          \"odrl:or\": {\n            \"odrl:leftOperand\": \"BusinessPartnerNumber\",\n            \"odrl:operator\": {\n              \"@id\": \"odrl:eq\"\n            },\n            \"odrl:rightOperand\": \"{{CONSUMER_ID}}\"\n          }\n        }\n      },\n      \"odrl:prohibition\": [],\n      \"odrl:obligation\": [],\n      \"odrl:target\": \"{{ASSET_ID}}\"\n    }\n  }\n}",
+					"raw": "{\n  \"@context\": {\n    \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n  },\n  \"@type\": \"NegotiationInitiateRequestDto\",\n  \"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n  \"protocol\": \"dataspace-protocol-http\",\n  \"connectorId\": \"{{PROVIDER_ID}}\",\n  \"providerId\": \"{{PROVIDER_ID}}\",\n  \"offer\": {\n    \"offerId\": \"{{OFFER_ID}}\",\n    \"assetId\": \"{{ASSET_ID}}\",\n    \"policy\": {\n      \"@type\": \"odrl:Set\",\n      \"odrl:permission\": {\n        \"odrl:target\": \"{{ASSET_ID}}\",\n        \"odrl:action\": {\n          \"odrl:type\": \"USE\"\n        },\n        \"odrl:constraint\": {\n          \"odrl:or\": {\n            \"odrl:leftOperand\": \"BusinessPartnerNumber\",\n            \"odrl:operator\": {\n              \"@id\": \"odrl:eq\"\n            },\n            \"odrl:rightOperand\": \"{{CONSUMER_ID}}\"\n          }\n        }\n      },\n      \"odrl:prohibition\": [],\n      \"odrl:obligation\": []\n    }\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -453,7 +443,7 @@
 							"    });\r",
 							"\r",
 							"    var data = response.json();\r",
-							"    if (data[\"edc:state\"] === \"FINALIZED\") {\r",
+							"    if (data[\"state\"] === \"FINALIZED\") {\r",
 							"      break;\r",
 							"    }\r",
 							"    else {\r",
@@ -585,7 +575,7 @@
 							"    });\r",
 							"\r",
 							"    var data = response.json();\r",
-							"    if (data[\"edc:state\"] === \"STARTED\") {\r",
+							"    if (data[\"state\"] === \"STARTED\") {\r",
 							"      break;\r",
 							"    }\r",
 							"    else {\r",
