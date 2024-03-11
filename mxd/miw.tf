@@ -17,6 +17,14 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
+module "miw-postgres" {
+  source            = "./modules/postgres"
+  database-name     = "miw"
+  database-username = "miw"
+  database-password = "miw"
+  database-port     = var.postgres-port
+}
+
 resource "kubernetes_deployment" "miw" {
   metadata {
     name = "miw"
@@ -79,12 +87,12 @@ resource "kubernetes_config_map" "miw-config" {
     name = "miw-config"
   }
   data = {
-    DB_HOST      = local.pg-ip
-    DB_PORT      = var.postgres-port
+    DB_HOST      = module.miw-postgres.database-host
+    DB_PORT      = module.miw-postgres.database-port
     DB_USER      = "postgres"
-    DB_NAME      = var.miw-database
-    DB_USER_NAME = var.miw-db-user
-    DB_PASSWORD  = local.miw-pg-pwd
+    DB_NAME      = module.miw-postgres.database-name
+    DB_USER_NAME = module.miw-postgres.database-username
+    DB_PASSWORD  = module.miw-postgres.database-password
 
     KEYCLOAK_CLIENT_ID              = "miw_private_client"
     ENCRYPTION_KEY                  = "Woh9waid4Ei5eez0aitieghoow9so4oe"

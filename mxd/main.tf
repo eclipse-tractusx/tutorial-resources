@@ -53,11 +53,10 @@ module "alice-connector" {
   source            = "./modules/connector"
   humanReadableName = "alice"
   participantId     = var.alice-bpn
-  database-host     = local.pg-ip
   database-name     = "alice"
   database-credentials = {
-    user     = "postgres"
-    password = "postgres"
+    user     = "alice"
+    password = "alice"
   }
   ssi-config = {
     miw-url            = "http://${kubernetes_service.miw.metadata.0.name}:${var.miw-api-port}"
@@ -83,11 +82,10 @@ module "bob-connector" {
   source            = "./modules/connector"
   humanReadableName = "bob"
   participantId     = var.bob-bpn
-  database-host     = local.pg-ip
   database-name     = "bob"
   database-credentials = {
-    user     = "postgres"
-    password = "postgres"
+    user     = "bob"
+    password = "bob"
   }
   ssi-config = {
     miw-url            = "http://${kubernetes_service.miw.metadata.0.name}:${var.miw-api-port}"

@@ -1,5 +1,5 @@
 #
-#  Copyright (c) 2023 Contributors to the Eclipse Foundation
+#  Copyright (c) 2024 Contributors to the Eclipse Foundation
 #
 #  See the NOTICE file(s) distributed with this work for additional
 #  information regarding copyright ownership.
@@ -17,26 +17,26 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-output "aes_key" {
-  value = local.aes_key_b64
+output "database-name" {
+  value = var.database-name
 }
 
-output "client_secret" {
-  value = local.client_secret
-}
-output "database-credentials" {
-  value = module.postgres
+output "database-username" {
+  value = var.database-username
 }
 
-output "urls" {
-  value = {
-    management = local.management_url
-    health     = local.health_url
-    proxy      = local.proxy_url
-    public     = local.public_url
-  }
+output "database-password" {
+  value = var.database-password
 }
 
-output "node-ip" {
-  value = kubernetes_service.controlplane-service.spec.0.cluster_ip
+output "database-host" {
+  value = local.db-ip
+}
+
+output "database-port" {
+  value = var.database-port
+}
+
+output "database-url" {
+  value = local.db-url
 }
