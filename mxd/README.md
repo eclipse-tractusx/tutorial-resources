@@ -215,6 +215,7 @@ Alternatively, please check out the [Postman collections here](./postman)
 
 ## 3. Tutorials
 * [Restrict Asset Using Access Policies](./docs/Access%20Policies%20Tutorial.md)
+* [Business Partner Group Policy](docs/Business%20Partner%20Group%20Policy%20Tutorial.md)
 * [File Transfer: Azure Blob Storage to Azure Blob Storage](./docs/File%20Transfer%20Azure%20to%20Azure.md)
 * [File Transfer: Azure Blob Storage to Amazon S3](./docs/File%20Transfer%20Azure%20to%20S3.md)
 * [File Transfer: Amazon S3 to Amazon S3](./docs/File%20Transfer%20S3%20to%20S3.md)
