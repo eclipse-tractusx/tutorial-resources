@@ -33,33 +33,28 @@ output "connector2-client-secret" {
   value = module.bob-connector.client_secret
 }
 
-output "postgres-url" {
-  value = "jdbc:postgresql://${local.pg-host}/"
-}
-
 output "keycloak-cluster-ip" {
   value = kubernetes_service.keycloak.spec.0.cluster_ip
 }
 
-
 output "keycloak-database-credentials" {
-  value = {
-    user     = var.keycloak-db-user
-    password = nonsensitive(local.kc-pg-pwd)
-    database = var.keycloak-database
-  }
+  value = module.keycloak-postgres
 }
 
 output "miw-cluster-ip" {
   value = local.miw-ip
 }
-output "miw-database-credentials" {
 
-  value = {
-    user     = var.miw-db-user
-    password = nonsensitive(local.miw-pg-pwd)
-    database = var.miw-database
-  }
+output "miw-database-credentials" {
+  value = module.miw-postgres
+}
+
+output "bob-database-credentials" {
+  value = module.bob-connector.database-credentials
+}
+
+output "alice-database-credentials" {
+  value = module.alice-connector.database-credentials
 }
 
 output "bob-urls" {

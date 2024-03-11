@@ -1,5 +1,5 @@
 #
-#  Copyright (c) 2023 Contributors to the Eclipse Foundation
+#  Copyright (c) 2024 Contributors to the Eclipse Foundation
 #
 #  See the NOTICE file(s) distributed with this work for additional
 #  information regarding copyright ownership.
@@ -19,9 +19,9 @@
 
 resource "kubernetes_deployment" "postgres" {
   metadata {
-    name = "postgres"
+    name = local.app-name
     labels = {
-      App = "postgres"
+      App = local.app-name
     }
   }
 
@@ -29,19 +29,19 @@ resource "kubernetes_deployment" "postgres" {
     replicas = 1
     selector {
       match_labels = {
-        App = "postgres"
+        App = local.app-name
       }
     }
     template {
       metadata {
         labels = {
-          App = "postgres"
+          App = local.app-name
         }
       }
       spec {
         container {
           image = local.pg-image
-          name  = "postgres"
+          name  = local.app-name
 
           env_from {
             config_map_ref {
@@ -92,7 +92,7 @@ resource "kubernetes_deployment" "postgres" {
 # ConfigMap that contains SQL statements to initialize the DB, create a "miw" DB, etc.
 resource "kubernetes_config_map" "postgres-config" {
   metadata {
-    name = "pg-initdb-config"
+    name = "${local.app-name}-initdb-config"
   }
 
   ## Create databases for keycloak and MIW, create users and assign privileges
@@ -100,21 +100,11 @@ resource "kubernetes_config_map" "postgres-config" {
     POSTGRES_USER     = "postgres"
     POSTGRES_PASSWORD = "postgres"
     "init.sql"        = <<EOT
-      CREATE DATABASE ${var.miw-database};
-      CREATE USER ${var.miw-db-user} WITH ENCRYPTED PASSWORD '${local.miw-pg-pwd}';
-      GRANT ALL PRIVILEGES ON DATABASE ${var.miw-database} TO ${var.miw-db-user};
-      \c ${var.miw-database}
-      GRANT ALL ON SCHEMA public TO ${var.miw-db-user};
-
-      CREATE DATABASE ${var.keycloak-database};
-      CREATE USER ${var.keycloak-db-user} WITH ENCRYPTED PASSWORD '${local.kc-pg-pwd}';
-      GRANT ALL PRIVILEGES ON DATABASE ${var.keycloak-database} TO ${var.keycloak-db-user};
-      \c ${var.keycloak-database}
-      GRANT ALL ON SCHEMA public TO ${var.keycloak-db-user};
-
-      CREATE DATABASE ${module.alice-connector.database-name};
-      CREATE DATABASE ${module.bob-connector.database-name};
-      CREATE DATABASE trudy;
+      CREATE DATABASE ${var.database-name};
+      CREATE USER ${var.database-username} WITH ENCRYPTED PASSWORD '${var.database-password}';
+      GRANT ALL PRIVILEGES ON DATABASE ${var.database-name} TO ${var.database-username};
+      \c ${var.database-name}
+      GRANT ALL ON SCHEMA public TO ${var.database-username};
 
     EOT
   }
@@ -123,7 +113,7 @@ resource "kubernetes_config_map" "postgres-config" {
 # K8S ClusterIP so Keycloak and MIW can access postgres
 resource "kubernetes_service" "pg-service" {
   metadata {
-    name = "postgres-service"
+    name = "${local.app-name}-service"
   }
   spec {
     selector = {
@@ -131,24 +121,15 @@ resource "kubernetes_service" "pg-service" {
     }
     port {
       name        = "pg-port"
-      port        = var.postgres-port
-      target_port = var.postgres-port
+      port        = var.database-port
+      target_port = var.database-port
     }
   }
 }
 
-resource "random_password" "miw-pg-pwd" {
-  length = 16
-}
-
-resource "random_password" "kc-pg-pwd" {
-  length = 16
-}
-
 locals {
-  pg-image   = "postgres:15.3-alpine3.18"
-  miw-pg-pwd = random_password.miw-pg-pwd.result
-  kc-pg-pwd  = random_password.kc-pg-pwd.result
-  pg-ip      = kubernetes_service.pg-service.spec.0.cluster_ip
-  pg-host    = "${local.pg-ip}:${var.postgres-port}"
+  app-name = "postgres-${var.database-name}"
+  pg-image = "postgres:15.3-alpine3.18"
+  db-ip    = kubernetes_service.pg-service.spec.0.cluster_ip
+  db-url   = "${local.db-ip}:${var.database-port}"
 }

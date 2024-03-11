@@ -52,18 +52,6 @@ resource "kubernetes_ingress_v1" "mxd-ingress" {
             }
           }
         }
-
-        path {
-          path = "/pg(/|$)(.*)"
-          backend {
-            service {
-              name = kubernetes_service.pg-service.metadata.0.name
-              port {
-                number = var.postgres-port
-              }
-            }
-          }
-        }
       }
     }
   }

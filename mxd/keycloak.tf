@@ -17,6 +17,14 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
+module "keycloak-postgres" {
+  source            = "./modules/postgres"
+  database-name     = "keycloak"
+  database-username = "keycloak"
+  database-password = "keycloak"
+  database-port     = var.postgres-port
+}
+
 resource "kubernetes_deployment" "keycloak" {
   metadata {
     name = "keycloak"
@@ -109,9 +117,9 @@ resource "kubernetes_config_map" "keycloak_env" {
   data = {
     KC_DB                      = "postgres"
     KC_DB_SCHEMA               = "public"
-    KC_DB_PASSWORD             = local.kc-pg-pwd
-    KC_DB_USERNAME             = var.keycloak-db-user
-    KC_DB_URL                  = "jdbc:postgresql://${local.pg-host}/${var.keycloak-database}"
+    KC_DB_PASSWORD             = module.keycloak-postgres.database-password
+    KC_DB_USERNAME             = module.keycloak-postgres.database-username
+    KC_DB_URL                  = "jdbc:postgresql://${module.keycloak-postgres.database-url}/${module.keycloak-postgres.database-name}"
     KEYCLOAK_MIW_PUBLIC_CLIENT = "miw_public"
     KEYCLOAK_ADMIN             = "admin"
     KEYCLOAK_ADMIN_PASSWORD    = "admin"

@@ -33,10 +33,6 @@ variable "participantId" {
   description = "Participant ID of the connector. In Catena-X, this MUST be the BPN"
 }
 
-variable "database-host" {
-  description = "IP address (ClusterIP) or host name of the postgres database host"
-
-}
 variable "database-port" {
   default     = 5432
   description = "Port where the Postgres database is reachable, defaults to 5432."

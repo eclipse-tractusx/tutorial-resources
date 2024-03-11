@@ -18,18 +18,6 @@
 #
 
 # configuration values for the MIW+Keycloak Postgres db
-variable "keycloak-database" {
-  default = "keycloak"
-}
-variable "keycloak-db-user" {
-  default = "keycloak_user"
-}
-variable "miw-database" {
-  default = "miw"
-}
-variable "miw-db-user" {
-  default = "miw_user"
-}
 variable "postgres-port" {
   default = 5432
 }
