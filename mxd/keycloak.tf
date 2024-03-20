@@ -146,6 +146,6 @@ resource "kubernetes_service" "keycloak" {
 }
 
 locals {
-  keycloak-ip  = "10.96.103.80"
+  keycloak-ip  = var.keycloak-static-ip
   keycloak-url = "${local.keycloak-ip}:${var.keycloak-port}"
 }
