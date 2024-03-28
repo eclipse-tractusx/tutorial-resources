@@ -1,0 +1,1670 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="MXD Performance Evaluation - Measurement Interval">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="EXPERIMENT_DURATION_SEC" elementType="Argument">
+            <stringProp name="Argument.name">EXPERIMENT_DURATION_SEC</stringProp>
+            <stringProp name="Argument.value">${__P(EXPERIMENT_DURATION_SEC, 60)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="EDC_NAMESPACE" elementType="Argument">
+            <stringProp name="Argument.name">EDC_NAMESPACE</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.value">${__P(EDC_NAMESPACE, https://w3id.org/edc/v0.0.1/ns/)}</stringProp>
+          </elementProp>
+          <elementProp name="BACKEND_SERVICE" elementType="Argument">
+            <stringProp name="Argument.name">BACKEND_SERVICE</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.value">${__P(BACKEND_SERVICE, https://requestbin.myworkato.com/z8zu6nz9)}</stringProp>
+          </elementProp>
+          <elementProp name="MAX_NEGOTIATION_POLL_COUNT" elementType="Argument">
+            <stringProp name="Argument.name">MAX_NEGOTIATION_POLL_COUNT</stringProp>
+            <stringProp name="Argument.value">${__P(MAX_NEGOTIATION_POLL_COUNT, 100)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="MAX_TRANSFER_POLL_COUNT" elementType="Argument">
+            <stringProp name="Argument.name">MAX_TRANSFER_POLL_COUNT</stringProp>
+            <stringProp name="Argument.value">${__P(MAX_TRANSFER_POLL_COUNT, 100)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="LOOP_COUNT" elementType="Argument">
+            <stringProp name="Argument.name">LOOP_COUNT</stringProp>
+            <stringProp name="Argument.value">${__P(LOOP_COUNT, 50)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="THREAD_COUNT" elementType="Argument">
+            <stringProp name="Argument.name">THREAD_COUNT</stringProp>
+            <stringProp name="Argument.value">${__P(THREAD_COUNT, 1)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="INTERVALS_PER_MINUTE" elementType="Argument">
+            <stringProp name="Argument.name">INTERVALS_PER_MINUTE</stringProp>
+            <stringProp name="Argument.value">${__P(INTERVALS_PER_MINUTE, 10)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="OEM_MANAGEMENT_URL" elementType="Argument">
+            <stringProp name="Argument.name">OEM_MANAGEMENT_URL</stringProp>
+            <stringProp name="Argument.value">${__P(OEM_MANAGEMENT_URL, http://edc.ingress.mxd.edc-lpt.shoot.live.k8s-hana.ondemand.com/alice/management)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="OEM_PROTOCOL_URL" elementType="Argument">
+            <stringProp name="Argument.name">OEM_PROTOCOL_URL</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.value">${__P(OEM_PROTOCOL_URL, http://alice-controlplane:8084/api/v1/dsp)}</stringProp>
+          </elementProp>
+          <elementProp name="OEM_ID" elementType="Argument">
+            <stringProp name="Argument.name">OEM_ID</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.value">${__P(OEM_ID, BPNL000000000001)}</stringProp>
+          </elementProp>
+          <elementProp name="OEM_API_KEY" elementType="Argument">
+            <stringProp name="Argument.name">OEM_API_KEY</stringProp>
+            <stringProp name="Argument.value">${__P(OEM_API_KEY, password)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="OEM_PLANTS" elementType="Argument">
+            <stringProp name="Argument.name">OEM_PLANTS</stringProp>
+            <stringProp name="Argument.value">${__P(OEM_PLANTS, 2)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="OEM_CARS_INITIAL" elementType="Argument">
+            <stringProp name="Argument.name">OEM_CARS_INITIAL</stringProp>
+            <stringProp name="Argument.value">${__P(OEM_CARS_INITIAL, 1000)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="PARTS_PER_CAR" elementType="Argument">
+            <stringProp name="Argument.name">PARTS_PER_CAR</stringProp>
+            <stringProp name="Argument.value">${__P(PARTS_PER_CAR, 100)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="CARS_PRODUCED_PER_INTERVALL" elementType="Argument">
+            <stringProp name="Argument.name">CARS_PRODUCED_PER_INTERVALL</stringProp>
+            <stringProp name="Argument.value">${__P(CARS_PRODUCED_PER_INTERVALL, 1)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="SUPPLIER_MANAGEMENT_URL" elementType="Argument">
+            <stringProp name="Argument.name">SUPPLIER_MANAGEMENT_URL</stringProp>
+            <stringProp name="Argument.value">${__P(SUPPLIER_MANAGEMENT_URL, http://edc.ingress.mxd.edc-lpt.shoot.live.k8s-hana.ondemand.com/bob/management)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="SUPPLIER_PROTOCOL_URL" elementType="Argument">
+            <stringProp name="Argument.name">SUPPLIER_PROTOCOL_URL</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.value">${__P(SUPPLIER_PROTOCOL_URL, http://bob-controlplane:8084/api/v1/dsp)}</stringProp>
+          </elementProp>
+          <elementProp name="SUPPLIER_ID" elementType="Argument">
+            <stringProp name="Argument.name">SUPPLIER_ID</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.value">${__P(SUPPLIER_ID, BPNL000000000002)}</stringProp>
+          </elementProp>
+          <elementProp name="SUPPLIER_API_KEY" elementType="Argument">
+            <stringProp name="Argument.name">SUPPLIER_API_KEY</stringProp>
+            <stringProp name="Argument.value">${__P(SUPPLIER_API_KEY, password)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="SUPPLIER_PLANTS" elementType="Argument">
+            <stringProp name="Argument.name">SUPPLIER_PLANTS</stringProp>
+            <stringProp name="Argument.value">${__P(SUPPLIER_PLANTS, 2)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="PARTS_PRODUCED_PER_INTERVALL" elementType="Argument">
+            <stringProp name="Argument.name">PARTS_PRODUCED_PER_INTERVALL</stringProp>
+            <stringProp name="Argument.value">${__P(PARTS_PRODUCED_PER _INTERVALL, 50)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="SUPPLIER_FLEET_MANAGERS" elementType="Argument">
+            <stringProp name="Argument.name">SUPPLIER_FLEET_MANAGERS</stringProp>
+            <stringProp name="Argument.value">${__P(SUPPLIER_FLEET_MANAGERS, 1)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="SUPPLIER_PARTS_PLANTS_COUNT" elementType="Argument">
+            <stringProp name="Argument.name">SUPPLIER_PARTS_PLANTS_COUNT</stringProp>
+            <stringProp name="Argument.value">${__P(SUPPLIER_PARTS_PLANTS_COUNT)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="SUPPLIER_FLEET_COUNT" elementType="Argument">
+            <stringProp name="Argument.name">SUPPLIER_FLEET_COUNT</stringProp>
+            <stringProp name="Argument.value">${__P(SUPPLIER_FLEET_COUNT)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="CARS_REQUESTED_PER_INTERVALL" elementType="Argument">
+            <stringProp name="Argument.name">CARS_REQUESTED_PER_INTERVALL</stringProp>
+            <stringProp name="Argument.value">${__P(CARS_REQUESTED_PER_INTERVALL, 1)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="SUPPLIER_PARTS_INITIAL" elementType="Argument">
+            <stringProp name="Argument.name">SUPPLIER_PARTS_INITIAL</stringProp>
+            <stringProp name="Argument.value">${__P(SUPPLIER_PARTS_INITIAL, 1000)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="OEM Plants ">
+        <stringProp name="ThreadGroup.num_threads">${OEM_PLANTS}</stringProp>
+        <stringProp name="ThreadGroup.duration">${EXPERIMENT_DURATION_SEC}</stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">startnextloop</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Schleifen-Controller (Loop Controller)">
+          <intProp name="LoopController.loops">-1</intProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="OEM Dummy Sampler">
+          <boolProp name="displayJMeterProperties">false</boolProp>
+          <boolProp name="displayJMeterVariables">true</boolProp>
+          <boolProp name="displaySystemProperties">false</boolProp>
+        </DebugSampler>
+        <hashTree>
+          <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Constant Throughput Timer">
+            <intProp name="calcMode">0</intProp>
+            <stringProp name="throughput">${INTERVALS_PER_MINUTE}</stringProp>
+          </ConstantThroughputTimer>
+          <hashTree/>
+        </hashTree>
+        <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="User Parameters">
+          <collectionProp name="UserParameters.names">
+            <stringProp name="-601834919">NEGOTIATION_ID</stringProp>
+            <stringProp name="-2060801421">NEGOTIATION_STATE</stringProp>
+            <stringProp name="144194031">TRANSFER_ID</stringProp>
+            <stringProp name="726858525">TRANSFER_STATE</stringProp>
+          </collectionProp>
+          <collectionProp name="UserParameters.thread_values">
+            <collectionProp name="772031937">
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+            </collectionProp>
+          </collectionProp>
+          <boolProp name="UserParameters.per_iteration">true</boolProp>
+          <stringProp name="TestPlan.comments">Local Variables to be reset after each loop</stringProp>
+        </UserParameters>
+        <hashTree/>
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Provide ID Counter">
+          <stringProp name="CounterConfig.start">${__intSum(1,${OEM_CARS_INITIAL})}</stringProp>
+          <stringProp name="CounterConfig.end"></stringProp>
+          <stringProp name="CounterConfig.incr">1</stringProp>
+          <stringProp name="CounterConfig.name">PROVIDE_COUNTER</stringProp>
+          <stringProp name="CounterConfig.format"></stringProp>
+          <boolProp name="CounterConfig.per_user">false</boolProp>
+        </CounterConfig>
+        <hashTree/>
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Consume ID Counter">
+          <stringProp name="CounterConfig.start">1</stringProp>
+          <stringProp name="CounterConfig.end"></stringProp>
+          <stringProp name="CounterConfig.incr">1</stringProp>
+          <stringProp name="CounterConfig.name">CONSUME_COUNTER</stringProp>
+          <stringProp name="CounterConfig.format"></stringProp>
+          <boolProp name="CounterConfig.per_user">false</boolProp>
+        </CounterConfig>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Create Asset">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v3/assets</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;@context&quot;: {},&#xd;
+    &quot;@id&quot;: &quot;${PROVIDE_COUNTER}&quot;, &#xd;
+    &quot;properties&quot;: {&#xd;
+        &quot;description&quot;: &quot;Product EDC Demo Asset&quot;&#xd;
+    },&#xd;
+    &quot;dataAddress&quot;: {&#xd;
+        &quot;@type&quot;: &quot;DataAddress&quot;,&#xd;
+        &quot;type&quot;: &quot;HttpData&quot;,&#xd;
+        &quot;baseUrl&quot;: &quot;https://jsonplaceholder.typicode.com/todos&quot;&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${OEM_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response code 200 or 409" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+              <stringProp name="51517">409</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">true</boolProp>
+            <intProp name="Assertion.test_type">40</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Policy" enabled="false">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v2/policydefinitions</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;@context&quot;: {&#xd;
+        &quot;odrl&quot;: &quot;http://www.w3.org/ns/odrl/2/&quot;&#xd;
+    },&#xd;
+    &quot;@type&quot;: &quot;PolicyDefinitionRequestDto&quot;,&#xd;
+    &quot;@id&quot;: &quot;${PROVIDE_COUNTER}&quot;,&#xd;
+    &quot;policy&quot;: {&#xd;
+		&quot;@type&quot;: &quot;Policy&quot;,&#xd;
+		&quot;odrl:permission&quot; : [{&#xd;
+			&quot;odrl:action&quot; : &quot;USE&quot;,&#xd;
+			&quot;odrl:constraint&quot; : {&#xd;
+				&quot;@type&quot;: &quot;LogicalConstraint&quot;,&#xd;
+				&quot;odrl:or&quot; : [{&#xd;
+					&quot;@type&quot; : &quot;Constraint&quot;,&#xd;
+					&quot;odrl:leftOperand&quot; : &quot;BusinessPartnerNumber&quot;,&#xd;
+					&quot;odrl:operator&quot; : {&#xd;
+                        		&quot;@id&quot;: &quot;odrl:eq&quot;&#xd;
+                    	},&#xd;
+					&quot;odrl:rightOperand&quot; : &quot;${SUPPLIER_ID}&quot;&#xd;
+				}]&#xd;
+			}&#xd;
+		}]&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${OEM_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response code 200 or 409" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+              <stringProp name="51517">409</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">true</boolProp>
+            <intProp name="Assertion.test_type">40</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Contract Definitiion" enabled="false">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v2/contractdefinitions</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;@context&quot;: {},&#xd;
+    &quot;@id&quot;: &quot;${PROVIDE_COUNTER}&quot;,&#xd;
+    &quot;@type&quot;: &quot;ContractDefinition&quot;,&#xd;
+    &quot;accessPolicyId&quot;: &quot;${PROVIDE_COUNTER}&quot;,&#xd;
+    &quot;contractPolicyId&quot;: &quot;${PROVIDE_COUNTER}&quot;,&#xd;
+    &quot;assetsSelector&quot; : {&#xd;
+        &quot;@type&quot; : &quot;CriterionDto&quot;,&#xd;
+        &quot;operandLeft&quot;: &quot;${EDC_NAMESPACE}id&quot;,&#xd;
+        &quot;operator&quot;: &quot;=&quot;,&#xd;
+        &quot;operandRight&quot;: &quot;${PROVIDE_COUNTER}&quot;&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${OEM_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response code 200 or 409" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+              <stringProp name="51517">409</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">true</boolProp>
+            <intProp name="Assertion.test_type">40</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Get Supplier Asset">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v3/assets/${CONSUME_COUNTER}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${SUPPLIER_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Query Catalog">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v2/catalog/request</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;@context&quot;: {&#xd;
+    &quot;@vocab&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/&quot;&#xd;
+  },&#xd;
+  &quot;@type&quot;: &quot;CatalogRequest&quot;,&#xd;
+  &quot;counterPartyAddress&quot;: &quot;${SUPPLIER_PROTOCOL_URL}&quot;,&#xd;
+  &quot;protocol&quot;: &quot;dataspace-protocol-http&quot;,&#xd;
+  &quot;querySpec&quot;: {&#xd;
+    &quot;offset&quot;: 0,&#xd;
+    &quot;limit&quot;: 10,&#xd;
+    &quot;filterExpression&quot;: {&#xd;
+      &quot;@type&quot;: &quot;CriterionDto&quot;,&#xd;
+      &quot;operandLeft&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/id&quot;,&#xd;
+      &quot;operator&quot;: &quot;=&quot;,&#xd;
+      &quot;operandRight&quot;: &quot;${CONSUME_COUNTER}&quot;&#xd;
+    }&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${OEM_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">CONTRACT_OFFER_ID</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">${__eval($[&apos;dcat:dataset&apos;][?(@.id==&quot;${CONSUME_COUNTER}&quot;)][&apos;odrl:hasPolicy&apos;][&apos;@id&apos;])}</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Verify Contract Offer Id" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">var offerId = vars.get(&quot;CONTRACT_OFFER_ID&quot;)
+
+if(offerId == null || offerId.isEmpty()) {
+	AssertionResult.setFailure(true)
+	AssertionResult.setFailureMessage(&quot;CONTRACT_OFFER_ID is missing&quot;)
+}
+</stringProp>
+          </JSR223Assertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Initiate Negotiation">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v2/contractnegotiations</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+	&quot;@context&quot;: {&#xd;
+		&quot;@vocab&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/&quot;,&#xd;
+		&quot;odrl&quot;: &quot;http://www.w3.org/ns/odrl/2/&quot;&#xd;
+	},&#xd;
+	&quot;@type&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/ContractRequest&quot;,&#xd;
+	&quot;counterPartyAddress&quot;: &quot;${SUPPLIER_PROTOCOL_URL}&quot;,&#xd;
+	&quot;protocol&quot;: &quot;dataspace-protocol-http&quot;,&#xd;
+	&quot;providerId&quot;: &quot;${SUPPLIER_ID}&quot;,&#xd;
+	&quot;offer&quot;: {&#xd;
+		&quot;offerId&quot;: &quot;${CONTRACT_OFFER_ID}&quot;,&#xd;
+		&quot;assetId&quot;: &quot;${CONSUME_COUNTER}&quot;,&#xd;
+		&quot;policy&quot;: {&#xd;
+			&quot;@context&quot;: &quot;http://www.w3.org/ns/odrl.jsonld&quot;,&#xd;
+			&quot;@type&quot;: &quot;odrl:Set&quot;,&#xd;
+			&quot;@id&quot;: &quot;${CONSUME_COUNTER}&quot;,&#xd;
+			&quot;odrl:permission&quot; : {&#xd;
+				&quot;odrl:target&quot; : &quot;${CONSUME_COUNTER}&quot;,&#xd;
+				&quot;odrl:action&quot;: {&#xd;
+					&quot;odrl:type&quot;: &quot;USE&quot;&#xd;
+				},&#xd;
+				&quot;odrl:constraint&quot; : {&#xd;
+					&quot;odrl:or&quot; : {&#xd;
+						&quot;odrl:leftOperand&quot; : &quot;BusinessPartnerNumber&quot;,&#xd;
+						&quot;odrl:operator&quot; : {&#xd;
+	                        		&quot;@id&quot;: &quot;odrl:eq&quot;&#xd;
+	                    	},&#xd;
+						&quot;odrl:rightOperand&quot; : &quot;${OEM_ID}&quot;&#xd;
+					}&#xd;
+				}&#xd;
+			},&#xd;
+			&quot;odrl:prohibition&quot;: [],&#xd;
+			&quot;odrl:obligation&quot;: [],&#xd;
+			&quot;odrl:target&quot;: &quot;${CONSUME_COUNTER}&quot;&#xd;
+	  	}&#xd;
+	},&#xd;
+	&quot;callbackAddresses&quot;: []&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${OEM_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Negotiation ID" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">NEGOTIATION_ID</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;@id&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="OEM Negotiation Complete">
+          <boolProp name="TransactionController.includeTimers">true</boolProp>
+        </TransactionController>
+        <hashTree>
+          <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Negotiation_State_Loop">
+            <stringProp name="WhileController.condition">${__jexl3(&quot;${NEGOTIATION_STATE}&quot; != &quot;FINALIZED&quot; &amp;&amp;
+${__jm__Negotiation_State_Loop__idx} &lt; ${MAX_NEGOTIATION_POLL_COUNT})}</stringProp>
+            <stringProp name="TestPlan.comments">Loop while Negotiation State is FINALIZED</stringProp>
+          </WhileController>
+          <hashTree>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Sleep while negotiation state changes" enabled="true">
+              <stringProp name="ConstantTimer.delay">500</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Get Negotiation State">
+              <intProp name="HTTPSampler.concurrentPool">6</intProp>
+              <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v2/contractnegotiations/${NEGOTIATION_ID}/state</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <stringProp name="HTTPSampler.method">GET</stringProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+                <collectionProp name="Arguments.arguments"/>
+              </elementProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">X-Api-Key</stringProp>
+                    <stringProp name="Header.value">${OEM_API_KEY}</stringProp>
+                  </elementProp>
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">NEGOTIATION_STATE</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;state&apos;]</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="OEM Verify Negotiation State">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">var currentState = vars.get(&quot;NEGOTIATION_STATE&quot;);
+
+if(!&quot;FINALIZED&quot;.equals( currentState)) {
+	SampleResult.setSuccessful(false);
+	SampleResult.setResponseData(&quot;Negotiation State is not &apos;FINALIZED&apos; after ${vars.get(&apos;MAX_NEGOTIATION_POLL_COUNT&apos;)} attempts. Current State: ${currentState}&quot;);
+}
+</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Get Negotiation">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v2/contractnegotiations/${NEGOTIATION_ID}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${OEM_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">CONTRACT_AGREEMENT_ID</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;contractAgreementId&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Initiate Transfer">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v2/transferprocesses</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;@context&quot;: {&#xd;
+		&quot;@vocab&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/&quot;&#xd;
+    },&#xd;
+	&quot;@type&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/TransferRequest&quot;,&#xd;
+	&quot;protocol&quot;: &quot;dataspace-protocol-http&quot;,&#xd;
+	&quot;counterPartyAddress&quot;: &quot;${SUPPLIER_PROTOCOL_URL}&quot;,&#xd;
+	&quot;connectorId&quot;: &quot;${SUPPLIER_ID}&quot;,&#xd;
+	&quot;contractId&quot;: &quot;${CONTRACT_AGREEMENT_ID}&quot;,&#xd;
+	&quot;assetId&quot;: &quot;${CONSUME_COUNTER}&quot;,&#xd;
+	&quot;dataDestination&quot;: {&#xd;
+	   &quot;type&quot;: &quot;HttpProxy&quot;&#xd;
+	},&#xd;
+	&quot;privateProperties&quot;: {&#xd;
+	   &quot;receiverHttpEndpoint&quot;: &quot;${BACKEND_SERVICE}&quot;&#xd;
+	},&#xd;
+	&#xd;
+	&quot;transferType&quot;: {&#xd;
+	   &quot;contentType&quot;: &quot;application/octet-stream&quot;,&#xd;
+	   &quot;isFinite&quot;: true&#xd;
+	}&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${OEM_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Transfer ID" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">TRANSFER_ID</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;@id&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="OEM Transfer Complete">
+          <boolProp name="TransactionController.includeTimers">true</boolProp>
+        </TransactionController>
+        <hashTree>
+          <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Transfer_State_Loop">
+            <stringProp name="WhileController.condition">${__jexl3(&quot;${TRANSFER_STATE}&quot; != &quot;STARTED&quot; &amp;&amp;
+${__jm__Transfer_State_Loop__idx} &lt; ${MAX_TRANSFER_POLL_COUNT})}</stringProp>
+            <stringProp name="TestPlan.comments">Loop while Transfer State is STARTED</stringProp>
+          </WhileController>
+          <hashTree>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Sleep while transfer state changes" enabled="true">
+              <stringProp name="ConstantTimer.delay">500</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Get Transfer State">
+              <intProp name="HTTPSampler.concurrentPool">6</intProp>
+              <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v2/transferprocesses/${TRANSFER_ID}/state</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <stringProp name="HTTPSampler.method">GET</stringProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+                <collectionProp name="Arguments.arguments"/>
+              </elementProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">X-Api-Key</stringProp>
+                    <stringProp name="Header.value">${OEM_API_KEY}</stringProp>
+                  </elementProp>
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">TRANSFER_STATE</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;state&apos;]</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="OEM Verify Transfer State">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">var currentState = vars.get(&quot;TRANSFER_STATE&quot;);
+
+if(!&quot;STARTED&quot;.equals( currentState)) {
+	SampleResult.setSuccessful(false);
+	SampleResult.setResponseData(&quot;Transfer State is not &apos;COMPLETED&apos; after ${vars.get(&apos;MAX_TRANSFER_POLL_COUNT&apos;)} attempts. Current State: ${currentState}&quot;);
+}
+</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>true</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>true</responseData>
+              <samplerData>true</samplerData>
+              <xml>true</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>true</responseHeaders>
+              <requestHeaders>true</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <fileName>true</fileName>
+              <hostname>true</hostname>
+              <threadCounts>true</threadCounts>
+              <sampleCount>true</sampleCount>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename">output/measurement_interval_oem_plants_errors.xml</stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="TestPlan.comments">SetUp OEM</stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Supplier Plants">
+        <stringProp name="ThreadGroup.num_threads">${SUPPLIER_PLANTS}</stringProp>
+        <stringProp name="ThreadGroup.duration">${EXPERIMENT_DURATION_SEC}</stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">startnextloop</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Schleifen-Controller (Loop Controller)">
+          <intProp name="LoopController.loops">-1</intProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Supplier Dummy Sampler">
+          <boolProp name="displayJMeterProperties">false</boolProp>
+          <boolProp name="displayJMeterVariables">true</boolProp>
+          <boolProp name="displaySystemProperties">false</boolProp>
+        </DebugSampler>
+        <hashTree>
+          <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Constant Throughput Timer" enabled="true">
+            <intProp name="calcMode">0</intProp>
+            <stringProp name="throughput">${INTERVALS_PER_MINUTE}</stringProp>
+          </ConstantThroughputTimer>
+          <hashTree/>
+        </hashTree>
+        <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="User Parameters" enabled="true">
+          <collectionProp name="UserParameters.names">
+            <stringProp name="-601834919">NEGOTIATION_ID</stringProp>
+            <stringProp name="-2060801421">NEGOTIATION_STATE</stringProp>
+            <stringProp name="144194031">TRANSFER_ID</stringProp>
+            <stringProp name="726858525">TRANSFER_STATE</stringProp>
+          </collectionProp>
+          <collectionProp name="UserParameters.thread_values">
+            <collectionProp name="772031937">
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+            </collectionProp>
+          </collectionProp>
+          <boolProp name="UserParameters.per_iteration">true</boolProp>
+          <stringProp name="TestPlan.comments">Local Variables to be reset after each loop</stringProp>
+        </UserParameters>
+        <hashTree/>
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="ID Counter">
+          <stringProp name="CounterConfig.start">${__intSum(1,${SUPPLIER_PARTS_INITIAL})}</stringProp>
+          <stringProp name="CounterConfig.end"></stringProp>
+          <stringProp name="CounterConfig.incr">1</stringProp>
+          <stringProp name="CounterConfig.name">ID</stringProp>
+          <stringProp name="CounterConfig.format"></stringProp>
+          <boolProp name="CounterConfig.per_user">false</boolProp>
+        </CounterConfig>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Supplier Create Asset">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v3/assets</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;@context&quot;: {},&#xd;
+    &quot;@id&quot;: &quot;${ID}&quot;, &#xd;
+    &quot;properties&quot;: {&#xd;
+        &quot;description&quot;: &quot;Product EDC Demo Asset&quot;&#xd;
+    },&#xd;
+    &quot;dataAddress&quot;: {&#xd;
+        &quot;@type&quot;: &quot;DataAddress&quot;,&#xd;
+        &quot;type&quot;: &quot;HttpData&quot;,&#xd;
+        &quot;baseUrl&quot;: &quot;https://jsonplaceholder.typicode.com/todos&quot;&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${SUPPLIER_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response code 200 or 409" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+              <stringProp name="51517">409</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">true</boolProp>
+            <intProp name="Assertion.test_type">40</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Policy" enabled="false">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v2/policydefinitions</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;@context&quot;: {&#xd;
+        &quot;odrl&quot;: &quot;http://www.w3.org/ns/odrl/2/&quot;&#xd;
+    },&#xd;
+    &quot;@type&quot;: &quot;PolicyDefinitionRequestDto&quot;,&#xd;
+    &quot;@id&quot;: &quot;${ID}&quot;,&#xd;
+    &quot;policy&quot;: {&#xd;
+		&quot;@type&quot;: &quot;Policy&quot;,&#xd;
+		&quot;odrl:permission&quot; : [{&#xd;
+			&quot;odrl:action&quot; : &quot;USE&quot;,&#xd;
+			&quot;odrl:constraint&quot; : {&#xd;
+				&quot;@type&quot;: &quot;LogicalConstraint&quot;,&#xd;
+				&quot;odrl:or&quot; : [{&#xd;
+					&quot;@type&quot; : &quot;Constraint&quot;,&#xd;
+					&quot;odrl:leftOperand&quot; : &quot;BusinessPartnerNumber&quot;,&#xd;
+					&quot;odrl:operator&quot; : {&#xd;
+                        		&quot;@id&quot;: &quot;odrl:eq&quot;&#xd;
+                    	},&#xd;
+					&quot;odrl:rightOperand&quot; : &quot;${OEM_ID}&quot;&#xd;
+				}]&#xd;
+			}&#xd;
+		}]&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${SUPPLIER_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response code 200 or 409" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+              <stringProp name="51517">409</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">true</boolProp>
+            <intProp name="Assertion.test_type">40</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Contract Definitiion" enabled="false">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v2/contractdefinitions</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;@context&quot;: {},&#xd;
+    &quot;@id&quot;: &quot;${ID}&quot;,&#xd;
+    &quot;@type&quot;: &quot;ContractDefinition&quot;,&#xd;
+    &quot;accessPolicyId&quot;: &quot;${ID}&quot;,&#xd;
+    &quot;contractPolicyId&quot;: &quot;${ID}&quot;,&#xd;
+    &quot;assetsSelector&quot; : {&#xd;
+        &quot;@type&quot; : &quot;CriterionDto&quot;,&#xd;
+        &quot;operandLeft&quot;: &quot;${EDC_NAMESPACE}id&quot;,&#xd;
+        &quot;operator&quot;: &quot;=&quot;,&#xd;
+        &quot;operandRight&quot;: &quot;${ID}&quot;&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${SUPPLIER_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response code 200 or 409" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+              <stringProp name="51517">409</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">true</boolProp>
+            <intProp name="Assertion.test_type">40</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>true</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>true</responseData>
+              <samplerData>true</samplerData>
+              <xml>true</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>true</responseHeaders>
+              <requestHeaders>true</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <fileName>true</fileName>
+              <hostname>true</hostname>
+              <threadCounts>true</threadCounts>
+              <sampleCount>true</sampleCount>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename">output/measurement_interval_supplier_plants_errors.xml</stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="TestPlan.comments">SetUp OEM</stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Supplier Fleet Manager">
+        <stringProp name="ThreadGroup.num_threads">${SUPPLIER_FLEET_MANAGERS}</stringProp>
+        <stringProp name="ThreadGroup.duration">${EXPERIMENT_DURATION_SEC}</stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">startnextloop</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Schleifen-Controller (Loop Controller)">
+          <intProp name="LoopController.loops">-1</intProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Fleet Dummy Sampler">
+          <boolProp name="displayJMeterProperties">false</boolProp>
+          <boolProp name="displayJMeterVariables">true</boolProp>
+          <boolProp name="displaySystemProperties">false</boolProp>
+        </DebugSampler>
+        <hashTree>
+          <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Constant Throughput Timer" enabled="true">
+            <intProp name="calcMode">0</intProp>
+            <stringProp name="throughput">${INTERVALS_PER_MINUTE}</stringProp>
+          </ConstantThroughputTimer>
+          <hashTree/>
+        </hashTree>
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="ID Counter">
+          <stringProp name="CounterConfig.start">1</stringProp>
+          <stringProp name="CounterConfig.end"></stringProp>
+          <stringProp name="CounterConfig.incr">1</stringProp>
+          <stringProp name="CounterConfig.name">CONSUME_COUNTER</stringProp>
+          <stringProp name="CounterConfig.format"></stringProp>
+          <boolProp name="CounterConfig.per_user">false</boolProp>
+          <stringProp name="TestPlan.comments">Consumes the current value from the OEM. </stringProp>
+        </CounterConfig>
+        <hashTree/>
+        <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="User Parameters">
+          <collectionProp name="UserParameters.names">
+            <stringProp name="-601834919">NEGOTIATION_ID</stringProp>
+            <stringProp name="-2060801421">NEGOTIATION_STATE</stringProp>
+            <stringProp name="144194031">TRANSFER_ID</stringProp>
+            <stringProp name="726858525">TRANSFER_STATE</stringProp>
+          </collectionProp>
+          <collectionProp name="UserParameters.thread_values">
+            <collectionProp name="772031937">
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+            </collectionProp>
+          </collectionProp>
+          <boolProp name="UserParameters.per_iteration">true</boolProp>
+          <stringProp name="TestPlan.comments">Local Variables to be reset after each loop</stringProp>
+        </UserParameters>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fleet Get OEM Asset">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v3/assets/${CONSUME_COUNTER}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${SUPPLIER_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fleet Query Catalog">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v2/catalog/request</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;@context&quot;: {&#xd;
+        &quot;@vocab&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/&quot;&#xd;
+    },&#xd;
+    &quot;@type&quot;: &quot;CatalogRequest&quot;,&#xd;
+    &quot;counterPartyAddress&quot;: &quot;${OEM_PROTOCOL_URL}&quot;,&#xd;
+    &quot;protocol&quot;: &quot;dataspace-protocol-http&quot;,&#xd;
+    &quot;querySpec&quot;: {&#xd;
+        &quot;offset&quot;: 0,&#xd;
+        &quot;limit&quot;: 10,&#xd;
+        &quot;filterExpression&quot;: {&#xd;
+      	&quot;@type&quot;: &quot;CriterionDto&quot;,&#xd;
+      	&quot;operandLeft&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/id&quot;,&#xd;
+      	&quot;operator&quot;: &quot;=&quot;,&#xd;
+      	&quot;operandRight&quot;: &quot;${CONSUME_COUNTER}&quot;&#xd;
+    }&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${SUPPLIER_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor">
+            <stringProp name="JSONPostProcessor.referenceNames">CONTRACT_OFFER_ID</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">${__eval($[&apos;dcat:dataset&apos;][?(@.id==&quot;${CONSUME_COUNTER}&quot;)][&apos;odrl:hasPolicy&apos;][&apos;@id&apos;])}</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Verify Contract Offer Id">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">var offerId = vars.get(&quot;CONTRACT_OFFER_ID&quot;)
+
+if(offerId == null || offerId.isEmpty()) {
+	AssertionResult.setFailure(true)
+	AssertionResult.setFailureMessage(&quot;CONTRACT_OFFER_ID is missing&quot;)
+}
+</stringProp>
+          </JSR223Assertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fleet Initiate Negotiation">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v2/contractnegotiations</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+	&quot;@context&quot;: {&#xd;
+		&quot;@vocab&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/&quot;,&#xd;
+		&quot;odrl&quot;: &quot;http://www.w3.org/ns/odrl/2/&quot;&#xd;
+	},&#xd;
+	&quot;@type&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/ContractRequest&quot;,&#xd;
+	&quot;counterPartyAddress&quot;: &quot;${OEM_PROTOCOL_URL}&quot;,&#xd;
+	&quot;protocol&quot;: &quot;dataspace-protocol-http&quot;,&#xd;
+	&quot;providerId&quot;: &quot;${OEM_ID}&quot;,&#xd;
+	&quot;offer&quot;: {&#xd;
+		&quot;offerId&quot;: &quot;${CONTRACT_OFFER_ID}&quot;,&#xd;
+		&quot;assetId&quot;: &quot;${CONSUME_COUNTER}&quot;,&#xd;
+		&quot;policy&quot;: {&#xd;
+			&quot;@context&quot;: &quot;http://www.w3.org/ns/odrl.jsonld&quot;,&#xd;
+			&quot;@type&quot;: &quot;odrl:Set&quot;,&#xd;
+			&quot;@id&quot;: &quot;${CONSUME_COUNTER}&quot;,&#xd;
+			&quot;odrl:permission&quot; : {&#xd;
+				&quot;odrl:target&quot; : &quot;${CONSUME_COUNTER}&quot;,&#xd;
+				&quot;odrl:action&quot;: {&#xd;
+					&quot;odrl:type&quot;: &quot;USE&quot;&#xd;
+				},&#xd;
+				&quot;odrl:constraint&quot; : {&#xd;
+					&quot;odrl:or&quot; : {&#xd;
+						&quot;odrl:leftOperand&quot; : &quot;BusinessPartnerNumber&quot;,&#xd;
+						&quot;odrl:operator&quot; : {&#xd;
+	                        		&quot;@id&quot;: &quot;odrl:eq&quot;&#xd;
+	                    	},&#xd;
+						&quot;odrl:rightOperand&quot; : &quot;${SUPPLIER_ID}&quot;&#xd;
+					}&#xd;
+				}&#xd;
+			},&#xd;
+			&quot;odrl:prohibition&quot;: [],&#xd;
+			&quot;odrl:obligation&quot;: [],&#xd;
+			&quot;odrl:target&quot;: &quot;${CONSUME_COUNTER}&quot;&#xd;
+	  	}&#xd;
+	},&#xd;
+	&quot;callbackAddresses&quot;: []&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${SUPPLIER_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Negotiation ID">
+            <stringProp name="JSONPostProcessor.referenceNames">NEGOTIATION_ID</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;@id&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Fleet Negotiation Complete">
+          <boolProp name="TransactionController.includeTimers">true</boolProp>
+        </TransactionController>
+        <hashTree>
+          <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Negotiation_State_Loop">
+            <stringProp name="WhileController.condition">${__jexl3(&quot;${NEGOTIATION_STATE}&quot; != &quot;FINALIZED&quot; &amp;&amp;
+${__jm__Negotiation_State_Loop__idx} &lt; ${MAX_NEGOTIATION_POLL_COUNT})}</stringProp>
+            <stringProp name="TestPlan.comments">Loop while Negotiation State is FINALIZED</stringProp>
+          </WhileController>
+          <hashTree>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Sleep while negotiation state changes" enabled="true">
+              <stringProp name="ConstantTimer.delay">500</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Negotiation State" enabled="true">
+              <intProp name="HTTPSampler.concurrentPool">6</intProp>
+              <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v2/contractnegotiations/${NEGOTIATION_ID}/state</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <stringProp name="HTTPSampler.method">GET</stringProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+                <collectionProp name="Arguments.arguments"/>
+              </elementProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">X-Api-Key</stringProp>
+                    <stringProp name="Header.value">${SUPPLIER_API_KEY}</stringProp>
+                  </elementProp>
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">NEGOTIATION_STATE</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;state&apos;]</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Fleet Verify Negotiation State">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">var currentState = vars.get(&quot;NEGOTIATION_STATE&quot;);
+
+if(!&quot;FINALIZED&quot;.equals( currentState)) {
+	SampleResult.setSuccessful(false);
+	SampleResult.setResponseData(&quot;Negotiation State is not &apos;FINALIZED&apos; after ${vars.get(&apos;MAX_NEGOTIATION_POLL_COUNT&apos;)} attempts. Current State: ${currentState}&quot;);
+}
+</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fleet Get Negotiation">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v2/contractnegotiations/${NEGOTIATION_ID}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${SUPPLIER_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor">
+            <stringProp name="JSONPostProcessor.referenceNames">CONTRACT_AGREEMENT_ID</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;contractAgreementId&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fleet Initiate Transfer">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v2/transferprocesses</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;@context&quot;: {&#xd;
+		&quot;@vocab&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/&quot;&#xd;
+    },&#xd;
+	&quot;@type&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/TransferRequest&quot;,&#xd;
+	&quot;protocol&quot;: &quot;dataspace-protocol-http&quot;,&#xd;
+	&quot;counterPartyAddress&quot;: &quot;${OEM_PROTOCOL_URL}&quot;,&#xd;
+	&quot;connectorId&quot;: &quot;${OEM_ID}&quot;,&#xd;
+	&quot;contractId&quot;: &quot;${CONTRACT_AGREEMENT_ID}&quot;,&#xd;
+	&quot;assetId&quot;: &quot;${CONSUME_COUNTER}&quot;,&#xd;
+	&quot;dataDestination&quot;: {&#xd;
+	   &quot;type&quot;: &quot;HttpProxy&quot;&#xd;
+	},&#xd;
+	&quot;privateProperties&quot;: {&#xd;
+	   &quot;receiverHttpEndpoint&quot;: &quot;${BACKEND_SERVICE}&quot;&#xd;
+	},&#xd;
+	&#xd;
+	&quot;transferType&quot;: {&#xd;
+	   &quot;contentType&quot;: &quot;application/octet-stream&quot;,&#xd;
+	   &quot;isFinite&quot;: true&#xd;
+	}&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${SUPPLIER_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Transfer ID" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">TRANSFER_ID</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;@id&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Fleet Transfer Complete">
+          <boolProp name="TransactionController.includeTimers">true</boolProp>
+        </TransactionController>
+        <hashTree>
+          <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Transfer_State_Loop">
+            <stringProp name="WhileController.condition">${__jexl3(&quot;${TRANSFER_STATE}&quot; != &quot;STARTED&quot; &amp;&amp;
+${__jm__Transfer_State_Loop__idx} &lt; ${MAX_TRANSFER_POLL_COUNT})}</stringProp>
+            <stringProp name="TestPlan.comments">Loop while Transfer State is STARTED</stringProp>
+          </WhileController>
+          <hashTree>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Sleep while transfer state changes" enabled="true">
+              <stringProp name="ConstantTimer.delay">500</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Transfer State" enabled="true">
+              <intProp name="HTTPSampler.concurrentPool">6</intProp>
+              <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v2/transferprocesses/${TRANSFER_ID}/state</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <stringProp name="HTTPSampler.method">GET</stringProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+                <collectionProp name="Arguments.arguments"/>
+              </elementProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">X-Api-Key</stringProp>
+                    <stringProp name="Header.value">${SUPPLIER_API_KEY}</stringProp>
+                  </elementProp>
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">TRANSFER_STATE</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;state&apos;]</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Fleet Verify Transfer State">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">var currentState = vars.get(&quot;TRANSFER_STATE&quot;);
+
+if(!&quot;STARTED&quot;.equals( currentState)) {
+	SampleResult.setSuccessful(false);
+	SampleResult.setResponseData(&quot;Transfer State is not &apos;COMPLETED&apos; after ${vars.get(&apos;MAX_TRANSFER_POLL_COUNT&apos;)} attempts. Current State: ${currentState}&quot;);
+}
+</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>true</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>true</responseData>
+              <samplerData>true</samplerData>
+              <xml>true</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>true</responseHeaders>
+              <requestHeaders>true</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <fileName>true</fileName>
+              <hostname>true</hostname>
+              <threadCounts>true</threadCounts>
+              <sampleCount>true</sampleCount>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename">output/supplier_fleet_manager_errors.xml</stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="TestPlan.comments">SetUp OEM</stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
