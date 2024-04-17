@@ -25,6 +25,7 @@ LOG_MESSAGE="Test Completed"
 POD_NAME="mxd-performance-test"
 GENERATED_OUTPUT_FILE="/opt/apache-jmeter-5.5/mxd-performance-evaluation/output.tar"
 GENERATED_OUTPUT_SLIM_FILE="/opt/apache-jmeter-5.5/mxd-performance-evaluation/output_slim.tar"
+GENERATED_OUTPUT_JTL_FILE="/opt/apache-jmeter-5.5/mxd-performance-evaluation/output_jtl.tar.gz"
 CUSTOM_PROPERTIES="custom_experiment.properties"
 TERRAFORM_LOGFILE="terraform_logs_$(date +%d-%m-%YT%H-%M-%S).logs"
 TEST_CONFIGURATION_FILE_EXTENSION=".properties"
@@ -166,6 +167,10 @@ copy_test_result_files() {
       kubectl cp --retries=-1 "${POD_NAME}:${GENERATED_OUTPUT_SLIM_FILE}" \
         "${experiment_file}_slim.tar" --context="${test_pod_context}"
       print_info_log "Test Report downloaded with name output_${experiment_file}_slim.tar"
+
+      kubectl cp --retries=-1 "${POD_NAME}:${GENERATED_OUTPUT_JTL_FILE}" \
+        "${experiment_file}_jtl.tar.gz" --context="${test_pod_context}"
+      print_info_log "Test Report downloaded with name output_${experiment_file}_jtl.tar.gz"
 
       break
     else
