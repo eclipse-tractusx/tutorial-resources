@@ -158,7 +158,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="OEM Dummy Sampler">
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="OEM Dummy Sampler" enabled="true">
           <boolProp name="displayJMeterProperties">false</boolProp>
           <boolProp name="displayJMeterVariables">true</boolProp>
           <boolProp name="displaySystemProperties">false</boolProp>
@@ -189,7 +189,7 @@
           <stringProp name="TestPlan.comments">Local Variables to be reset after each loop</stringProp>
         </UserParameters>
         <hashTree/>
-        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Provide ID Counter" enabled="true">
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Provide ID Counter">
           <stringProp name="CounterConfig.start">${__intSum(1,${OEM_CARS_INITIAL})}</stringProp>
           <stringProp name="CounterConfig.end"></stringProp>
           <stringProp name="CounterConfig.incr">1</stringProp>
@@ -198,7 +198,7 @@
           <boolProp name="CounterConfig.per_user">false</boolProp>
         </CounterConfig>
         <hashTree/>
-        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Consume ID Counter" enabled="true">
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Consume ID Counter">
           <stringProp name="CounterConfig.start">1</stringProp>
           <stringProp name="CounterConfig.end"></stringProp>
           <stringProp name="CounterConfig.incr">1</stringProp>
@@ -392,7 +392,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">X-Api-Key</stringProp>
@@ -423,6 +423,7 @@
   },&#xd;
   &quot;@type&quot;: &quot;CatalogRequest&quot;,&#xd;
   &quot;counterPartyAddress&quot;: &quot;${SUPPLIER_PROTOCOL_URL}&quot;,&#xd;
+  &quot;counterPartyId&quot;: &quot;${SUPPLIER_ID}&quot;,&#xd;
   &quot;protocol&quot;: &quot;dataspace-protocol-http&quot;,&#xd;
   &quot;querySpec&quot;: {&#xd;
     &quot;offset&quot;: 0,&#xd;
@@ -441,7 +442,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">X-Api-Key</stringProp>
@@ -454,7 +455,7 @@
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor">
             <stringProp name="JSONPostProcessor.referenceNames">CONTRACT_OFFER_ID</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">${__eval($[&apos;dcat:dataset&apos;][?(@.id==&quot;${CONSUME_COUNTER}&quot;)][&apos;odrl:hasPolicy&apos;][&apos;@id&apos;])}</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
@@ -487,42 +488,36 @@ if(offerId == null || offerId.isEmpty()) {
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;@context&quot;: {&#xd;
-		&quot;@vocab&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/&quot;,&#xd;
-		&quot;odrl&quot;: &quot;http://www.w3.org/ns/odrl/2/&quot;&#xd;
-	},&#xd;
-	&quot;@type&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/ContractRequest&quot;,&#xd;
-	&quot;counterPartyAddress&quot;: &quot;${SUPPLIER_PROTOCOL_URL}&quot;,&#xd;
-	&quot;protocol&quot;: &quot;dataspace-protocol-http&quot;,&#xd;
-	&quot;providerId&quot;: &quot;${SUPPLIER_ID}&quot;,&#xd;
-	&quot;offer&quot;: {&#xd;
-		&quot;offerId&quot;: &quot;${CONTRACT_OFFER_ID}&quot;,&#xd;
-		&quot;assetId&quot;: &quot;${CONSUME_COUNTER}&quot;,&#xd;
-		&quot;policy&quot;: {&#xd;
-			&quot;@context&quot;: &quot;http://www.w3.org/ns/odrl.jsonld&quot;,&#xd;
-			&quot;@type&quot;: &quot;odrl:Set&quot;,&#xd;
-			&quot;@id&quot;: &quot;${CONSUME_COUNTER}&quot;,&#xd;
-			&quot;odrl:permission&quot; : {&#xd;
-				&quot;odrl:target&quot; : &quot;${CONSUME_COUNTER}&quot;,&#xd;
-				&quot;odrl:action&quot;: {&#xd;
-					&quot;odrl:type&quot;: &quot;USE&quot;&#xd;
-				},&#xd;
-				&quot;odrl:constraint&quot; : {&#xd;
-					&quot;odrl:or&quot; : {&#xd;
-						&quot;odrl:leftOperand&quot; : &quot;BusinessPartnerNumber&quot;,&#xd;
-						&quot;odrl:operator&quot; : {&#xd;
-	                        		&quot;@id&quot;: &quot;odrl:eq&quot;&#xd;
-	                    	},&#xd;
-						&quot;odrl:rightOperand&quot; : &quot;${OEM_ID}&quot;&#xd;
-					}&#xd;
-				}&#xd;
-			},&#xd;
-			&quot;odrl:prohibition&quot;: [],&#xd;
-			&quot;odrl:obligation&quot;: [],&#xd;
-			&quot;odrl:target&quot;: &quot;${CONSUME_COUNTER}&quot;&#xd;
-	  	}&#xd;
-	},&#xd;
-	&quot;callbackAddresses&quot;: []&#xd;
+  &quot;@context&quot;: {&#xd;
+    &quot;@vocab&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/&quot;&#xd;
+  },&#xd;
+  &quot;@type&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/ContractRequest&quot;,&#xd;
+  &quot;counterPartyAddress&quot;: &quot;${SUPPLIER_PROTOCOL_URL}&quot;,&#xd;
+  &quot;protocol&quot;: &quot;dataspace-protocol-http&quot;,&#xd;
+  &quot;policy&quot;: {&#xd;
+    &quot;@context&quot;: &quot;http://www.w3.org/ns/odrl.jsonld&quot;,&#xd;
+    &quot;@type&quot;: &quot;odrl:Offer&quot;,&#xd;
+    &quot;@id&quot;: &quot;${CONTRACT_OFFER_ID}&quot;,&#xd;
+    &quot;assigner&quot;: &quot;${SUPPLIER_ID}&quot;,&#xd;
+    &quot;permission&quot;: [{&#xd;
+      &quot;odrl:target&quot;: &quot;${CONSUME_COUNTER}&quot;,&#xd;
+      &quot;odrl:action&quot;: {&#xd;
+        &quot;odrl:type&quot;: &quot;USE&quot;&#xd;
+      },&#xd;
+      &quot;odrl:constraint&quot;: {&#xd;
+        &quot;odrl:or&quot;: {&#xd;
+          &quot;odrl:leftOperand&quot;: &quot;BusinessPartnerNumber&quot;,&#xd;
+          &quot;odrl:operator&quot;: {&#xd;
+            &quot;@id&quot;: &quot;odrl:eq&quot;&#xd;
+          },&#xd;
+          &quot;odrl:rightOperand&quot;: &quot;${OEM_ID}&quot;&#xd;
+        }&#xd;
+      }&#xd;
+    }],&#xd;
+    &quot;prohibition&quot;: [],&#xd;
+    &quot;obligation&quot;: [],&#xd;
+    &quot;target&quot;: &quot;${CONSUME_COUNTER}&quot;&#xd;
+  }&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -550,11 +545,11 @@ if(offerId == null || offerId.isEmpty()) {
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="OEM Negotiation Complete" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="OEM Negotiation Complete">
           <boolProp name="TransactionController.includeTimers">true</boolProp>
         </TransactionController>
         <hashTree>
-          <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Negotiation_State_Loop" enabled="true">
+          <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Negotiation_State_Loop">
             <stringProp name="WhileController.condition">${__jexl3(&quot;${NEGOTIATION_STATE}&quot; != &quot;FINALIZED&quot; &amp;&amp;
 ${__jm__Negotiation_State_Loop__idx} &lt; ${MAX_NEGOTIATION_POLL_COUNT})}</stringProp>
             <stringProp name="TestPlan.comments">Loop while Negotiation State is FINALIZED</stringProp>
@@ -655,26 +650,19 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-    &quot;@context&quot;: {&#xd;
-		&quot;@vocab&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/&quot;&#xd;
-    },&#xd;
-	&quot;@type&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/TransferRequest&quot;,&#xd;
-	&quot;protocol&quot;: &quot;dataspace-protocol-http&quot;,&#xd;
-	&quot;counterPartyAddress&quot;: &quot;${SUPPLIER_PROTOCOL_URL}&quot;,&#xd;
-	&quot;connectorId&quot;: &quot;${SUPPLIER_ID}&quot;,&#xd;
-	&quot;contractId&quot;: &quot;${CONTRACT_AGREEMENT_ID}&quot;,&#xd;
-	&quot;assetId&quot;: &quot;${CONSUME_COUNTER}&quot;,&#xd;
-	&quot;dataDestination&quot;: {&#xd;
-	   &quot;type&quot;: &quot;HttpProxy&quot;&#xd;
-	},&#xd;
-	&quot;privateProperties&quot;: {&#xd;
-	   &quot;receiverHttpEndpoint&quot;: &quot;${BACKEND_SERVICE}&quot;&#xd;
-	},&#xd;
-	&#xd;
-	&quot;transferType&quot;: {&#xd;
-	   &quot;contentType&quot;: &quot;application/octet-stream&quot;,&#xd;
-	   &quot;isFinite&quot;: true&#xd;
-	}&#xd;
+  &quot;@context&quot;: {&#xd;
+    &quot;@vocab&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/&quot;&#xd;
+  },&#xd;
+  &quot;@type&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/TransferRequest&quot;,&#xd;
+  &quot;protocol&quot;: &quot;dataspace-protocol-http&quot;,&#xd;
+  &quot;counterPartyAddress&quot;: &quot;${SUPPLIER_PROTOCOL_URL}&quot;,&#xd;
+  &quot;contractId&quot;: &quot;${CONTRACT_AGREEMENT_ID}&quot;,&#xd;
+  &quot;connectorId&quot;: &quot;${SUPPLIER_ID}&quot;,&#xd;
+  &quot;assetId&quot;: &quot;${CONSUME_COUNTER}&quot;,&#xd;
+  &quot;transferType&quot;: &quot;HttpData-PULL&quot;,&#xd;
+  &quot;dataDestination&quot;:  {&#xd;
+        &quot;type&quot;: &quot;HttpProxy&quot;&#xd;
+  }&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -748,7 +736,7 @@ ${__jm__Transfer_State_Loop__idx} &lt; ${MAX_TRANSFER_POLL_COUNT})}</stringProp>
               <hashTree/>
             </hashTree>
           </hashTree>
-          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="OEM Verify Transfer State">
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="OEM Verify Transfer State" enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -854,7 +842,7 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Supplier Dummy Sampler">
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Supplier Dummy Sampler" enabled="true">
           <boolProp name="displayJMeterProperties">false</boolProp>
           <boolProp name="displayJMeterVariables">true</boolProp>
           <boolProp name="displaySystemProperties">false</boolProp>
@@ -894,7 +882,7 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
           <boolProp name="CounterConfig.per_user">false</boolProp>
         </CounterConfig>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Supplier Create Asset">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Supplier Create Asset" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v3/assets</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -1158,7 +1146,7 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Fleet Dummy Sampler">
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Fleet Dummy Sampler" enabled="true">
           <boolProp name="displayJMeterProperties">false</boolProp>
           <boolProp name="displayJMeterVariables">true</boolProp>
           <boolProp name="displaySystemProperties">false</boolProp>
@@ -1170,7 +1158,7 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
           </ConstantThroughputTimer>
           <hashTree/>
         </hashTree>
-        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="ID Counter">
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="ID Counter" enabled="true">
           <stringProp name="CounterConfig.start">1</stringProp>
           <stringProp name="CounterConfig.end"></stringProp>
           <stringProp name="CounterConfig.incr">1</stringProp>
@@ -1211,7 +1199,7 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">X-Api-Key</stringProp>
@@ -1242,6 +1230,7 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
     },&#xd;
     &quot;@type&quot;: &quot;CatalogRequest&quot;,&#xd;
     &quot;counterPartyAddress&quot;: &quot;${OEM_PROTOCOL_URL}&quot;,&#xd;
+    &quot;counterPartyId&quot;: &quot;${OEM_ID}&quot;,&#xd;
     &quot;protocol&quot;: &quot;dataspace-protocol-http&quot;,&#xd;
     &quot;querySpec&quot;: {&#xd;
         &quot;offset&quot;: 0,&#xd;
@@ -1260,7 +1249,7 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">X-Api-Key</stringProp>
@@ -1273,13 +1262,13 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor">
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
             <stringProp name="JSONPostProcessor.referenceNames">CONTRACT_OFFER_ID</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">${__eval($[&apos;dcat:dataset&apos;][?(@.id==&quot;${CONSUME_COUNTER}&quot;)][&apos;odrl:hasPolicy&apos;][&apos;@id&apos;])}</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
           </JSONPostProcessor>
           <hashTree/>
-          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Verify Contract Offer Id">
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Verify Contract Offer Id" enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -1306,42 +1295,36 @@ if(offerId == null || offerId.isEmpty()) {
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;@context&quot;: {&#xd;
-		&quot;@vocab&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/&quot;,&#xd;
-		&quot;odrl&quot;: &quot;http://www.w3.org/ns/odrl/2/&quot;&#xd;
-	},&#xd;
-	&quot;@type&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/ContractRequest&quot;,&#xd;
-	&quot;counterPartyAddress&quot;: &quot;${OEM_PROTOCOL_URL}&quot;,&#xd;
-	&quot;protocol&quot;: &quot;dataspace-protocol-http&quot;,&#xd;
-	&quot;providerId&quot;: &quot;${OEM_ID}&quot;,&#xd;
-	&quot;offer&quot;: {&#xd;
-		&quot;offerId&quot;: &quot;${CONTRACT_OFFER_ID}&quot;,&#xd;
-		&quot;assetId&quot;: &quot;${CONSUME_COUNTER}&quot;,&#xd;
-		&quot;policy&quot;: {&#xd;
-			&quot;@context&quot;: &quot;http://www.w3.org/ns/odrl.jsonld&quot;,&#xd;
-			&quot;@type&quot;: &quot;odrl:Set&quot;,&#xd;
-			&quot;@id&quot;: &quot;${CONSUME_COUNTER}&quot;,&#xd;
-			&quot;odrl:permission&quot; : {&#xd;
-				&quot;odrl:target&quot; : &quot;${CONSUME_COUNTER}&quot;,&#xd;
-				&quot;odrl:action&quot;: {&#xd;
-					&quot;odrl:type&quot;: &quot;USE&quot;&#xd;
-				},&#xd;
-				&quot;odrl:constraint&quot; : {&#xd;
-					&quot;odrl:or&quot; : {&#xd;
-						&quot;odrl:leftOperand&quot; : &quot;BusinessPartnerNumber&quot;,&#xd;
-						&quot;odrl:operator&quot; : {&#xd;
-	                        		&quot;@id&quot;: &quot;odrl:eq&quot;&#xd;
-	                    	},&#xd;
-						&quot;odrl:rightOperand&quot; : &quot;${SUPPLIER_ID}&quot;&#xd;
-					}&#xd;
-				}&#xd;
-			},&#xd;
-			&quot;odrl:prohibition&quot;: [],&#xd;
-			&quot;odrl:obligation&quot;: [],&#xd;
-			&quot;odrl:target&quot;: &quot;${CONSUME_COUNTER}&quot;&#xd;
-	  	}&#xd;
-	},&#xd;
-	&quot;callbackAddresses&quot;: []&#xd;
+  &quot;@context&quot;: {&#xd;
+    &quot;@vocab&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/&quot;&#xd;
+  },&#xd;
+  &quot;@type&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/ContractRequest&quot;,&#xd;
+  &quot;counterPartyAddress&quot;: &quot;${OEM_PROTOCOL_URL}&quot;,&#xd;
+  &quot;protocol&quot;: &quot;dataspace-protocol-http&quot;,&#xd;
+  &quot;policy&quot;: {&#xd;
+    &quot;@context&quot;: &quot;http://www.w3.org/ns/odrl.jsonld&quot;,&#xd;
+    &quot;@type&quot;: &quot;odrl:Offer&quot;,&#xd;
+    &quot;@id&quot;: &quot;${CONTRACT_OFFER_ID}&quot;,&#xd;
+    &quot;assigner&quot;: &quot;${OEM_ID}&quot;,&#xd;
+    &quot;permission&quot;: [{&#xd;
+      &quot;odrl:target&quot;: &quot;${CONSUME_COUNTER}&quot;,&#xd;
+      &quot;odrl:action&quot;: {&#xd;
+        &quot;odrl:type&quot;: &quot;USE&quot;&#xd;
+      },&#xd;
+      &quot;odrl:constraint&quot;: {&#xd;
+        &quot;odrl:or&quot;: {&#xd;
+          &quot;odrl:leftOperand&quot;: &quot;BusinessPartnerNumber&quot;,&#xd;
+          &quot;odrl:operator&quot;: {&#xd;
+            &quot;@id&quot;: &quot;odrl:eq&quot;&#xd;
+          },&#xd;
+          &quot;odrl:rightOperand&quot;: &quot;${SUPPLIER_ID}&quot;&#xd;
+        }&#xd;
+      }&#xd;
+    }],&#xd;
+    &quot;prohibition&quot;: [],&#xd;
+    &quot;obligation&quot;: [],&#xd;
+    &quot;target&quot;: &quot;${CONSUME_COUNTER}&quot;&#xd;
+  }&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -1362,18 +1345,18 @@ if(offerId == null || offerId.isEmpty()) {
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Negotiation ID" enabled="true">
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Negotiation ID">
             <stringProp name="JSONPostProcessor.referenceNames">NEGOTIATION_ID</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;@id&apos;]</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Fleet Negotiation Complete" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Fleet Negotiation Complete">
           <boolProp name="TransactionController.includeTimers">true</boolProp>
         </TransactionController>
         <hashTree>
-          <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Negotiation_State_Loop" enabled="true">
+          <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Negotiation_State_Loop">
             <stringProp name="WhileController.condition">${__jexl3(&quot;${NEGOTIATION_STATE}&quot; != &quot;FINALIZED&quot; &amp;&amp;
 ${__jm__Negotiation_State_Loop__idx} &lt; ${MAX_NEGOTIATION_POLL_COUNT})}</stringProp>
             <stringProp name="TestPlan.comments">Loop while Negotiation State is FINALIZED</stringProp>
@@ -1442,7 +1425,7 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">X-Api-Key</stringProp>
@@ -1455,7 +1438,7 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor">
             <stringProp name="JSONPostProcessor.referenceNames">CONTRACT_AGREEMENT_ID</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;contractAgreementId&apos;]</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
@@ -1474,26 +1457,19 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-    &quot;@context&quot;: {&#xd;
-		&quot;@vocab&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/&quot;&#xd;
-    },&#xd;
-	&quot;@type&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/TransferRequest&quot;,&#xd;
-	&quot;protocol&quot;: &quot;dataspace-protocol-http&quot;,&#xd;
-	&quot;counterPartyAddress&quot;: &quot;${OEM_PROTOCOL_URL}&quot;,&#xd;
-	&quot;connectorId&quot;: &quot;${OEM_ID}&quot;,&#xd;
-	&quot;contractId&quot;: &quot;${CONTRACT_AGREEMENT_ID}&quot;,&#xd;
-	&quot;assetId&quot;: &quot;${CONSUME_COUNTER}&quot;,&#xd;
-	&quot;dataDestination&quot;: {&#xd;
-	   &quot;type&quot;: &quot;HttpProxy&quot;&#xd;
-	},&#xd;
-	&quot;privateProperties&quot;: {&#xd;
-	   &quot;receiverHttpEndpoint&quot;: &quot;${BACKEND_SERVICE}&quot;&#xd;
-	},&#xd;
-	&#xd;
-	&quot;transferType&quot;: {&#xd;
-	   &quot;contentType&quot;: &quot;application/octet-stream&quot;,&#xd;
-	   &quot;isFinite&quot;: true&#xd;
-	}&#xd;
+  &quot;@context&quot;: {&#xd;
+    &quot;@vocab&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/&quot;&#xd;
+  },&#xd;
+  &quot;@type&quot;: &quot;https://w3id.org/edc/v0.0.1/ns/TransferRequest&quot;,&#xd;
+  &quot;protocol&quot;: &quot;dataspace-protocol-http&quot;,&#xd;
+  &quot;counterPartyAddress&quot;: &quot;${OEM_PROTOCOL_URL}&quot;,&#xd;
+  &quot;contractId&quot;: &quot;${CONTRACT_AGREEMENT_ID}&quot;,&#xd;
+  &quot;connectorId&quot;: &quot;${OEM_ID}&quot;,&#xd;
+  &quot;assetId&quot;: &quot;${CONSUME_COUNTER}&quot;,&#xd;
+  &quot;transferType&quot;: &quot;HttpData-PULL&quot;,&#xd;
+  &quot;dataDestination&quot;:  {&#xd;
+        &quot;type&quot;: &quot;HttpProxy&quot;&#xd;
+  }&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -1501,7 +1477,7 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">X-Api-Key</stringProp>
@@ -1514,7 +1490,7 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Transfer ID" enabled="true">
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Transfer ID">
             <stringProp name="JSONPostProcessor.referenceNames">TRANSFER_ID</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;@id&apos;]</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
@@ -1525,7 +1501,7 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
           <boolProp name="TransactionController.includeTimers">true</boolProp>
         </TransactionController>
         <hashTree>
-          <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Transfer_State_Loop" enabled="true">
+          <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Transfer_State_Loop">
             <stringProp name="WhileController.condition">${__jexl3(&quot;${TRANSFER_STATE}&quot; != &quot;STARTED&quot; &amp;&amp;
 ${__jm__Transfer_State_Loop__idx} &lt; ${MAX_TRANSFER_POLL_COUNT})}</stringProp>
             <stringProp name="TestPlan.comments">Loop while Transfer State is STARTED</stringProp>
@@ -1622,7 +1598,7 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
           <stringProp name="filename">output/supplier_fleet_manager_errors.xml</stringProp>
         </ResultCollector>
         <hashTree/>
-        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
