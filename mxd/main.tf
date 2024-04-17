@@ -75,6 +75,7 @@ module "alice-connector" {
     minio-username = "aliceawsclient"
     minio-password = "aliceawssecret"
   }
+  bdrs-directory-url = local.bdrs-directory-url
 }
 
 # Second connector
@@ -105,6 +106,7 @@ module "bob-connector" {
     minio-username = "bobawsclient"
     minio-password = "bobawssecret"
   }
+  bdrs-directory-url = local.bdrs-directory-url
 }
 
 module "azurite" {

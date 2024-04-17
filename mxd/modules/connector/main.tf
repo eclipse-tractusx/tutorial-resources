@@ -34,7 +34,7 @@ resource "helm_release" "connector" {
 
   repository = "https://eclipse-tractusx.github.io/charts/dev"
   chart      = "tractusx-connector"
-  version    = "0.6.0"
+  version    = "0.7.0-rc1"
 
   values = [
     file("${path.module}/values.yaml"),
@@ -56,6 +56,7 @@ resource "helm_release" "connector" {
               "/bin/vault kv put secret/${var.azure-account-name}-sas content='${local.azure-sas-token}'",
               "/bin/vault kv put secret/transferProxyTokenSignerPrivateKey content='${tls_private_key.transfer_proxy_privatekey.private_key_pem}'",
               "/bin/vault kv put secret/transferProxyTokenSignerPublicKey content='${tls_private_key.transfer_proxy_privatekey.public_key_pem}'",
+              "/bin/vault kv put secret/${var.iatp-config.oauth-secretalias} content='${var.iatp-config.oauth-clientsecret}'",
             ])
           ]
         }
@@ -84,6 +85,11 @@ resource "helm_release" "connector" {
             }
           }
         }
+        bdrs : {
+          server : {
+            url : var.bdrs-directory-url
+          }
+        }
       }
       dataplane : {
         env : {
@@ -91,6 +97,21 @@ resource "helm_release" "connector" {
         }
         aws : {
           endpointOverride : "http://${local.minio-url}"
+        }
+      }
+      iatp : {
+        id : var.iatp-config.id
+        sts : {
+          dim : {
+            url : var.iatp-config.dim-url
+          }
+          oauth : {
+            token_url : var.iatp-config.oauth-tokenUrl
+            client : {
+              id : var.iatp-config.oauth-clientid,
+              secret_alias : var.iatp-config.oauth-secretalias
+            }
+          }
         }
       }
     })

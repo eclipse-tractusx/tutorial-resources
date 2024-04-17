@@ -49,6 +49,9 @@ controlplane:
     oauth:
       client:
         secretAlias: "client-secret"
+  env:
+    "EDC_IAM_DID_WEB_USE_HTTPS": false
+
 dataplane:
   debug:
     enabled: true
@@ -67,9 +70,15 @@ dataplane:
     endpointOverride: http://minio:9000
     secretAccessKey: qwerty123
     accessKeyId: qwerty123
+  token:
+    signer:
+      privatekey_alias: transferProxyTokenSignerPrivateKey
+    verifier:
+      publickey_alias: transferProxyTokenSignerPublicKey
 
   env:
     "EDC_API_AUTH_KEY" : "password"
+    "EDC_IAM_DID_WEB_USE_HTTPS": false
 
 postgresql:
    # JDBC URL should be set from `main.tf`

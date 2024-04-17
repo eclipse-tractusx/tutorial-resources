@@ -64,6 +64,42 @@ resource "kubernetes_ingress_v1" "mxd-ingress" {
             }
           }
         }
+
+        path {
+          path = "/bdrs(/|$)(.*)"
+          backend {
+            service {
+              name = local.bdrs-service
+              port {
+                number = local.bdrs-port
+              }
+            }
+          }
+        }
+
+        path {
+          path = "/bdrs-mgmt(/|$)(.*)"
+          backend {
+            service {
+              name = local.bdrs-service
+              port {
+                number = local.bdrs-mgmt-port
+              }
+            }
+          }
+        }
+
+        path {
+          path = "/bdrs-dir(/|$)(.*)"
+          backend {
+            service {
+              name = local.bdrs-service
+              port {
+                number = local.bdrs-directory-port
+              }
+            }
+          }
+        }
       }
     }
   }

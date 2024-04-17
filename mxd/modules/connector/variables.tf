@@ -64,6 +64,17 @@ variable "ssi-config" {
   }
 }
 
+variable "iatp-config" {
+  default = {
+    id                 = ""
+    oauth-tokenUrl     = ""
+    oauth-clientid     = ""
+    oauth-clientsecret = ""
+    oauth-secretalias  = ""
+    dim-url            = ""
+  }
+}
+
 variable "azure-account-name" {
   description = "Azure Account Name for the connector"
 }
@@ -85,4 +96,8 @@ variable "minio-config" {
     minio-username = ""
     minio-password = ""
   }
+}
+
+variable "bdrs-directory-url" {
+  description = "bdrs server url"
 }
