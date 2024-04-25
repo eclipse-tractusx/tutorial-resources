@@ -489,7 +489,7 @@
 			]
 		},
 		{
-			"name": "IATP Seed",
+			"name": "SeedIATP",
 			"item": [
 				{
 					"name": "Create Alice BPN Mapping",
@@ -522,7 +522,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"bpn\": \"{{ALICE_BPN}}\",\n  \"did\": \"did:web:dim-static-prod.dis-cloud-prod.cfapps.eu10-004.hana.ondemand.com:dim-hosted:94de46ea-2005-4b1a-829e-a4bd31ac143d:verifier-iatp\"\n}",
+							"raw": "{\n  \"bpn\": \"{{ALICE_BPN}}\",\n  \"did\": \"{{ALICE_DID}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -572,7 +572,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"bpn\": \"{{BOB_BPN}}\",\n  \"did\": \"did:web:dim-static-prod.dis-cloud-prod.cfapps.eu10-004.hana.ondemand.com:dim-hosted:b1d43f28-8619-4ded-a96b-dda69d1fad00:holder-iatp\"\n}",
+							"raw": "{\n  \"bpn\": \"{{BOB_BPN}}\",\n  \"did\": \"{{BOB_DID}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -682,6 +682,16 @@
 		{
 			"key": "TRUDY_BPN",
 			"value": "BPNL000000000003",
+			"type": "string"
+		},
+		{
+			"key": "ALICE_DID",
+			"value": "did:web:dim-static-prod.dis-cloud-prod.cfapps.eu10-004.hana.ondemand.com:dim-hosted:94de46ea-2005-4b1a-829e-a4bd31ac143d:verifier-iatp",
+			"type": "string"
+		},
+		{
+			"key": "BOB_DID",
+			"value": "did:web:dim-static-prod.dis-cloud-prod.cfapps.eu10-004.hana.ondemand.com:dim-hosted:b1d43f28-8619-4ded-a96b-dda69d1fad00:holder-iatp",
 			"type": "string"
 		},
 		{

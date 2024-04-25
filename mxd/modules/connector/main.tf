@@ -34,7 +34,7 @@ resource "helm_release" "connector" {
 
   repository = "https://eclipse-tractusx.github.io/charts/dev"
   chart      = "tractusx-connector"
-  version    = "0.7.0-rc1"
+  version    = "0.7.0"
 
   values = [
     file("${path.module}/values.yaml"),

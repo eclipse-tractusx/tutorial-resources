@@ -89,3 +89,25 @@ variable "bob-azure-account-key" {
 variable "bob-azure-key-sas" {
   default = "sv=2023-01-03&ss=btqf&srt=sco&st=2023-11-23T13%3A18%3A49Z&se=2030-01-01T00%3A00%3A00Z&sp=rwdftlacup&sig=Xki%2B2nHBT2V8oe%2BMmS%2BI%2FHzcAsTFCYWDv6t6zT%2FWXFM%3D"
 }
+
+variable "alice-iatp-config" {
+  default = {
+    id                 = ""
+    oauth-tokenUrl     = ""
+    oauth-clientid     = ""
+    oauth-clientsecret = ""
+    oauth-secretalias  = ""
+    dim-url            = ""
+  }
+}
+
+variable "bob-iatp-config" {
+  default = {
+    id                 = ""
+    oauth-tokenUrl     = ""
+    oauth-clientid     = ""
+    oauth-clientsecret = ""
+    oauth-secretalias  = ""
+    dim-url            = ""
+  }
+}

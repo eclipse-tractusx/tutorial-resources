@@ -52,4 +52,5 @@ locals {
   bdrs-mgmt-port      = 8081
   bdrs-directory-port = 8082
   bdrs-directory-url  = "http://${local.bdrs-service}:${local.bdrs-port}/api"
+  bdrs-mgmt-url       = "http://${local.bdrs-service}:${local.bdrs-mgmt-port}/api/management"
 }

@@ -76,6 +76,7 @@ module "alice-connector" {
     minio-password = "aliceawssecret"
   }
   bdrs-directory-url = local.bdrs-directory-url
+  iatp-config        = var.alice-iatp-config
 }
 
 # Second connector
@@ -107,6 +108,7 @@ module "bob-connector" {
     minio-password = "bobawssecret"
   }
   bdrs-directory-url = local.bdrs-directory-url
+  iatp-config        = var.bob-iatp-config
 }
 
 module "azurite" {
