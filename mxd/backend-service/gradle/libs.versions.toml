@@ -2,18 +2,22 @@
 format.version = "1.1"
 [versions]
 assertj = "3.25.3"
-edc = "0.4.1"
+edc = "0.6.0"
 postgresql = "42.7.2"
 commons = "2.11.0"
-sql-core = "0.4.1"
+sql-core = "0.6.0"
 swagger = "2.2.19"
 jersey = "0.4.1"
 jupiter = "5.10.1"
 junit-bom = "5.9.1"
 restAssured = "5.4.0"
 junit = "0.5.1"
+testng = "7.9.0"
+testcontainers = "1.19.7"
+
 [libraries]
-edc-junit = { module = "org.eclipse.edc:junit" , version.ref = "junit" }
+edc-junit = { module = "org.eclipse.edc:junit" , version.ref = "edc" }
+edc-junit-base = { module = "org.eclipse.edc:junit-base" , version.ref = "edc" }
 assertj = { module = "org.assertj:assertj-core", version.ref = "assertj" }
 restAssured = { module = "io.rest-assured:rest-assured", version.ref = "restAssured" }
 edc-transaction = {module = "org.eclipse.edc:transaction-datasource-spi" , version.ref="edc"}
@@ -21,11 +25,13 @@ junit-bom = {module = "org.junit:junit-bom" , version.ref="junit-bom"}
 junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "jupiter" }
 edc-boot = {module = "org.eclipse.edc:boot" , version.ref="edc"}
 edc-json-ld = { module = "org.eclipse.edc:json-ld", version.ref = "edc" }
+edc-util = { module = "org.eclipse.edc:util", version.ref = "edc" }
 edc-web-spi = {module = "org.eclipse.edc:web-spi" , version.ref="edc"}
 edc-api-core = {module = "org.eclipse.edc:api-core" , version.ref = "edc"}
 edc-core = {module = "org.eclipse.edc:core-spi" , version.ref = "edc"}
 edc-http = { module = "org.eclipse.edc:http", version.ref = "edc" }
 edc-http-spi = {module = "org.eclipse.edc:http-spi" , version.ref = "edc" }
+edc-http-lib = { module = "org.eclipse.edc:http-lib", version.ref = "edc" }
 edc-jersey-core = {module = "org.eclipse.edc:jersey-core" , version.ref = "jersey"}
 swagger-core = {module = "io.swagger.core.v3:swagger-annotations" , version.ref = "swagger"}
 edc-transaction-spi = { module = "org.eclipse.edc:transaction-spi", version.ref = "edc" }
@@ -35,5 +41,8 @@ apache-commons = { module = "org.apache.commons:commons-dbcp2", version.ref = "c
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 edc-transform = { module = "org.eclipse.edc:transform-core", version.ref = "edc" }
 edc-configuration-filesystem = { module = "org.eclipse.edc:configuration-filesystem", version.ref = "edc" }
+testng = { module = "org.testng:testng", version.ref = "testng" }
+test-containers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
+postgres-containers = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
 [plugins]
 shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }

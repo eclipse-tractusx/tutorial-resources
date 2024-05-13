@@ -1,26 +1,18 @@
-/*******************************************************************************
+/********************************************************************************
+ *  Copyright (c) 2024 SAP SE
  *
- * Copyright (c) 2024 Contributors to the Eclipse Foundation
+ *  This program and the accompanying materials are made available under the
+ *  terms of the Apache License, Version 2.0 which is available at
+ *  https://www.apache.org/licenses/LICENSE-2.0
  *
- * See the NOTICE file(s) distributed with this work for additional
- * information regarding copyright ownership.
+ *  SPDX-License-Identifier: Apache-2.0
  *
- * This program and the accompanying materials are made available under the
- * terms of the Apache License, Version 2.0 which is available at
- * https://www.apache.org/licenses/LICENSE-2.0
+ *  Contributors:
+ *       SAP SE - initial API and implementation
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations
- * under the License.
- *
- * SPDX-License-Identifier: Apache-2.0
- *
- ******************************************************************************/
+ ********************************************************************************/
 
 package org.eclipse.tractusx.mxd.backendservice.controller;
-
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.*;
@@ -47,26 +39,24 @@ public class TransferApiController {
 
     private final ObjectMapper objectMapper;
 
-    public TransferApiController(TransferService transferService,Monitor monitor,ObjectMapper objectMapper) {
+    public TransferApiController(TransferService transferService, Monitor monitor, ObjectMapper objectMapper) {
         this.transferService = transferService;
         this.monitor = monitor;
-        this.objectMapper=objectMapper;
+        this.objectMapper = objectMapper;
     }
 
     @POST
     @Produces((MediaType.APPLICATION_JSON))
     @Consumes((MediaType.APPLICATION_JSON))
     public TransferRequest insertTransfer(TransferRequest transferRequest) {
-        monitor.info("insertTransfer POST request "+transferRequest);
-
-        Transfer transfer = new Transfer.Builder()
+        Transfer transfer = Transfer.Builder.newInstance()
                 .id(transferRequest.getId())
                 .endpoint(transferRequest.getEndpoint())
                 .authKey(transferRequest.getAuthKey())
                 .authCode(transferRequest.getAuthCode())
                 .properties(transferRequest.getProperties())
                 .build();
-        var transferResponse = this.transferService.create(transfer,monitor)
+        var transferResponse = this.transferService.create(transfer, monitor)
                 .map(a -> TransferRequest.builder()
                         .id(a.getId())
                         .endpoint(a.getEndpoint())
@@ -88,7 +78,7 @@ public class TransferApiController {
     public String getTransfer(@PathParam("transferId") String transferId) {
         return Optional.of(transferId)
                 .map(id -> transferService.getTransfer(transferId))
-                .map(transfer -> transfer.getContent() != null ? transfer.getContent().getAsset() : Converter.toJson(transfer.getFailure(),objectMapper))
+                .map(transfer -> transfer.getContent() != null ? transfer.getContent().getAsset() : Converter.toJson(transfer.getFailure(), objectMapper))
                 .orElse(Constants.DEFAULTERRORMESSAGE);
     }
 
@@ -97,7 +87,7 @@ public class TransferApiController {
     public Object getTransferContents(@PathParam("id") String transferId) {
         return Optional.of(transferId)
                 .map(id -> transferService.getTransfer(transferId))
-                .map(transfer -> transfer.getContent() != null ? transfer.getContent().getContents() : Converter.toJson(transfer.getFailure(),objectMapper))
+                .map(transfer -> transfer.getContent() != null ? transfer.getContent().getContents() : Converter.toJson(transfer.getFailure(), objectMapper))
                 .orElse(Constants.DEFAULTERRORMESSAGE);
     }
 }

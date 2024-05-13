@@ -17,14 +17,8 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-resource "null_resource" "kind_load" {
-  provisioner "local-exec" {
-    command = "kind load docker-image backend-service:1.0.0 --name mxd"
-  }
-}
-
 resource "kubernetes_deployment" "backend-service" {
-  depends_on = [null_resource.kind_load]
+
   metadata {
     name = "backend-service"
     labels = {

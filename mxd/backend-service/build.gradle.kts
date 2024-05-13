@@ -1,23 +1,16 @@
-/*******************************************************************************
+/********************************************************************************
+ *  Copyright (c) 2024 SAP SE
  *
- * Copyright (c) 2024 Contributors to the Eclipse Foundation
+ *  This program and the accompanying materials are made available under the
+ *  terms of the Apache License, Version 2.0 which is available at
+ *  https://www.apache.org/licenses/LICENSE-2.0
  *
- * See the NOTICE file(s) distributed with this work for additional
- * information regarding copyright ownership.
+ *  SPDX-License-Identifier: Apache-2.0
  *
- * This program and the accompanying materials are made available under the
- * terms of the Apache License, Version 2.0 which is available at
- * https://www.apache.org/licenses/LICENSE-2.0
+ *  Contributors:
+ *       SAP SE - initial API and implementation
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations
- * under the License.
- *
- * SPDX-License-Identifier: Apache-2.0
- *
- ******************************************************************************/
+ ********************************************************************************/
 
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 import com.github.jengelman.gradle.plugins.shadow.ShadowJavaPlugin
@@ -25,6 +18,7 @@ import com.github.jengelman.gradle.plugins.shadow.ShadowJavaPlugin
 plugins {
     id("java")
     `java-library`
+    `java-test-fixtures`
     id("application")
     alias(libs.plugins.shadow)
     id("com.bmuschko.docker-remote-api") version "9.3.6"
@@ -41,12 +35,7 @@ application {
 }
 
 dependencies {
-   testImplementation(platform(libs.junit.bom))
-    testImplementation(libs.junit.jupiter.params)
-    testImplementation(libs.restAssured)
     implementation(libs.restAssured)
-    testImplementation(libs.assertj)
-    testImplementation(libs.edc.junit)
     implementation(libs.edc.configuration.filesystem)
     implementation(libs.edc.boot)
     implementation(libs.edc.json.ld)
@@ -54,6 +43,7 @@ dependencies {
     implementation(libs.edc.api.core)
     implementation(libs.edc.core)
     implementation(libs.edc.http)
+    implementation(libs.edc.http.lib)
     implementation(libs.edc.http.spi)
     implementation(libs.edc.jersey.core)
     implementation(libs.swagger.core)
@@ -64,12 +54,41 @@ dependencies {
     implementation(libs.postgresql)
     implementation(libs.edc.transform)
     implementation(libs.edc.transaction)
+    implementation(libs.edc.util)
 
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter.params)
+    testImplementation(libs.restAssured)
+    testImplementation(libs.assertj)
+    testImplementation(libs.edc.junit)
+    implementation(libs.edc.junit.base)
+    testImplementation(libs.testng)
+    testImplementation(libs.edc.sql.core)
+    testImplementation(libs.test.containers)
+    testImplementation(libs.postgres.containers)
+
+    testImplementation(testFixtures(libs.edc.sql.core))
+    testImplementation(libs.edc.core)
 
 }
 tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     mergeServiceFiles()
     archiveFileName.set("backend-service.jar")
+}
+tasks {
+    "test"(Test::class) {
+        useJUnitPlatform()
+
+        testLogging {
+            showStandardStreams = true
+        }
+    }
+}
+
+tasks.register("printClasspath") {
+    doLast {
+        println("${sourceSets["main"].runtimeClasspath.asPath}");
+    }
 }
 // this task copies some legal docs into the build folder, so we can easily copy them into the docker images
 val copyDockerFile = tasks.create("copyDockerFile", Copy::class) {
@@ -88,5 +107,5 @@ val dockerTask: DockerBuildImage = tasks.create("dockerize", DockerBuildImage::c
     images.add("${project.name}:${project.version}")
     images.add("${project.name}:latest")
 }
-dockerTask.dependsOn(tasks.named("build"),tasks.named("copyDockerFile"),tasks.named("copyJar"))
+dockerTask.dependsOn(tasks.named("build"), tasks.named("copyDockerFile"), tasks.named("copyJar"))
 copyJar.dependsOn(tasks.named("build"))

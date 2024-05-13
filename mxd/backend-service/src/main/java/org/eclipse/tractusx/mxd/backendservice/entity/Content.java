@@ -1,23 +1,16 @@
-/*******************************************************************************
+/********************************************************************************
+ *  Copyright (c) 2024 SAP SE
  *
- * Copyright (c) 2024 Contributors to the Eclipse Foundation
+ *  This program and the accompanying materials are made available under the
+ *  terms of the Apache License, Version 2.0 which is available at
+ *  https://www.apache.org/licenses/LICENSE-2.0
  *
- * See the NOTICE file(s) distributed with this work for additional
- * information regarding copyright ownership.
+ *  SPDX-License-Identifier: Apache-2.0
  *
- * This program and the accompanying materials are made available under the
- * terms of the Apache License, Version 2.0 which is available at
- * https://www.apache.org/licenses/LICENSE-2.0
+ *  Contributors:
+ *       SAP SE - initial API and implementation
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations
- * under the License.
- *
- * SPDX-License-Identifier: Apache-2.0
- *
- ******************************************************************************/
+ ********************************************************************************/
 
 package org.eclipse.tractusx.mxd.backendservice.entity;
 
@@ -26,74 +19,53 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.eclipse.edc.spi.entity.Entity;
 
-import java.time.Clock;
-
 @JsonDeserialize(builder = Content.Builder.class)
 public class Content extends Entity {
 
-    public String data;
+    private String data;
 
-    @JsonCreator
-    public Content(String id, String data, Clock clock, long createdAt) {
-        this.id = id;
-        this.data = data;
-        this.clock = clock;
-        this.createdAt = createdAt;
+    private Content() {
     }
 
     public String getData() {
         return data;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public Builder toBuilder() {
+        return Content.Builder.newInstance()
+                .id(id)
+                .data(data)
+                .clock(clock)
+                .createdAt(createdAt);
     }
 
-    @Override
-    public String toString() {
-        return "Content{" +
-                "data='" + data + '\'' +
-                ", id='" + id + '\'' +
-                ", clock=" + clock +
-                ", createdAt=" + createdAt +
-                '}';
-    }
+    @JsonPOJOBuilder(withPrefix = "")
+    public static class Builder extends Entity.Builder<Content, Builder> {
 
-    @JsonPOJOBuilder(withPrefix = "set")
-    public static class Builder {
-        protected Clock clock;
-        protected long createdAt;
-        private String data;
-        private String id;
-
-        // Default constructor
-        public Builder() {
+        protected Builder(Content content) {
+            super(content);
         }
 
-        // Setter methods for each field
-        public Builder setData(String data) {
-            this.data = data;
+        @JsonCreator
+        public static Builder newInstance() {
+            return new Builder(new Content());
+        }
+
+        public Builder data(String data) {
+            entity.data = data;
+            return self();
+        }
+
+        @Override
+        public Builder self() {
             return this;
         }
 
-        public Builder setId(String id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder setClock(Clock clock) {
-            this.clock = clock;
-            return this;
-        }
-
-        public Builder setCreatedAt(long createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
-
-        // Build method to create an instance of Content
+        @Override
         public Content build() {
-            return new Content(id, data, clock, createdAt);
+            super.build();
+
+            return entity;
         }
     }
 }
