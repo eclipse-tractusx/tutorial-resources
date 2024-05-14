@@ -2,8 +2,7 @@
 
 ## API Details Summary
 
-Backend Service is used to validate the transfer. It has the following APIs.
-
+The Backend Service is used to simulate a data source or sink enabling the transfer of data and supporting the validation of the end-to-end process. It has the following APIs:
 - [Contents API](#contents-api)
 - [Transfer API](#transfer-api)
 
@@ -11,9 +10,9 @@ Backend Service is used to validate the transfer. It has the following APIs.
 
 ### Generate a random content
 
-- Method : GET
-- URL : http://localhost/backend-service/api/v1/contents/random
-- Sample Response
+- Method: GET
+- URL: http://localhost/backend-service/api/v1/contents/random
+- Sample response:
 
 ```json
 {
@@ -25,9 +24,9 @@ Backend Service is used to validate the transfer. It has the following APIs.
 
 ### Save the generated content
 
-- Method : POST
-- URL : http://localhost/backend-service/api/v1/contents
-- Request Body:
+- Method: POST
+- URL: http://localhost/backend-service/api/v1/contents
+- Request body:
 
 ```json
 {
@@ -37,7 +36,7 @@ Backend Service is used to validate the transfer. It has the following APIs.
 }
 ```
 
-- Sample Response containing content id and url
+- Sample response containing content id and URL:
 
 ```json
 {
@@ -45,13 +44,13 @@ Backend Service is used to validate the transfer. It has the following APIs.
   "url": "http://localhost:8080/api/v1/contents/3b777103-5e06-461b-90c6-1f99e597f60d"
 }
 ```
-This URL will be used as a Endpoint in the transfer API.
+This URL will be used as an endpoint in the transfer API.
 
-### Fetch a Content
+### Fetch a content
 
-- Method : GET
-- URL : http://localhost/backend-service/api/v1/contents/{content-id}
-- Sample Response
+- Method: GET
+- URL: http://localhost/backend-service/api/v1/contents/{content-id}
+- Sample response:
 
 ```json
 {
@@ -61,11 +60,11 @@ This URL will be used as a Endpoint in the transfer API.
 }
 ```
 
-### Fetch All Contents
+### Fetch all contents
 
-- Method : GET
-- URL : http://localhost/backend-service/api/v1/contents
-- Response
+- Method: GET
+- URL: http://localhost/backend-service/api/v1/contents
+- Sample response:
 
 ```json
 [
@@ -84,25 +83,13 @@ This URL will be used as a Endpoint in the transfer API.
 ]
 ```
 
-
 ## Transfer API
 
-### Accept the transfer data from the connector
+### Accept transfer data
 
-Connector will push something similar to this:
-```json
-{
-  "id": "123456789011",
-  "endpoint": "<Content Url>",
-  "authKey": "Authorization",
-  "authCode": "<Auth Code>",
-  "properties": {}
-}
-```
-
-- Method : POST
-- URL : http://localhost/backend-service/api/v1/transfers
-- Request/ Response
+- Method: POST
+- URL: http://localhost/backend-service/api/v1/transfers
+- Request/response:
 
 ```json
 {
@@ -116,9 +103,9 @@ Connector will push something similar to this:
 
 ### Get transfer data with ID
 
-- Method : GET
-- URL : http://localhost/backend-service/api/v1/transfers/{id}
-- Sample Response
+- Method: GET
+- URL: http://localhost/backend-service/api/v1/transfers/{id}
+- Sample response:
 
 ```json
 {
@@ -130,11 +117,11 @@ Connector will push something similar to this:
 }
 ```
 
-### Get Transfer Content
-Get the content which is stored at the above endpoint
-- Method : GET
-- URL : http://localhost/backend-service/api/v1/transfers/{id}/contents
-- Sample Response
+### Get transfer content
+Get the content which is stored at the above endpoint:
+- Method: GET
+- URL: http://localhost/backend-service/api/v1/transfers/{id}/contents
+- Sample response:
 
 ```json
 {
