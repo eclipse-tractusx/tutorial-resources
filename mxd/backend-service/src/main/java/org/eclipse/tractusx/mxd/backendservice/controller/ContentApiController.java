@@ -38,10 +38,16 @@ public class ContentApiController {
 
     private final ObjectMapper objectMapper;
 
-    public ContentApiController(ContentService service, Monitor monitor, ObjectMapper objectMapper) {
+    private final String host;
+    private final String port;
+
+    public ContentApiController(ContentService service, Monitor monitor, ObjectMapper objectMapper,
+                                String host, String port) {
         this.service = service;
         this.monitor = monitor;
         this.objectMapper = objectMapper;
+        this.host = host;
+        this.port = port;
     }
 
     @POST
@@ -73,7 +79,7 @@ public class ContentApiController {
     private String createJsonResponse(String id) {
         JsonNode jsonResponse = objectMapper.createObjectNode()
                 .put("id", id)
-                .put("url", UriBuilder.fromUri("http://localhost:8080")
+                .put("url", UriBuilder.fromUri("http://" + host  +  ":" + port)
                         .path("api")
                         .path("v1")
                         .path("contents")

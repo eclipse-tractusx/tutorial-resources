@@ -27,6 +27,7 @@ import org.eclipse.edc.connector.core.base.RetryPolicyFactory;
 import org.eclipse.edc.runtime.metamodel.annotation.Extension;
 import org.eclipse.edc.runtime.metamodel.annotation.Inject;
 import org.eclipse.edc.runtime.metamodel.annotation.Provider;
+import org.eclipse.edc.runtime.metamodel.annotation.Setting;
 import org.eclipse.edc.spi.EdcException;
 import org.eclipse.edc.spi.http.EdcHttpClient;
 import org.eclipse.edc.spi.monitor.Monitor;
@@ -89,6 +90,14 @@ public class BackendServiceExtension implements ServiceExtension {
     @Inject
     private QueryExecutor queryExecutor;
 
+    @Setting(value = "host name")
+    private final static String HOSTNAME_SETTING = "edc.hostname";
+    @Setting(value = "host name")
+    private final static String PORT_SETTING = "web.http.port";
+
+    private final static String DEFAULT_HOST = "localhost";
+    private final static String DEFAULT_PORT = "8080";
+
     @Override
     public String name() {
         return NAME;
@@ -120,7 +129,9 @@ public class BackendServiceExtension implements ServiceExtension {
                     new ContentApiController(
                             contentService,
                             monitor,
-                            getObjectMapper()
+                            getObjectMapper(),
+                            context.getSetting(HOSTNAME_SETTING, DEFAULT_HOST),
+                            context.getSetting(PORT_SETTING, DEFAULT_PORT)
                     ));
 
             // Initialize SQL transfer store
