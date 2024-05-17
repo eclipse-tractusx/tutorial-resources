@@ -43,6 +43,7 @@ kubectl wait --namespace ingress-nginx \
   --for=condition=ready pod \
   --selector=app.kubernetes.io/component=controller \
   --timeout=90s
+kind load docker-image --name mxd backend-service:1.0.0
 terraform init
 terraform apply
 # type "yes" and press enter when prompted to do so 

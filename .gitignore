@@ -42,3 +42,4 @@ mxd/backend-service/.gradle
 .lock
 .bin
 mxd/backend-service/build
+*.log

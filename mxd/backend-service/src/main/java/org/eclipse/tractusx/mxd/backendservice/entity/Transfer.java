@@ -1,23 +1,16 @@
-/*******************************************************************************
+/********************************************************************************
+ *  Copyright (c) 2024 SAP SE
  *
- * Copyright (c) 2024 Contributors to the Eclipse Foundation
+ *  This program and the accompanying materials are made available under the
+ *  terms of the Apache License, Version 2.0 which is available at
+ *  https://www.apache.org/licenses/LICENSE-2.0
  *
- * See the NOTICE file(s) distributed with this work for additional
- * information regarding copyright ownership.
+ *  SPDX-License-Identifier: Apache-2.0
  *
- * This program and the accompanying materials are made available under the
- * terms of the Apache License, Version 2.0 which is available at
- * https://www.apache.org/licenses/LICENSE-2.0
+ *  Contributors:
+ *       SAP SE - initial API and implementation
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations
- * under the License.
- *
- * SPDX-License-Identifier: Apache-2.0
- *
- ******************************************************************************/
+ ********************************************************************************/
 
 package org.eclipse.tractusx.mxd.backendservice.entity;
 
@@ -28,7 +21,6 @@ import org.eclipse.edc.spi.entity.Entity;
 
 import java.util.Map;
 
-
 @JsonDeserialize(builder = Transfer.Builder.class)
 public class Transfer extends Entity {
 
@@ -37,129 +29,76 @@ public class Transfer extends Entity {
     private String authCode;
     private Map<String, Object> properties;
 
-
-    @JsonCreator
-    public Transfer(String id, String endpoint, String authKey, String authCode, Map<String, Object> properties) {
-        this.id = id;
-        this.endpoint = endpoint;
-        this.authKey = authKey;
-        this.authCode = authCode;
-        this.properties = properties;
-    }
-
-
-    public Transfer() {
+    private Transfer() {
     }
 
     public String getEndpoint() {
         return endpoint;
     }
 
-    public void setEndpoint(String endpoint) {
-        this.endpoint = endpoint;
-    }
-
     public String getAuthKey() {
         return authKey;
-    }
-
-    public void setAuthKey(String authKey) {
-        this.authKey = authKey;
     }
 
     public String getAuthCode() {
         return authCode;
     }
 
-    public void setAuthCode(String authCode) {
-        this.authCode = authCode;
-    }
-
     public Map<String, Object> getProperties() {
         return properties;
     }
 
-    public void setProperties(Map<String, Object> properties) {
-        this.properties = properties;
-    }
-
-    @Override
-    public String toString() {
-        return "Transfer{" +
-                ", endpoint='" + endpoint + '\'' +
-                ", authKey='" + authKey + '\'' +
-                ", authCode='" + authCode + '\'' +
-                ", properties=" + properties +
-                '}';
-    }
-
-    public static class Builder {
-
-        private String id;
-        private String endpoint;
-        private String authKey;
-        private String authCode;
-        private Map<String, Object> properties;
-
-        public Builder() {
-        }
-
-        public Builder id(String id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder endpoint(String endpoint) {
-            this.endpoint = endpoint;
-            return this;
-        }
-
-        public Builder authKey(String authKey) {
-            this.authKey = authKey;
-            return this;
-        }
-
-        public Builder authCode(String authCode) {
-            this.authCode = authCode;
-            return this;
-        }
-
-        public Builder properties(Map<String, Object> properties) {
-            this.properties = properties;
-            return this;
-        }
-
-        public Transfer build() {
-            return new Transfer(id, endpoint, authKey, authCode, properties);
-        }
-
+    public Builder toBuilder() {
+        return Transfer.Builder.newInstance()
+                .id(id)
+                .authCode(authCode)
+                .authKey(authKey)
+                .endpoint(endpoint)
+                .properties(properties)
+                .createdAt(createdAt);
     }
 
     @JsonPOJOBuilder(withPrefix = "")
-    public static final class Builders {
-        private final Transfer instance;
+    public static class Builder extends Entity.Builder<Transfer, Builder> {
 
-        private Builders() {
-            instance = new Transfer();
+        protected Builder(Transfer transfer) {
+            super(transfer);
         }
 
         @JsonCreator
-        public static Transfer.Builders newInstance() {
-            return new Transfer.Builders();
+        public static Builder newInstance() {
+            return new Builder(new Transfer());
         }
 
-        public Transfer.Builders id(String id) {
-            instance.id = id;
+        public Builder endpoint(String endpoint) {
+            entity.endpoint = endpoint;
+            return self();
+        }
+
+        public Builder authKey(String authKey) {
+            entity.authKey = authKey;
+            return self();
+        }
+
+        public Builder authCode(String authCode) {
+            entity.authCode = authCode;
+            return self();
+        }
+
+        public Builder properties(Map<String, Object> properties) {
+            entity.properties = properties;
+            return self();
+        }
+
+        @Override
+        public Builder self() {
             return this;
         }
 
-        public Transfer.Builders endpoint(String endpoint) {
-            instance.endpoint = endpoint;
-            return this;
-        }
-
+        @Override
         public Transfer build() {
-            return instance;
+            super.build();
+            return entity;
         }
     }
 }
