@@ -72,6 +72,7 @@ variable "iatp-config" {
     oauth-clientsecret = ""
     oauth-secretalias  = ""
     dim-url            = ""
+    trusted-issuers    = []
   }
 }
 

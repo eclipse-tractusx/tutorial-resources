@@ -34,7 +34,7 @@ resource "helm_release" "connector" {
 
   repository = "https://eclipse-tractusx.github.io/charts/dev"
   chart      = "tractusx-connector"
-  version    = "0.7.0"
+  version    = "0.7.1"
 
   values = [
     file("${path.module}/values.yaml"),
@@ -113,6 +113,7 @@ resource "helm_release" "connector" {
             }
           }
         }
+        trustedIssuers : var.iatp-config.trusted-issuers
       }
     })
   ]
@@ -150,7 +151,6 @@ resource "helm_release" "connector" {
     name  = "install.postgresql"
     value = "false"
   }
-
 }
 
 resource "random_string" "kc_client_secret" {
