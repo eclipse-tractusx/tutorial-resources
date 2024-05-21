@@ -130,13 +130,18 @@ curl --location 'http://localhost/alice/management/v2/catalog/request' \
 --header 'Content-Type: application/json' \
 --header 'X-Api-Key: password' \
 --data-raw '{
-    "@context": {},
-    "protocol": "dataspace-protocol-http",
-    "counterPartyAddress": "http://bob-controlplane:8084/api/v1/dsp",
-    "querySpec": {
-        "offset": 0,
-        "limit": 50
-    }
+    "@context": {
+		"@vocab": "https://w3id.org/edc/v0.0.1/ns/"
+	  },
+	  "@type": "CatalogRequest",
+	  "counterPartyAddress": "http://bob-controlplane:8084/api/v1/dsp",
+	  "counterPartyId": "BPNL000000000001",
+	  "protocol": "dataspace-protocol-http",
+	  "querySpec": {
+		"offset": 0,
+		"limit": 50
+	}
+
 }'
 ```
 

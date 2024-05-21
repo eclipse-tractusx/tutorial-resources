@@ -140,6 +140,8 @@ curl --location 'http://localhost/alice/management/v2/catalog/request' \
     "@context": {},
     "protocol": "dataspace-protocol-http",
     "counterPartyAddress": "http://trudy-controlplane:8084/api/v1/dsp",
+	"counterPartyId": "BPNL000000000003",
+	"protocol": "dataspace-protocol-http",
     "querySpec": {
         "offset": 0,
         "limit": 50
@@ -224,6 +226,8 @@ curl --location 'http://localhost/bob/management/v2/catalog/request' \
     "@context": {},
     "protocol": "dataspace-protocol-http",
     "counterPartyAddress": "http://trudy-controlplane:8084/api/v1/dsp",
+	"counterPartyId": "BPNL000000000003",
+	"protocol": "dataspace-protocol-http",
     "querySpec": {
         "offset": 0,
         "limit": 50

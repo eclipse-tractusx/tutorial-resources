@@ -189,6 +189,7 @@ curl --location 'http://localhost/bob/management/v2/catalog/request' \
   },
   "@type": "CatalogRequest",
   "counterPartyAddress": "http://alice-controlplane:8084/api/v1/dsp",
+  "counterPartyId": "BPNL000000000001",
   "protocol": "dataspace-protocol-http",
   "querySpec": {
     "offset": 0,
@@ -268,42 +269,36 @@ curl --location 'http://localhost/bob/management/v2/contractnegotiations' \
 --header 'Content-Type: application/json' \
 --header 'X-Api-Key: password' \
 --data-raw '{
-  "@context": {
-    "odrl": "http://www.w3.org/ns/odrl/2/"
-  },
-  "@type": "NegotiationInitiateRequestDto",
-  "connectorAddress": "http://alice-controlplane:8084/api/v1/dsp",
-  "protocol": "dataspace-protocol-http",
-  "connectorId": "BPNL000000000001",
-  "providerId": "BPNL000000000001",
-  "offer": {
-    "offerId": "<Odrl Policy ID From Above Step>",
-    "assetId": "20",
-    "policy": {
-      "@type": "odrl:Set",
-      "odrl:permission": {
-        "odrl:target": "20",
-        "odrl:action": {
-          "odrl:type": "USE"
-        },
-        "odrl:constraint": {
-          "odrl:or": [
-            {
-              "@type": "Constraint",
-              "odrl:leftOperand": "BusinessPartnerNumber",
-              "odrl:operator": {
-                "@id": "odrl:eq"
-              },
-              "odrl:rightOperand": "BPNL000000000002"
-            }
-          ]
-        }
-      },
-      "odrl:prohibition": [],
-      "odrl:obligation": [],
-      "odrl:target": "20"
-    }
-  }
+	"@context": {
+		"@vocab": "https://w3id.org/edc/v0.0.1/ns/"
+	},
+	"@type": "NegotiationInitiateRequestDto",
+	"counterPartyAddress": "http://alice-controlplane:8084/api/v1/dsp",
+	"protocol": "dataspace-protocol-http",
+	"policy": {
+		"@context": "http://www.w3.org/ns/odrl.jsonld",
+		"@type": "odrl:Offer",
+		"@id": "<Offer Id>",
+         "assigner": "BPNL000000000001",
+		"permission": {
+			"odrl:target": "<Asset Id>",
+			"odrl:action": {
+				"odrl:type": "USE"
+			},
+			"odrl:constraint": {
+				"odrl:or": {
+					"odrl:leftOperand": "{{TX_NAMESPACE}}BusinessPartnerGroup",
+					"odrl:operator": {
+						"@id": "odrl:eq"
+					},
+					"odrl:rightOperand": "<Business Partner Group>}}"
+				}
+			}
+		},
+		"prohibition": [],
+		"obligation": [],
+		"target": "<Asset Id>"
+	}
 }'
 ```
 

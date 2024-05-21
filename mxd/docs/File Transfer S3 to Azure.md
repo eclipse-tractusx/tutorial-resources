@@ -21,20 +21,20 @@ curl --location 'http://localhost/bob/management/v2/transferprocesses' \
 --header 'X-Api-Key: password' \
 --data-raw '{
   "@context": {
-    "odrl": "http://www.w3.org/ns/odrl/2/"
+    "@vocab": "https://w3id.org/edc/v0.0.1/ns/"
   },
-  "assetId": "<Asset Id>",
-  "connectorAddress": "http://alice-controlplane:8084/api/v1/dsp",
-  "connectorId": "BPNL000000000001",
+  "@type": "https://w3id.org/edc/v0.0.1/ns/TransferRequest",
+  "protocol": "dataspace-protocol-http",
+  "counterPartyAddress": "http://alice-controlplane:8084/api/v1/dsp",
   "contractId": "<Contract Agreement Id from Get Negotiation Response>",
-  "dataDestination": {
+  "assetId": "<Asset Id>",
+  "transferType": "application/octet-stream",
+  "dataDestination":  {
     "type": "AzureStorage",
     "account": "bobazureaccount",
     "container": "bob-container",
     "keyName": "bobazureaccount-sas"
-  },
-  "callbackAddresses": [],
-  "protocol": "dataspace-protocol-http"
+  }
 }'
 ```
 

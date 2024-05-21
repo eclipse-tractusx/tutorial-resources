@@ -202,6 +202,7 @@ curl --location 'http://localhost/bob/management/v2/catalog/request' \
   },
   "@type": "CatalogRequest",
   "counterPartyAddress": "http://alice-controlplane:8084/api/v1/dsp",
+  "counterPartyId": "BPNL000000000001",
   "protocol": "dataspace-protocol-http",
   "querySpec": {
     "offset": 0,

@@ -180,6 +180,7 @@ curl --location 'http://localhost/bob/management/v2/catalog/request' \
   },
   "@type": "CatalogRequest",
   "counterPartyAddress": "http://alice-controlplane:8084/api/v1/dsp",
+  "counterPartyId": "BPNL000000000001",
   "protocol": "dataspace-protocol-http",
   "querySpec": {
     "offset": 0,
@@ -267,38 +268,35 @@ curl --location 'http://localhost/bob/management/v2/contractnegotiations' \
 --header 'X-Api-Key: password' \
 --data-raw '{
   "@context": {
-    "odrl": "http://www.w3.org/ns/odrl/2/"
-  },
-  "@type": "NegotiationInitiateRequestDto",
-  "connectorAddress": "http://alice-controlplane:8084/api/v1/dsp",
-  "protocol": "dataspace-protocol-http",
-  "connectorId": "BPNL000000000001",
-  "providerId": "BPNL000000000001",
-  "offer": {
-    "offerId": "<Odrl Policy ID From Above Step>",
-    "assetId": "10",
-    "policy": {
-      "@type": "odrl:Set",
-      "odrl:permission": {
-        "odrl:target": "10",
-        "odrl:action": {
-          "odrl:type": "USE"
-        },
-        "odrl:constraint": {
-          "odrl:or": {
-            "odrl:leftOperand": "BusinessPartnerNumber",
-            "odrl:operator": {
-              "@id": "odrl:eq"
-            },
-            "odrl:rightOperand": "BPNL000000000002"
-          }
-        }
-      },
-      "odrl:prohibition": [],
-      "odrl:obligation": [],
-      "odrl:target": "10"
-    }
-  }
+		"@vocab": "https://w3id.org/edc/v0.0.1/ns/"
+	},
+	"@type": "NegotiationInitiateRequestDto",
+	"counterPartyAddress": "http://alice-controlplane:8084/api/v1/dsp",
+	"protocol": "dataspace-protocol-http",
+	"policy": {
+		"@context": "http://www.w3.org/ns/odrl.jsonld",
+		"@type": "odrl:Offer",
+		"@id": "<Offer ID From Above Step>",
+         "assigner": "BPNL000000000001",
+		"permission": {
+			"odrl:target": "10",
+			"odrl:action": {
+				"odrl:type": "USE"
+			},
+			"odrl:constraint": {
+				"odrl:or": {
+					"odrl:leftOperand": "<TX NAMESPACE>BusinessPartnerGroup",
+					"odrl:operator": {
+						"@id": "odrl:eq"
+					},
+					"odrl:rightOperand": "<BUSINESS PARTNER GROUP>"
+				}
+			}
+		},
+		"prohibition": [],
+		"obligation": [],
+		"target": "10"
+	}
 }'
 ```
 
@@ -338,7 +336,14 @@ It should return below response.
   "callbackAddresses": [],
   "createdAt": 1700737605805,
   "contractAgreementId": "5fee8548-2018-4363-b417-95af486c6200",
-  "@context": {}
+  "@context": {
+		"@vocab": "https://w3id.org/edc/v0.0.1/ns/",
+        "edc": "https://w3id.org/edc/v0.0.1/ns/",
+        "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+        "tx-auth": "https://w3id.org/tractusx/auth/",
+        "cx-policy": "https://w3id.org/catenax/policy/",
+        "odrl": "http://www.w3.org/ns/odrl/2/"
+	}
 }
 ```
 Please note:
@@ -375,20 +380,20 @@ curl --location 'http://localhost/bob/management/v2/transferprocesses' \
 --header 'X-Api-Key: password' \
 --data-raw '{
   "@context": {
-    "odrl": "http://www.w3.org/ns/odrl/2/"
+    "@vocab": "https://w3id.org/edc/v0.0.1/ns/"
   },
-  "assetId": "10",
-  "connectorAddress": "http://alice-controlplane:8084/api/v1/dsp",
-  "connectorId": "BPNL000000000001",
+  "@type": "https://w3id.org/edc/v0.0.1/ns/TransferRequest",
+  "protocol": "dataspace-protocol-http",
+  "counterPartyAddress": " http://alice-controlplane:8084/api/v1/dsp",
   "contractId": "<Contract Agreement Id from Get Negotiation Response>",
-  "dataDestination": {
-    "type": "AzureStorage",
-    "account": "bobazureaccount",
-    "container": "bob-container",
-    "keyName": "bobazureaccount-sas"
+  "assetId": "10",
+  "transferType": "application/octet-stream",
+  "dataDestination":  {
+        "type": "HttpProxy"
   },
-  "callbackAddresses": [],
-  "protocol": "dataspace-protocol-http"
+  "privateProperties": {
+     "receiverHttpEndpoint": "<Backend Service Endpoint>"
+  }
 }'
 ```
 

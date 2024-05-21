@@ -19,35 +19,36 @@ curl --location 'http://localhost/bob/management/edrs' \
 --header 'Content-Type: application/json' \
 --header 'X-Api-Key: password' \
 --data-raw '{
-	"@context": {
-		"odrl": "http://www.w3.org/ns/odrl/2/"
-	},
-	"@type": "NegotiationInitiateRequestDto",
-	"counterPartyAddress": "http://alice-controlplane:8084/api/v1/dsp",
-	"protocol": "dataspace-protocol-http",
-	"counterPartyId": "BPNL000000000001",
-	"providerId": "BPNL000000000001",
-	"offer": {
-		"offerId": "MQ==:MQ==:MDJlMGRlOWUtNzdhZS00N2FhLTg5ODktYzEyMTdhMDE4ZjJh",
-		"assetId": "1",
+	{
+		"@context": {
+			"@vocab": "https://w3id.org/edc/v0.0.1/ns/"
+		},
+		"@type": "NegotiationInitiateRequestDto",
+		"counterPartyAddress": "{{PROVIDER_PROTOCOL_URL}}",
+		"protocol": "dataspace-protocol-http",
 		"policy": {
-			"@type": "odrl:Set",
-			"odrl:permission": {
-			    "odrl:target": "1",
+			"@context": "http://www.w3.org/ns/odrl.jsonld",
+			"@type": "odrl:Offer",
+			"@id": "{{OFFER_ID}}",
+			 "assigner": "{{PROVIDER_ID}}",
+			"permission": {
+				"odrl:target": "{{ASSET_ID}}",
 				"odrl:action": {
 					"odrl:type": "USE"
 				},
 				"odrl:constraint": {
 					"odrl:or": {
-						"odrl:leftOperand": "BusinessPartnerNumber",
-						"odrl:operator": { "@id": "odrl:eq" },
-						"odrl:rightOperand": "BPNL000000000002"
+						"odrl:leftOperand": "{{TX_NAMESPACE}}BusinessPartnerGroup",
+						"odrl:operator": {
+							"@id": "odrl:eq"
+						},
+						"odrl:rightOperand": "{{BUSINESS_PARTNER_GROUP}}"
 					}
 				}
 			},
-			"odrl:prohibition": [],
-			"odrl:obligation": [],
-			"odrl:target": "1"
+			"prohibition": [],
+			"obligation": [],
+			"target": "{{ASSET_ID}}"
 		}
 	}
 }' | jq
@@ -63,17 +64,17 @@ If everithing is ok, we'll get this as response:
 
 ```json
 {
-  "@type": "edc:IdResponse",
-  "@id": "2f911118-657d-4001-b36c-73cb45222a4a",
-  "edc:createdAt": 1694446314832,
-  "@context": {
-    "dct": "https://purl.org/dc/terms/",
-    "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
-    "edc": "https://w3id.org/edc/v0.0.1/ns/",
-    "dcat": "https://www.w3.org/ns/dcat/",
-    "odrl": "http://www.w3.org/ns/odrl/2/",
-    "dspace": "https://w3id.org/dspace/v0.8/"
-  }
+    "@type": "IdResponse",
+    "@id": "69009511-f956-405e-a341-ac73a1b4ed6e",
+    "createdAt": 1716543547468,
+    "@context": {
+        "@vocab": "https://w3id.org/edc/v0.0.1/ns/",
+        "edc": "https://w3id.org/edc/v0.0.1/ns/",
+        "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+        "tx-auth": "https://w3id.org/tractusx/auth/",
+        "cx-policy": "https://w3id.org/catenax/policy/",
+        "odrl": "http://www.w3.org/ns/odrl/2/"
+    }
 }
 ```
 
