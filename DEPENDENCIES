@@ -386,7 +386,6 @@ npm/npmjs/-/minimalistic-assert/1.0.1, ISC, approved, clearlydefined
 npm/npmjs/-/minimatch/3.0.5, ISC, approved, clearlydefined
 npm/npmjs/-/minimatch/3.1.2, ISC, approved, clearlydefined
 npm/npmjs/-/minimatch/5.1.6, ISC, approved, #5952
-npm/npmjs/-/minimatch/9.0.3, ISC, approved, #9190
 npm/npmjs/-/minimatch/9.0.4, ISC, approved, #9190
 npm/npmjs/-/minimist/1.2.8, MIT, approved, #5886
 npm/npmjs/-/minipass-collect/2.0.1, ISC, approved, clearlydefined
@@ -696,15 +695,12 @@ npm/npmjs/@angular-devkit/build-webpack/0.1703.5, MIT, approved, clearlydefined
 npm/npmjs/@angular-devkit/core/17.3.5, MIT, approved, clearlydefined
 npm/npmjs/@angular-devkit/schematics/17.3.5, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/builder/17.4.1, , restricted, clearlydefined
-npm/npmjs/@angular-eslint/bundled-angular-compiler/17.2.1, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/bundled-angular-compiler/17.3.0, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/bundled-angular-compiler/17.4.1, , restricted, clearlydefined
-npm/npmjs/@angular-eslint/eslint-plugin-template/17.2.1, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/eslint-plugin-template/17.4.1, , restricted, clearlydefined
 npm/npmjs/@angular-eslint/eslint-plugin/17.4.1, , restricted, clearlydefined
 npm/npmjs/@angular-eslint/schematics/17.4.1, , restricted, clearlydefined
 npm/npmjs/@angular-eslint/template-parser/17.3.0, MIT, approved, clearlydefined
-npm/npmjs/@angular-eslint/utils/17.2.1, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/utils/17.4.1, , restricted, clearlydefined
 npm/npmjs/@angular/animations/17.3.5, MIT, approved, clearlydefined
 npm/npmjs/@angular/cdk/17.3.5, MIT, approved, clearlydefined
@@ -1042,22 +1038,16 @@ npm/npmjs/@types/sockjs/0.3.36, MIT, approved, #10984
 npm/npmjs/@types/ws/8.5.10, MIT, approved, #6016
 npm/npmjs/@typescript-eslint/eslint-plugin/7.7.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14387
 npm/npmjs/@typescript-eslint/parser/7.7.0, BSD-2-Clause, approved, clearlydefined
-npm/npmjs/@typescript-eslint/scope-manager/6.19.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/scope-manager/7.7.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/scope-manager/7.8.0, MIT, approved, clearlydefined
-npm/npmjs/@typescript-eslint/type-utils/6.19.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/type-utils/7.7.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/type-utils/7.8.0, MIT, approved, clearlydefined
-npm/npmjs/@typescript-eslint/types/6.19.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/types/7.7.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/types/7.8.0, MIT, approved, clearlydefined
-npm/npmjs/@typescript-eslint/typescript-estree/6.19.0, BSD-2-Clause AND (BSD-2-Clause AND ISC AND MIT) AND MIT, approved, #12779
 npm/npmjs/@typescript-eslint/typescript-estree/7.7.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14390
 npm/npmjs/@typescript-eslint/typescript-estree/7.8.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14612
-npm/npmjs/@typescript-eslint/utils/6.19.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/utils/7.7.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14389
 npm/npmjs/@typescript-eslint/utils/7.8.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14613
-npm/npmjs/@typescript-eslint/visitor-keys/6.19.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/visitor-keys/7.7.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/visitor-keys/7.8.0, MIT, approved, clearlydefined
 npm/npmjs/@ungap/structured-clone/1.2.0, ISC, approved, clearlydefined
