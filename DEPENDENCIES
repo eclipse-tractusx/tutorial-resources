@@ -1036,18 +1036,22 @@ npm/npmjs/@types/serve-index/1.9.4, MIT, approved, #10976
 npm/npmjs/@types/serve-static/1.15.7, MIT, approved, #9188
 npm/npmjs/@types/sockjs/0.3.36, MIT, approved, #10984
 npm/npmjs/@types/ws/8.5.10, MIT, approved, #6016
-npm/npmjs/@typescript-eslint/eslint-plugin/7.7.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14387
+npm/npmjs/@typescript-eslint/eslint-plugin/7.10.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14836
 npm/npmjs/@typescript-eslint/parser/7.7.0, BSD-2-Clause, approved, clearlydefined
+npm/npmjs/@typescript-eslint/scope-manager/7.10.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/scope-manager/7.7.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/scope-manager/7.8.0, MIT, approved, clearlydefined
-npm/npmjs/@typescript-eslint/type-utils/7.7.0, MIT, approved, clearlydefined
+npm/npmjs/@typescript-eslint/type-utils/7.10.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/type-utils/7.8.0, MIT, approved, clearlydefined
+npm/npmjs/@typescript-eslint/types/7.10.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/types/7.7.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/types/7.8.0, MIT, approved, clearlydefined
+npm/npmjs/@typescript-eslint/typescript-estree/7.10.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14838
 npm/npmjs/@typescript-eslint/typescript-estree/7.7.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14390
 npm/npmjs/@typescript-eslint/typescript-estree/7.8.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14612
-npm/npmjs/@typescript-eslint/utils/7.7.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14389
+npm/npmjs/@typescript-eslint/utils/7.10.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14837
 npm/npmjs/@typescript-eslint/utils/7.8.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14613
+npm/npmjs/@typescript-eslint/visitor-keys/7.10.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/visitor-keys/7.7.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/visitor-keys/7.8.0, MIT, approved, clearlydefined
 npm/npmjs/@ungap/structured-clone/1.2.0, ISC, approved, clearlydefined
