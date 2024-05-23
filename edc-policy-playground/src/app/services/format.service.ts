@@ -21,7 +21,6 @@
 import { Injectable } from '@angular/core';
 import { OutputKind, PolicyConfiguration } from '../models/policy';
 import { PlainFormatter } from './format/plain';
-import { PrefixFormatter } from './format/prefix';
 import { PolicyService } from './policy.service';
 
 @Injectable({ providedIn: 'root' })
@@ -29,7 +28,6 @@ export class FormatService {
   formatters: Map<OutputKind, JsonLdFormatter> = new Map();
   constructor(public policyService: PolicyService) {
     this.formatters.set(OutputKind.Plain, new PlainFormatter(policyService));
-    this.formatters.set(OutputKind.Prefixed, new PrefixFormatter(policyService));
   }
 
   toJsonLd(policyConfig: PolicyConfiguration, format: OutputKind = OutputKind.Prefixed): object {
