@@ -22,6 +22,8 @@ import org.eclipse.tractusx.mxd.backendservice.entity.Transfer;
 import org.eclipse.tractusx.mxd.backendservice.store.ContentStoreService;
 import org.eclipse.tractusx.mxd.backendservice.store.TransferStoreService;
 import org.eclipse.tractusx.mxd.testfixtures.PostgresRuntime;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -31,9 +33,21 @@ import java.util.UUID;
 
 import static io.restassured.http.ContentType.JSON;
 import static jakarta.json.Json.createObjectBuilder;
+import static org.eclipse.tractusx.mxd.testfixtures.PostgresqlEndToEndInstance.createContainer;
+import static org.eclipse.tractusx.mxd.testfixtures.PostgresqlEndToEndInstance.destroyContainer;
 import static org.hamcrest.Matchers.is;
 
 public class TransferApiEndToEndTest {
+
+    @BeforeAll
+    static void setUp() {
+        createContainer();
+    }
+
+    @AfterAll
+    static void tearDown() {
+        destroyContainer();
+    }
 
     @Nested
     @PostgresqlIntegrationTest
