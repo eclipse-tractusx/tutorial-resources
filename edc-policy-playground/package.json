@@ -20,7 +20,7 @@
     "@angular/platform-browser-dynamic": "^17.3.5",
     "@angular/router": "^17.3.5",
     "@angular/compiler": "^17.3.5",
-    "@angular/material": "^17.3.5",
+    "@angular/material": "^18.0.0",
     "@codemirror/lang-json": "^6.0.1",
     "@codemirror/state": "^6.4.0",
     "codemirror": "^6.0.1",
