@@ -194,11 +194,11 @@ public class BackendServiceExtension implements ServiceExtension {
     }
 
     private ContentStatementsService getStatementImpl() {
-        return new ContentStatementsServiceImpl() {};
+        return new ContentStatementsServiceImpl();
     }
 
     private TransferStatementsService getTransferStatementImpl() {
-        return new TransferStatementsServiceImpl() {};
+        return new TransferStatementsServiceImpl();
     }
 
     public void registerDefaultDataSource(ServiceExtensionContext context) {
