@@ -38,7 +38,7 @@ output "keycloak-cluster-ip" {
 }
 
 output "keycloak-database-credentials" {
-  value = module.keycloak-postgres
+  value = local.keycloak-postgres
 }
 
 output "miw-cluster-ip" {
@@ -46,15 +46,15 @@ output "miw-cluster-ip" {
 }
 
 output "miw-database-credentials" {
-  value = module.miw-postgres
+  value = local.miw-postgres
 }
 
 output "bob-database-credentials" {
-  value = module.bob-connector.database-credentials
+  value = local.alice-postgres
 }
 
 output "alice-database-credentials" {
-  value = module.alice-connector.database-credentials
+  value = local.bob-postgres
 }
 
 output "bob-urls" {

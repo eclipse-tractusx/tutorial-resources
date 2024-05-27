@@ -24,8 +24,8 @@ output "aes_key" {
 output "client_secret" {
   value = local.client_secret
 }
-output "database-credentials" {
-  value = module.postgres
+output "database-name" {
+  value = var.database-name
 }
 
 output "urls" {

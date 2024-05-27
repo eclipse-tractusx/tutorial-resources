@@ -17,16 +17,8 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-output "database-name" {
-  value = var.database-name
-}
-
-output "database-username" {
-  value = var.database-username
-}
-
-output "database-password" {
-  value = var.database-password
+output "instance-name" {
+  value = var.instance-name
 }
 
 output "database-host" {
