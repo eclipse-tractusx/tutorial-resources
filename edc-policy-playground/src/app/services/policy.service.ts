@@ -79,7 +79,7 @@ export class PolicyService {
 
     const credentialConstraintsTemplate = credentialConstraints.map(c => {
       return {
-        name: c.leftOperand + ' credential',
+        name: c.get_label() + ' credential',
         multiple: false,
         factory: () => c,
       };
@@ -119,11 +119,11 @@ export class PolicyService {
     ];
   }
 
-  contextFor(policy: PolicyConfiguration): any {
+  namespacesFor(policy: PolicyConfiguration): any {
     const context: any = {};
     policy.policy.permissions
       .flatMap(permission => permission.constraints)
-      .map(constraint => constraint.prefixes())
+      .map(constraint => constraint.get_prefixes())
       .flat()
       .forEach(prefix => {
         const ns = NAMESPACES[prefix];
@@ -131,5 +131,13 @@ export class PolicyService {
       });
 
     return context;
+  }
+
+  contextsFor(policy: PolicyConfiguration): string[] {
+    const contexts = policy.policy.permissions
+      .flatMap(permission => permission.constraints)
+      .flatMap(constraint => constraint.get_contexts());
+
+    return Array.from(new Set(contexts));
   }
 }

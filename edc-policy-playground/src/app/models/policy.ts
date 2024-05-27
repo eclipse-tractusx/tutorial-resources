@@ -55,9 +55,12 @@ export class LogicalConstraint implements Constraint {
     return cloned;
   }
 
-  prefixes(): string[] {
-    const prefixes = this.constraints.flatMap(c => c.prefixes());
-    return ['odrl', ...prefixes];
+  get_prefixes(): string[] {
+    return this.constraints.flatMap(c => c.get_prefixes());
+  }
+
+  get_contexts(): string[] {
+    return this.constraints.flatMap(c => c.get_contexts());
   }
 
   toString() {
@@ -66,20 +69,14 @@ export class LogicalConstraint implements Constraint {
 }
 
 export class LeftOperand {
-  prefix?: string;
   value: string;
 
-  constructor(value: string, prefix?: string) {
+  constructor(value: string) {
     this.value = value;
-    this.prefix = prefix;
   }
 
-  toString(withPrefix: boolean = true) {
-    if (withPrefix && this.prefix != null) {
-      return `${this.prefix}:${this.value}`;
-    } else {
-      return `${this.value}`;
-    }
+  toString() {
+    return `${this.value}`;
   }
 }
 
@@ -88,7 +85,9 @@ export class AtomicConstraint implements Constraint {
   operator: Operator;
   rightOperand?: string | number | Value;
   kind: ValueKind;
-
+  contexts: string[] = [];
+  prefixes: string[] = [];
+  label?: string;
   constructor();
   constructor(leftOperand: LeftOperand);
   constructor(leftOperand: LeftOperand, operator: Operator, rightOperator: RightOperand);
@@ -104,21 +103,44 @@ export class AtomicConstraint implements Constraint {
     this.leftOperand = leftOperand != null ? leftOperand : new LeftOperand('');
     this.rightOperand = rightOperand;
   }
+
   clone(): AtomicConstraint {
     const cloned = new AtomicConstraint();
     cloned.kind = this.kind;
     cloned.leftOperand = this.leftOperand;
     cloned.operator = this.operator;
     cloned.rightOperand = this.rightOperand;
+    cloned.contexts = this.contexts;
+    cloned.label = this.label;
+    cloned.prefixes = this.prefixes;
     return cloned;
   }
 
-  prefixes(): string[] {
-    if (this.leftOperand.prefix) {
-      return [this.leftOperand.prefix];
-    } else {
-      return [];
-    }
+  get_prefixes(): string[] {
+    return this.prefixes;
+  }
+
+  get_contexts(): string[] {
+    return this.contexts;
+  }
+
+  get_label(): string {
+    return this.label != null ? this.label : this.leftOperand.value;
+  }
+
+  with_context(ctx: string): AtomicConstraint {
+    this.contexts.push(ctx);
+    return this;
+  }
+
+  with_prefix(prefix: string): AtomicConstraint {
+    this.prefixes.push(prefix);
+    return this;
+  }
+
+  with_label(label: string): AtomicConstraint {
+    this.label = label;
+    return this;
   }
 
   toString() {
@@ -156,7 +178,8 @@ export enum LogicalOperator {
 export interface Constraint {
   clone(): Constraint;
 
-  prefixes(): string[];
+  get_prefixes(): string[];
+  get_contexts(): string[];
 }
 
 export enum Action {

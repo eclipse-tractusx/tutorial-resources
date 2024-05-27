@@ -20,39 +20,47 @@
 
 import { AtomicConstraint, LeftOperand, LogicalConstraint, Operator, Value, ValueKind } from '../models/policy';
 
-const EDC_PREFIX = 'edc';
 const IN_FORCE = 'inForceDate';
-const DATE_EXPRESSION = EDC_PREFIX + ':dateExpression';
+const DATE_EXPRESSION = 'dateExpression';
 
-const XSD_DATETIME = 'xsd:datetime';
+const TX_BASE_CONTEXT = 'https://w3id.org/tractusx/edc/v0.0.1';
+const TX_POLICY_CONTEXT = 'https://w3id.org/tractusx/policy/v1.0.0';
 
-const TX_PREFIX = 'tx';
+const XSD_PREFIX = 'xsd';
+const XSD_DATETIME = XSD_PREFIX + ':datetime';
 
 export const bpnConstraint = () => {
-  return new AtomicConstraint(new LeftOperand('BusinessPartnerNumber'), Operator.Eq, '<bpnNumber>', ValueKind.String);
+  return new AtomicConstraint(
+    new LeftOperand('BusinessPartnerNumber'),
+    Operator.Eq,
+    '<bpnNumber>',
+    ValueKind.String,
+  ).with_context(TX_BASE_CONTEXT);
 };
 
 export const bpnGroupConstraint = () => {
-  return new AtomicConstraint(new LeftOperand('BusinessPartnerGroup', TX_PREFIX), Operator.In, '<group>');
+  return new AtomicConstraint(new LeftOperand('BusinessPartnerGroup'), Operator.In, '<group>').with_context(
+    TX_BASE_CONTEXT,
+  );
 };
 
 export const inForceFixedConstraint = () => {
   const constraint = new LogicalConstraint();
   constraint.constraints.push(
     new AtomicConstraint(
-      new LeftOperand(IN_FORCE, EDC_PREFIX),
+      new LeftOperand(IN_FORCE),
       Operator.Gte,
       new Value('2023-01-01T00:00:01Z', XSD_DATETIME),
       ValueKind.Value,
-    ),
+    ).with_prefix(XSD_PREFIX),
   );
   constraint.constraints.push(
     new AtomicConstraint(
-      new LeftOperand(IN_FORCE, EDC_PREFIX),
+      new LeftOperand(IN_FORCE),
       Operator.Lte,
       new Value('2024-01-01T00:00:01Z', XSD_DATETIME),
       ValueKind.Value,
-    ),
+    ).with_prefix(XSD_PREFIX),
   );
   return constraint;
 };
@@ -61,7 +69,7 @@ export const inForceDurationConstraint = () => {
   const constraint = new LogicalConstraint();
   constraint.constraints.push(
     new AtomicConstraint(
-      new LeftOperand(IN_FORCE, EDC_PREFIX),
+      new LeftOperand(IN_FORCE),
       Operator.Gte,
       new Value('contractAgreement+0s', DATE_EXPRESSION),
       ValueKind.Value,
@@ -69,7 +77,7 @@ export const inForceDurationConstraint = () => {
   );
   constraint.constraints.push(
     new AtomicConstraint(
-      new LeftOperand(IN_FORCE, EDC_PREFIX),
+      new LeftOperand(IN_FORCE),
       Operator.Lte,
       new Value('contractAgreement+100d', DATE_EXPRESSION),
       ValueKind.Value,
@@ -78,17 +86,32 @@ export const inForceDurationConstraint = () => {
   return constraint;
 };
 
-const credentials = [
-  'Membership',
-  'Dismantler',
-  'FrameworkAgreement.pcf',
-  'FrameworkAgreement.sustainability',
-  'FrameworkAgreement.quality',
-  'FrameworkAgreement.traceability',
-  'FrameworkAgreement.behavioraltwin',
-  'BPN',
+const fremeworkAgreements = [
+  'Pcf',
+  'Traceability',
+  'Quality',
+  'CircularEconomy',
+  'DemandCapacity',
+  'Puris',
+  'BusinessPartner',
+  'BehavioralTwin',
 ];
 
+const frameworkCredentials = fremeworkAgreements.map(frame => {
+  return { name: 'FrameworkAgreement', value: `${frame}:<version>`, label: frame };
+});
+
+const baseCredentials = [
+  { name: 'Membership', value: 'active', label: 'Membership' },
+  { name: 'Dismantler', value: 'active', label: 'Dismantler' },
+];
+
+const credentials = [...baseCredentials, ...frameworkCredentials];
+
 export const credentialsConstraints = () => {
-  return credentials.map(c => new AtomicConstraint(new LeftOperand(c, TX_PREFIX), Operator.Eq, 'active'));
+  return credentials.map(c =>
+    new AtomicConstraint(new LeftOperand(c.name), Operator.Eq, c.value)
+      .with_context(TX_POLICY_CONTEXT)
+      .with_label(c.label),
+  );
 };
