@@ -23,14 +23,14 @@ import java.util.Map;
 public interface PostgresRuntime {
 
     @RegisterExtension
-    static final BeforeAllCallback CREATE_DATABASE = context -> PostgresqlEndToEndInstance.createDatabase("runtime");
+    static final BeforeAllCallback CREATE_DATABASE = context -> PostgresqlEndToEndInstance.createDatabase(PostgresqlEndToEndInstance.DB_NAME);
 
     @RegisterExtension
     public static final EdcRuntimeExtension RUNTIME = new EdcRuntimeExtension(
             "",
             "backend",
             Map.of(
-                    "edc.datasource.default.url", PostgresqlEndToEndInstance.JDBC_URL_PREFIX + "runtime",
+                    "edc.datasource.default.url", PostgresqlEndToEndInstance.JDBC_URL_PREFIX + PostgresqlEndToEndInstance.DB_NAME,
                     "edc.datasource.default.user", PostgresqlEndToEndInstance.USER,
                     "edc.datasource.default.password", PostgresqlEndToEndInstance.PASSWORD
             )

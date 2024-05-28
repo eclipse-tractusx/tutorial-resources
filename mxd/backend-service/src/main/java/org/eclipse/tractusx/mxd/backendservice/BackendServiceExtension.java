@@ -78,12 +78,6 @@ public class BackendServiceExtension implements ServiceExtension {
     @Inject
     private TypeManager typeManager;
 
-    @Inject(required = false)
-    private ContentStatementsService statements;
-
-    @Inject(required = false)
-    private TransferStatementsService transferStatementsService;
-
     @Inject
     private TypeTransformerRegistry transformerRegistry;
 
@@ -200,14 +194,11 @@ public class BackendServiceExtension implements ServiceExtension {
     }
 
     private ContentStatementsService getStatementImpl() {
-        return statements != null ? statements : new ContentStatementsServiceImpl() {
-        };
+        return new ContentStatementsServiceImpl();
     }
 
     private TransferStatementsService getTransferStatementImpl() {
-        return transferStatementsService != null ? transferStatementsService :
-                new TransferStatementsServiceImpl() {
-                };
+        return new TransferStatementsServiceImpl();
     }
 
     public void registerDefaultDataSource(ServiceExtensionContext context) {
@@ -216,28 +207,7 @@ public class BackendServiceExtension implements ServiceExtension {
 
     @Provider
     public EdcHttpClient createEdcHttpClient(ServiceExtensionContext context) {
-        return new EdcHttpClientImpl(
-                createOkHttpClient(context),
-                createRetryPolicy(context),
-                context.getMonitor()
-        );
-    }
-
-    @Provider
-    public OkHttpClient createOkHttpClient(ServiceExtensionContext context) {
-        return OkHttpClientFactory.create(OkHttpClientConfiguration.Builder.newInstance().build(), okHttpEventListener, context.getMonitor());
-    }
-
-    @Provider
-    public <T> RetryPolicy<T> createRetryPolicy(ServiceExtensionContext context) {
-        var configuration = RetryPolicyConfiguration.Builder.newInstance()
-                .logOnAbort(true)
-                .logOnRetryScheduled(true)
-                .logOnRetry(true)
-                .logOnRetriesExceeded(true)
-                .logOnFailedAttempt(true)
-                .build();
-        return (RetryPolicy<T>) RetryPolicyFactory.create(configuration, context.getMonitor());
+        return new EdcHttpClientImpl(new OkHttpClient(), RetryPolicy.ofDefaults(), context.getMonitor());
     }
 
     public int runQuery(String query, Connection connection) {
