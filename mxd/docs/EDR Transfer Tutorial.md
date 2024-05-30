@@ -7,7 +7,7 @@ simply request an API token to Alice's proxy, and start sucking data out of it.
 We don't even need to worry about token expiry - the EDR API has a little gizmo that automatically refreshes the token
 if it nears expiry.
 
-A detailed documentation about the EDR API is available [here](https://github.com/eclipse-tractusx/tractusx-edc/blob/main/docs/samples/edr-api-overview/edr-api-overview.md).
+A detailed documentation about the EDR API is available [here](https://github.com/eclipse-tractusx/tractusx-edc/blob/main/docs/usage/management-api-walkthrough/07_edrs.md).
 
 The EDR API is a tiny wrapper on top of the contract negotiation and transfer state machines. With a single request the system will track the EDR negotiation
 for us, and it will store it locally for future usage. The API for starting a new EDR negotiation is similar to the contract negotiation one.
