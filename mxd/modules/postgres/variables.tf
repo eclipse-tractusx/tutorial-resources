@@ -17,18 +17,16 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-variable "database-name" {
-  description = "Name for the Postgres database. Cannot contain special characters"
-}
-
-variable "database-username" {
-  description = "Database username"
-}
-
-variable "database-password" {
-  description = "Database password"
+variable "instance-name" {
+  description = "Name for the Postgres instance, must be unique for each postgres instances"
+  default     = "common"
 }
 
 variable "database-port" {
   default = 5432
+}
+
+variable "init-sql-configs" {
+  description = "Name of config maps with init sql scripts"
+  default     = []
 }

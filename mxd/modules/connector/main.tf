@@ -24,14 +24,6 @@ module "minio" {
   minio-password    = var.minio-config.minio-password
 }
 
-module "postgres" {
-  source            = "../postgres"
-  database-name     = var.database-name
-  database-username = var.database-credentials.user
-  database-password = var.database-credentials.password
-  database-port     = var.database-port
-}
-
 resource "helm_release" "connector" {
   name              = lower(var.humanReadableName)
   force_update      = true
@@ -158,7 +150,7 @@ resource "tls_private_key" "transfer_proxy_privatekey" {
 locals {
   aes_key_b64                     = base64encode(random_string.aes_key_raw.result)
   client_secret                   = base64encode(random_string.kc_client_secret.result)
-  jdbcUrl                         = "jdbc:postgresql://${module.postgres.database-url}/${var.database-name}"
+  jdbcUrl                         = "jdbc:postgresql://${var.database-host}:${var.database-port}/${var.database-name}"
   edc-blobstore-endpoint-template = "${var.azure-url}/%s"
   azure-sas-token                 = jsonencode({ edctype = "dataspaceconnector:azuretoken", sas = var.azure-account-key-sas })
   minio-url                       = module.minio.minio-url

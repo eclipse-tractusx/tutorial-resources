@@ -45,7 +45,7 @@ resource "kubernetes_deployment" "postgres" {
 
           env_from {
             config_map_ref {
-              name = kubernetes_config_map.postgres-config.metadata[0].name
+              name = kubernetes_config_map.postgres-env.metadata[0].name
             }
           }
           port {
@@ -53,9 +53,14 @@ resource "kubernetes_deployment" "postgres" {
             name           = "postgres-port"
           }
 
-          volume_mount {
-            mount_path = "/docker-entrypoint-initdb.d/"
-            name       = "pg-initdb"
+          dynamic "volume_mount" {
+            for_each = toset(var.init-sql-configs)
+            content {
+              mount_path = "/docker-entrypoint-initdb.d/${volume_mount.value}.sql"
+              name       = volume_mount.value
+              sub_path   = "${volume_mount.value}.sql"
+              read_only  = true
+            }
           }
 
           # Uncomment this to assign (more) resources
@@ -78,10 +83,14 @@ resource "kubernetes_deployment" "postgres" {
             timeout_seconds   = 30
           }
         }
-        volume {
-          name = "pg-initdb"
-          config_map {
-            name = kubernetes_config_map.postgres-config.metadata.0.name
+
+        dynamic "volume" {
+          for_each = toset(var.init-sql-configs)
+          content {
+            name = volume.value
+            config_map {
+              name = volume.value
+            }
           }
         }
       }
@@ -89,24 +98,15 @@ resource "kubernetes_deployment" "postgres" {
   }
 }
 
-# ConfigMap that contains SQL statements to initialize the DB, create a "miw" DB, etc.
-resource "kubernetes_config_map" "postgres-config" {
+resource "kubernetes_config_map" "postgres-env" {
   metadata {
-    name = "${local.app-name}-initdb-config"
+    name = "${local.app-name}-env"
   }
 
   ## Create databases for keycloak and MIW, create users and assign privileges
   data = {
     POSTGRES_USER     = "postgres"
     POSTGRES_PASSWORD = "postgres"
-    "init.sql"        = <<EOT
-      CREATE DATABASE ${var.database-name};
-      CREATE USER ${var.database-username} WITH ENCRYPTED PASSWORD '${var.database-password}';
-      GRANT ALL PRIVILEGES ON DATABASE ${var.database-name} TO ${var.database-username};
-      \c ${var.database-name}
-      GRANT ALL ON SCHEMA public TO ${var.database-username};
-
-    EOT
   }
 }
 
@@ -128,7 +128,7 @@ resource "kubernetes_service" "pg-service" {
 }
 
 locals {
-  app-name = "postgres-${var.database-name}"
+  app-name = "${var.instance-name}-postgres"
   pg-image = "postgres:15.3-alpine3.18"
   db-ip    = kubernetes_service.pg-service.spec.0.cluster_ip
   db-url   = "${local.db-ip}:${var.database-port}"
