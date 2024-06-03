@@ -694,14 +694,14 @@ npm/npmjs/@angular-devkit/build-angular/17.3.5, MIT, restricted, clearlydefined
 npm/npmjs/@angular-devkit/build-webpack/0.1703.5, MIT, approved, clearlydefined
 npm/npmjs/@angular-devkit/core/17.3.5, MIT, approved, clearlydefined
 npm/npmjs/@angular-devkit/schematics/17.3.5, MIT, approved, clearlydefined
-npm/npmjs/@angular-eslint/builder/17.4.1, , restricted, clearlydefined
+npm/npmjs/@angular-eslint/builder/17.4.1, MIT, restricted, clearlydefined
 npm/npmjs/@angular-eslint/bundled-angular-compiler/17.3.0, MIT, approved, clearlydefined
-npm/npmjs/@angular-eslint/bundled-angular-compiler/17.4.1, , restricted, clearlydefined
-npm/npmjs/@angular-eslint/eslint-plugin-template/17.4.1, , restricted, clearlydefined
-npm/npmjs/@angular-eslint/eslint-plugin/17.4.1, , restricted, clearlydefined
-npm/npmjs/@angular-eslint/schematics/17.4.1, , restricted, clearlydefined
+npm/npmjs/@angular-eslint/bundled-angular-compiler/17.4.1, MIT, approved, clearlydefined
+npm/npmjs/@angular-eslint/eslint-plugin-template/17.4.1, MIT, approved, clearlydefined
+npm/npmjs/@angular-eslint/eslint-plugin/17.4.1, MIT, approved, clearlydefined
+npm/npmjs/@angular-eslint/schematics/17.4.1, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/template-parser/17.3.0, MIT, approved, clearlydefined
-npm/npmjs/@angular-eslint/utils/17.4.1, , restricted, clearlydefined
+npm/npmjs/@angular-eslint/utils/17.4.1, MIT, approved, clearlydefined
 npm/npmjs/@angular/animations/17.3.5, MIT, approved, clearlydefined
 npm/npmjs/@angular/cdk/17.3.5, MIT, approved, clearlydefined
 npm/npmjs/@angular/cli/17.3.5, MIT, approved, clearlydefined
@@ -1037,22 +1037,22 @@ npm/npmjs/@types/serve-static/1.15.7, MIT, approved, #9188
 npm/npmjs/@types/sockjs/0.3.36, MIT, approved, #10984
 npm/npmjs/@types/ws/8.5.10, MIT, approved, #6016
 npm/npmjs/@typescript-eslint/eslint-plugin/7.10.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14836
-npm/npmjs/@typescript-eslint/parser/7.7.0, BSD-2-Clause, approved, clearlydefined
+npm/npmjs/@typescript-eslint/parser/7.11.0, BSD-2-Clause, approved, clearlydefined
 npm/npmjs/@typescript-eslint/scope-manager/7.10.0, MIT, approved, clearlydefined
-npm/npmjs/@typescript-eslint/scope-manager/7.7.0, MIT, approved, clearlydefined
+npm/npmjs/@typescript-eslint/scope-manager/7.11.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/scope-manager/7.8.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/type-utils/7.10.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/type-utils/7.8.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/types/7.10.0, MIT, approved, clearlydefined
-npm/npmjs/@typescript-eslint/types/7.7.0, MIT, approved, clearlydefined
+npm/npmjs/@typescript-eslint/types/7.11.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/types/7.8.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/typescript-estree/7.10.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14838
-npm/npmjs/@typescript-eslint/typescript-estree/7.7.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14390
+npm/npmjs/@typescript-eslint/typescript-estree/7.11.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #15052
 npm/npmjs/@typescript-eslint/typescript-estree/7.8.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14612
 npm/npmjs/@typescript-eslint/utils/7.10.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14837
 npm/npmjs/@typescript-eslint/utils/7.8.0, BSD-2-Clause AND MIT AND (BSD-2-Clause AND ISC AND MIT), approved, #14613
 npm/npmjs/@typescript-eslint/visitor-keys/7.10.0, MIT, approved, clearlydefined
-npm/npmjs/@typescript-eslint/visitor-keys/7.7.0, MIT, approved, clearlydefined
+npm/npmjs/@typescript-eslint/visitor-keys/7.11.0, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/visitor-keys/7.8.0, MIT, approved, clearlydefined
 npm/npmjs/@ungap/structured-clone/1.2.0, ISC, approved, clearlydefined
 npm/npmjs/@vitejs/plugin-basic-ssl/1.1.0, MIT, restricted, clearlydefined
