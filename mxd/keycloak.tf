@@ -109,9 +109,9 @@ resource "kubernetes_config_map" "keycloak_env" {
   data = {
     KC_DB                      = "postgres"
     KC_DB_SCHEMA               = "public"
-    KC_DB_PASSWORD             = local.kc-pg-pwd
-    KC_DB_USERNAME             = var.keycloak-db-user
-    KC_DB_URL                  = "jdbc:postgresql://${local.pg-host}/${var.keycloak-database}"
+    KC_DB_PASSWORD             = local.databases.keycloak.database-password
+    KC_DB_USERNAME             = local.databases.keycloak.database-username
+    KC_DB_URL                  = "jdbc:postgresql://${local.keycloak-postgres.database-url}/${local.databases.keycloak.database-name}"
     KEYCLOAK_MIW_PUBLIC_CLIENT = "miw_public"
     KEYCLOAK_ADMIN             = "admin"
     KEYCLOAK_ADMIN_PASSWORD    = "admin"

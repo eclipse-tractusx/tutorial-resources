@@ -79,12 +79,12 @@ resource "kubernetes_config_map" "miw-config" {
     name = "miw-config"
   }
   data = {
-    DB_HOST      = local.pg-ip
+    DB_HOST      = local.miw-postgres.database-host
     DB_PORT      = var.postgres-port
     DB_USER      = "postgres"
-    DB_NAME      = var.miw-database
-    DB_USER_NAME = var.miw-db-user
-    DB_PASSWORD  = local.miw-pg-pwd
+    DB_NAME      = local.databases.miw.database-name
+    DB_USER_NAME = local.databases.miw.database-username
+    DB_PASSWORD  = local.databases.miw.database-password
 
     KEYCLOAK_CLIENT_ID              = "miw_private_client"
     ENCRYPTION_KEY                  = "Woh9waid4Ei5eez0aitieghoow9so4oe"

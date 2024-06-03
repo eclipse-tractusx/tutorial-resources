@@ -35,7 +35,6 @@ variable "participantId" {
 
 variable "database-host" {
   description = "IP address (ClusterIP) or host name of the postgres database host"
-
 }
 variable "database-port" {
   default     = 5432
