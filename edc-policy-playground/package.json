@@ -25,7 +25,7 @@
     "@codemirror/state": "^6.4.0",
     "codemirror": "^6.0.1",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0",
+    "tslib": "^2.6.3",
     "zone.js": "~0.14.0"
   },
   "devDependencies": {
