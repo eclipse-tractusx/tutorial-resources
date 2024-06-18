@@ -23,7 +23,6 @@ import org.eclipse.edc.sql.QueryExecutor;
 import org.eclipse.edc.sql.store.AbstractSqlStore;
 import org.eclipse.edc.transaction.datasource.spi.DataSourceRegistry;
 import org.eclipse.edc.transaction.spi.TransactionContext;
-import org.eclipse.tractusx.mxd.backendservice.entity.Content;
 import org.eclipse.tractusx.mxd.backendservice.entity.ContentResponse;
 import org.eclipse.tractusx.mxd.backendservice.statements.ContentStatementsService;
 import org.jetbrains.annotations.NotNull;
@@ -40,8 +39,8 @@ import static java.lang.String.format;
 
 public class SqlContentStoreServiceImpl extends AbstractSqlStore implements ContentStoreService {
 
-    private ContentStatementsService statements;
-    private Monitor monitor;
+    private final ContentStatementsService statements;
+    private final Monitor monitor;
 
     public SqlContentStoreServiceImpl(DataSourceRegistry dataSourceRegistry,
                                       String dataSourceName,
@@ -88,15 +87,12 @@ public class SqlContentStoreServiceImpl extends AbstractSqlStore implements Cont
 
     @Override
     public String save(Object content) {
-        String urlResponse = "";
         try (var connection = getConnection()) {
-            urlResponse = insertInternal(connection, content).toString();
-
+            return insertInternal(connection, content).toString();
         } catch (Exception exception) {
             monitor.warning(exception.getMessage());
             throw new EdcPersistenceException(exception.getMessage(), exception);
         }
-        return urlResponse;
     }
 
     private UUID insertInternal(Connection connection, Object content) {
@@ -104,37 +100,26 @@ public class SqlContentStoreServiceImpl extends AbstractSqlStore implements Cont
             monitor.info(toJson(content));
             UUID uuid = UUID.randomUUID();
             int affectedRow = queryExecutor.execute(connection, statements.getInsertTemplate(), uuid, toJson(content), new Date(), new Date());
-            if (affectedRow > 0) {
+            if (affectedRow > 0)
                 return uuid;
-            }
+            else
+                throw new EdcPersistenceException("Failed to insert content. 0 rows were affected.");
         } catch (Exception exception) {
             monitor.warning(exception.getMessage());
             throw new EdcPersistenceException(exception.getMessage(), exception);
         }
-        return null;
     }
 
     private ContentResponse mapResultSet(ResultSet resultSet) throws Exception {
 
-        ContentResponse content = new ContentResponse.Builder()
+        return new ContentResponse.Builder()
                 .setId(resultSet.getString(statements.getIdColumn()))
                 .setData(resultSet.getString(statements.getAssetColumn()))
                 .build();
-        return content;
     }
 
     private ContentResponse findContentById(Connection connection, String id) {
         var sql = statements.getFindByTemplate();
         return queryExecutor.single(connection, false, this::mapResultSet, sql, id);
-    }
-
-    @Override
-    public StoreResult<Void> update(Content definition) {
-        return null;
-    }
-
-    @Override
-    public StoreResult<Content> deleteById(String id) {
-        return null;
     }
 }

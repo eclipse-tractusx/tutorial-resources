@@ -30,7 +30,7 @@ public interface PostgresqlEndToEndInstance {
     String DB_NAME = "backendservicedb";
     PostgreSQLContainer<?> postgreSQLContainer =
             new PostgreSQLContainer<>("postgres:latest")
-                    .withExposedPorts(new Integer[]{Integer.valueOf(PORT)})
+                    .withExposedPorts(Integer.valueOf(PORT))
                     .withUsername(USER)
                     .withPassword(PASSWORD);
 

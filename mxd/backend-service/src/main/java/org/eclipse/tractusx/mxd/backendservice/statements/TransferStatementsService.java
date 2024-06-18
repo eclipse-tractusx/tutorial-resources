@@ -44,15 +44,9 @@ public interface TransferStatementsService extends SqlStatements {
         return "updateddate";
     }
 
-    String getDeleteByIdTemplate();
-
     String getFindByTemplate();
 
     String getInsertTemplate();
-
-    String getCountTemplate();
-
-    String getUpdateTemplate();
 
     SqlQueryStatement createQuery(QuerySpec querySpec);
 

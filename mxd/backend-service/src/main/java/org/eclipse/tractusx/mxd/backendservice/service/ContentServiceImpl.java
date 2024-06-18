@@ -19,10 +19,13 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.ext.Provider;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.query.QuerySpec;
+import org.eclipse.edc.spi.result.ServiceResult;
 import org.eclipse.edc.spi.result.StoreResult;
 import org.eclipse.tractusx.mxd.backendservice.entity.ContentResponse;
 import org.eclipse.tractusx.mxd.backendservice.store.ContentStoreService;
 import org.eclipse.tractusx.mxd.util.RandomWordUtil;
+
+import java.util.List;
 
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
@@ -42,13 +45,14 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
-    public String getAllContent() {
-        return contentStoreService.findAll(new QuerySpec()).map(ContentResponse::getData).toList().toString();
+    public List<String> getAllContent() {
+        return contentStoreService.findAll(new QuerySpec()).map(ContentResponse::getData).toList();
     }
 
     @Override
-    public StoreResult<ContentResponse> getContent(String contentId) {
-        return contentStoreService.findById(contentId);
+    public ServiceResult<ContentResponse> getContent(String contentId) {
+        StoreResult<ContentResponse> response = contentStoreService.findById(contentId);
+        return ServiceResult.success(response.getContent());
     }
 
     @Override

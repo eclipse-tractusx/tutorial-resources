@@ -14,16 +14,18 @@
 
 package org.eclipse.tractusx.mxd.backendservice.service;
 
-import org.eclipse.edc.spi.result.StoreResult;
+import org.eclipse.edc.spi.result.ServiceResult;
 import org.eclipse.tractusx.mxd.backendservice.entity.ContentResponse;
+
+import java.util.List;
 
 public interface ContentService {
 
     String create(Object content);
 
-    String getAllContent();
+    List<String> getAllContent();
 
-    StoreResult<ContentResponse> getContent(String contentId);
+    ServiceResult<ContentResponse> getContent(String contentId);
 
     String getRandomContent();
 

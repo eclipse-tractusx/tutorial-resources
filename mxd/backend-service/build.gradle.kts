@@ -13,7 +13,6 @@
  ********************************************************************************/
 
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
-import com.github.jengelman.gradle.plugins.shadow.ShadowJavaPlugin
 
 plugins {
     id("java")
@@ -37,38 +36,20 @@ application {
 dependencies {
     implementation(libs.restAssured)
     implementation(libs.edc.configuration.filesystem)
-    implementation(libs.edc.boot)
     implementation(libs.edc.json.ld)
-    implementation(libs.edc.web.spi)
-    implementation(libs.edc.api.core)
-    implementation(libs.edc.core)
     implementation(libs.edc.http)
     implementation(libs.edc.http.lib)
-    implementation(libs.edc.http.spi)
-    implementation(libs.edc.jersey.core)
-    implementation(libs.swagger.core)
-    implementation(libs.edc.transaction.spi)
     implementation(libs.edc.connector.core)
     implementation(libs.edc.sql.core)
     implementation(libs.apache.commons)
     implementation(libs.postgresql)
-    implementation(libs.edc.transform)
-    implementation(libs.edc.transaction)
-    implementation(libs.edc.util)
+    implementation(libs.edc.boot)
 
-    testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter.params)
-    testImplementation(libs.restAssured)
     testImplementation(libs.assertj)
     testImplementation(libs.edc.junit)
-    implementation(libs.edc.junit.base)
-    testImplementation(libs.testng)
-    testImplementation(libs.edc.sql.core)
-    testImplementation(libs.test.containers)
     testImplementation(libs.postgres.containers)
-
     testImplementation(testFixtures(libs.edc.sql.core))
-    testImplementation(libs.edc.core)
 
 }
 tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
@@ -87,10 +68,10 @@ tasks {
 
 tasks.register("printClasspath") {
     doLast {
-        println("${sourceSets["main"].runtimeClasspath.asPath}");
+        println("${sourceSets["main"].runtimeClasspath.asPath}")
     }
 }
-// this task copies some legal docs into the build folder, so we can easily copy them into the docker images
+
 val copyDockerFile = tasks.create("copyDockerFile", Copy::class) {
     from(project.projectDir)
     into("${project.buildDir}/docker")

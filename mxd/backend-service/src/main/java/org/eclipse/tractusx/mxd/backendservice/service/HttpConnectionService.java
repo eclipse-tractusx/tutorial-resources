@@ -14,31 +14,27 @@
 
 package org.eclipse.tractusx.mxd.backendservice.service;
 
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.eclipse.edc.spi.http.EdcHttpClient;
+import org.eclipse.edc.http.spi.EdcHttpClient;
 import org.eclipse.edc.spi.monitor.Monitor;
+import org.eclipse.edc.spi.persistence.EdcPersistenceException;
 import org.eclipse.tractusx.mxd.backendservice.entity.Transfer;
 
 import java.io.IOException;
 
 public class HttpConnectionService {
 
-    private EdcHttpClient httpClient;
+    private final EdcHttpClient httpClient;
 
-    private Monitor monitor;
+    private final Monitor monitor;
 
     public HttpConnectionService(EdcHttpClient httpClient, Monitor monitor) {
         this.httpClient = httpClient;
         this.monitor = monitor;
     }
 
-    public HttpConnectionService() {
-    }
-
     public String getUrlAssets(Transfer receivedModel, Monitor monitor) {
-        var res = "";
         monitor.info("getUrlAssets " + receivedModel);
         Request getRequest = new Request.Builder()
                 .url(receivedModel.getEndpoint())
@@ -52,13 +48,15 @@ public class HttpConnectionService {
                     return response.body().string();
                 } else {
                     monitor.warning("Response body is null");
+                    throw new EdcPersistenceException("Response body is null");
                 }
             } else {
                 monitor.warning("HTTP request failed with status code: " + response.code());
+                throw new EdcPersistenceException("HTTP request failed with status code: " + response.code());
             }
         } catch (IOException e) {
             monitor.warning("IOException occurred: " + e.getMessage());
+            throw new EdcPersistenceException("IOException occurred: " + e.getMessage());
         }
-        return res;
     }
 }

@@ -79,7 +79,7 @@ public class TransferApiController {
         return Optional.of(transferId)
                 .map(id -> transferService.getTransfer(transferId))
                 .map(transfer -> transfer.getContent() != null ? transfer.getContent().getAsset() : Converter.toJson(transfer.getFailure(), objectMapper))
-                .orElse(Constants.DEFAULTERRORMESSAGE);
+                .orElse(Constants.DEFAULT_ERROR_MESSAGE);
     }
 
     @GET
@@ -88,6 +88,6 @@ public class TransferApiController {
         return Optional.of(transferId)
                 .map(id -> transferService.getTransfer(transferId))
                 .map(transfer -> transfer.getContent() != null ? transfer.getContent().getContents() : Converter.toJson(transfer.getFailure(), objectMapper))
-                .orElse(Constants.DEFAULTERRORMESSAGE);
+                .orElse(Constants.DEFAULT_ERROR_MESSAGE);
     }
 }

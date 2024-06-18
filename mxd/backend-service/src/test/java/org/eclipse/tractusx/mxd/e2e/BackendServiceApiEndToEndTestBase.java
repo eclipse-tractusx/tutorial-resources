@@ -43,9 +43,7 @@ public abstract class BackendServiceApiEndToEndTestBase {
         String port = configs.get("web.http.port").toString();
         String host = configs.get("edc.hostname").toString();
         String path = configs.get("web.http.path").toString();
-        URI uri = URI.create("http://" + host + ":" + port + path);
-
-        return uri;
+        return URI.create("http://" + host + ":" + port + path);
     }
 
 }
