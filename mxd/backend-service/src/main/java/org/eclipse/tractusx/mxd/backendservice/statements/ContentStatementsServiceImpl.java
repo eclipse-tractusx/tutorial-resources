@@ -23,11 +23,6 @@ import static java.lang.String.format;
 public class ContentStatementsServiceImpl implements ContentStatementsService {
 
     @Override
-    public String getDeleteByIdTemplate() {
-        return executeStatement().delete(getContentTable(), getIdColumn());
-    }
-
-    @Override
     public String getFindByTemplate() {
         return format("SELECT * FROM %s WHERE %s = ?", getContentTable(), getIdColumn());
     }
@@ -43,32 +38,8 @@ public class ContentStatementsServiceImpl implements ContentStatementsService {
     }
 
     @Override
-    public String getCountTemplate() {
-        return format("SELECT COUNT (%s) FROM %s WHERE %s = ?",
-                getIdColumn(),
-                getContentTable(),
-                getIdColumn());
-    }
-
-    @Override
-    public String getUpdateTemplate() {
-        return executeStatement()
-                .column(getIdColumn())
-                .jsonColumn(getAssetColumn())
-                .column(getCreatedDateColumn())
-                .column(getUpdatedDateColumn())
-                .update(getContentTable(), getIdColumn());
-
-    }
-
-    @Override
     public SqlQueryStatement createQuery(QuerySpec querySpec) {
         var select = format("SELECT * FROM %s", getContentTable());
-        //return new SqlQueryStatement(select, querySpec, null);
         return new SqlQueryStatement(select, querySpec, null, new PostgresqlOperatorTranslator());
-    }
-
-    protected String getSelectStatement() {
-        return "SELECT * FROM " + getContentTable();
     }
 }

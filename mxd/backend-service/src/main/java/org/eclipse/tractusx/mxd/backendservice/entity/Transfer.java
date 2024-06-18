@@ -21,6 +21,8 @@ import org.eclipse.edc.spi.entity.Entity;
 
 import java.util.Map;
 
+import static java.util.Objects.requireNonNull;
+
 @JsonDeserialize(builder = Transfer.Builder.class)
 public class Transfer extends Entity {
 
@@ -98,6 +100,10 @@ public class Transfer extends Entity {
         @Override
         public Transfer build() {
             super.build();
+            requireNonNull(entity.id);
+            requireNonNull(entity.endpoint);
+            requireNonNull(entity.authKey);
+            requireNonNull(entity.authCode);
             return entity;
         }
     }

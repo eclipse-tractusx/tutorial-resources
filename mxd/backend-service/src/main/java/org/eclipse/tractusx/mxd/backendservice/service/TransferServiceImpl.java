@@ -17,7 +17,7 @@ package org.eclipse.tractusx.mxd.backendservice.service;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.ext.Provider;
-import org.eclipse.edc.spi.http.EdcHttpClient;
+import org.eclipse.edc.http.spi.EdcHttpClient;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.query.QuerySpec;
 import org.eclipse.edc.spi.result.ServiceResult;
@@ -34,13 +34,13 @@ import java.util.stream.Stream;
 @Produces(MediaType.APPLICATION_JSON)
 public class TransferServiceImpl implements TransferService {
 
-    private TransferStoreService transferStoreService;
+    private final TransferStoreService transferStoreService;
 
-    private EdcHttpClient edcHttpClient;
+    private final EdcHttpClient edcHttpClient;
 
-    private Monitor monitor;
+    private final Monitor monitor;
 
-    private HttpConnectionService httpConnectionService;
+    private final HttpConnectionService httpConnectionService;
 
     public TransferServiceImpl(TransferStoreService transferStoreService, EdcHttpClient edcHttpClient, Monitor monitor, HttpConnectionService httpConnectionService) {
         this.transferStoreService = transferStoreService;
@@ -62,25 +62,28 @@ public class TransferServiceImpl implements TransferService {
         Stream<TransferResponse> transferResponse = this.transferStoreService.findAll(querySpec);
         List<TransferResponse> response = new ArrayList<TransferResponse>();
         transferResponse.forEach(data -> {
-            TransferResponse transferResp = new TransferResponse().builder()
+            TransferResponse transferResp = TransferResponse.builder()
                     .transferID(data.getTransferID())
                     .asset(data.getAsset())
                     .contents(data.getContents())
                     .updatedDate(data.getUpdatedDate())
-                    .createdDate(data.getCreatedDate()).build();
+                    .createdDate(data.getCreatedDate())
+                    .build();
             response.add(transferResp);
         });
         return response;
     }
 
     @Override
-    public StoreResult<TransferResponse> getTransfer(String transferId) {
-        return this.transferStoreService.findById(transferId);
+    public ServiceResult<TransferResponse> getTransfer(String transferId) {
+        StoreResult<TransferResponse> response = this.transferStoreService.findById(transferId);
+        return ServiceResult.success(response.getContent());
     }
 
     @Override
-    public StoreResult<TransferResponse> getTransferContent(String transferId) {
-        return this.transferStoreService.findById(transferId);
+    public ServiceResult<TransferResponse> getTransferContent(String transferId) {
+        StoreResult<TransferResponse> response = this.transferStoreService.findById(transferId);
+        return ServiceResult.success(response.getContent());
     }
 
 }

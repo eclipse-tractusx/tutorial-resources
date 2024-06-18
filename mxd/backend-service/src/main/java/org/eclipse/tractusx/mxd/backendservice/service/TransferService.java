@@ -16,7 +16,6 @@ package org.eclipse.tractusx.mxd.backendservice.service;
 
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.result.ServiceResult;
-import org.eclipse.edc.spi.result.StoreResult;
 import org.eclipse.tractusx.mxd.backendservice.entity.Transfer;
 import org.eclipse.tractusx.mxd.backendservice.entity.TransferResponse;
 
@@ -28,8 +27,8 @@ public interface TransferService {
 
     List<TransferResponse> getAllTransfer();
 
-    StoreResult<TransferResponse> getTransfer(String transferId);
+    ServiceResult<TransferResponse> getTransfer(String transferId);
 
-    StoreResult<TransferResponse> getTransferContent(String transferId);
+    ServiceResult<TransferResponse> getTransferContent(String transferId);
 
 }

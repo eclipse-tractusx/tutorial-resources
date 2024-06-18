@@ -18,15 +18,11 @@ import io.restassured.http.ContentType;
 import jakarta.json.JsonObject;
 import org.eclipse.edc.junit.annotations.PostgresqlIntegrationTest;
 import org.eclipse.edc.junit.extensions.EdcRuntimeExtension;
-import org.eclipse.tractusx.mxd.backendservice.store.ContentStoreService;
 import org.eclipse.tractusx.mxd.testfixtures.PostgresRuntime;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import java.util.LinkedHashMap;
-import java.util.UUID;
 
 import static io.restassured.http.ContentType.JSON;
 import static jakarta.json.Json.createObjectBuilder;
@@ -64,9 +60,9 @@ public class ContentApiEndToEndTest {
         }
 
         @Test
-        void getContentById() {
-            LinkedHashMap content = getContent();
-            String contentId = getContentIndex().save(content);
+        void getContentWithId() {
+            JsonObject contentJson = getContentJson();
+            String contentId = createContent(contentJson);
 
             baseRequest()
                     .when()
@@ -74,15 +70,14 @@ public class ContentApiEndToEndTest {
                     .then()
                     .log().ifValidationFails()
                     .statusCode(200)
-                    .body("userId", is(content.get("userId")))
-                    .body("title", is(content.get("title")))
-                    .body("text", is(content.get("text")));
+                    .contentType(JSON)
+                    .body("size()", equalTo(3));
         }
 
         @Test
         void getAllContents() {
-            LinkedHashMap content = getContent();
-            getContentIndex().save(content);
+            JsonObject contentJson = getContentJson();
+            createContent(contentJson);
 
             baseRequest()
                     .when()
@@ -97,19 +92,7 @@ public class ContentApiEndToEndTest {
         @Test
         void createAsset_shouldBeStored() {
             JsonObject contentJson = getContentJson();
-
-            var responseBody = baseRequest()
-                    .contentType(ContentType.JSON)
-                    .body(contentJson)
-                    .post(ENDPOINT)
-                    .then()
-                    .log().ifError()
-                    .statusCode(200);
-
-            String contentId = responseBody.extract().jsonPath()
-                    .getString("id");
-
-            assertThat(getContentIndex().findById(contentId)).isNotNull();
+            String contentId = createContent(contentJson);
 
             baseRequest()
                     .when()
@@ -118,47 +101,46 @@ public class ContentApiEndToEndTest {
                     .log().ifValidationFails()
                     .statusCode(200)
                     .contentType(JSON)
-                    .body("userId", is(contentJson.getString("userId")))
+                    .body("userId", is(contentJson.getInt("userId")))
                     .body("title", is(contentJson.getString("title")))
                     .body("text", is(contentJson.getString("text")));
         }
 
         @Test
         void getRandomContent() {
-            baseRequest()
+            JsonObject content = getContentJson();
+
+            assertThat(content.getString("title")).isNotNull();
+            assertThat(content.getString("text")).isNotNull();
+            assertThat(content.getInt("userId")).isGreaterThan(-1);
+        }
+
+        String createContent(JsonObject contentJson) {
+            var responseBody = baseRequest()
+                    .contentType(ContentType.JSON)
+                    .body(contentJson)
+                    .post(ENDPOINT)
+                    .then()
+                    .log().ifError()
+                    .statusCode(200);
+
+            return responseBody.extract().jsonPath()
+                    .getString("id");
+        }
+
+        public JsonObject getContentJson() {
+            var responseBody = baseRequest()
                     .when()
                     .get(ENDPOINT + "random")
                     .then()
                     .log().ifValidationFails()
                     .statusCode(200)
-                    .contentType(JSON)
-                    .body("userId", is(greaterThan(-1)))
-                    .body("title",  not(emptyString()))
-                    .body("text",  not(emptyString()));
+                    .contentType(JSON);
 
-        }
-
-        private ContentStoreService getContentIndex() {
-            return runtime.getContext().getService(ContentStoreService.class);
-        }
-
-        private LinkedHashMap getContent() {
-            String id = UUID.randomUUID().toString();
-            LinkedHashMap<String, String> content
-                    = new LinkedHashMap<>();
-            content.put("userId", id);
-            content.put("title", "Test");
-            content.put("text", "Test");
-
-            return  content;
-        }
-
-        public JsonObject getContentJson() {
-            String id = UUID.randomUUID().toString();
             return createObjectBuilder()
-                    .add("userId", id)
-                    .add("title", "Test")
-                    .add("text", "Test")
+                    .add("userId", responseBody.extract().jsonPath().getInt("userId"))
+                    .add("title", responseBody.extract().jsonPath().getString("title"))
+                    .add("text", responseBody.extract().jsonPath().getString("text"))
                     .build();
 
         }

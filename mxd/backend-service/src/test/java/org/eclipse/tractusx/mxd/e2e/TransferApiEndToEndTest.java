@@ -14,27 +14,23 @@
 
 package org.eclipse.tractusx.mxd.e2e;
 
-import io.restassured.http.ContentType;
+import io.restassured.response.ValidatableResponse;
 import jakarta.json.JsonObject;
 import org.eclipse.edc.junit.annotations.PostgresqlIntegrationTest;
 import org.eclipse.edc.junit.extensions.EdcRuntimeExtension;
-import org.eclipse.tractusx.mxd.backendservice.entity.Transfer;
-import org.eclipse.tractusx.mxd.backendservice.store.ContentStoreService;
-import org.eclipse.tractusx.mxd.backendservice.store.TransferStoreService;
 import org.eclipse.tractusx.mxd.testfixtures.PostgresRuntime;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import static io.restassured.http.ContentType.JSON;
 import static jakarta.json.Json.createObjectBuilder;
 import static org.eclipse.tractusx.mxd.testfixtures.PostgresqlEndToEndInstance.createContainer;
 import static org.eclipse.tractusx.mxd.testfixtures.PostgresqlEndToEndInstance.destroyContainer;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
 public class TransferApiEndToEndTest {
@@ -59,7 +55,8 @@ public class TransferApiEndToEndTest {
 
     abstract static class Tests extends BackendServiceApiEndToEndTestBase {
 
-        private final static String ENDPOINT = "/v1/transfers/";
+        private final static String TRANSFER_API_ENDPOINT = "/v1/transfers/";
+        private final static String CONTENT_API_ENDPOINT = "/v1/contents/";
 
         Tests(EdcRuntimeExtension runtime) {
             super(runtime);
@@ -67,85 +64,83 @@ public class TransferApiEndToEndTest {
 
         @Test
         void createTransfer_shouldBeStored() {
-            LinkedHashMap content = getContent();
-            String contentId = getContentIndex().save(content);
-            String contentUrl = getBaseUri().toString() + "/v1/contents/" + contentId;
+            String contentId = createContent(createContentJson());
+            String contentUrl = getBaseUri().toString() + CONTENT_API_ENDPOINT + contentId;
 
-            String id = UUID.randomUUID().toString();
-            JsonObject transferJson = getTransferJson(id, contentUrl);
+            String transferId = UUID.randomUUID().toString();
+            JsonObject transferJson = getTransferJson(transferId, contentUrl);
 
-            baseRequest()
-                    .contentType(ContentType.JSON)
-                    .body(transferJson)
-                    .post(ENDPOINT)
-                    .then()
-                    .statusCode(200)
-                    .body("id", is(id))
-                    .body("authCode", is(transferJson.getString("authCode")))
-                    .body("authKey", is(transferJson.getString("authKey")))
-                    .body("endpoint", is(transferJson.getString("endpoint")));
+            var responseBody = createTransfer(transferJson);
 
-            Map headers = Map.of(
-                    "authCode", transferJson.getString("authCode"),
-                    "authKey", transferJson.getString("authKey")
-            );
-
-            baseRequest()
-                    .headers(headers)
-                    .get(ENDPOINT + id + "/contents")
-                    .then()
-                    .log().ifValidationFails()
-                    .statusCode(200)
-                    .contentType(JSON)
-                    .body("userId", is(content.get("userId")))
-                    .body("title", is(content.get("title")))
-                    .body("text", is(content.get("text")));
+            responseBody
+            .body("id", is(transferId))
+            .body("authCode", is(transferJson.getString("authCode")))
+            .body("authKey", is(transferJson.getString("authKey")))
+            .body("endpoint", is(transferJson.getString("endpoint")));
         }
 
         @Test
         void getTransferWithId() {
-            LinkedHashMap content = getContent();
-            String contentId = getContentIndex().save(content);
-            String contentUrl = getBaseUri().toString() + "/v1/contents/" + contentId;
+            String contentId = createContent(createContentJson());
+            String contentUrl = getBaseUri().toString() + CONTENT_API_ENDPOINT + contentId;
 
-            String id = UUID.randomUUID().toString();
-            Transfer transfer = getTransfer(id, contentUrl);
+            String transferId = UUID.randomUUID().toString();
+            JsonObject transferJson = getTransferJson(transferId, contentUrl);
 
-            getTransferIndex().save(transfer, content.toString());
+            createTransfer(transferJson);
 
             baseRequest()
-                    .get(ENDPOINT + id)
+                    .get(TRANSFER_API_ENDPOINT + transferId)
                     .then()
                     .log().ifValidationFails()
                     .statusCode(200)
                     .contentType(JSON)
-                    .body("id", is(id))
-                    .body("authCode", is(transfer.getAuthCode()))
-                    .body("authKey", is(transfer.getAuthKey()))
-                    .body("endpoint", is(transfer.getEndpoint()));
+                    .body("id", is(transferId))
+                    .body("authCode", is(transferJson.getString("authCode")))
+                    .body("authKey", is(transferJson.getString("authKey")))
+                    .body("endpoint", is(transferJson.getString("endpoint")));
+        }
+
+        @Test
+        void getAllTransfer() {
+            String contentId = createContent(createContentJson());
+            String contentUrl = getBaseUri().toString() + CONTENT_API_ENDPOINT + contentId;
+
+            String transferId = UUID.randomUUID().toString();
+            JsonObject transferJson = getTransferJson(transferId, contentUrl);
+
+            createTransfer(transferJson);
+
+            baseRequest()
+                    .get(TRANSFER_API_ENDPOINT + transferId)
+                    .then()
+                    .log().ifValidationFails()
+                    .statusCode(200)
+                    .contentType(JSON)
+                    .body("size()", is(greaterThan(0)));
         }
 
         @Test
         void getAssetContent() {
-            String userId = UUID.randomUUID().toString();
-            JsonObject content = getContentJson(userId);
-            String contentId = getContentIndex().save(content);
-            String contentUrl = getBaseUri().toString() + "/v1/contents/" + contentId;
+            JsonObject contentJson = createContentJson();
+            String contentId = createContent(contentJson);
+            String contentUrl = getBaseUri().toString() + CONTENT_API_ENDPOINT + contentId;
 
-            String id = UUID.randomUUID().toString();
-            Transfer transfer = getTransfer(id, contentUrl);
+            String transferId = UUID.randomUUID().toString();
+            JsonObject transferJson = getTransferJson(transferId, contentUrl);
 
-            getTransferIndex().save(transfer, content.toString());
+            createTransfer(transferJson);
 
             baseRequest()
-                    .get(ENDPOINT + id + "/contents")
+                    .get(TRANSFER_API_ENDPOINT + transferId + "/contents")
                     .then()
                     .log().ifValidationFails()
                     .statusCode(200)
                     .contentType(JSON)
-                    .body("userId", is(userId))
-                    .body("id", is(content.getString("id")))
-                    .body("title", is(content.getString("title")));
+                    .body("userId", is(contentJson.getString("userId")))
+                    .body("title", is(contentJson.getString("title")))
+                    .body("text", is(contentJson.getString("text")))
+            ;
 
         }
 
@@ -158,42 +153,33 @@ public class TransferApiEndToEndTest {
                     .build();
         }
 
-        public JsonObject getContentJson(String id) {
+        ValidatableResponse createTransfer(JsonObject transferJson) {
+            return baseRequest()
+                    .contentType(JSON)
+                    .body(transferJson)
+                    .post(TRANSFER_API_ENDPOINT)
+                    .then()
+                    .statusCode(200);
+        }
+        String createContent(JsonObject contentJson) {
+            var responseBody = baseRequest()
+                    .contentType(JSON)
+                    .body(contentJson)
+                    .post(CONTENT_API_ENDPOINT)
+                    .then()
+                    .log().ifError()
+                    .statusCode(200);
+
+            return responseBody.extract().jsonPath()
+                    .getString("id");
+        }
+
+        JsonObject createContentJson() {
             return createObjectBuilder()
-                    .add("userId", id)
-                    .add("id", "0")
-                    .add("title", "test")
+                    .add("userId", UUID.randomUUID().toString())
+                    .add("title", "Test")
+                    .add("text", "Test")
                     .build();
-
-        }
-
-        private Transfer getTransfer(String id, String endPoint) {
-            return Transfer.Builder
-                    .newInstance()
-                    .id(id)
-                    .authKey("Authorization")
-                    .authCode("100000")
-                    .endpoint(endPoint)
-                    .build();
-        }
-
-        private TransferStoreService getTransferIndex() {
-            return runtime.getContext().getService(TransferStoreService.class);
-        }
-
-        private ContentStoreService getContentIndex() {
-            return runtime.getContext().getService(ContentStoreService.class);
-        }
-
-        private LinkedHashMap getContent() {
-            String id = UUID.randomUUID().toString();
-            LinkedHashMap<String, String> content
-                    = new LinkedHashMap<>();
-            content.put("userId", id);
-            content.put("title", "Test");
-            content.put("text", "Test");
-
-            return  content;
         }
     }
 }

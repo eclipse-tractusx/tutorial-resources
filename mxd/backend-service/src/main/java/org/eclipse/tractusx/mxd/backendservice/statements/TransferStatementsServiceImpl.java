@@ -23,11 +23,6 @@ import static java.lang.String.format;
 public class TransferStatementsServiceImpl implements TransferStatementsService {
 
     @Override
-    public String getDeleteByIdTemplate() {
-        return executeStatement().delete(getTransferTable(), getTransferIdColumn());
-    }
-
-    @Override
     public String getFindByTemplate() {
         return format("SELECT * FROM %s WHERE %s = ?", getTransferTable(), getTransferIdColumn());
     }
@@ -44,28 +39,8 @@ public class TransferStatementsServiceImpl implements TransferStatementsService 
     }
 
     @Override
-    public String getCountTemplate() {
-        return format("SELECT COUNT (%s) FROM %s WHERE %s = ?",
-                getTransferIdColumn(),
-                getTransferTable(),
-                getTransferIdColumn());
-    }
-
-    @Override
-    public String getUpdateTemplate() {
-        return executeStatement()
-                .column(getTransferIdColumn())
-                .column(getAssetColumn())
-                .column(getContentsColumn())
-                .column(getCreatedDateColumn())
-                .column(getUpdatedDateColumn())
-                .insertInto(getTransferTable());
-    }
-
-    @Override
     public SqlQueryStatement createQuery(QuerySpec querySpec) {
         var select = format("SELECT * FROM %s", getTransferTable());
-        //return new SqlQueryStatement(select, querySpec, null);
         return new SqlQueryStatement(select, querySpec, null, new PostgresqlOperatorTranslator());
     }
 }

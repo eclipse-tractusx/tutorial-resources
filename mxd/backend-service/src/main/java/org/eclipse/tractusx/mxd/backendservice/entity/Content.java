@@ -27,18 +27,6 @@ public class Content extends Entity {
     private Content() {
     }
 
-    public String getData() {
-        return data;
-    }
-
-    public Builder toBuilder() {
-        return Content.Builder.newInstance()
-                .id(id)
-                .data(data)
-                .clock(clock)
-                .createdAt(createdAt);
-    }
-
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder extends Entity.Builder<Content, Builder> {
 
@@ -59,13 +47,6 @@ public class Content extends Entity {
         @Override
         public Builder self() {
             return this;
-        }
-
-        @Override
-        public Content build() {
-            super.build();
-
-            return entity;
         }
     }
 }

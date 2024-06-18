@@ -15,6 +15,7 @@
 package org.eclipse.tractusx.mxd.backendservice.store;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.eclipse.edc.spi.EdcException;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.persistence.EdcPersistenceException;
 import org.eclipse.edc.spi.query.QuerySpec;
@@ -39,8 +40,8 @@ import static java.lang.String.format;
 
 public class SqlTransferStoreServiceImpl extends AbstractSqlStore implements TransferStoreService {
 
-    private TransferStatementsService statements;
-    private Monitor monitor;
+    private final TransferStatementsService statements;
+    private final Monitor monitor;
 
     public SqlTransferStoreServiceImpl(DataSourceRegistry dataSourceRegistry,
                                        String dataSourceName,
@@ -84,35 +85,22 @@ public class SqlTransferStoreServiceImpl extends AbstractSqlStore implements Tra
     }
 
     @Override
-    public StoreResult<Void> save(Transfer transfer, String content) {
+    public void save(Transfer transfer, String content) {
         try (var connection = getConnection()) {
             insertInternal(connection, transfer, content);
         } catch (Exception e) {
             throw new EdcPersistenceException(e.getMessage(), e);
         }
-        return null;
-    }
-
-    @Override
-    public StoreResult<Void> update(Transfer transfer) {
-        return null;
-    }
-
-    @Override
-    public StoreResult<Transfer> deleteById(String id) {
-        return null;
     }
 
     private TransferResponse mapResultSet(ResultSet resultSet) throws Exception {
-        TransferResponse response = TransferResponse.builder()
+        return TransferResponse.builder()
                 .asset(resultSet.getString(statements.getAssetColumn()))
                 .contents(resultSet.getString(statements.getContentsColumn()))
                 .transferID(resultSet.getString(statements.getTransferIdColumn()))
                 .createdDate(resultSet.getDate(statements.getCreatedDateColumn()))
                 .updatedDate(resultSet.getDate(statements.getUpdatedDateColumn()))
                 .build();
-
-        return response;
     }
 
     private TransferResponse findById(Connection connection, String id) {
@@ -127,6 +115,7 @@ public class SqlTransferStoreServiceImpl extends AbstractSqlStore implements Tra
             });
         } catch (Exception e) {
             monitor.warning(e.getMessage(), e);
+            throw new EdcException("Error creating transfer" + e.getMessage());
         }
     }
 }
