@@ -34,5 +34,8 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+.gradle
+build
+
 .idea/
 mxd/.terraform.lock.hcl
