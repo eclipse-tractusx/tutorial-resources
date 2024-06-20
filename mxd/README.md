@@ -225,6 +225,7 @@ Alternatively, please check out the [Postman collections here](./postman)
 * [File Transfer: Amazon S3 to Azure Blob Storage](./docs/File%20Transfer%20S3%20to%20Azure.md)
 * [Simplify negotiation and transfer using the EDR API](./docs/EDR%20Transfer%20Tutorial.md)
 * [Add a new Participant](./docs/Trudy%20Connector%20Tutorial.md)
+* [Deploying MXD on Remote Kubernetes Cluster (AWS / GCP)](./docs/MXD%20Remote%20Deployment.md)
 
 ## 4. Improving the setup
 

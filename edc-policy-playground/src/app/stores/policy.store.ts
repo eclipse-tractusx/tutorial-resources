@@ -52,7 +52,7 @@ export class PolicyConfigurationStore {
 }
 
 export function bpnPolicy(): PolicyConfiguration {
-  return createPolicy('Bpn Policy', bpnConstraint(), 'Bpn permission');
+  return createPolicy('Business Partner Number Policy', bpnConstraint(), 'Bpn permission');
 }
 
 export function bpnGroupPolicy(): PolicyConfiguration {
@@ -69,13 +69,7 @@ function inForceDurationPolicy(): PolicyConfiguration {
 
 function credentialsPolicies(): PolicyConfiguration[] {
   return credentialsConstraints().map(c => {
-    const splitted = c.leftOperand?.value?.split('.');
-
-    if (!splitted || splitted.length == 1) {
-      return createPolicy(`${c.leftOperand.value}  Policy`, c);
-    } else {
-      return createPolicy(`${splitted[0]} Policy (${splitted[1]})`, c);
-    }
+    return createPolicy(`${c.get_label()}  Policy`, c);
   });
 }
 

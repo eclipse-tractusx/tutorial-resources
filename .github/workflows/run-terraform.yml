@@ -32,16 +32,16 @@ jobs:
     steps:
 
       - name: "Setup Helm"
-        uses: azure/setup-helm@v3.5
+        uses: azure/setup-helm@v4
         with:
           version: v3.8.1
 
       - name: "Setup Kubectl"
-        uses: azure/setup-kubectl@v3.2
+        uses: azure/setup-kubectl@v4
 
       - uses: actions/checkout@v4
       - name: "Create k8s Kind Cluster"
-        uses: helm/kind-action@v1.9.0
+        uses: helm/kind-action@v1.10.0
         with:
           config: mxd/kind.config.yaml
           cluster_name: mxd

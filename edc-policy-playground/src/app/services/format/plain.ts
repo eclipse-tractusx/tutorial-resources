@@ -31,20 +31,18 @@ import {
 import { JsonLdFormatter } from '../format.service';
 import { PolicyService } from '../policy.service';
 
+const CONTEXTS = ['http://www.w3.org/ns/odrl.jsonld'];
+const NESTED_CONTEXT = { '@vocab': 'https://w3id.org/edc/v0.0.1/ns/' };
+
 export const policyRequestTemplate = {
-  '@context': {
-    edc: 'https://w3id.org/edc/v0.0.1/ns/',
-    tx: 'https://w3id.org/tractusx/v0.0.1/ns/',
-    xsd: 'http://www.w3.org/2001/XMLSchema#',
-  },
-  '@type': 'PolicyDefinitionRequest',
+  '@context': {},
+  '@type': 'PolicyDefinition',
   '@id': '{{POLICY_ID}}',
   policy: {},
 };
 
 const policyHeader = {
   '@type': 'Set',
-  '@context': 'http://www.w3.org/ns/odrl.jsonld',
 };
 
 export const emptyPolicy = Object.assign(policyRequestTemplate, {
@@ -59,11 +57,13 @@ export class PlainFormatter implements JsonLdFormatter {
   constructor(policyService: PolicyService) {
     this.policyService = policyService;
   }
+
   toJsonLd(policyConfig: PolicyConfiguration): object {
     const permission = policyConfig.policy.permissions.map(this.mapPermission.bind(this));
+    const additionalNamespaces = this.policyService.namespacesFor(policyConfig);
+    const additionalContexts = this.policyService.contextsFor(policyConfig);
 
-    const context = this.policyService.contextFor(policyConfig);
-    delete context['odrl'];
+    const context = [...CONTEXTS, ...additionalContexts, Object.assign(NESTED_CONTEXT, additionalNamespaces)];
 
     return Object.assign(emptyPolicy, {
       '@context': context,
@@ -80,23 +80,14 @@ export class PlainFormatter implements JsonLdFormatter {
 
   mapConstraint(constraint: Constraint): object {
     if (constraint instanceof AtomicConstraint) {
-      let leftOperand;
-      if (constraint.leftOperand.prefix) {
-        leftOperand = constraint.leftOperand.toString();
-      } else {
-        leftOperand = {
-          '@value': constraint.leftOperand.toString(),
-        };
-      }
+      const leftOperand = constraint.leftOperand.toString();
       return {
         leftOperand,
         operator: constraint.operator.toString(),
         rightOperand: this.mapRightOperand(constraint),
       };
     } else if (constraint instanceof LogicalConstraint) {
-      const obj: any = {
-        '@type': 'LogicalConstraint',
-      };
+      const obj: any = {};
       obj[constraint.operator.toString().toLowerCase()] = constraint.constraints.map(this.mapConstraint.bind(this));
       return obj;
     }
