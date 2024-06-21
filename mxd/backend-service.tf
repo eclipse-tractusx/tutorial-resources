@@ -51,16 +51,16 @@ resource "kubernetes_deployment" "backend-service" {
           }
           env {
             name  = "edc.datasource.backendservice.url"
-            value = "jdbc:postgresql://${local.pg-ip}:${var.postgres-port}/backendservicedb"
+            value = "jdbc:postgresql://${local.backendservice-postgres.database-url}/${local.databases.backendservice.database-name}"
           }
 
           env {
             name  = "edc.datasource.backendservice.user"
-            value = "postgres"
+            value = local.databases.backendservice.database-username
           }
           env {
             name  = "edc.datasource.backendservice.password"
-            value = "postgres"
+            value = local.databases.backendservice.database-password
           }
           env {
             name  = "web.http.port"

@@ -23,11 +23,11 @@ import java.util.List;
 
 public interface PostgresqlEndToEndInstance {
 
-    String USER = "postgres";
-    String PASSWORD = "password";
+    String USER = "backendservice";
+    String PASSWORD = "backendservice";
     String PORT = "5432";
     String JDBC_URL_PREFIX = "jdbc:postgresql://localhost:" + PORT + "/";
-    String DB_NAME = "backendservicedb";
+    String DB_NAME = "backendservice";
     PostgreSQLContainer<?> postgreSQLContainer =
             new PostgreSQLContainer<>("postgres:latest")
                     .withExposedPorts(Integer.valueOf(PORT))
