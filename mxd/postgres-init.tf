@@ -56,10 +56,10 @@ resource "kubernetes_config_map" "postgres-initdb-config" {
 }
 
 locals {
-  keycloak-postgres = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["keycloak"]
-  miw-postgres      = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["miw"]
-  alice-postgres    = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["alice"]
-  bob-postgres      = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["bob"]
+  keycloak-postgres       = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["keycloak"]
+  miw-postgres            = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["miw"]
+  alice-postgres          = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["alice"]
+  bob-postgres            = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["bob"]
   backendservice-postgres = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["backendservice"]
 
   databases = {
