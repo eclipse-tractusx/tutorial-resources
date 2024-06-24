@@ -99,10 +99,6 @@ export class PolicyEditorComponent {
     this.updateJsonText(cfg, this.currentFormat);
   }
 
-  onOutputFormatChange(format: OutputKind) {
-    this.updateJsonText(this.policyConfig, format);
-  }
-
   updateJsonText(cfg: PolicyConfiguration, format: OutputKind) {
     const ld = this.formatService.toJsonLd(cfg, format);
     this.text = this.formatService.formatPolicy(ld);
