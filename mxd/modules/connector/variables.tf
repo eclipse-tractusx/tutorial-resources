@@ -85,3 +85,7 @@ variable "minio-config" {
     minio-password = ""
   }
 }
+
+variable "ingress-host" {
+  description = "Ingress Host"
+}

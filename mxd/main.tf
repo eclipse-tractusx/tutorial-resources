@@ -75,6 +75,7 @@ module "alice-connector" {
     minio-username = "aliceawsclient"
     minio-password = "aliceawssecret"
   }
+  ingress-host = var.alice-ingress-host
 }
 
 # Second connector
@@ -105,6 +106,7 @@ module "bob-connector" {
     minio-username = "bobawsclient"
     minio-password = "bobawssecret"
   }
+  ingress-host = var.bob-ingress-host
 }
 
 module "azurite" {
