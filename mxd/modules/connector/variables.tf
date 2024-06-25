@@ -88,4 +88,5 @@ variable "minio-config" {
 
 variable "ingress-host" {
   description = "Ingress Host"
+  default     = "localhost"
 }
