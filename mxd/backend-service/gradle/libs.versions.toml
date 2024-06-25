@@ -1,0 +1,28 @@
+[metadata]
+format.version = "1.1"
+[versions]
+assertj = "3.25.3"
+edc = "0.7.0"
+commons = "2.11.0"
+jupiter = "5.10.1"
+restAssured = "5.4.0"
+postgresql = "42.7.2"
+testcontainers = "1.19.7"
+
+[libraries]
+edc-boot = {module = "org.eclipse.edc:boot" , version.ref="edc"}
+edc-junit = { module = "org.eclipse.edc:junit" , version.ref = "edc" }
+assertj = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+restAssured = { module = "io.rest-assured:rest-assured", version.ref = "restAssured" }
+junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "jupiter" }
+edc-json-ld = { module = "org.eclipse.edc:json-ld", version.ref = "edc" }
+edc-http = { module = "org.eclipse.edc:http", version.ref = "edc" }
+edc-http-lib = { module = "org.eclipse.edc:http-lib", version.ref = "edc" }
+edc-connector-core = { module = "org.eclipse.edc:connector-core", version.ref = "edc" }
+edc-sql-core = {module = "org.eclipse.edc:sql-core",version.ref = "edc"}
+apache-commons = { module = "org.apache.commons:commons-dbcp2", version.ref = "commons" }
+edc-configuration-filesystem = { module = "org.eclipse.edc:configuration-filesystem", version.ref = "edc" }
+postgres-containers = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+[plugins]
+shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
