@@ -31,6 +31,8 @@ once and are accessible by all participants.
 For the most bare-bones installation of the dataspace, execute the following commands in a shell:
 
 ```shell
+cd <path/of/mxd/backend-service>
+./gradlew clean dockerize
 # firstly go to the folder containing the config files
 cd <path/of/mxd>
 kind create cluster -n mxd --config kind.config.yaml
@@ -41,6 +43,7 @@ kubectl wait --namespace ingress-nginx \
   --for=condition=ready pod \
   --selector=app.kubernetes.io/component=controller \
   --timeout=90s
+kind load docker-image --name mxd backend-service:1.0.0
 terraform init
 terraform apply
 # type "yes" and press enter when prompted to do so 
@@ -222,6 +225,7 @@ Alternatively, please check out the [Postman collections here](./postman)
 * [File Transfer: Amazon S3 to Azure Blob Storage](./docs/File%20Transfer%20S3%20to%20Azure.md)
 * [Simplify negotiation and transfer using the EDR API](./docs/EDR%20Transfer%20Tutorial.md)
 * [Add a new Participant](./docs/Trudy%20Connector%20Tutorial.md)
+* [Deploying MXD on Remote Kubernetes Cluster (AWS / GCP)](./docs/MXD%20Remote%20Deployment.md)
 
 ## 4. Improving the setup
 

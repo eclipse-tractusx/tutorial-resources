@@ -32,19 +32,19 @@ jobs:
     steps:
 
       - name: "Setup Helm"
-        uses: azure/setup-helm@v3.5
+        uses: azure/setup-helm@v4
         with:
           version: v3.8.1
 
       - name: "Setup Kubectl"
-        uses: azure/setup-kubectl@v3.2
+        uses: azure/setup-kubectl@v4
 
       - uses: actions/checkout@v4
       - name: "Create k8s Kind Cluster"
-        uses: helm/kind-action@v1.9.0
+        uses: helm/kind-action@v1.10.0
         with:
           config: mxd/kind.config.yaml
-
+          cluster_name: mxd
       - name: "Install nginx ingress controller"
         run: |-
           echo "::notice title=nginx ingress on KinD::For details how to run nginx ingress on KinD check https://kind.sigs.k8s.io/docs/user/ingress/#ingress-nginx"
@@ -53,7 +53,15 @@ jobs:
             --for=condition=ready pod \
             --selector=app.kubernetes.io/component=controller \
             --timeout=90s
-
+      - name: Setup JDK 21
+        uses: actions/setup-java@v3.13.0
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - name: "Backend-Service Build"
+        working-directory: mxd/backend-service
+        run: |-
+          ./gradlew clean dockerize
       - name: "Terraform init"
         working-directory: mxd
         run: |-

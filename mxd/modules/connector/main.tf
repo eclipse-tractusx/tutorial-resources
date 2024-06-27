@@ -92,9 +92,6 @@ resource "helm_release" "connector" {
         aws : {
           endpointOverride : "http://${local.minio-url}"
         }
-        url : {
-          public : "http://localhost/${var.humanReadableName}/api/public"
-        }
       }
     })
   ]

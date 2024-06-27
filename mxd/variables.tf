@@ -18,24 +18,20 @@
 #
 
 # configuration values for the MIW+Keycloak Postgres db
-variable "keycloak-database" {
-  default = "keycloak"
-}
-variable "keycloak-db-user" {
-  default = "keycloak_user"
-}
-variable "miw-database" {
-  default = "miw"
-}
-variable "miw-db-user" {
-  default = "miw_user"
-}
 variable "postgres-port" {
   default = 5432
 }
 
+variable "keycloak-static-ip" {
+  default = "10.96.103.80"
+}
+
 variable "keycloak-port" {
   default = 8080
+}
+
+variable "miw-static-ip" {
+  default = "10.96.81.222"
 }
 
 variable "miw-api-port" {
@@ -80,4 +76,8 @@ variable "bob-azure-account-key" {
 
 variable "bob-azure-key-sas" {
   default = "sv=2023-01-03&ss=btqf&srt=sco&st=2023-11-23T13%3A18%3A49Z&se=2030-01-01T00%3A00%3A00Z&sp=rwdftlacup&sig=Xki%2B2nHBT2V8oe%2BMmS%2BI%2FHzcAsTFCYWDv6t6zT%2FWXFM%3D"
+}
+
+variable "common-postgres-instance" {
+  default = true
 }
