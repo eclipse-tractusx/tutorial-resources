@@ -1,0 +1,211 @@
+{
+	"info": {
+		"_postman_id": "6ab595a8-0851-4288-b9c2-c9c2b9984a60",
+		"name": "BackendService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "34215553"
+	},
+	"item": [
+		{
+			"name": "GenerateRandomContent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost/backend-service/api/v1/contents/random"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateContent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"const id = responseJson.id\r",
+							"\r",
+							"pm.collectionVariables.set('content-id', id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": 918704604,\r\n    \"title\": \"agwng\",\r\n    \"text\": \"oz\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost/backend-service/api/v1/contents"
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllContents",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost/backend-service/api/v1/contents"
+			},
+			"response": []
+		},
+		{
+			"name": "FetchAContent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost/backend-service/api/v1/contents/{{content-id}}"
+			},
+			"response": []
+		},
+		{
+			"name": "AcceptTransfer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"const id = responseJson.id\r",
+							"\r",
+							"pm.collectionVariables.set('transfer-id', id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"31\",\r\n  \"endpoint\": \"http://localhost:8080/api/v1/contents/{{content-id}}\",\r\n  \"authKey\": \"Authorization\",\r\n  \"authCode\": \"100000\",\r\n  \"properties\": {}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost/backend-service/api/v1/transfers"
+			},
+			"response": []
+		},
+		{
+			"name": "GetTransfer",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost/backend-service/api/v1/transfers/{{transfer-id}}"
+			},
+			"response": []
+		},
+		{
+			"name": "GetTransferContent",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"123456789011\",\r\n  \"endpoint\": \"http://alice-tractusx-connector-dataplane:8081/api/public\",\r\n  \"authKey\": \"Authorization\",\r\n  \"authCode\": \"100000\",\r\n  \"properties\": {}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost/backend-service/api/v1/transfers/{{transfer-id}}/contents"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "content-id",
+			"value": ""
+		},
+		{
+			"key": "create-req",
+			"value": ""
+		},
+		{
+			"key": "content-url",
+			"value": ""
+		},
+		{
+			"key": "transfer-id",
+			"value": ""
+		}
+	]
+}

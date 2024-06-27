@@ -19,14 +19,15 @@
 
 # Trudy connector
 module "trudy-connector" {
+  depends_on        = [module.azurite]
   source            = "./modules/connector"
   humanReadableName = "trudy"
   participantId     = var.trudy-bpn
-  database-host     = local.pg-ip
-  database-name     = "trudy"
+  database-host     = local.trudy-postgres.database-host
+  database-name     = local.databases.trudy.database-name
   database-credentials = {
-    user     = "postgres"
-    password = "postgres"
+    user     = local.databases.trudy.database-username
+    password = local.databases.trudy.database-password
   }
   ssi-config = {
     miw-url            = "http://${kubernetes_service.miw.metadata.0.name}:${var.miw-api-port}"
@@ -35,5 +36,13 @@ module "trudy-connector" {
     oauth-clientid     = "trudy_private_client"
     oauth-secretalias  = "client_secret_alias"
     oauth-clientsecret = "trudy_private_client"
+  }
+  azure-account-name    = var.trudy-azure-account-name
+  azure-account-key     = local.trudy-azure-key-base64
+  azure-account-key-sas = var.trudy-azure-key-sas
+  azure-url             = module.azurite.azurite-url
+  minio-config = {
+    minio-username = "trudyawsclient"
+    minio-password = "trudyawssecret"
   }
 }

@@ -31,6 +31,8 @@ once and are accessible by all participants.
 For the most bare-bones installation of the dataspace, execute the following commands in a shell:
 
 ```shell
+cd <path/of/mxd/backend-service>
+./gradlew clean dockerize
 # firstly go to the folder containing the config files
 cd <path/of/mxd>
 kind create cluster -n mxd --config kind.config.yaml
@@ -41,6 +43,7 @@ kubectl wait --namespace ingress-nginx \
   --for=condition=ready pod \
   --selector=app.kubernetes.io/component=controller \
   --timeout=90s
+kind load docker-image --name mxd backend-service:1.0.0
 terraform init
 terraform apply
 # type "yes" and press enter when prompted to do so 

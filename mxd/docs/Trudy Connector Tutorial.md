@@ -51,7 +51,7 @@ curl --location 'http://localhost/trudy/management/v3/assets' \
   "dataAddress": {
     "@type": "DataAddress",
     "type": "HttpData",
-    "baseUrl": "https://jsonplaceholder.typicode.com/todos/1"
+    "baseUrl": "https://jsonplaceholder.typicode.com/todos"
   }
 }'
 ```

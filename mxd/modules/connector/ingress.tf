@@ -74,6 +74,17 @@ resource "kubernetes_ingress_v1" "mxd-ingress" {
             }
           }
         }
+        path {
+          path = "/backend-service(/|$)(.*)"
+          backend {
+            service {
+              name = "backend-service"
+              port {
+                number = 8080
+              }
+            }
+          }
+        }
       }
     }
   }

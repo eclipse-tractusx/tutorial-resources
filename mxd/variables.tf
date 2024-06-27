@@ -78,6 +78,17 @@ variable "bob-azure-key-sas" {
   default = "sv=2023-01-03&ss=btqf&srt=sco&st=2023-11-23T13%3A18%3A49Z&se=2030-01-01T00%3A00%3A00Z&sp=rwdftlacup&sig=Xki%2B2nHBT2V8oe%2BMmS%2BI%2FHzcAsTFCYWDv6t6zT%2FWXFM%3D"
 }
 
+variable "trudy-azure-account-name" {
+  default = "trudyazureaccount"
+}
+
+variable "trudy-azure-account-key" {
+  default = "trudyazurekey"
+}
+
+variable "trudy-azure-key-sas" {
+  default = "st=2023-11-23T13%3A18%3A49Z&se=2030-01-01T13%3A18%3A49Z&sp=rwdlacupft&sv=2022-11-02&ss=qftb&srt=sco&sig=lOo5x2U04isnhBdlAZLj2nFk%2BphhiVeuzjv/XGJu3DM%3D"
+}
 
 variable "alice-ingress-host" {
   default = "localhost"
