@@ -90,6 +90,18 @@ variable "trudy-azure-key-sas" {
   default = "st=2023-11-23T13%3A18%3A49Z&se=2030-01-01T13%3A18%3A49Z&sp=rwdlacupft&sv=2022-11-02&ss=qftb&srt=sco&sig=lOo5x2U04isnhBdlAZLj2nFk%2BphhiVeuzjv/XGJu3DM%3D"
 }
 
+variable "alice-ingress-host" {
+  default = "localhost"
+}
+
+variable "bob-ingress-host" {
+  default = "localhost"
+}
+
+variable "trudy-ingress-host" {
+  default = "localhost"
+}
+
 variable "common-postgres-instance" {
   default = true
 }

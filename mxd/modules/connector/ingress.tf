@@ -28,6 +28,7 @@ resource "kubernetes_ingress_v1" "mxd-ingress" {
   spec {
     ingress_class_name = "nginx"
     rule {
+      host = var.ingress-host
       http {
         path {
           path = "/${var.humanReadableName}(/|$)(.*)"
@@ -92,8 +93,8 @@ resource "kubernetes_ingress_v1" "mxd-ingress" {
 locals {
   control-plane-service = "${var.humanReadableName}-tractusx-connector-controlplane"
   data-plane-service    = "${var.humanReadableName}-tractusx-connector-dataplane"
-  management_url        = "http://localhost/${var.humanReadableName}/management/v2"
-  proxy_url             = "http://localhost/${var.humanReadableName}/proxy"
-  health_url            = "http://localhost/${var.humanReadableName}/health"
-  public_url            = "http://localhost/${var.humanReadableName}/api/public"
+  management_url        = "http://${var.ingress-host}/${var.humanReadableName}/management/v2"
+  proxy_url             = "http://${var.ingress-host}/${var.humanReadableName}/proxy"
+  health_url            = "http://${var.ingress-host}/${var.humanReadableName}/health"
+  public_url            = "http://${var.ingress-host}/${var.humanReadableName}/api/public"
 }
