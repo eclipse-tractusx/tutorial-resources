@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "4d995b9e-8460-4f77-9f94-cdc908aafe8f",
+		"_postman_id": "e2aebd59-90e7-46f5-bd35-cd131baeddab",
 		"name": "Management API Tests",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "31550443"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "34215553"
 	},
 	"item": [
 		{
@@ -36,17 +36,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "{{BACKEND_SERVICE}}/api/v1/contents",
-					"host": [
-						"{{BACKEND_SERVICE}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"contents"
-					]
-				}
+				"url": "{{BACKEND_SERVICE}}/api/v1/contents"
 			},
 			"response": []
 		},
@@ -66,7 +56,8 @@
 							"    pm.expect(jsonData[\"@id\"]).to.eql(expectedId)",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				},
 				{
@@ -75,7 +66,8 @@
 						"exec": [
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -91,21 +83,12 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v3/assets",
-					"host": [
-						"{{PROVIDER_MANAGEMENT_URL}}"
-					],
-					"path": [
-						"v3",
-						"assets"
-					]
-				}
+				"url": "{{PROVIDER_MANAGEMENT_URL}}/v3/assets"
 			},
 			"response": []
 		},
 		{
-			"name": "Get all Assets",
+			"name": "Get Asset by ID",
 			"event": [
 				{
 					"listen": "test",
@@ -115,31 +98,22 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"var expectedId = pm.collectionVariables.get(\"ASSET_ID\");\r",
-							"pm.test(\"Get All Assets \", function () {\r",
+							"pm.test(\"Get Asset by ID\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.some(asset => asset[\"@id\"] == expectedId)).to.be.true;\r",
+							"    var expectedId = pm.collectionVariables.get(\"ASSET_ID\");\r",
+							"    pm.expect(jsonData[\"@id\"]).to.eql(expectedId)\r",
 							"});\r",
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v3/assets/request",
-					"host": [
-						"{{PROVIDER_MANAGEMENT_URL}}"
-					],
-					"path": [
-						"v3",
-						"assets",
-						"request"
-					]
-				}
+				"url": "{{PROVIDER_MANAGEMENT_URL}}/v3/assets/{{ASSET_ID}}"
 			},
 			"response": []
 		},
@@ -175,21 +149,12 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/policydefinitions",
-					"host": [
-						"{{PROVIDER_MANAGEMENT_URL}}"
-					],
-					"path": [
-						"v2",
-						"policydefinitions"
-					]
-				}
+				"url": "{{PROVIDER_MANAGEMENT_URL}}/v2/policydefinitions"
 			},
 			"response": []
 		},
 		{
-			"name": "Get all Policies",
+			"name": "Get Policies by ID",
 			"event": [
 				{
 					"listen": "test",
@@ -198,31 +163,22 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"var expectedId = pm.collectionVariables.get(\"POLICY_ID\");\r",
-							"pm.test(\"Get Policy \", function () {\r",
+							"pm.test(\"Get Policy by ID\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.some((item) => item[\"@id\"] == expectedId)).to.be.true;\r",
+							"    var expectedId = pm.collectionVariables.get(\"POLICY_ID\");\r",
+							"    pm.expect(jsonData[\"@id\"]).to.eql(expectedId)\r",
 							"});\r",
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/policydefinitions/request",
-					"host": [
-						"{{PROVIDER_MANAGEMENT_URL}}"
-					],
-					"path": [
-						"v2",
-						"policydefinitions",
-						"request"
-					]
-				}
+				"url": "{{PROVIDER_MANAGEMENT_URL}}/v2/policydefinitions/{{POLICY_ID}}"
 			},
 			"response": []
 		},
@@ -259,21 +215,12 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/contractdefinitions",
-					"host": [
-						"{{PROVIDER_MANAGEMENT_URL}}"
-					],
-					"path": [
-						"v2",
-						"contractdefinitions"
-					]
-				}
+				"url": "{{PROVIDER_MANAGEMENT_URL}}/v2/contractdefinitions"
 			},
 			"response": []
 		},
 		{
-			"name": "Get all Contract Definitiions",
+			"name": "Get Contract Definitiion by ID",
 			"event": [
 				{
 					"listen": "test",
@@ -282,31 +229,22 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"  pm.response.to.have.status(200);\r",
 							"});\r",
-							"var expectedId = pm.collectionVariables.get(\"CONTRACT_DEFINITION_ID\");\r",
-							"pm.test(\"Get All Contract Definition\", function () {\r",
+							"pm.test(\"Get Contract Definition by ID\", function () {\r",
 							"  var jsonData = pm.response.json();\r",
-							"  pm.expect(jsonData.some((item) => item[\"@id\"] == expectedId)).to.be.true;\r",
+							"   var expectedId = pm.collectionVariables.get(\"CONTRACT_DEFINITION_ID\");\r",
+							"    pm.expect(jsonData[\"@id\"]).to.eql(expectedId)\r",
 							"});\r",
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/contractdefinitions/request",
-					"host": [
-						"{{PROVIDER_MANAGEMENT_URL}}"
-					],
-					"path": [
-						"v2",
-						"contractdefinitions",
-						"request"
-					]
-				}
+				"url": "{{PROVIDER_MANAGEMENT_URL}}/v2/contractdefinitions/{{CONTRACT_DEFINITION_ID}}"
 			},
 			"response": []
 		},
@@ -347,17 +285,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/catalog/request",
-					"host": [
-						"{{CONSUMER_MANAGEMENT_URL}}"
-					],
-					"path": [
-						"v2",
-						"catalog",
-						"request"
-					]
-				}
+				"url": "{{CONSUMER_MANAGEMENT_URL}}/v2/catalog/request"
 			},
 			"response": []
 		},
@@ -376,7 +304,8 @@
 							"  pm.collectionVariables.set(\"NEGOTIATION_ID\", jsonData[\"@id\"]);",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				},
 				{
@@ -385,7 +314,8 @@
 						"exec": [
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -394,23 +324,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"@context\": {\n    \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n  },\n  \"@type\": \"NegotiationInitiateRequestDto\",\n  \"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n  \"protocol\": \"dataspace-protocol-http\",\n  \"connectorId\": \"{{PROVIDER_ID}}\",\n  \"providerId\": \"{{PROVIDER_ID}}\",\n  \"offer\": {\n    \"offerId\": \"{{OFFER_ID}}\",\n    \"assetId\": \"{{ASSET_ID}}\",\n    \"policy\": {\n      \"@type\": \"odrl:Set\",\n      \"odrl:permission\": {\n        \"odrl:target\": \"{{ASSET_ID}}\",\n        \"odrl:action\": {\n          \"odrl:type\": \"USE\"\n        },\n        \"odrl:constraint\": {\n          \"odrl:or\": {\n            \"odrl:leftOperand\": \"BusinessPartnerNumber\",\n            \"odrl:operator\": {\n              \"@id\": \"odrl:eq\"\n            },\n            \"odrl:rightOperand\": \"{{CONSUMER_ID}}\"\n          }\n        }\n      },\n      \"odrl:prohibition\": [],\n      \"odrl:obligation\": []\n    }\n  }\n}",
+					"raw": "{\n  \"@context\": {\n    \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n  },\n  \"@type\": \"NegotiationInitiateRequestDto\",\n  \"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n  \"protocol\": \"dataspace-protocol-http\",\n  \"connectorId\": \"{{PROVIDER_ID}}\",\n  \"providerId\": \"{{PROVIDER_ID}}\",\n  \"offer\": {\n    \"offerId\": \"{{OFFER_ID}}\",\n    \"assetId\": \"{{ASSET_ID}}\",\n    \"policy\": {\n      \"@type\": \"odrl:Set\",\n      \"odrl:permission\": {\n        \"odrl:target\": \"{{ASSET_ID}}\",\n        \"odrl:action\": {\n          \"odrl:type\": \"USE\"\n        },\n        \"odrl:constraint\": {\n          \"odrl:or\": {\n            \"odrl:leftOperand\": \"BusinessPartnerNumber\",\n            \"odrl:operator\": {\n              \"@id\": \"odrl:eq\"\n            },\n            \"odrl:rightOperand\": \"{{CONSUMER_ID}}\"\n          }\n        }\n      },\n      \"odrl:prohibition\": [],\n      \"odrl:obligation\": [],\n      \"odrl:target\": \"{{ASSET_ID}}\"\n    }\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": {
-					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/contractnegotiations",
-					"host": [
-						"{{CONSUMER_MANAGEMENT_URL}}"
-					],
-					"path": [
-						"v2",
-						"contractnegotiations"
-					]
-				}
+				"url": "{{CONSUMER_MANAGEMENT_URL}}/v2/contractnegotiations"
 			},
 			"response": []
 		},
@@ -478,17 +399,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/contractnegotiations/{{NEGOTIATION_ID}}",
-					"host": [
-						"{{CONSUMER_MANAGEMENT_URL}}"
-					],
-					"path": [
-						"v2",
-						"contractnegotiations",
-						"{{NEGOTIATION_ID}}"
-					]
-				}
+				"url": "{{CONSUMER_MANAGEMENT_URL}}/v2/contractnegotiations/{{NEGOTIATION_ID}}"
 			},
 			"response": []
 		},
@@ -501,7 +412,8 @@
 						"exec": [
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				},
 				{
@@ -517,7 +429,8 @@
 							"});",
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -526,23 +439,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"@context\": {\n    \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n  },\n  \"assetId\": \"{{ASSET_ID}}\",\n  \"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n  \"connectorId\": \"{{PROVIDER_ID}}\",\n  \"contractId\": \"{{CONTRACT_AGREEMENT_ID}}\",\n  \"dataDestination\": {\n    \"type\": \"HttpProxy\"\n  },\n  \"privateProperties\": {\n    \"receiverHttpEndpoint\": \"{{BACKEND_SERVICE_PROTOCOL}}/api/v1/transfers\"\n  },\n  \"protocol\": \"dataspace-protocol-http\"\n}",
+					"raw": "{\n  \"@context\": {\n    \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n  },\n  \"assetId\": \"{{ASSET_ID}}\",\n  \"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n  \"connectorId\": \"{{PROVIDER_ID}}\",\n  \"contractId\": \"{{CONTRACT_AGREEMENT_ID}}\",\n  \"dataDestination\": {\n    \"type\": \"HttpData-PULL\"\n  },\n  \"privateProperties\": {\n    \"receiverHttpEndpoint\": \"{{BACKEND_SERVICE_PROTOCOL}}/api/v1/transfers\"\n  },\n  \"protocol\": \"dataspace-protocol-http\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": {
-					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/transferprocesses",
-					"host": [
-						"{{CONSUMER_MANAGEMENT_URL}}"
-					],
-					"path": [
-						"v2",
-						"transferprocesses"
-					]
-				}
+				"url": "{{CONSUMER_MANAGEMENT_URL}}/v2/transferprocesses"
 			},
 			"response": []
 		},
@@ -608,17 +512,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/transferprocesses/{{TRANSFER_ID}}",
-					"host": [
-						"{{CONSUMER_MANAGEMENT_URL}}"
-					],
-					"path": [
-						"v2",
-						"transferprocesses",
-						"{{TRANSFER_ID}}"
-					]
-				}
+				"url": "{{CONSUMER_MANAGEMENT_URL}}/v2/transferprocesses/{{TRANSFER_ID}}"
 			},
 			"response": []
 		},
@@ -631,7 +525,8 @@
 						"exec": [
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				},
 				{
@@ -648,45 +543,25 @@
 							"    pm.expect(expected).to.eql(actual);\r",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "{{BACKEND_SERVICE}}/api/v1/transfers/{{TRANSFER_ID}}/contents/",
-					"host": [
-						"{{BACKEND_SERVICE}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"transfers",
-						"{{TRANSFER_ID}}",
-						"contents",
-						""
-					]
-				}
+				"url": "{{BACKEND_SERVICE}}/api/v1/transfers/{{TRANSFER_ID}}/contents"
 			},
 			"response": []
 		}
 	],
 	"auth": {
 		"type": "apikey",
-		"apikey": [
-			{
-				"key": "value",
-				"value": "{{API_KEY_PASSWORD}}",
-				"type": "string"
-			},
-			{
-				"key": "key",
-				"value": "X-Api-Key",
-				"type": "string"
-			}
-		]
+		"apikey": {
+			"value": "{{API_KEY_PASSWORD}}",
+			"key": "X-Api-Key"
+		}
 	},
 	"event": [
 		{
@@ -768,7 +643,27 @@
 		},
 		{
 			"key": "JSON_CONTENT",
-			"value": "{\"userId\": 1, \"text\": \"hello\"}"
+			"value": "{\"userId\": 918704604,\"title\": \"agwng\",\"text\": \"oz\"}"
+		},
+		{
+			"key": "CONTENT_ID",
+			"value": ""
+		},
+		{
+			"key": "OFFER_ID",
+			"value": ""
+		},
+		{
+			"key": "NEGOTIATION_ID",
+			"value": ""
+		},
+		{
+			"key": "TRANSFER_ID",
+			"value": ""
+		},
+		{
+			"key": "CONTRACT_AGREEMENT_ID",
+			"value": ""
 		}
 	]
 }
