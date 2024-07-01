@@ -62,6 +62,9 @@ jobs:
         working-directory: mxd/backend-service
         run: |-
           ./gradlew clean dockerize
+      - name: "Load Docker Images"
+        run: |-
+          kind load docker-image -n mxd backend-service:1.0.0
       - name: "Terraform init"
         working-directory: mxd
         run: |-
