@@ -14,15 +14,15 @@
 
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 import com.github.jengelman.gradle.plugins.shadow.ShadowJavaPlugin
-import java.time.Duration
 
 plugins {
     `java-library`
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("com.bmuschko.docker-remote-api") version "9.4.0"
+    alias(libs.plugins.shadow)
+    alias(libs.plugins.docker)
 }
 
 val edcVersion = libs.versions.edc
+val openTelemetryVersion = libs.versions.opentelemetry.get()
 
 buildscript {
     repositories {
@@ -57,7 +57,7 @@ subprojects {
 
             val agentFile = buildDir.resolve("opentelemetry-javaagent.jar")
             // create task to download the opentelemetry agent
-            val openTelemetryAgentUrl = "https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v1.32.0/opentelemetry-javaagent.jar"
+            val openTelemetryAgentUrl = "https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v${openTelemetryVersion}/opentelemetry-javaagent.jar"
             val downloadOtel = tasks.create("downloadOtel") {
                 // only execute task if the opentelemetry agent does not exist. invoke the "clean" task to force
                 onlyIf {
