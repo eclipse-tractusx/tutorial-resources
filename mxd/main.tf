@@ -75,6 +75,7 @@ module "alice-connector" {
     minio-username = "aliceawsclient"
     minio-password = "aliceawssecret"
   }
+  ingress-host = var.alice-ingress-host
 }
 
 # Second connector
@@ -105,14 +106,16 @@ module "bob-connector" {
     minio-username = "bobawsclient"
     minio-password = "bobawssecret"
   }
+  ingress-host = var.bob-ingress-host
 }
 
 module "azurite" {
   source           = "./modules/azurite"
-  azurite-accounts = "${var.alice-azure-account-name}:${local.alice-azure-key-base64};${var.bob-azure-account-name}:${local.bob-azure-key-base64}"
+  azurite-accounts = "${var.alice-azure-account-name}:${local.alice-azure-key-base64};${var.bob-azure-account-name}:${local.bob-azure-key-base64};${var.trudy-azure-account-name}:${local.trudy-azure-key-base64};"
 }
 
 locals {
   alice-azure-key-base64 = base64encode(var.alice-azure-account-key)
   bob-azure-key-base64   = base64encode(var.bob-azure-account-key)
+  trudy-azure-key-base64 = base64encode(var.trudy-azure-account-key)
 }
