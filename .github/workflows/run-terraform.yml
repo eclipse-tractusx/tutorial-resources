@@ -53,18 +53,24 @@ jobs:
             --for=condition=ready pod \
             --selector=app.kubernetes.io/component=controller \
             --timeout=90s
-      - name: Setup JDK 21
+      - name: Setup JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: '22'
           distribution: 'temurin'
       - name: "Backend-Service Build"
         working-directory: mxd/backend-service
         run: |-
           ./gradlew clean dockerize
+      - name: "Custom TractusX EDC Build"
+        working-directory: custom-tractusx-edc
+        run: |-
+          ./gradlew clean dockerize
       - name: "Load Docker Images"
         run: |-
           kind load docker-image -n mxd backend-service:1.0.0
+          kind load docker-image -n mxd custom-edc-controlplane-postgresql-hashicorp-vault:latest
+          kind load docker-image -n mxd custom-edc-dataplane-hashicorp-vault:latest
       - name: "Terraform init"
         working-directory: mxd
         run: |-

@@ -34,6 +34,9 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+.gradle
+build
+
 .idea/
 mxd/.terraform.lock.hcl
 #Ignore Java Classes and Gradle Build Files
