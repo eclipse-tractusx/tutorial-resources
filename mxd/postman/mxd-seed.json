@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "d2bed995-c23f-43fa-a5ae-6aa49b24f0d9",
+		"_postman_id": "456f5db9-6973-4259-a8a9-381408e48c6a",
 		"name": "MXD Management API Seed",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "252261",
-		"_collection_link": "https://winter-rocket-884715.postman.co/workspace/SAP~ff4cf631-05f4-48ab-a1e0-f716cf2efc25/collection/252261-d2bed995-c23f-43fa-a5ae-6aa49b24f0d9?action=share&source=collection_link&creator=252261"
+		"_collection_link": "https://winter-rocket-884715.postman.co/workspace/SAP~ff4cf631-05f4-48ab-a1e0-f716cf2efc25/collection/252261-456f5db9-6973-4259-a8a9-381408e48c6a?action=share&source=collection_link&creator=252261"
 	},
 	"item": [
 		{
@@ -487,6 +487,161 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "SeedBDRS",
+			"item": [
+				{
+					"name": "Create Alice BPN Mapping",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bpn\": \"{{ALICE_BPN}}\",\n  \"did\": \"{{ALICE_DID}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BDRS_MGMT_URL}}/bpn-directory",
+							"host": [
+								"{{BDRS_MGMT_URL}}"
+							],
+							"path": [
+								"bpn-directory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Bob BPN Mapping",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bpn\": \"{{BOB_BPN}}\",\n  \"did\": \"{{BOB_DID}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BDRS_MGMT_URL}}/bpn-directory",
+							"host": [
+								"{{BDRS_MGMT_URL}}"
+							],
+							"path": [
+								"bpn-directory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Trudy BPN Mapping",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bpn\": \"{{TRUDY_BPN}}\",\n  \"did\": \"{{TRUDY_DID}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BDRS_MGMT_URL}}/bpn-directory",
+							"host": [
+								"{{BDRS_MGMT_URL}}"
+							],
+							"path": [
+								"bpn-directory"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
@@ -577,6 +732,26 @@
 		{
 			"key": "TRUDY_BPN",
 			"value": "BPNL000000000003",
+			"type": "string"
+		},
+		{
+			"key": "ALICE_DID",
+			"value": "did:web:miw%3A8000:BPNL000000000001",
+			"type": "string"
+		},
+		{
+			"key": "BOB_DID",
+			"value": "did:web:miw%3A8000:BPNL000000000002",
+			"type": "string"
+		},
+		{
+			"key": "TRUDY_DID",
+			"value": "did:web:miw%3A8000:BPNL000000000003",
+			"type": "string"
+		},
+		{
+			"key": "BDRS_MGMT_URL",
+			"value": "localhost/bdrs-mgmt/api/management",
 			"type": "string"
 		},
 		{
