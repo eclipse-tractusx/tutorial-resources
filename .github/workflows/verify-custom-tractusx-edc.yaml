@@ -1,0 +1,52 @@
+#################################################################################
+#
+#  Copyright (c) 2024 SAP SE
+#
+#  This program and the accompanying materials are made available under the
+#  terms of the Apache License, Version 2.0 which is available at
+#  https://www.apache.org/licenses/LICENSE-2.0
+#
+#  SPDX-License-Identifier: Apache-2.0
+#
+#  Contributors:
+#       SAP SE - initial API and implementation
+#
+#################################################################################
+
+---
+name: "Custom TractusX EDC"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'custom-tractusx-edc/**'
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'custom-tractusx-edc/**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  Build-Custom-TractusX-EDC:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '22'
+
+      - run: ./gradlew clean dockerize
+        working-directory: custom-tractusx-edc
