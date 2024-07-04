@@ -58,6 +58,7 @@ resource "kubernetes_config_map" "postgres-initdb-config" {
 locals {
   keycloak-postgres       = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["keycloak"]
   miw-postgres            = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["miw"]
+  bdrs-postgres           = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["bdrs"]
   alice-postgres          = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["alice"]
   bob-postgres            = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["bob"]
   trudy-postgres          = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["trudy"]
@@ -74,6 +75,12 @@ locals {
       database-name     = "miw",
       database-username = "miw"
       database-password = "miw"
+    }
+
+    bdrs = {
+      database-name     = "bdrs",
+      database-username = "bdrs"
+      database-password = "bdrs"
     }
 
     alice = {
