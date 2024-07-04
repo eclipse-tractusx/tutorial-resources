@@ -5,17 +5,62 @@ In our current setup, there are two participants named "Alice" and "Bob". Now we
 Following are the steps needed to accomplish this.
 
 ## 1 Create Keycloak Client
-Presently, Alice and Bob each have a Keycloak client name `alice-private-client` and `bob-private-client`.  
-Trudy should be assigned a Keycloak client as well.
-For simplicity, a client named `trudy-private-client` has already been created.
+Currently, Alice and Bob each have a Keycloak client named alice-private-client and `bob-private-client`. Trudy also needs to be assigned a Keycloak client. For simplicity, a client named `trudy_private_client` has already been created.
+
+If you need to create a client, you can do so in the Keycloak Admin Console, where you can configure roles, service accounts, and other settings for that client. Creating a client using Keycloak APIs is complicated, so this client was created using the Keycloak Admin Console and exported as a [realm file](../keycloak/miw_test_realm.json).
 
 ## 2 Create Wallet in MIW
 A wallet is needed for Trudy associated with its BPN number (`BPNL000000000003`).
 It has been already created along with Alice and Bob's wallet.
 
+If you want to manually create a wallet for trudy, follow the steps below.
+#### a. Setup Port Forwarding for MIW and Keycloak
+Forward the Keycloak and MIW ports with the following commands, using the pod names from your setup.
+```shell
+# forward Keycloak port
+kubectl port-forward Keycloak-pod-name 8080:8080
+# forward MIW port
+kubectl port-forward MIW-pod-name 8000:8000
+```
+
+#### b. Create Keycloak access token:
+Create Keycloak access token with the following curl command.
+```shell
+curl --location 'http://localhost:8080/realms/miw_test/protocol/openid-connect/token' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'client_id=miw_private_client' \
+--data-urlencode 'grant_type=client_credentials' \
+--data-urlencode 'client_secret=miw_private_client' \
+--data-urlencode 'scope=openid'
+```
+
+It returns `access_token` which will be used for creating wallet.
+
+#### c. Create Trudy Wallet
+Create a wallet using the following curl command, replacing `keycloak_access_token` with the token obtained in the previous step.
+```shell
+curl --location 'http://localhost:8000/api/wallets' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer <keycloak_access_token>' \
+--data '{
+    "name": "Trudy-Wallet",
+    "bpn": "BPNL000000000003"
+}'
+```
+
 ## 3 Create a database for Trudy
-We need a database for Trudy.
-A database named `trudy` has already been created on the existing PostgreSQL server.
+We need a database for Trudy. A database named `trudy` has already been created on the existing PostgreSQL server.
+
+If you want to manually create the `trudy` database, follow the steps below.
+
+#### a. Setup Port Forwarding for Postgres
+Forward the Postgres port with the following command, using the pod name from your setup.
+```shell
+kubectl port-forward postgres-pod-name 5432:5432
+```
+
+#### b. Install PgAdmin Tool and Create Database
+Install PgAdmin and connect to the PostgreSQL server at `jdbc:postgresql://localhost:5432/` using the user `postgres` and the password `postgres`. Then, create the `trudy` database with PgAdmin.
 
 ## 4 Deploy Trudy Connector
 A terraform config has already been defined in [trudy.tfignore](../trudy.tfignore).  
