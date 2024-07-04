@@ -56,7 +56,13 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
-    public String getRandomContent() {
-        return RandomWordUtil.generateRandom();
+    public String getRandomContent(int size) {
+        return RandomWordUtil.generateRandom(size);
+    }
+
+    @Override
+    public String createRandomContent(int size) {
+        Object content = RandomWordUtil.generateRandom(size);
+        return contentStoreService.save(content);
     }
 }

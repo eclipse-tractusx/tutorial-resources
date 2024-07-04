@@ -17,6 +17,8 @@ package org.eclipse.tractusx.mxd.util;
 public class Constants {
 
     public static final String DEFAULT_ERROR_MESSAGE = "Unexpected error from backend service";
+    public static final String CONTENT_ID_ERROR_MESSAGE = "Invalid content id";
+    public static final String CONTENT_SIZE_ERROR_MESSAGE = "Invalid size. Size must be specified in KB (1KB-10240KB) or MB (1MB-10MB).";
     public static final String DEFAULT_DRIVE = "org.postgresql.Driver";
     public static final String DATASOURCE_NAME_SETTING = "edc.datasource.backendservice.name";
 

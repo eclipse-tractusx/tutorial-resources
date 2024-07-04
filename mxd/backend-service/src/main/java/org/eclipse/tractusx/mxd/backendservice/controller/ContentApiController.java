@@ -68,13 +68,44 @@ public class ContentApiController {
         return Optional.of(contentId)
                 .map(id -> service.getContent(contentId))
                 .map(content -> content.getContent() != null ? content.getContent().getData() : Converter.toJson(content.getFailure(), objectMapper))
-                .orElse(Constants.DEFAULT_ERROR_MESSAGE);
+                .orElse(Constants.CONTENT_ID_ERROR_MESSAGE);
     }
 
     @GET
     @Path("/random")
-    public String getRandomContent() {
-        return this.service.getRandomContent();
+    public String getRandomContent(@QueryParam("size") @DefaultValue("1KB") String size) {
+        return parseSize(size)
+                .map(sizeInBytes -> this.service.getRandomContent(sizeInBytes))
+                .orElse(Constants.CONTENT_SIZE_ERROR_MESSAGE);
+    }
+
+    @GET
+    @Path("/create/random")
+    public String createRandomContent(@QueryParam("size") @DefaultValue("1KB") String size) {
+        return parseSize(size)
+                .map(sizeInBytes -> this.service.createRandomContent(sizeInBytes))
+                .map(this::createJsonResponse)
+                .orElse(Constants.CONTENT_SIZE_ERROR_MESSAGE);
+    }
+
+    private Optional<Integer> parseSize(String size) {
+        try {
+            int sizeInBytes;
+            if (size.endsWith("KB")) {
+                sizeInBytes = Integer.parseInt(size.replace("KB", "").trim()) * 1024;
+            } else if (size.endsWith("MB")) {
+                sizeInBytes = Integer.parseInt(size.replace("MB", "").trim()) * 1024 * 1024;
+            } else {
+                return Optional.empty();
+            }
+            if (sizeInBytes > 10 * 1024 * 1024 || sizeInBytes < 1024) {
+                return Optional.empty();
+            }
+
+            return Optional.of(sizeInBytes);
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
     }
 
     private String createJsonResponse(String id) {

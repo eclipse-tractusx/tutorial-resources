@@ -11,7 +11,8 @@ The Backend Service is used to simulate a data source or sink enabling the trans
 ### Generate a random content
 
 - Method: GET
-- URL: http://localhost/backend-service/api/v1/contents/random
+- URL: http://localhost/backend-service/api/v1/contents/random?size={size}
+- URL Parameter `size` (optional): Specifies the size of the random content to be generated. The size of the content can be expressed in either kilobytes (KB) or megabytes (MB), ranging from 1 KB to 10 MB.
 - Sample response:
 
 ```json
@@ -37,6 +38,21 @@ The Backend Service is used to simulate a data source or sink enabling the trans
 ```
 
 - Sample response containing content id and URL:
+
+```json
+{
+  "id": "3b777103-5e06-461b-90c6-1f99e597f60d",
+  "url": "http://localhost:8080/api/v1/contents/3b777103-5e06-461b-90c6-1f99e597f60d"
+}
+```
+This URL will be used as an endpoint in the transfer API.
+
+### Create and save a random content
+
+- Method: GET
+- URL: http://localhost/backend-service/api/v1/contents/create/random?size={size}
+- URL Parameter `size` (optional): Specifies the size of the random content to be generated. The size of the content can be expressed in either kilobytes (KB) or megabytes (MB), ranging from 1 KB to 10 MB.
+- Sample response:
 
 ```json
 {
