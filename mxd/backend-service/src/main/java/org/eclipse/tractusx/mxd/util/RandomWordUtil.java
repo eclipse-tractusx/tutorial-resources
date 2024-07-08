@@ -15,19 +15,20 @@
 package org.eclipse.tractusx.mxd.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.edc.spi.EdcException;
 
 import java.security.SecureRandom;
 
 public class RandomWordUtil {
 
-    public static String generateRandom() {
+    public static String generateRandom(int size) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             RandomData randomData = new RandomData();
             randomData.setUserId(generateRandomUserId());
-            randomData.setTitle(generateRandomString());
-            randomData.setText(generateRandomString());
+            randomData.setTitle(generateRandomString(8));
+            randomData.setText(generateRandomString(size));
             return objectMapper.writeValueAsString(randomData);
         } catch (Exception e) {
             throw new EdcException(e.getMessage());
@@ -38,17 +39,8 @@ public class RandomWordUtil {
         return Math.abs(new SecureRandom().nextInt());
     }
 
-    private static String generateRandomString() {
-        String characters = "abcdefghijklmnopqrstuvwxyz";
-        SecureRandom random = new SecureRandom();
-        StringBuilder sb = new StringBuilder();
-
-        int length = random.nextInt(8) + 1;
-        for (int i = 0; i < length; i++) {
-            int index = random.nextInt(characters.length());
-            sb.append(characters.charAt(index));
-        }
-        return sb.toString();
+    private static String generateRandomString(int length) {
+        return StringUtils.repeat("a", length);
     }
 
     private static class RandomData {

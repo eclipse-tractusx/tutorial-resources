@@ -68,7 +68,6 @@ public interface PostgresqlEndToEndInstance {
                 throw new EdcPersistenceException(exception.getMessage(), exception);
             }
         } catch (Exception e) {
-            System.out.println("Ex : " + e.getMessage());
             throw new EdcPersistenceException(e);
         }
     }

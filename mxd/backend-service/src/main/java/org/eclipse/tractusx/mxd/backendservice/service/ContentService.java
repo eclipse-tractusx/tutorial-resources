@@ -27,6 +27,8 @@ public interface ContentService {
 
     ServiceResult<ContentResponse> getContent(String contentId);
 
-    String getRandomContent();
+    String getRandomContent(int size);
+
+    String createRandomContent(int size);
 
 }

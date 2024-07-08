@@ -111,8 +111,34 @@ public class ContentApiEndToEndTest {
             JsonObject content = getContentJson();
 
             assertThat(content.getString("title")).isNotNull();
-            assertThat(content.getString("text")).isNotNull();
+            assertThat(content.getString("text")).hasSize(1024);
             assertThat(content.getInt("userId")).isGreaterThan(-1);
+        }
+
+        @Test
+        void createRandomContent() {
+            var responseBody = baseRequest()
+                    .when()
+                    .get(ENDPOINT + "create/random?size=1KB")
+                    .then()
+                    .log().ifValidationFails()
+                    .statusCode(200)
+                    .contentType(JSON);
+
+            String contentId = responseBody.extract().jsonPath()
+                    .getString("id");
+
+            responseBody = baseRequest()
+                    .when()
+                    .get(ENDPOINT + contentId)
+                    .then()
+                    .log().ifValidationFails()
+                    .statusCode(200)
+                    .contentType(JSON);
+
+            assertThat(responseBody.extract().jsonPath().getString("title")).isNotNull();
+            assertThat(responseBody.extract().jsonPath().getString("text")).hasSize(1024);
+            assertThat(responseBody.extract().jsonPath().getInt("userId")).isGreaterThan(-1);
         }
 
         String createContent(JsonObject contentJson) {
