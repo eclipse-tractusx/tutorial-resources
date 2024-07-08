@@ -1063,7 +1063,7 @@ npm/npmjs/@types/jasmine/5.1.4, MIT, approved, clearlydefined
 npm/npmjs/@types/json-schema/7.0.15, MIT, approved, clearlydefined
 npm/npmjs/@types/mime/1.3.5, MIT, approved, #10834
 npm/npmjs/@types/node-forge/1.3.11, MIT, approved, clearlydefined
-npm/npmjs/@types/node/20.14.9, MIT, approved, clearlydefined
+npm/npmjs/@types/node/20.14.10, MIT, approved, clearlydefined
 npm/npmjs/@types/qs/6.9.15, MIT, approved, #14071
 npm/npmjs/@types/range-parser/1.2.7, MIT, approved, #10795
 npm/npmjs/@types/retry/0.12.2, MIT, approved, clearlydefined
