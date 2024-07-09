@@ -152,6 +152,12 @@ copy_test_result_files() {
   local experiment_file=$1
   local logs
 
+  #Save connector's image in metadata.txt
+  local connector_version
+  connector_version=$(kubectl get deploy alice-tractusx-connector-controlplane -o jsonpath="{..image}")
+  kubectl exec -it --namespace=default mxd-performance-test -- \
+    bash -c "echo CONNECTOR_VERSION=${connector_version}>>mxd-performance-evaluation/output/metadata.txt"
+
   print_info_log "Waiting for the tests to finish ..."
   while true; do
     logs=$(kubectl logs --tail=5 "${POD_NAME}" --context="${test_pod_context}" 2>/dev/null)

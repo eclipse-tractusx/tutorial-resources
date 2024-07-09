@@ -41,6 +41,9 @@ echo "*** Property: $experiment_property Start ***"
 cat $experiment_property
 echo "*** Property: $experiment_property End ***"
 
+echo "Copying custom_experiment.properties to output folder with new name metadata.txt"
+cp $experiment_property output/metadata.txt
+
 echo "*** Performance Test Start ***"
 if [ -z "$jmeter_script" ]; then
   echo "Executing all scripts in order"
@@ -52,8 +55,6 @@ if [ -z "$jmeter_script" ]; then
 fi
 echo "*** Performance Test End ***"
 
-echo "Copying custom_experiment.properties to output folder with new name metadata.txt"
-cp $experiment_property output/metadata.txt
 echo "Creating tar file with output"
 tar -cf output.tar output
 
