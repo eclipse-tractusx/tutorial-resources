@@ -85,16 +85,10 @@ jobs:
         run: |-
           terraform apply "$GITHUB_SHA.out"
 
-      - name: "Pod Logs"
-        if: always()
-        run: |-
-          kubectl logs deployment/backend-service
-
       - name: "Run Health Checks"
         run: |-
           curl --fail http://localhost/bob/health/api/check/readiness
           curl --fail http://localhost/alice/health/api/check/readiness
-          curl --fail http://localhost/backend-service/api/check/readiness
 
       - name: "Run Tests"
         uses: ./.github/actions/mxd-test-action
