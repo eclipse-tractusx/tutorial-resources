@@ -12,7 +12,7 @@
 #
 #
 
-FROM eclipse-temurin:21.0.2_13-jre-alpine
+FROM eclipse-temurin:22.0.1_8-jre-alpine
 
 WORKDIR /app
 
