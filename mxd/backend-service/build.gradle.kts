@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.apache.commons)
     implementation(libs.postgresql)
     implementation(libs.edc.boot)
+    runtimeOnly(libs.edc.api.observability)
 
     testImplementation(libs.junit.jupiter.params)
     testImplementation(libs.assertj)

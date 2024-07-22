@@ -70,6 +70,28 @@ resource "kubernetes_deployment" "backend-service" {
             name  = "JAVA_TOOL_OPTIONS"
             value = "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044"
           }
+          readiness_probe {
+            http_get {
+              path = "/api/check/readiness"
+              port = 8080
+            }
+            initial_delay_seconds = 30
+            period_seconds        = 10
+            timeout_seconds       = 5
+            failure_threshold     = 10
+            success_threshold     = 1
+          }
+          liveness_probe {
+            http_get {
+              path = "/api/check/liveness"
+              port = 8080
+            }
+            initial_delay_seconds = 30
+            period_seconds        = 10
+            timeout_seconds       = 5
+            failure_threshold     = 10
+            success_threshold     = 1
+          }
         }
       }
     }
