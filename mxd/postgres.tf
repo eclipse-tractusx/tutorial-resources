@@ -116,6 +116,7 @@ resource "kubernetes_config_map" "postgres-config" {
       CREATE DATABASE ${module.bob-connector.database-name};
       CREATE DATABASE trudy;
       CREATE DATABASE bdrs;
+      CREATE DATABASE backendservicedb;
 
     EOT
   }
