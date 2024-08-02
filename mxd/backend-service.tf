@@ -42,8 +42,8 @@ resource "kubernetes_deployment" "backend-service" {
       spec {
         container {
           name              = "backend-service"
-          image             = "euna123/backend-service:1.0.0"
-          image_pull_policy = "Always"
+          image             = "backend-service:1.0.0"
+          image_pull_policy = "IfNotPresent"
 
           port {
             container_port = 8080
