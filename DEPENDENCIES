@@ -706,11 +706,14 @@ npm/npmjs/@angular-devkit/core/18.0.7, MIT, approved, clearlydefined
 npm/npmjs/@angular-devkit/schematics/18.0.7, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/builder/18.0.1, MIT, restricted, clearlydefined
 npm/npmjs/@angular-eslint/bundled-angular-compiler/18.0.1, MIT, approved, clearlydefined
+npm/npmjs/@angular-eslint/bundled-angular-compiler/18.2.0, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/eslint-plugin-template/18.0.1, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/eslint-plugin/18.0.1, MIT, approved, clearlydefined
+npm/npmjs/@angular-eslint/eslint-plugin/18.2.0, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/schematics/18.0.1, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/template-parser/18.0.1, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/utils/18.0.1, MIT, approved, clearlydefined
+npm/npmjs/@angular-eslint/utils/18.2.0, MIT, approved, clearlydefined
 npm/npmjs/@angular/animations/18.0.6, MIT, approved, clearlydefined
 npm/npmjs/@angular/build/18.0.7, MIT, restricted, clearlydefined
 npm/npmjs/@angular/cdk/18.0.6, MIT, approved, clearlydefined
