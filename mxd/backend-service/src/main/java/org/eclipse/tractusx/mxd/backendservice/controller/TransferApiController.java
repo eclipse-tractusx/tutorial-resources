@@ -24,7 +24,7 @@ import org.eclipse.tractusx.mxd.backendservice.entity.TransferResponse;
 import org.eclipse.tractusx.mxd.backendservice.service.TransferService;
 import org.eclipse.tractusx.mxd.util.Constants;
 import org.eclipse.tractusx.mxd.util.Converter;
-
+import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,6 +66,42 @@ public class TransferApiController {
                         .build());
         return transferResponse.getContent();
 
+    }
+
+    @POST
+    @Path("/events")
+    @Produces((MediaType.APPLICATION_JSON))
+    @Consumes((MediaType.APPLICATION_JSON))
+    public void createTransferFromEvent(JsonNode transferRequest) {
+        System.out.println("Received JSON request: "+ transferRequest.toString());
+        if (transferRequest.has("type") && "TransferProcessStarted".equals(transferRequest.get("type").asText())) {
+
+            JsonNode payloadNode = transferRequest.get("payload");
+            String id = payloadNode.get("transferProcessId").asText();
+            String endpoint = payloadNode.get("dataAddress")
+                    .get("properties")
+                    .get("https://w3id.org/edc/v0.0.1/ns/endpoint")
+                    .asText();
+            String authCode = payloadNode.get("dataAddress")
+                    .get("properties")
+                    .get("https://w3id.org/edc/v0.0.1/ns/authorization")
+                    .asText();
+
+            Transfer transfer = Transfer.Builder.newInstance()
+                    .id(id)
+                    .endpoint(endpoint)
+                    .authCode(authCode)
+                    .authKey("authorization")
+                    .build();
+
+            this.transferService.create(transfer, monitor)
+                    .map(a -> TransferRequest.builder()
+                            .id(a.getId())
+                            .endpoint(a.getEndpoint())
+                            .authCode(a.getAuthCode())
+                            .build());
+            //return Response.ok(transferResponse.getContent()).build();
+        }
     }
 
     @GET
