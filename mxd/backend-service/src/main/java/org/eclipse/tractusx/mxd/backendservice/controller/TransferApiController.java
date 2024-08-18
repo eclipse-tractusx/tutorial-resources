@@ -27,6 +27,7 @@ import org.eclipse.tractusx.mxd.util.Converter;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Optional;
+import org.eclipse.edc.connector.controlplane.transfer.spi.event.TransferProcessStarted;
 
 
 @Consumes(MediaType.APPLICATION_JSON)
@@ -72,20 +73,19 @@ public class TransferApiController {
     @Path("/events")
     @Produces((MediaType.APPLICATION_JSON))
     @Consumes((MediaType.APPLICATION_JSON))
-    public void createTransferFromEvent(JsonNode transferRequest) {
-        System.out.println("Received JSON request: "+ transferRequest.toString());
+    public void createTransferFromEvent(JsonNode transferRequest) throws Exception {
+
         if (transferRequest.has("type") && "TransferProcessStarted".equals(transferRequest.get("type").asText())) {
 
             JsonNode payloadNode = transferRequest.get("payload");
-            String id = payloadNode.get("transferProcessId").asText();
-            String endpoint = payloadNode.get("dataAddress")
-                    .get("properties")
-                    .get("https://w3id.org/edc/v0.0.1/ns/endpoint")
-                    .asText();
-            String authCode = payloadNode.get("dataAddress")
-                    .get("properties")
-                    .get("https://w3id.org/edc/v0.0.1/ns/authorization")
-                    .asText();
+            TransferProcessStarted transferProcessStarted =
+                    this.objectMapper.treeToValue(payloadNode, TransferProcessStarted.class);
+            String id = transferProcessStarted.getTransferProcessId();
+            String endpoint = transferProcessStarted.getDataAddress()
+                    .getStringProperty("https://w3id.org/edc/v0.0.1/ns/endpoint");
+
+            String authCode = transferProcessStarted.getDataAddress()
+                    .getStringProperty("https://w3id.org/edc/v0.0.1/ns/authorization");
 
             Transfer transfer = Transfer.Builder.newInstance()
                     .id(id)
@@ -100,7 +100,6 @@ public class TransferApiController {
                             .endpoint(a.getEndpoint())
                             .authCode(a.getAuthCode())
                             .build());
-            //return Response.ok(transferResponse.getContent()).build();
         }
     }
 

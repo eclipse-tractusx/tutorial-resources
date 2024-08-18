@@ -24,5 +24,6 @@ apache-commons = { module = "org.apache.commons:commons-dbcp2", version.ref = "c
 edc-configuration-filesystem = { module = "org.eclipse.edc:configuration-filesystem", version.ref = "edc" }
 postgres-containers = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+edc-spi-transfer = { module = "org.eclipse.edc:transfer-spi", version.ref = "edc" }
 [plugins]
 shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
