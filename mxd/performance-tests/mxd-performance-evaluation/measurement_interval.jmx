@@ -139,10 +139,18 @@
             <stringProp name="Argument.value">${__P(SUPPLIER_PARTS_INITIAL, 1000)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="BACKEND_SERVICE_URL" elementType="Argument">
+            <stringProp name="Argument.name">BACKEND_SERVICE_URL</stringProp>
+            <stringProp name="Argument.value">${__P(BACKEND_SERVICE_URL)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="BACKEND_SERVICE_PROTOCOL_URL" elementType="Argument">
+            <stringProp name="Argument.name">BACKEND_SERVICE_PROTOCOL_URL</stringProp>
+            <stringProp name="Argument.value">${__P(BACKEND_SERVICE_PROTOCOL, http://backend-service:8080)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </elementProp>
-      <boolProp name="TestPlan.functional_mode">false</boolProp>
-      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
     </TestPlan>
     <hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="OEM Plants ">
@@ -189,7 +197,7 @@
           <stringProp name="TestPlan.comments">Local Variables to be reset after each loop</stringProp>
         </UserParameters>
         <hashTree/>
-        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Provide ID Counter">
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Provide ID Counter" enabled="true">
           <stringProp name="CounterConfig.start">${__intSum(1,${OEM_CARS_INITIAL})}</stringProp>
           <stringProp name="CounterConfig.end"></stringProp>
           <stringProp name="CounterConfig.incr">1</stringProp>
@@ -207,6 +215,48 @@
           <boolProp name="CounterConfig.per_user">false</boolProp>
         </CounterConfig>
         <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Create Content">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${BACKEND_SERVICE_URL}/api/v1/contents</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+	&quot;userId&quot;: 918704604,&#xd;
+	&quot;title&quot;: &quot;agwng&quot;,&#xd;
+	&quot;text&quot;: &quot;oz&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${OEM_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Content URL" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">CONTENT_URL</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;url&apos;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Create Asset">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v3/assets</stringProp>
@@ -227,7 +277,7 @@
     &quot;dataAddress&quot;: {&#xd;
         &quot;@type&quot;: &quot;DataAddress&quot;,&#xd;
         &quot;type&quot;: &quot;HttpData&quot;,&#xd;
-        &quot;baseUrl&quot;: &quot;https://jsonplaceholder.typicode.com/todos&quot;&#xd;
+        &quot;baseUrl&quot;: &quot;${CONTENT_URL}&quot;&#xd;
     }&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -380,7 +430,7 @@
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Get Supplier Asset">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Get Supplier Asset" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v3/assets/${CONSUME_COUNTER}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -406,7 +456,7 @@
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Query Catalog">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Query Catalog" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v2/catalog/request</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -442,7 +492,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">X-Api-Key</stringProp>
@@ -455,7 +505,7 @@
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor">
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
             <stringProp name="JSONPostProcessor.referenceNames">CONTRACT_OFFER_ID</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">${__eval($[&apos;dcat:dataset&apos;][?(@.id==&quot;${CONSUME_COUNTER}&quot;)][&apos;odrl:hasPolicy&apos;][&apos;@id&apos;])}</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
@@ -476,7 +526,7 @@ if(offerId == null || offerId.isEmpty()) {
           </JSR223Assertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Initiate Negotiation">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Initiate Negotiation" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v2/contractnegotiations</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -545,11 +595,11 @@ if(offerId == null || offerId.isEmpty()) {
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="OEM Negotiation Complete">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="OEM Negotiation Complete" enabled="true">
           <boolProp name="TransactionController.includeTimers">true</boolProp>
         </TransactionController>
         <hashTree>
-          <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Negotiation_State_Loop">
+          <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Negotiation_State_Loop" enabled="true">
             <stringProp name="WhileController.condition">${__jexl3(&quot;${NEGOTIATION_STATE}&quot; != &quot;FINALIZED&quot; &amp;&amp;
 ${__jm__Negotiation_State_Loop__idx} &lt; ${MAX_NEGOTIATION_POLL_COUNT})}</stringProp>
             <stringProp name="TestPlan.comments">Loop while Negotiation State is FINALIZED</stringProp>
@@ -591,7 +641,7 @@ ${__jm__Negotiation_State_Loop__idx} &lt; ${MAX_NEGOTIATION_POLL_COUNT})}</strin
               <hashTree/>
             </hashTree>
           </hashTree>
-          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="OEM Verify Negotiation State">
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="OEM Verify Negotiation State" enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -606,7 +656,7 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
           </JSR223Sampler>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Get Negotiation">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Get Negotiation" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v2/contractnegotiations/${NEGOTIATION_ID}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -638,7 +688,7 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Initiate Transfer">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Initiate Transfer" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v2/transferprocesses</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -662,7 +712,19 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
   &quot;transferType&quot;: &quot;HttpData-PULL&quot;,&#xd;
   &quot;dataDestination&quot;:  {&#xd;
         &quot;type&quot;: &quot;HttpProxy&quot;&#xd;
-  }&#xd;
+  },&#xd;
+  &quot;privateProperties&quot;: {&#xd;
+      &quot;receiverHttpEndpoint&quot;: &quot;{{BACKEND_SERVICE_PROTOCOL_URL}}/api/v1/transfers/events&quot;&#xd;
+   },&#xd;
+  &quot;callbackAddresses&quot;: [&#xd;
+    {&#xd;
+      &quot;transactional&quot;: false,&#xd;
+      &quot;uri&quot;: &quot;{{BACKEND_SERVICE_PROTOCOL_URL}}/api/v1/transfers/events&quot;,&#xd;
+      &quot;events&quot;: [&#xd;
+        &quot;transfer.process&quot;&#xd;
+      ]&#xd;
+    }&#xd;
+  ]&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -749,6 +811,32 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
 }
 </stringProp>
           </JSR223Sampler>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Get Transfer Content" enabled="true">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">${BACKEND_SERVICE_URL}/api/v1/transfers/${TRANSFER_ID}/contents</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Api-Key</stringProp>
+                <stringProp name="Header.value">${SUPPLIER_API_KEY}</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
           <hashTree/>
         </hashTree>
         <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
@@ -1134,7 +1222,7 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Supplier Fleet Manager">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Supplier Fleet Manager" enabled="true">
         <stringProp name="ThreadGroup.num_threads">${SUPPLIER_FLEET_MANAGERS}</stringProp>
         <stringProp name="ThreadGroup.duration">${EXPERIMENT_DURATION_SEC}</stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
@@ -1187,7 +1275,7 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
           <stringProp name="TestPlan.comments">Local Variables to be reset after each loop</stringProp>
         </UserParameters>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fleet Get OEM Asset">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fleet Get OEM Asset" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v3/assets/${CONSUME_COUNTER}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -1213,7 +1301,7 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fleet Query Catalog">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fleet Query Catalog" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v2/catalog/request</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -1283,7 +1371,7 @@ if(offerId == null || offerId.isEmpty()) {
           </JSR223Assertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fleet Initiate Negotiation">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fleet Initiate Negotiation" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v2/contractnegotiations</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -1345,18 +1433,18 @@ if(offerId == null || offerId.isEmpty()) {
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Negotiation ID">
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Negotiation ID" enabled="true">
             <stringProp name="JSONPostProcessor.referenceNames">NEGOTIATION_ID</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;@id&apos;]</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Fleet Negotiation Complete">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Fleet Negotiation Complete" enabled="true">
           <boolProp name="TransactionController.includeTimers">true</boolProp>
         </TransactionController>
         <hashTree>
-          <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Negotiation_State_Loop">
+          <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Negotiation_State_Loop" enabled="true">
             <stringProp name="WhileController.condition">${__jexl3(&quot;${NEGOTIATION_STATE}&quot; != &quot;FINALIZED&quot; &amp;&amp;
 ${__jm__Negotiation_State_Loop__idx} &lt; ${MAX_NEGOTIATION_POLL_COUNT})}</stringProp>
             <stringProp name="TestPlan.comments">Loop while Negotiation State is FINALIZED</stringProp>
@@ -1398,7 +1486,7 @@ ${__jm__Negotiation_State_Loop__idx} &lt; ${MAX_NEGOTIATION_POLL_COUNT})}</strin
               <hashTree/>
             </hashTree>
           </hashTree>
-          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Fleet Verify Negotiation State">
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Fleet Verify Negotiation State" enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -1413,7 +1501,7 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
           </JSR223Sampler>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fleet Get Negotiation">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fleet Get Negotiation" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v2/contractnegotiations/${NEGOTIATION_ID}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -1425,7 +1513,7 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">X-Api-Key</stringProp>
@@ -1438,14 +1526,14 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor">
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
             <stringProp name="JSONPostProcessor.referenceNames">CONTRACT_AGREEMENT_ID</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;contractAgreementId&apos;]</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fleet Initiate Transfer">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fleet Initiate Transfer" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v2/transferprocesses</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -1477,7 +1565,7 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">X-Api-Key</stringProp>
@@ -1490,18 +1578,18 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Transfer ID">
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Transfer ID" enabled="true">
             <stringProp name="JSONPostProcessor.referenceNames">TRANSFER_ID</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;@id&apos;]</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Fleet Transfer Complete">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Fleet Transfer Complete" enabled="true">
           <boolProp name="TransactionController.includeTimers">true</boolProp>
         </TransactionController>
         <hashTree>
-          <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Transfer_State_Loop">
+          <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Transfer_State_Loop" enabled="true">
             <stringProp name="WhileController.condition">${__jexl3(&quot;${TRANSFER_STATE}&quot; != &quot;STARTED&quot; &amp;&amp;
 ${__jm__Transfer_State_Loop__idx} &lt; ${MAX_TRANSFER_POLL_COUNT})}</stringProp>
             <stringProp name="TestPlan.comments">Loop while Transfer State is STARTED</stringProp>
@@ -1543,7 +1631,7 @@ ${__jm__Transfer_State_Loop__idx} &lt; ${MAX_TRANSFER_POLL_COUNT})}</stringProp>
               <hashTree/>
             </hashTree>
           </hashTree>
-          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Fleet Verify Transfer State">
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Fleet Verify Transfer State" enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -1598,7 +1686,7 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
           <stringProp name="filename">output/supplier_fleet_manager_errors.xml</stringProp>
         </ResultCollector>
         <hashTree/>
-        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report">
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
