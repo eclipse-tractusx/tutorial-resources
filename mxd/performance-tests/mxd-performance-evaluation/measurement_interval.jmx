@@ -688,7 +688,7 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Initiate Transfer" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Initiate Transfer">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v2/transferprocesses</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -714,12 +714,12 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
         &quot;type&quot;: &quot;HttpProxy&quot;&#xd;
   },&#xd;
   &quot;privateProperties&quot;: {&#xd;
-      &quot;receiverHttpEndpoint&quot;: &quot;{{BACKEND_SERVICE_PROTOCOL_URL}}/api/v1/transfers/events&quot;&#xd;
+      &quot;receiverHttpEndpoint&quot;: &quot;${BACKEND_SERVICE_PROTOCOL_URL}/api/v1/transfers/events&quot;&#xd;
    },&#xd;
   &quot;callbackAddresses&quot;: [&#xd;
     {&#xd;
       &quot;transactional&quot;: false,&#xd;
-      &quot;uri&quot;: &quot;{{BACKEND_SERVICE_PROTOCOL_URL}}/api/v1/transfers/events&quot;,&#xd;
+      &quot;uri&quot;: &quot;${BACKEND_SERVICE_PROTOCOL_URL}/api/v1/transfers/events&quot;,&#xd;
       &quot;events&quot;: [&#xd;
         &quot;transfer.process&quot;&#xd;
       ]&#xd;
@@ -752,7 +752,7 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="OEM Transfer Complete" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="OEM Transfer Complete">
           <boolProp name="TransactionController.includeTimers">true</boolProp>
         </TransactionController>
         <hashTree>
@@ -813,7 +813,7 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
           </JSR223Sampler>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Get Transfer Content" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Get Transfer Content">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${BACKEND_SERVICE_URL}/api/v1/transfers/${TRANSFER_ID}/contents</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
