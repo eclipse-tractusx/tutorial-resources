@@ -69,10 +69,18 @@
             <stringProp name="Argument.value">${__P(ADDITIONAL_CONTRACT_DEFINITIONS_OEM, 0)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="BACKEND_SERVICE_URL" elementType="Argument">
+            <stringProp name="Argument.name">BACKEND_SERVICE_URL</stringProp>
+            <stringProp name="Argument.value">${__P(BACKEND_SERVICE_URL)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="BACKEND_SERVICE_PROTOCOL_URL" elementType="Argument">
+            <stringProp name="Argument.name">BACKEND_SERVICE_PROTOCOL_URL</stringProp>
+            <stringProp name="Argument.value">${__P(BACKEND_SERVICE_PROTOCOL, http://backend-service:8080)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </elementProp>
-      <boolProp name="TestPlan.functional_mode">false</boolProp>
-      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
     </TestPlan>
     <hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="SetUp Supplier">
@@ -90,7 +98,7 @@
           <stringProp name="ConstantTimer.delay">500</stringProp>
         </ConstantTimer>
         <hashTree/>
-        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
           <stringProp name="LoopController.loops">${SUPPLIER_PARTS_INITIAL}</stringProp>
         </LoopController>
         <hashTree>
@@ -103,7 +111,7 @@
             <boolProp name="CounterConfig.per_user">false</boolProp>
           </CounterConfig>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Asset" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Asset">
             <intProp name="HTTPSampler.concurrentPool">6</intProp>
             <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v3/assets</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -224,7 +232,7 @@
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Contract Definitiion">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Contract Definitiion" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v2/contractdefinitions</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -573,7 +581,7 @@
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="SetUp OEM" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="SetUp OEM">
         <stringProp name="TestPlan.comments">Defining a test for the processes &quot;Create Asset&quot;, &quot;Create Policy&quot; and &quot;Create Contract Definition&quot; of the OEM</stringProp>
         <intProp name="ThreadGroup.num_threads">1</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">false</boolProp>
@@ -588,7 +596,7 @@
           <stringProp name="ConstantTimer.delay">500</stringProp>
         </ConstantTimer>
         <hashTree/>
-        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
           <stringProp name="LoopController.loops">${OEM_CARS_INITIAL}</stringProp>
         </LoopController>
         <hashTree>
@@ -601,7 +609,49 @@
             <boolProp name="CounterConfig.per_user">false</boolProp>
           </CounterConfig>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Asset" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Contents">
+            <intProp name="HTTPSampler.concurrentPool">6</intProp>
+            <stringProp name="HTTPSampler.path">${BACKEND_SERVICE_URL}/api/v1/contents</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+	&quot;userId&quot;: 918704604,&#xd;
+	&quot;title&quot;: &quot;agwng&quot;,&#xd;
+	&quot;text&quot;: &quot;oz&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">X-Api-Key</stringProp>
+                  <stringProp name="Header.value">${OEM_API_KEY}</stringProp>
+                </elementProp>
+                <elementProp name="Content-Type" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor">
+              <stringProp name="JSONPostProcessor.referenceNames">CONTENT_URL</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;url&apos;]</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Asset">
             <intProp name="HTTPSampler.concurrentPool">6</intProp>
             <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v3/assets</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -621,7 +671,7 @@
     &quot;dataAddress&quot;: {&#xd;
         &quot;@type&quot;: &quot;DataAddress&quot;,&#xd;
         &quot;type&quot;: &quot;HttpData&quot;,&#xd;
-        &quot;baseUrl&quot;: &quot;https://jsonplaceholder.typicode.com/todos&quot;&#xd;
+        &quot;baseUrl&quot;: &quot;${CONTENT_URL}&quot;&#xd;
     }&#xd;
 }</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
@@ -722,7 +772,7 @@
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Contract Definitiion" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Contract Definitiion">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v2/contractdefinitions</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
