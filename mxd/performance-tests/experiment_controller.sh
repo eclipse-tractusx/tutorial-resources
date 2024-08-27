@@ -31,7 +31,8 @@ TERRAFORM_LOGFILE="terraform_logs_$(date +%d-%m-%YT%H-%M-%S).logs"
 TEST_CONFIGURATION_FILE_EXTENSION=".properties"
 
 #defaults
-path_to_test_configuration="test-configurations/small_experiment.properties"
+path_to_test_configuration="test-configurations/Business_Case_Tier2.properties"
+backend_service_docker_image="euna123/backend-service:1.0.0"
 terraform_dir="$(dirname "$0")/.."
 test_pod_context="kind-mxd"
 test_environment_context="kind-mxd"
@@ -42,6 +43,7 @@ is_debug=true
 while getopts "f:t:x:y:d" opt; do
     case $opt in
         f) path_to_test_configuration=$OPTARG;;
+        b) backend_service_docker_image=$OPTARG;;
         t) terraform_dir=$OPTARG;;
         x) test_pod_context=$OPTARG;;
         y) test_environment_context=$OPTARG;;
@@ -119,8 +121,8 @@ setup_test_environment() {
     || print_error_log_and_exit "Failed to deploy Prometheus"
 
   print_info_log "Apply terraform"
-  terraform -chdir="${terraform_dir}" apply -auto-approve \
-    >> "${TERRAFORM_LOGFILE}" \
+  terraform -chdir="${terraform_dir}" apply -var "backend-service-docker-image=${backend_service_docker_image}" \
+    -auto-approve  >> "${TERRAFORM_LOGFILE}" \
     || print_error_log_and_exit "Failed to apply Terraform"
 
   print_info_log "Create performance tests pod"

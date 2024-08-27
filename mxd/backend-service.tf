@@ -42,7 +42,7 @@ resource "kubernetes_deployment" "backend-service" {
       spec {
         container {
           name              = "backend-service"
-          image             = "euna123/backend-service:1.0.0"
+          image             = "${var.backend-service-docker-image}"
           image_pull_policy = "Always"
 
           port {

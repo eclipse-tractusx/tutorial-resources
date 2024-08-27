@@ -148,13 +148,13 @@ Once all tools and software have been installed and the Tractus-X Dataspace has 
 The script ```./experiment_controller.sh```
 1. Deploys terraform from ```mxd```folder to a provided cluster
 2. Starts the ```mxd-performance-test``` container which runs
-   ```small_experiment.properties``` by default with latest changes from .jmx files.
+   ```Business_Case_Tier2.properties``` by default with latest changes from .jmx files.
 
 #### Display help
 ```./experiment_controller.sh -h```
 For more information about arguments visit [help.txt](help.txt).
 
-#### Run default experiment file small_experiment.properties on ```kind-mxd``` cluster
+#### Run default experiment file Business_Case_Tier2.properties on ```kind-mxd``` cluster
 ```./experiment_controller.sh```
 
 #### Run all files from test-configurations folder on ```kind-mxd``` cluster
@@ -163,7 +163,7 @@ For more information about arguments visit [help.txt](help.txt).
 #### Run just one file ex:  medium_experiment_10_contracts.properties  on ```kind-mxd``` cluster
 ```./experiment_controller.sh -f test-configurations/medium_experiment_10_contracts.properties```
 
-#### Run default experiment file small_experiment.properties on ```shoot--edc-lpt--mxd``` cluster
+#### Run default experiment file Business_Case_Tier2.properties on ```shoot--edc-lpt--mxd``` cluster
 ```./experiment_controller.sh -x shoot--edc-lpt--mxd -y shoot--edc-lpt--mxd```
 
 ####  Run default experiment file with test container on ```kind-mxd``` cluster and the rest of the environment on ```shoot--edc-lpt--mxd``` cluster
@@ -171,6 +171,9 @@ For more information about arguments visit [help.txt](help.txt).
 
 #### Run all files from test-configurations folder on separate clusters
 ```./experiment_controller.sh -f test-configurations -x kind-mxd -y shoot--edc-lpt--mxd```
+
+#### Run all files from test-configurations folder with a custom build backend service image
+```./experiment_controller.sh -f test-configurations -b your_backend_service_image```
 
 Enjoy the test results!
 

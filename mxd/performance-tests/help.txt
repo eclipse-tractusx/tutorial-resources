@@ -1,5 +1,6 @@
 Help:
-  -f  Set the path to file/folder with experiment files (default: "test-configurations/small_experiment.properties")
+  -f  Set the path to file/folder with experiment files (default: "test-configurations/Business_Case_Tier2.properties")
+  -b  Backend service docker image
   -t  Set the Terraform directory (default: "parent folder")
   -d  Enable debug mode (default: true)
   -x  Test pod context (cluster used to host test pod) (default: kind-mxd)

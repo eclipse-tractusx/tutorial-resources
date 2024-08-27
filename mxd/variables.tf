@@ -113,3 +113,7 @@ variable "bob-iatp-config" {
     trusted-issuers    = []
   }
 }
+
+variable "backend-service-docker-image" {
+  default = "euna123/backend-service:1.0.0"
+}
