@@ -149,6 +149,11 @@
             <stringProp name="Argument.value">${__P(BACKEND_SERVICE_PROTOCOL, http://backend-service:8080)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="TRANSFER_CONTENT" elementType="Argument">
+            <stringProp name="Argument.name">TRANSFER_CONTENT</stringProp>
+            <stringProp name="Argument.value">{&quot;userId&quot;: 918704604,&quot;title&quot;: &quot;agwng&quot;,&quot;text&quot;: &quot;oz&quot;}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </elementProp>
     </TestPlan>
@@ -197,7 +202,7 @@
           <stringProp name="TestPlan.comments">Local Variables to be reset after each loop</stringProp>
         </UserParameters>
         <hashTree/>
-        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Provide ID Counter">
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Provide ID Counter" enabled="true">
           <stringProp name="CounterConfig.start">${__intSum(1,${OEM_CARS_INITIAL})}</stringProp>
           <stringProp name="CounterConfig.end"></stringProp>
           <stringProp name="CounterConfig.incr">1</stringProp>
@@ -206,7 +211,7 @@
           <boolProp name="CounterConfig.per_user">false</boolProp>
         </CounterConfig>
         <hashTree/>
-        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Consume ID Counter">
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Consume ID Counter" enabled="true">
           <stringProp name="CounterConfig.start">1</stringProp>
           <stringProp name="CounterConfig.end"></stringProp>
           <stringProp name="CounterConfig.incr">1</stringProp>
@@ -226,11 +231,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-	&quot;userId&quot;: 918704604,&#xd;
-	&quot;title&quot;: &quot;agwng&quot;,&#xd;
-	&quot;text&quot;: &quot;oz&quot;&#xd;
-}</stringProp>
+                <stringProp name="Argument.value">&quot;${TRANSFER_CONTENT}&quot;</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -286,7 +287,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">X-Api-Key</stringProp>
@@ -298,17 +299,6 @@
               </elementProp>
             </collectionProp>
           </HeaderManager>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response code 200 or 409" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-              <stringProp name="51517">409</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">true</boolProp>
-            <intProp name="Assertion.test_type">40</intProp>
-          </ResponseAssertion>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Policy" enabled="false">
@@ -526,7 +516,7 @@ if(offerId == null || offerId.isEmpty()) {
           </JSR223Assertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Initiate Negotiation">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Initiate Negotiation" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v2/contractnegotiations</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -595,7 +585,7 @@ if(offerId == null || offerId.isEmpty()) {
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="OEM Negotiation Complete">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="OEM Negotiation Complete" enabled="true">
           <boolProp name="TransactionController.includeTimers">true</boolProp>
         </TransactionController>
         <hashTree>
@@ -641,7 +631,7 @@ ${__jm__Negotiation_State_Loop__idx} &lt; ${MAX_NEGOTIATION_POLL_COUNT})}</strin
               <hashTree/>
             </hashTree>
           </hashTree>
-          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="OEM Verify Negotiation State">
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="OEM Verify Negotiation State" enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -688,7 +678,7 @@ if(!&quot;FINALIZED&quot;.equals( currentState)) {
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Initiate Transfer">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OEM Initiate Transfer" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${OEM_MANAGEMENT_URL}/v2/transferprocesses</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -798,7 +788,7 @@ ${__jm__Transfer_State_Loop__idx} &lt; ${MAX_TRANSFER_POLL_COUNT})}</stringProp>
               <hashTree/>
             </hashTree>
           </hashTree>
-          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="OEM Verify Transfer State" enabled="true">
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="OEM Verify Transfer State">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -825,7 +815,7 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">X-Api-Key</stringProp>
@@ -837,6 +827,17 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
               </elementProp>
             </collectionProp>
           </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response code 200">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+              <stringProp name="0"></stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">true</boolProp>
+            <intProp name="Assertion.test_type">40</intProp>
+          </ResponseAssertion>
           <hashTree/>
         </hashTree>
         <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
@@ -970,7 +971,7 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
           <boolProp name="CounterConfig.per_user">false</boolProp>
         </CounterConfig>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Supplier Create Asset">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Supplier Create Asset" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">${SUPPLIER_MANAGEMENT_URL}/v3/assets</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -1287,7 +1288,7 @@ if(!&quot;STARTED&quot;.equals( currentState)) {
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">X-Api-Key</stringProp>
