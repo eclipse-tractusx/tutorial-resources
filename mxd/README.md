@@ -59,6 +59,9 @@ potato, it'll take even longer. Just get a coffee. Eventually, it should look si
 
 ![img.png](assets/img.png)
 
+To dockerize backend-service on windows, add a third argument(an empty string) to the [RUNTIME](https://github.com/eclipse-tractusx/tutorial-resources/blob/8795f19273471194f092f1d1c618d780c69f2a4b/mxd/backend-service/src/test/java/org/eclipse/tractusx/mxd/testfixtures/PostgresRuntime.java#L29) declaration.
+Please check this [issue](https://github.com/eclipse-edc/Connector/issues/4285) for more details.
+
 ### Inspect terraform output
 
 After the `terraform` command has successfully completed, it will output a few configuration and setup values
