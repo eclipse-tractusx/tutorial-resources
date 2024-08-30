@@ -28,9 +28,14 @@ be our dataspace participants. Each of them stores their secrets in their "priva
 shared Postgres server, where each of them has a database. MIW and Keycloak are "central" components, they only exist
 once and are accessible by all participants.
 
+The backend service is a collection of REST endpoints and is used to validate succesful http transfers. More details on the backend service can be found [here](REST API Application to complete and validate a successful asset transfer.).
+
 For the most bare-bones installation of the dataspace, execute the following commands in a shell:
 
 ```shell
+#Dockerize the backend service
+cd <path/of/mxd/backend-service>
+./gradlew clean dockerize
 # firstly go to the folder containing the config files
 cd <path/of/mxd>
 kind create cluster -n mxd --config kind.config.yaml
