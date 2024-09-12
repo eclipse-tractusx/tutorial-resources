@@ -19,7 +19,8 @@
 
 resource "kubernetes_service" "minio-service" {
   metadata {
-    name = "${var.humanReadableName}-minio"
+    name      = "${var.humanReadableName}-minio"
+    namespace = var.namespace
   }
   spec {
     type = "NodePort"

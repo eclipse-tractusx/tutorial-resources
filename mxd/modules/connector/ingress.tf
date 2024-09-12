@@ -19,7 +19,8 @@
 
 resource "kubernetes_ingress_v1" "mxd-ingress" {
   metadata {
-    name = "${var.humanReadableName}-ingress"
+    name      = "${var.humanReadableName}-connector-ingress"
+    namespace = var.namespace
     annotations = {
       "nginx.ingress.kubernetes.io/rewrite-target" = "/$2"
       "nginx.ingress.kubernetes.io/use-regex"      = "true"
@@ -74,17 +75,19 @@ resource "kubernetes_ingress_v1" "mxd-ingress" {
             }
           }
         }
+
         path {
-          path = "/backend-service(/|$)(.*)"
+          path = "/${var.humanReadableName}/fc(/|$)(.*)"
           backend {
             service {
-              name = "backend-service"
+              name = kubernetes_service.controlplane-service.metadata.0.name
               port {
-                number = 8080
+                number = 8085
               }
             }
           }
         }
+
       }
     }
   }
@@ -93,7 +96,7 @@ resource "kubernetes_ingress_v1" "mxd-ingress" {
 locals {
   control-plane-service = "${var.humanReadableName}-tractusx-connector-controlplane"
   data-plane-service    = "${var.humanReadableName}-tractusx-connector-dataplane"
-  management_url        = "http://${var.ingress-host}/${var.humanReadableName}/management/v2"
+  management_url        = "http://${var.ingress-host}/${var.humanReadableName}/management/v3"
   proxy_url             = "http://${var.ingress-host}/${var.humanReadableName}/proxy"
   health_url            = "http://${var.ingress-host}/${var.humanReadableName}/health"
   public_url            = "http://${var.ingress-host}/${var.humanReadableName}/api/public"

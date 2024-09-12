@@ -29,36 +29,38 @@ controlplane:
     port: 1044
   livenessProbe:
     enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 5
   readinessProbe:
     enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 5
   service:
     type: NodePort
   endpoints:
     management:
       authKey: password
+# uncomment the following lines if a custom tx-control-plane runtime images should be used.
   image:
-    pullPolicy: Never
-#    repository: "edc-controlplane-postgresql-hashicorp-vault"
+    pullPolicy: Always
+
   securityContext:
     # avoids some errors in the log: cannot write temp files of large multipart requests when R/O
     readOnlyRootFilesystem: false
-  ssi:
-    miw:
-      url: "http://localhost:8080"
-      authorityId: "authorityId"
-    oauth:
-      client:
-        secretAlias: "client-secret"
 dataplane:
   debug:
     enabled: true
     port: 1044
   livenessProbe:
     enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 5
   readinessProbe:
     enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 5
   image:
-    pullPolicy: Never
+    pullPolicy: Always
 #    repository: "edc-dataplane-hashicorp-vault"
   securityContext:
     # avoids some errors in the log: cannot write temp files of large multipart requests when R/O
@@ -82,12 +84,6 @@ vault:
   hashicorp:
     url: http://{{ .Release.Name }}-vault:8200
     token: root
-  secretNames:
-    transferProxyTokenEncryptionAesKey: aes-keys
-    transferProxyTokenSignerPrivateKey: transferProxyTokenSignerPrivateKey
-    transferProxyTokenSignerPublicKey: transferProxyTokenSignerPublicKey
-    # this must be set through CLI args: --set vault.secrets=$YOUR_VAULT_SECRETS where YOUR_VAULT_SECRETS should
-    #    # be a string in the format "key1:secret1;key2:secret2;..."
     secrets:
 backendService:
   httpProxyTokenReceiverUrl: "http://backend:8080"

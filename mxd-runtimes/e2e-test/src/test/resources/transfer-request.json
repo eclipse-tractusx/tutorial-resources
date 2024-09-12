@@ -1,0 +1,27 @@
+{
+  "@context": [
+    "https://w3id.org/edc/connector/management/v0.0.1",
+    {
+      "odrl": "http://www.w3.org/ns/odrl/2/"
+    },
+    {
+      "tx": "https://w3id.org/tractusx/v0.0.1/ns/"
+    },
+    {
+      "tx-auth": "https://w3id.org/tractusx/auth/"
+    },
+    {
+      "cx-policy": "https://w3id.org/catenax/policy/"
+    }
+  ],
+  "@type": "TransferRequest",
+  "assetId": "asset-1",
+  "counterPartyAddress":  "{{PROVIDER_DSP_URL}}/api/v1/dsp",
+  "connectorId": "{{PROVIDER_ID}}",
+  "contractId": "{{CONTRACT_ID}}",
+  "dataDestination": {
+    "type": "HttpProxy"
+  },
+  "protocol": "dataspace-protocol-http",
+  "transferType": "HttpData-PULL"
+}

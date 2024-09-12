@@ -19,7 +19,8 @@
 
 resource "kubernetes_deployment" "azurite" {
   metadata {
-    name = local.appName
+    name      = local.appName
+    namespace = var.namespace
     labels = {
       App = local.appName
     }
@@ -61,7 +62,8 @@ resource "kubernetes_deployment" "azurite" {
 
 resource "kubernetes_config_map" "azurite-config" {
   metadata {
-    name = "${local.appName}-config"
+    namespace = var.namespace
+    name      = "${local.appName}-config"
   }
   data = {
     AZURITE_ACCOUNTS = var.azurite-accounts
@@ -70,7 +72,8 @@ resource "kubernetes_config_map" "azurite-config" {
 
 resource "kubernetes_service" "azurite" {
   metadata {
-    name = local.appName
+    namespace = var.namespace
+    name      = local.appName
   }
   spec {
     selector = {

@@ -17,38 +17,6 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-output "connector1-aeskey" {
-  value = module.alice-connector.aes_key
-}
-
-output "connector1-client-secret" {
-  value = module.alice-connector.client_secret
-}
-
-output "connector2-aeskey" {
-  value = module.bob-connector.aes_key
-}
-
-output "connector2-client-secret" {
-  value = module.bob-connector.client_secret
-}
-
-output "keycloak-cluster-ip" {
-  value = kubernetes_service.keycloak.spec.0.cluster_ip
-}
-
-output "keycloak-database-credentials" {
-  value = local.keycloak-postgres
-}
-
-output "miw-cluster-ip" {
-  value = local.miw-ip
-}
-
-output "miw-database-credentials" {
-  value = local.miw-postgres
-}
-
 output "bob-database-credentials" {
   value = local.alice-postgres
 }

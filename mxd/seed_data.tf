@@ -25,7 +25,8 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
   // wait until the connectors are running, otherwise terraform may report an error
   depends_on = [module.alice-connector, module.bob-connector]
   metadata {
-    name = "seed-connectors"
+    name      = "seed-connectors"
+    namespace = kubernetes_namespace.mxd-ns.metadata.0.name
   }
   spec {
     // run only once
@@ -38,31 +39,14 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
         name = "seed-connectors"
       }
       spec {
-        // this container seeds data to the BOB connector
-        container {
-          name  = "newman-bob"
-          image = "postman/newman:ubuntu"
-          command = [
-            "newman", "run",
-            "--folder", "SeedData",
-            "--env-var", "MANAGEMENT_URL=http://${module.bob-connector.node-ip}:8081/management",
-            "--env-var", "POLICY_BPN=${var.alice-bpn}",
-            "/opt/collection/${local.newman_collection_name}"
-          ]
-          volume_mount {
-            mount_path = "/opt/collection"
-            name       = "seed-collection"
-          }
-        }
         // this container seeds data to the ALICE connector
         container {
-          name  = "newman-alice"
+          name  = "seed-alice-connector"
           image = "postman/newman:ubuntu"
           command = [
             "newman", "run",
             "--folder", "SeedData",
             "--env-var", "MANAGEMENT_URL=http://${module.alice-connector.node-ip}:8081/management",
-            "--env-var", "POLICY_BPN=${var.bob-bpn}",
             "/opt/collection/${local.newman_collection_name}"
           ]
           volume_mount {
@@ -71,20 +55,14 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
           }
         }
 
-        // this container seeds data to the miw service
         container {
-          name  = "newman-miw"
+          name  = "seed-alice-catalogserver"
           image = "postman/newman:ubuntu"
           command = [
             "newman", "run",
-            "--folder", "SeedMIW",
-            "--env-var", "MIW_URL=http://${local.miw-url}",
-            "--env-var", "KEYCLOAK_URL=${local.keycloak-url}/realms/${local.keycloak-realm}",
-            "--env-var", "MIW_CLIENT_ID=miw_private_client",
-            "--env-var", "MIW_CLIENT_SECRET=miw_private_client",
-            "--env-var", "ALICE_BPN=${var.alice-bpn}",
-            "--env-var", "BOB_BPN=${var.bob-bpn}",
-            "--env-var", "TRUDY_BPN=${var.trudy-bpn}",
+            "--folder", "SeedCatalogServer",
+            "--env-var", "MANAGEMENT_URL=http://${module.alice-catalog-server.management-endpoint}/api/management",
+            "--env-var", "PROVIDER_DSP_ENDPOINT=http://alice-controlplane:8084/api/v1/dsp",
             "/opt/collection/${local.newman_collection_name}"
           ]
           volume_mount {
@@ -93,19 +71,70 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
           }
         }
 
+        // seed the BDRS Server
         container {
-          name  = "newman-bdrs"
+          name  = "seed-bdrs"
           image = "postman/newman:ubuntu"
           command = [
             "newman", "run",
             "--folder", "SeedBDRS",
             "--env-var", "BDRS_MGMT_URL=${local.bdrs-mgmt-url}",
-            "--env-var", "ALICE_DID=did:web:miw%3A${var.miw-api-port}:${var.alice-bpn}",
-            "--env-var", "BOB_DID=did:web:miw:${var.miw-api-port}:${var.bob-bpn}",
-            "--env-var", "TRUDY_DID=did:web:miw:${var.miw-api-port}:${var.trudy-bpn}",
+            "--env-var", "ALICE_DID=${var.alice-did}",
+            "--env-var", "BOB_DID=${var.bob-did}",
+            "--env-var", "TRUDY_DID=${var.trudy-did}",
             "--env-var", "ALICE_BPN=${var.alice-bpn}",
             "--env-var", "BOB_BPN=${var.bob-bpn}",
             "--env-var", "TRUDY_BPN=${var.trudy-bpn}",
+            "/opt/collection/${local.newman_collection_name}"
+          ]
+          volume_mount {
+            mount_path = "/opt/collection"
+            name       = "seed-collection"
+          }
+        }
+
+        // this container seeds ALICE's IdentityHub
+        container {
+          name  = "membership-cred-alice"
+          image = "postman/newman:ubuntu"
+          command = [
+            "newman", "run",
+            "--folder", "SeedIH",
+            "--env-var", "IH_URL=http://${var.alice-identityhub-host}:7081",
+            "--env-var", "PARTICIPANT_DID=${var.alice-did}",
+            "--env-var", "CONTROL_PLANE_HOST=alice-controlplane",
+            "--env-var", "PARTICIPANT_CONTEXT_ID=participant-alice",
+            "--env-var", "PARTICIPANT_CONTEXT_ID_BASE64=cGFydGljaXBhbnQtYWxpY2U=",
+            "--env-var",
+            "IDENTITYHUB_URL=http://${var.alice-identityhub-host}:${module.alice-identityhub.ports.presentation-api}/api/presentation",
+            "--env-var", "MEMBERSHIP_CREDENTIAL=${file("${path.module}/assets/alice.membership.jwt")}",
+            "--env-var", "FRAMEWORK_CREDENTIAL=${file("${path.module}/assets/alice.dataexchangegov.jwt")}",
+            "--env-var", "BPN=${var.alice-bpn}",
+            "/opt/collection/${local.newman_collection_name}"
+          ]
+          volume_mount {
+            mount_path = "/opt/collection"
+            name       = "seed-collection"
+          }
+        }
+
+        // this container seeds BOB's IdentityHub
+        container {
+          name  = "membership-cred-bob"
+          image = "postman/newman:ubuntu"
+          command = [
+            "newman", "run",
+            "--folder", "SeedIH",
+            "--env-var", "IH_URL=http://${var.bob-identityhub-host}:7081",
+            "--env-var", "PARTICIPANT_DID=${var.bob-did}",
+            "--env-var", "CONTROL_PLANE_HOST=bob-controlplane",
+            "--env-var", "PARTICIPANT_CONTEXT_ID=participant-bob",
+            "--env-var", "PARTICIPANT_CONTEXT_ID_BASE64=cGFydGljaXBhbnQtYm9i",
+            "--env-var",
+            "IDENTITYHUB_URL=http://${var.bob-identityhub-host}:${module.bob-identityhub.ports.presentation-api}/api/presentation",
+            "--env-var", "MEMBERSHIP_CREDENTIAL=${file("${path.module}/assets/bob.membership.jwt")}",
+            "--env-var", "FRAMEWORK_CREDENTIAL=${file("${path.module}/assets/bob.dataexchangegov.jwt")}",
+            "--env-var", "BPN=${var.bob-bpn}",
             "/opt/collection/${local.newman_collection_name}"
           ]
           volume_mount {
@@ -128,7 +157,8 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
 
 resource "kubernetes_config_map" "seed-collection" {
   metadata {
-    name = "seed-collection"
+    name      = "seed-collection"
+    namespace = kubernetes_namespace.mxd-ns.metadata.0.name
   }
   data = {
     (local.newman_collection_name) = file("./postman/mxd-seed.json")

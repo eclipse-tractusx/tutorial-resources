@@ -19,7 +19,8 @@
 
 resource "kubernetes_deployment" "minio" {
   metadata {
-    name = "${var.humanReadableName}-minio"
+    name      = "${var.humanReadableName}-minio"
+    namespace = var.namespace
     labels = {
       app = "${var.humanReadableName}-minio"
     }

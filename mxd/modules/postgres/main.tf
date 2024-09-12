@@ -19,7 +19,8 @@
 
 resource "kubernetes_deployment" "postgres" {
   metadata {
-    name = local.app-name
+    name      = local.app-name
+    namespace = var.namespace
     labels = {
       App = local.app-name
     }
@@ -100,7 +101,8 @@ resource "kubernetes_deployment" "postgres" {
 
 resource "kubernetes_config_map" "postgres-env" {
   metadata {
-    name = "${local.app-name}-env"
+    name      = "${local.app-name}-env"
+    namespace = var.namespace
   }
 
   ## Create databases for keycloak and MIW, create users and assign privileges
@@ -113,7 +115,8 @@ resource "kubernetes_config_map" "postgres-env" {
 # K8S ClusterIP so Keycloak and MIW can access postgres
 resource "kubernetes_service" "pg-service" {
   metadata {
-    name = "${local.app-name}-service"
+    name      = "${local.app-name}-service"
+    namespace = var.namespace
   }
   spec {
     selector = {
