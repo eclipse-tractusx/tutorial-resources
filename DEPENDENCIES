@@ -320,7 +320,7 @@ npm/npmjs/-/istanbul-reports/3.1.7, BSD-3-Clause AND MIT, approved, #1710
 npm/npmjs/-/jackspeak/3.4.1, BlueOak-1.0.0, approved, clearlydefined
 npm/npmjs/-/jake/10.9.1, Apache-2.0 AND (Apache-2.0 AND MIT), approved, #14655
 npm/npmjs/-/jasmine-core/4.6.1, MIT, approved, clearlydefined
-npm/npmjs/-/jasmine-core/5.1.2, MIT, approved, clearlydefined
+npm/npmjs/-/jasmine-core/5.3.0, MIT, approved, clearlydefined
 npm/npmjs/-/jest-diff/29.7.0, MIT, approved, clearlydefined
 npm/npmjs/-/jest-get-type/29.6.3, MIT, approved, clearlydefined
 npm/npmjs/-/jest-worker/27.5.1, 0BSD AND Apache-2.0 AND BSD-2-Clause AND MIT, approved, #1952
@@ -492,7 +492,7 @@ npm/npmjs/-/postcss-modules-extract-imports/3.1.0, ISC, approved, #14219
 npm/npmjs/-/postcss-modules-local-by-default/4.0.5, MIT, approved, #8508
 npm/npmjs/-/postcss-modules-scope/3.2.0, ISC, approved, #14218
 npm/npmjs/-/postcss-modules-values/4.0.0, ISC, approved, clearlydefined
-npm/npmjs/-/postcss-selector-parser/6.1.0, MIT, approved, clearlydefined
+npm/npmjs/-/postcss-selector-parser/6.1.0, MIT, approved, #15845
 npm/npmjs/-/postcss-value-parser/4.2.0, MIT, approved, clearlydefined
 npm/npmjs/-/postcss/8.4.38, MIT, approved, #3545
 npm/npmjs/-/prelude-ls/1.2.1, MIT, approved, clearlydefined
