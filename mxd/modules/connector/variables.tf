@@ -17,10 +17,10 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-variable "image-pull-policy" {
-  default     = "Always"
+variable "namespace" {
   type        = string
-  description = "Kubernetes ImagePullPolicy for all images"
+  description = "Kubernetes namespace to use"
+  default     = "mxd"
 }
 
 variable "humanReadableName" {
@@ -52,15 +52,32 @@ variable "database-credentials" {
   }
 }
 
-variable "ssi-config" {
+variable "participant-list-file" {
+  type    = string
+  default = "./assets/participants.json"
+}
+
+
+variable "dcp-config" {
+  type = object({
+    id                     = string
+    sts_token_url          = string
+    sts_client_id          = string
+    sts_clientsecret_alias = string
+  })
   default = {
-    miw-url            = ""
-    miw-authorityId    = ""
-    oauth-tokenUrl     = ""
-    oauth-clientid     = ""
-    oauth-clientsecret = ""
-    oauth-secretalias  = ""
+    id                     = ""
+    sts_token_url          = ""
+    sts_client_id          = ""
+    sts_clientsecret_alias = ""
   }
+}
+
+variable "dataplane" {
+  type = object({
+    privatekey-alias = string
+    publickey-alias  = string
+  })
 }
 
 variable "azure-account-name" {
@@ -80,10 +97,11 @@ variable "azure-url" {
 }
 
 variable "minio-config" {
-  default = {
-    minio-username = ""
-    minio-password = ""
-  }
+  type = object({
+    username = string
+    password = string
+    url      = string
+  })
 }
 
 variable "ingress-host" {

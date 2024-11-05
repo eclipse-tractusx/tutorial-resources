@@ -1,0 +1,26 @@
+[metadata]
+format.version = "1.1"
+
+[versions]
+edc = "0.10.0-SNAPSHOT"
+tractusx = "0.8.0-rc5"
+postgres = "42.7.3"
+
+[libraries]
+api-management = { module = "org.eclipse.edc:management-api", version.ref = "edc" }
+api-management-config = { module = "org.eclipse.edc:management-api-configuration", version.ref = "edc" }
+sts-remote-client = { module = "org.eclipse.edc:identity-trust-sts-remote-client", version.ref = "edc" }
+core-fc = { module = "org.eclipse.edc:federated-catalog-core", version.ref = "edc" }
+
+# BOM modules
+bom-catalog = { module = "org.eclipse.edc:federatedcatalog-dcp-bom", version.ref = "edc" }
+bom-catalog-sql = { module = "org.eclipse.edc:federatedcatalog-feature-sql-bom", version.ref = "edc" }
+
+# tx modules
+tx-bdrs-client = { module = "org.eclipse.tractusx.edc:bdrs-client", version.ref = "tractusx" }
+tx-dcp = { module = "org.eclipse.tractusx.edc:tx-dcp", version.ref = "tractusx" }
+tx-fc = { module = "org.eclipse.tractusx.edc:federated-catalog", version.ref = "tractusx" }
+tx-core-jsonld = { module = "org.eclipse.tractusx.edc:json-ld-core", version.ref = "tractusx" }
+
+# third party modules
+postgres = { module = "org.postgresql:postgresql", version.ref = "postgres" }

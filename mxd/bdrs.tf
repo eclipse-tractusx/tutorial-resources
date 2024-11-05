@@ -15,6 +15,7 @@
 
 resource "helm_release" "bdrs-server" {
   name              = "bdrs-server"
+  namespace         = kubernetes_namespace.mxd-ns.metadata.0.name
   force_update      = true
   dependency_update = true
   reuse_values      = true
@@ -23,16 +24,21 @@ resource "helm_release" "bdrs-server" {
 
   repository = "https://eclipse-tractusx.github.io/charts/dev"
   chart      = "bdrs-server"
-  version    = "0.0.4"
+  version    = "0.5.2"
 
   values = [
     yamlencode({
       server : {
-        trustedIssuers : ["did:web:miw:${var.miw-bpn}"]
+        debug : {
+          enabled : true
+          port : 1046
+        }
+        trustedIssuers : ["did:web:dataspace-issuer"]
         env : {
           EDC_API_AUTH_KEY : "password"
           EDC_DATASOURCE_DIDENTRY_USER : local.databases.bdrs.database-username
           EDC_DATASOURCE_DIDENTRY_PASSWORD : local.databases.bdrs.database-password
+          EDC_IAM_DID_WEB_USE_HTTPS : "false"
         }
       }
       postgresql : {

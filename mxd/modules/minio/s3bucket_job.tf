@@ -20,7 +20,8 @@
 resource "kubernetes_job" "create_minio_bucket" {
   depends_on = [kubernetes_deployment.minio, kubernetes_service.minio-service]
   metadata {
-    name = "${var.humanReadableName}-create-minio-bucket"
+    name      = "${var.humanReadableName}-create-minio-bucket"
+    namespace = var.namespace
   }
   spec {
     ttl_seconds_after_finished = "90"
@@ -47,7 +48,8 @@ resource "kubernetes_job" "minio-upload-document" {
   depends_on = [kubernetes_job.create_minio_bucket, kubernetes_config_map.document]
 
   metadata {
-    name = "${var.humanReadableName}-minio-upload-document"
+    name      = "${var.humanReadableName}-minio-upload-document"
+    namespace = var.namespace
   }
 
   spec {
@@ -95,7 +97,8 @@ resource "kubernetes_job" "minio-upload-document" {
 
 resource "kubernetes_config_map" "document" {
   metadata {
-    name = "${var.humanReadableName}-minio-document"
+    name      = "${var.humanReadableName}-minio-document"
+    namespace = var.namespace
   }
   data = {
     (local.file-name) = file("./assets/test-document.txt")

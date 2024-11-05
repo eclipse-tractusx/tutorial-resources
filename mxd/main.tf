@@ -26,11 +26,6 @@ terraform {
     random = {
       source = "hashicorp/random"
     }
-
-    keycloak = {
-      source  = "mrparkers/keycloak"
-      version = "4.4.0"
-    }
     kubernetes = {
       source = "hashicorp/kubernetes"
     }
@@ -47,75 +42,18 @@ provider "helm" {
   }
 }
 
-# First connector
-module "alice-connector" {
-  depends_on        = [module.azurite]
-  source            = "./modules/connector"
-  humanReadableName = "alice"
-  participantId     = var.alice-bpn
-  database-host     = local.alice-postgres.database-host
-  database-name     = local.databases.alice.database-name
-  database-credentials = {
-    user     = local.databases.alice.database-username
-    password = local.databases.alice.database-password
-  }
-  ssi-config = {
-    miw-url            = "http://${kubernetes_service.miw.metadata.0.name}:${var.miw-api-port}"
-    miw-authorityId    = var.miw-bpn
-    oauth-tokenUrl     = "http://${kubernetes_service.keycloak.metadata.0.name}:${var.keycloak-port}/realms/miw_test/protocol/openid-connect/token"
-    oauth-clientid     = "alice_private_client"
-    oauth-secretalias  = "client_secret_alias"
-    oauth-clientsecret = "alice_private_client"
-  }
-  azure-account-name    = var.alice-azure-account-name
-  azure-account-key     = local.alice-azure-key-base64
-  azure-account-key-sas = var.alice-azure-key-sas
-  azure-url             = module.azurite.azurite-url
-  minio-config = {
-    minio-username = "aliceawsclient"
-    minio-password = "aliceawssecret"
-  }
-  ingress-host = var.alice-ingress-host
-}
-
-# Second connector
-module "bob-connector" {
-  depends_on        = [module.azurite]
-  source            = "./modules/connector"
-  humanReadableName = "bob"
-  participantId     = var.bob-bpn
-  database-host     = local.bob-postgres.database-host
-  database-name     = local.databases.bob.database-name
-  database-credentials = {
-    user     = local.databases.bob.database-username
-    password = local.databases.bob.database-password
-  }
-  ssi-config = {
-    miw-url            = "http://${kubernetes_service.miw.metadata.0.name}:${var.miw-api-port}"
-    miw-authorityId    = var.miw-bpn
-    oauth-tokenUrl     = "http://${kubernetes_service.keycloak.metadata.0.name}:${var.keycloak-port}/realms/miw_test/protocol/openid-connect/token"
-    oauth-clientid     = "bob_private_client"
-    oauth-secretalias  = "client_secret_alias"
-    oauth-clientsecret = "bob_private_client"
-  }
-  azure-account-name    = var.bob-azure-account-name
-  azure-account-key     = local.bob-azure-key-base64
-  azure-account-key-sas = var.bob-azure-key-sas
-  azure-url             = module.azurite.azurite-url
-  minio-config = {
-    minio-username = "bobawsclient"
-    minio-password = "bobawssecret"
-  }
-  ingress-host = var.bob-ingress-host
-}
-
 module "azurite" {
   source           = "./modules/azurite"
+  namespace        = kubernetes_namespace.mxd-ns.metadata.0.name
   azurite-accounts = "${var.alice-azure-account-name}:${local.alice-azure-key-base64};${var.bob-azure-account-name}:${local.bob-azure-key-base64};${var.trudy-azure-account-name}:${local.trudy-azure-key-base64};"
 }
 
 locals {
-  alice-azure-key-base64 = base64encode(var.alice-azure-account-key)
-  bob-azure-key-base64   = base64encode(var.bob-azure-account-key)
   trudy-azure-key-base64 = base64encode(var.trudy-azure-account-key)
+}
+
+resource "kubernetes_namespace" "mxd-ns" {
+  metadata {
+    name = var.namespace
+  }
 }

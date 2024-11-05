@@ -17,6 +17,11 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
+variable "namespace" {
+  type        = string
+  description = "Kubernetes namespace to use"
+  default     = "mxd"
+}
 
 variable "azurite-accounts" {
   type        = string

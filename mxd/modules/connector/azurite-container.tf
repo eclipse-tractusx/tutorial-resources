@@ -20,7 +20,8 @@
 resource "kubernetes_job" "azurite-init" {
 
   metadata {
-    name = local.appName
+    name      = local.appName
+    namespace = var.namespace
   }
   spec {
     // run only once
@@ -58,7 +59,8 @@ resource "kubernetes_job" "azurite-init" {
 
 resource "kubernetes_config_map" "document" {
   metadata {
-    name = "${local.appName}-document"
+    name      = "${local.appName}-document"
+    namespace = var.namespace
   }
   data = {
     (local.file-name) = file("./assets/${local.file-name}")

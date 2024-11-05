@@ -17,20 +17,11 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-# A single Postgres Instance and separate databases for each components
-module "common-postgres" {
-  count            = var.common-postgres-instance ? 1 : 0
-  source           = "./modules/postgres"
-  instance-name    = "common"
-  database-port    = var.postgres-port
-  init-sql-configs = [for k, v in tomap(local.databases) : "${k}-initdb-config"]
-}
-
 # Separate Postgres Instance for each components
 module "postgres" {
   depends_on       = [kubernetes_config_map.postgres-initdb-config]
   source           = "./modules/postgres"
-  for_each         = var.common-postgres-instance ? {} : tomap(local.databases)
+  for_each         = tomap(local.databases)
   instance-name    = each.key
   database-port    = var.postgres-port
   init-sql-configs = ["${each.key}-initdb-config"]
@@ -39,7 +30,8 @@ module "postgres" {
 resource "kubernetes_config_map" "postgres-initdb-config" {
   for_each = tomap(local.databases)
   metadata {
-    name = "${each.key}-initdb-config"
+    name      = "${each.key}-initdb-config"
+    namespace = kubernetes_namespace.mxd-ns.metadata.0.name
   }
 
   data = {
@@ -56,27 +48,12 @@ resource "kubernetes_config_map" "postgres-initdb-config" {
 }
 
 locals {
-  keycloak-postgres       = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["keycloak"]
-  miw-postgres            = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["miw"]
-  bdrs-postgres           = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["bdrs"]
-  alice-postgres          = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["alice"]
-  bob-postgres            = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["bob"]
-  trudy-postgres          = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["trudy"]
-  backendservice-postgres = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["backendservice"]
+  bdrs-postgres          = module.postgres["bdrs"]
+  alice-postgres         = module.postgres["alice"]
+  bob-postgres           = module.postgres["bob"]
+  catalogserver-postgres = module.postgres["alice-catalogserver"]
 
   databases = {
-    keycloak = {
-      database-name     = "keycloak",
-      database-username = "keycloak"
-      database-password = "keycloak"
-    }
-
-    miw = {
-      database-name     = "miw",
-      database-username = "miw"
-      database-password = "miw"
-    }
-
     bdrs = {
       database-name     = "bdrs",
       database-username = "bdrs"
@@ -95,16 +72,10 @@ locals {
       database-password = "bob"
     }
 
-    trudy = {
-      database-name     = "trudy",
-      database-username = "trudy"
-      database-password = "trudy"
-    }
-
-    backendservice = {
-      database-name     = "backendservice",
-      database-username = "backendservice"
-      database-password = "backendservice"
+    alice-catalogserver = {
+      database-name     = "catalogserver"
+      database-username = "catalogserver"
+      database-password = "catalogserver"
     }
   }
 }

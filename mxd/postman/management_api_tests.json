@@ -149,7 +149,7 @@
 						}
 					}
 				},
-				"url": "{{PROVIDER_MANAGEMENT_URL}}/v2/policydefinitions"
+				"url": "{{PROVIDER_MANAGEMENT_URL}}/v3/policydefinitions"
 			},
 			"response": []
 		},
@@ -178,7 +178,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "{{PROVIDER_MANAGEMENT_URL}}/v2/policydefinitions/{{POLICY_ID}}"
+				"url": "{{PROVIDER_MANAGEMENT_URL}}/v3/policydefinitions/{{POLICY_ID}}"
 			},
 			"response": []
 		},
@@ -215,7 +215,7 @@
 						}
 					}
 				},
-				"url": "{{PROVIDER_MANAGEMENT_URL}}/v2/contractdefinitions"
+				"url": "{{PROVIDER_MANAGEMENT_URL}}/v3/contractdefinitions"
 			},
 			"response": []
 		},
@@ -244,7 +244,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "{{PROVIDER_MANAGEMENT_URL}}/v2/contractdefinitions/{{CONTRACT_DEFINITION_ID}}"
+				"url": "{{PROVIDER_MANAGEMENT_URL}}/v3/contractdefinitions/{{CONTRACT_DEFINITION_ID}}"
 			},
 			"response": []
 		},
@@ -285,7 +285,7 @@
 						}
 					}
 				},
-				"url": "{{CONSUMER_MANAGEMENT_URL}}/v2/catalog/request"
+				"url": "{{CONSUMER_MANAGEMENT_URL}}/v3/catalog/request"
 			},
 			"response": []
 		},
@@ -331,7 +331,7 @@
 						}
 					}
 				},
-				"url": "{{CONSUMER_MANAGEMENT_URL}}/v2/contractnegotiations"
+				"url": "{{CONSUMER_MANAGEMENT_URL}}/v3/contractnegotiations"
 			},
 			"response": []
 		},
@@ -343,7 +343,7 @@
 					"script": {
 						"exec": [
 							"const API_KEY_HEADER = 'X-Api-Key';\r",
-							"const URL=`${pm.collectionVariables.get(\"CONSUMER_MANAGEMENT_URL\")}/v2/contractnegotiations/${pm.collectionVariables.get(\"NEGOTIATION_ID\")}/state`;\r",
+							"const URL=`${pm.collectionVariables.get(\"CONSUMER_MANAGEMENT_URL\")}/v3/contractnegotiations/${pm.collectionVariables.get(\"NEGOTIATION_ID\")}/state`;\r",
 							"function delay(ms) {\r",
 							"  return new Promise(resolve => setTimeout(resolve, ms));\r",
 							"}\r",
@@ -399,7 +399,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "{{CONSUMER_MANAGEMENT_URL}}/v2/contractnegotiations/{{NEGOTIATION_ID}}"
+				"url": "{{CONSUMER_MANAGEMENT_URL}}/v3/contractnegotiations/{{NEGOTIATION_ID}}"
 			},
 			"response": []
 		},
@@ -446,7 +446,7 @@
 						}
 					}
 				},
-				"url": "{{CONSUMER_MANAGEMENT_URL}}/v2/transferprocesses"
+				"url": "{{CONSUMER_MANAGEMENT_URL}}/v3/transferprocesses"
 			},
 			"response": []
 		},
@@ -458,7 +458,7 @@
 					"script": {
 						"exec": [
 							"const API_KEY_HEADER = 'X-Api-Key';\r",
-							"const URL=`${pm.collectionVariables.get(\"CONSUMER_MANAGEMENT_URL\")}/v2/transferprocesses/${pm.collectionVariables.get(\"TRANSFER_ID\")}/state`;\r",
+							"const URL=`${pm.collectionVariables.get(\"CONSUMER_MANAGEMENT_URL\")}/v3/transferprocesses/${pm.collectionVariables.get(\"TRANSFER_ID\")}/state`;\r",
 							"function delay(ms) {\r",
 							"  return new Promise(resolve => setTimeout(resolve, ms));\r",
 							"}\r",
@@ -512,7 +512,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "{{CONSUMER_MANAGEMENT_URL}}/v2/transferprocesses/{{TRANSFER_ID}}"
+				"url": "{{CONSUMER_MANAGEMENT_URL}}/v3/transferprocesses/{{TRANSFER_ID}}"
 			},
 			"response": []
 		},

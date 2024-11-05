@@ -1,0 +1,91 @@
+[metadata]
+format.version = "1.1"
+
+[versions]
+awaitility = "4.2.2"
+assertj = "3.25.3"
+edc = "0.10.0-SNAPSHOT"
+tractusx = "0.8.0-rc4"
+commons = "2.11.0"
+opentelemetry = "1.32.0"
+postgres = "42.7.3"
+restAssured = "5.4.0"
+parsson = "1.1.6"
+testcontainers = "1.19.7"
+jupiter = "5.10.1"
+jackson = "2.17.2"
+jakarta-json = "2.1.3"
+swagger = "2.2.24"
+
+
+[libraries]
+# Connector dependencies
+edc-build-plugin = { module = "org.eclipse.edc.edc-build:org.eclipse.edc.edc-build.gradle.plugin", version.ref = "edc" }
+edc-vault-hashicorp = { module = "org.eclipse.edc:vault-hashicorp", version.ref = "edc" }
+edc-boot = { module = "org.eclipse.edc:boot", version.ref = "edc" }
+edc-junit = { module = "org.eclipse.edc:junit", version.ref = "edc" }
+
+edc-sql-core = { module = "org.eclipse.edc:sql-core", version.ref = "edc" }
+edc-sql-lease = { module = "org.eclipse.edc:sql-lease", version.ref = "edc" }
+edc-sql-pool = { module = "org.eclipse.edc:sql-pool-apache-commons", version.ref = "edc" }
+edc-sql-transactionlocal = { module = "org.eclipse.edc:transaction-local", version.ref = "edc" }
+edc-did-core = { module = "org.eclipse.edc:identity-did-core", version.ref = "edc" }
+edc-did-web = { module = "org.eclipse.edc:identity-did-web", version.ref = "edc" }
+edc-core-connector = { module = "org.eclipse.edc:connector-core", version.ref = "edc" }
+edc-ext-http = { module = "org.eclipse.edc:http", version.ref = "edc" }
+edc-core-jersey = { module = "org.eclipse.edc:jersey-core", version.ref = "edc" }
+edc-ext-jsonld = { module = "org.eclipse.edc:json-ld", version.ref = "edc" }
+edc-configuration-filesystem = { module = "org.eclipse.edc:configuration-filesystem", version.ref = "edc" }
+edc-http = { module = "org.eclipse.edc:http", version.ref = "edc" }
+edc-spi-did = { module = "org.eclipse.edc:did-spi", version.ref = "edc" }
+edc-spi-catalog = { module = "org.eclipse.edc:catalog-spi", version.ref = "edc" }
+edc-spi-crawler = { module = "org.eclipse.edc:crawler-spi", version.ref = "edc" }
+edc-spi-identitytrust = { module = "org.eclipse.edc:identity-trust-spi", version.ref = "edc" }
+edc-controlplane-transform = { module = "org.eclipse.edc:control-plane-transform", version.ref = "edc" }
+edc-api-observability = { module = "org.eclipse.edc:api-observability", version.ref = "edc" }
+
+# EDC lib dependencies
+edc-http-lib = { module = "org.eclipse.edc:http-lib", version.ref = "edc" }
+edc-lib-crypto = { module = "org.eclipse.edc:crypto-common-lib", version.ref = "edc" }
+edc-lib-keys = { module = "org.eclipse.edc:keys-lib", version.ref = "edc" }
+edc-lib-transform = { module = "org.eclipse.edc:transform-lib", version.ref = "edc" }
+edc-lib-jsonld = { module = "org.eclipse.edc:json-ld-lib", version.ref = "edc" }
+
+# identith-hub modules
+edc-ih-spi = { module = "org.eclipse.edc:identity-hub-spi", version.ref = "edc" }
+edc-ih-account-remote = { module = "org.eclipse.edc:sts-account-service-remote", version.ref = "edc" }
+
+# identity hub BOM modules
+bom-ih-withsts = { module = "org.eclipse.edc:identityhub-with-sts-bom", version.ref = "edc" }
+bom-ih = { module = "org.eclipse.edc:identityhub-bom", version.ref = "edc" }
+bom-ih-sql = { module = "org.eclipse.edc:identityhub-feature-sql-bom", version.ref = "edc" }
+bom-ih-sql-sts = { module = "org.eclipse.edc:identityhub-feature-sql-sts-bom", version.ref = "edc" }
+
+# STS modules
+edc-sql-sts-store = { module = "org.eclipse.edc:sts-client-store-sql", version.ref = "edc" }
+bom-sts = { module = "org.eclipse.edc:sts-feature-bom", version.ref = "edc" }
+
+# Tractus-X Runtime BOMs
+edc-tx-controlplane = { module = "org.eclipse.tractusx.edc:edc-controlplane-postgresql-hashicorp-vault", version.ref = "tractusx" }
+
+# third-party libraries
+apache-commons = { module = "org.apache.commons:commons-dbcp2", version.ref = "commons" }
+awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitility" }
+assertj = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "jupiter" }
+jakarta-json-api = { module = "jakarta.json:jakarta.json-api", version.ref = "jakarta-json" }
+jackson-datatype-jakarta-jsonp = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jakarta-jsonp", version.ref = "jackson" }
+parsson = { module = "org.eclipse.parsson:parsson", version.ref = "parsson" }
+postgres = { module = "org.postgresql:postgresql", version.ref = "postgres" }
+restAssured = { module = "io.rest-assured:rest-assured", version.ref = "restAssured" }
+testcontainers-postgres = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
+
+[bundles]
+connector = ["edc-boot", "edc-core-connector", "edc-ext-http", "edc-api-observability", "edc-ext-jsonld"]
+sql-sts = [ "edc-sql-sts-store", "edc-sql-core", "edc-sql-pool", "edc-sql-transactionlocal", "postgres"]
+
+
+[plugins]
+shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
+docker = { id = "com.bmuschko.docker-remote-api", version = "9.4.0" }
+swagger = { id = "io.swagger.core.v3.swagger-gradle-plugin", version.ref = "swagger" }

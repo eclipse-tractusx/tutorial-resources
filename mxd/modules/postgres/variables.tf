@@ -30,3 +30,9 @@ variable "init-sql-configs" {
   description = "Name of config maps with init sql scripts"
   default     = []
 }
+
+variable "namespace" {
+  type        = string
+  description = "Kubernetes namespace to use"
+  default     = "mxd"
+}

@@ -26,6 +26,12 @@ variable "minio-api-port" {
   default = 9000
 }
 
+variable "namespace" {
+  type        = string
+  description = "Kubernetes namespace to use"
+  default     = "mxd"
+}
+
 variable "minio-console-port" {
   default = 9001
 }
