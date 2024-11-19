@@ -48,3 +48,4 @@ mxd/backend-service/.gradle
 mxd/backend-service/build
 *.log
 /mxd-runtimes/jwt-signer/out/
+/icc-irs-challenges/node_modules/
