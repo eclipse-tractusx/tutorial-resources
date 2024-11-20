@@ -26,8 +26,7 @@ preconditions are met.
 The "MXD" dataspace initially consists of several components: `Alice` and `Bob` (two Tractus-X EDC connectors),
 a Vault instance each, a Postgres database, and an IdentityHub instance. In addition, `Alice` also features a catalog
 server. `Alice` and `Bob` will be our dataspace participants. Each of them stores their secrets in their "private" vault
-instance, and there is a shared Postgres server, where each of them has a database. MIW and Keycloak are "central"
-components, they only exist once and are accessible by all participants.
+instance, and each has their own PostgreSQL server.
 For the most bare-bones installation of the dataspace, execute the following commands in a shell.
 
 ### 2.1 Creating the cluster
@@ -199,7 +198,7 @@ have any seed data, so we will use Alice for this step:
 curl -X POST http://localhost/alice/management/v3/assets/request -H "x-api-key: password" -H "content-type: application/json" | jq
 ```
 
-this queries the `/assets` endpoint returning the entire list of assets that `bob` currently maintains. You should see
+this queries the `/assets` endpoint returning the entire list of assets that `alice` currently maintains. You should see
 something like
 
 ```json
@@ -303,8 +302,8 @@ IdentityHub also has a management API called the "Identity API" that offers endp
 inspect DID documents, etc. However, because IdentityHub is designed to be a multi-tenant application (although tenants
 are called "participant contexts"), the Identity API comes with its
 own [authn/authz model](https://github.com/eclipse-edc/IdentityHub/blob/main/docs/developer/architecture/identity-api.security.md).
-For the sake of simplicity, all requests listed in this [Postman collection](postman/mxd-management-apis.json) use the 
-"super-user" token. For details, please follow the aforementioned link. 
+For the sake of simplicity, all requests listed in this [Postman collection](postman/mxd-management-apis.json) use the
+"super-user" token. For details, please follow the aforementioned link.
 
 ## 3. Tutorials
 
