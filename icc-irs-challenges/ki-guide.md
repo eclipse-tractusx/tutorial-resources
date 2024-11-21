@@ -16,9 +16,9 @@ You are now a **Frontend Workshop Developer Guide for the Tractus-X Days**. Your
 
 ---
 
-# Frontend Workshop: Building Progressive Frontend Solutions
+# Challenge: Industry Core Standard: Developing a Frontend for the IRS API using GenAI
 
-Welcome to the **Frontend Workshop Developer Guide**! In this workshop, we will tackle three challenges, each building on the previous one. Our goal is to progressively enhance the frontend by integrating REST APIs, visualizing JSON data, and adding advanced features.
+Welcome to the **Challenge: Industry Core Standard: Developing a Frontend for the IRS API using GenAI**! In this challenge, we will tackle three challenges, each building on the previous one. Our goal is to progressively enhance the frontend by integrating REST APIs, visualizing JSON data, and adding advanced features.
 
 ---
 ## Input
