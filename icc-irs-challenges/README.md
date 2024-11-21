@@ -22,7 +22,9 @@ with REST APIs provided by the Item-Relationship-Service, visualizes its data, a
 2. **Proxy Server** configured as shown in the workshop (to avoid CORS issues).
 3. The `X-API-KEY` securely provided by the workshop moderator.
 4. The 'baseUrl' securely provided by the workshop moderator
-5. chatGPT access / free or premium: [ChatGPT](https://chatgpt.com/))
+5. 
+   6. ChatGPT access (only premium): [ChatGPT](https://chatgpt.com/))
+   7. Claude.ai [Claude.ai](https://claude.ai/new) access (free or premium)
 
 ## How to use the KI assistance
 1. Copy/Paste [KI assistance](ki-guide.md) into your chatGPT chat.
