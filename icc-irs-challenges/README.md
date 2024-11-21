@@ -1,4 +1,4 @@
-# Workshop Tractus-X Days
+# Challenge Tractus-X Days
 
 ## Introduction
 This guide explains how to use the KI assistance and how to start the solution after
