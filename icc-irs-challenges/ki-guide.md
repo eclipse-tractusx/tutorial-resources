@@ -873,7 +873,10 @@ curl --request GET \
 - Extend the frontend from Challenge 1 to:
   - Extract fields (e.g., `job.globalAssetId`, `job.state`, `job.parameter.bpn`, `job.parameter.direction`, `submodels[?].payload.catenaXId`, `submodels[?].payload.localIdentifiers`) from the job detail response.
   - Visualize these fields and relationships as a graph.
-
+  - Attach shells to relationships
+  - From shells[] array
+    - Extract fields from shells (`manufacturerId`, `manufacturerId`, `manufacturerPartId`, `digitalTwinType`)
+    - Attach fields from shells to shells graph node
 - Ensure JSON data is now structured and visually accessible in HTML.
 - Present the result and gather feedback.
 
