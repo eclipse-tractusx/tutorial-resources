@@ -1,423 +1,1725 @@
 {
 	"info": {
 		"_postman_id": "1cfce8bb-4d02-4486-a98f-c20834d3586e",
-		"name": "MXD sequence",
+		"name": "MXD Service APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "647585"
 	},
 	"item": [
 		{
-			"name": "get cached catalog",
-			"event": [
+			"name": "Example Sequence",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"// get the policy id of \"asset-1\" and save it as an environment variable",
-							"const asset_1 = pm.response.json()[1][\"dcat:dataset\"].find((asset) => asset[\"@id\"] == \"asset-1\")",
-							"offer_id=asset_1[\"odrl:hasPolicy\"][\"@id\"];",
-							"pm.collectionVariables.set(\"POLICY_ID_ASSET_1\", offer_id);  "
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@type\": \"QuerySpec\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost/bob/fc/catalog/v1alpha/catalog/query",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"bob",
-						"fc",
-						"catalog",
-						"v1alpha",
-						"catalog",
-						"query"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "initiate negotiation",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\",\n        {\n            \"tx\": \"https://w3id.org/tractusx/v0.0.1/ns/\"\n        },\n        {\n            \"tx-auth\": \"https://w3id.org/tractusx/auth/\"\n        },\n        {\n            \"cx-policy\": \"https://w3id.org/catenax/policy/\"\n        }\n    ],\n    \"@type\": \"ContractRequest\",\n    \"counterPartyAddress\": \"http://alice-controlplane:8084/api/v1/dsp\",\n    \"counterPartyId\": \"BPNL000000000001\",\n    \"protocol\": \"dataspace-protocol-http\",\n    \"policy\": {\n        \"@id\": \"{{POLICY_ID_ASSET_1}}\",\n        \"@type\": \"Offer\",\n        \"assigner\": \"BPNL000000000001\",\n        \"odrl:permission\": {\n            \"odrl:action\": {\n                \"@id\": \"odrl:use\"\n            },\n            \"odrl:constraint\": {\n                \"odrl:leftOperand\": {\n                    \"@id\": \"cx-policy:Membership\"\n                },\n                \"odrl:operator\": {\n                    \"@id\": \"odrl:eq\"\n                },\n                \"odrl:rightOperand\": \"active\"\n            }\n        },\n        \"odrl:prohibition\": [],\n        \"odrl:obligation\": [],\n        \"target\": \"asset-1\"\n    },\n    \"callbackAddresses\": []\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost/bob/management/v3/contractnegotiations",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"bob",
-						"management",
-						"v3",
-						"contractnegotiations"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get all negotiations",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"// get the contact agreement id and save it as an environment variable",
-							"if(pm.response.code < 300 && pm.response.code >= 200){",
-							"  //using the first contract agreement id found",
-							"  const contractAgreementId = pm.response.json()[0][\"contractAgreementId\"];",
-							"  pm.collectionVariables.set(\"CONTRACT_AGREEMENT_ID\", contractAgreementId);",
-							"}",
-							"",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n   \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@type\": \"QuerySpec\"\n}"
-				},
-				"url": {
-					"raw": "http://localhost/bob/management/v3/contractnegotiations/request",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"bob",
-						"management",
-						"v3",
-						"contractnegotiations",
-						"request"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "start transfer",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "x-api-key",
-						"value": "password",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"@context\": [\n        { \"@vocab\": \"https://w3id.org/edc/v0.0.1/ns/\" },\n        {\n            \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n        },\n        {\n            \"tx\": \"https://w3id.org/tractusx/v0.0.1/ns/\"\n        },\n        {\n            \"tx-auth\": \"https://w3id.org/tractusx/auth/\"\n        },\n        {\n            \"cx-policy\": \"https://w3id.org/catenax/policy/\"\n        }\n    ],\n    \"@type\": \"TransferRequest\",\n    \"assetId\": \"asset-1\",\n    \"counterPartyAddress\": \"http://alice-controlplane:8084/api/v1/dsp\",\n    \"counterPartyId\": \"BPNL000000000001\",\n    \"contractId\": \"{{CONTRACT_AGREEMENT_ID}}\",\n    \"dataDestination\": {\n        \"type\": \"HttpProxy\"\n    },\n    \"protocol\": \"dataspace-protocol-http\",\n    \"transferType\": \"HttpData-PULL\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost/bob/management/v3/transferprocesses",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"bob",
-						"management",
-						"v3",
-						"transferprocesses"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get transfers",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@type\": \"QuerySpec\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost/bob/management/v3/transferprocesses/request",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"bob",
-						"management",
-						"v3",
-						"transferprocesses",
-						"request"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get EDRs",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"// get the transfer process id of \"asset-1\" and save it as an environment variable",
-							"if(pm.response.code < 300 && pm.response.code >= 200){",
-							"  const transferProcessId = pm.response.json()[0][\"transferProcessId\"];",
-							"  pm.collectionVariables.set(\"TRANSFER_PROCESS_ID\", transferProcessId);",
-							"}",
-							"",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@type\": \"QuerySpec\"\n}"
-				},
-				"url": {
-					"raw": "http://localhost/bob/management/v3/edrs/request",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"bob",
-						"management",
-						"v3",
-						"edrs",
-						"request"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get EDR DataAddress for TransferId",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"if(!pm.collectionVariables.has(\"TRANSFER_PROCESS_ID\")){",
-							"    throw new Error('Transfer Process ID is not yet available, please execute request \"Get Transfer Processes\" first!');",
-							"}"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"// get the authorization token and save it as an environment variable",
-							"if(pm.response.code < 300 && pm.response.code >= 200){",
-							"  //using the first authorization token found",
-							"  const authorization = pm.response.json()[\"authorization\"];",
-							"  pm.collectionVariables.set(\"AUTHORIZATION\", authorization);",
-							"",
-							"  pm.collectionVariables.set(\"REFRESH_TOKEN\", pm.response.json()[\"tx-auth:refreshToken\"])",
-							"  pm.collectionVariables.set(\"REFRESH_AUD\", pm.response.json()[\"tx-auth:refreshAudience\"])",
-							"  pm.collectionVariables.set(\"REFRESH_ENDPOINT\", pm.response.json()[\"tx-auth:refreshEndpoint\"])",
-							"}",
-							"",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost/bob/management/v3/edrs/{{TRANSFER_PROCESS_ID}}/dataaddress",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"bob",
-						"management",
-						"v3",
-						"edrs",
-						"{{TRANSFER_PROCESS_ID}}",
-						"dataaddress"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Download Data from Public API Copy",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"if(!pm.collectionVariables.has(\"AUTHORIZATION\")){",
-							"    throw new Error(' The authorization token is not yet available, please execute request \"Get EDR DataAddress for TransferId\" first!');",
-							"}"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{AUTHORIZATION}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "http://localhost/alice/api/public",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"alice",
-						"api",
-						"public"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "refresh token",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"// get the authorization token and save it as an environment variable",
-							"if(pm.response.code < 300 && pm.response.code >= 200){",
-							"  //using the first authorization token found",
-							"  const authorization = pm.response.json()[\"authorization\"];",
-							"  pm.collectionVariables.set(\"AUTHORIZATION\", authorization);",
-							"",
-							"  pm.collectionVariables.set(\"REFRESH_TOKEN\", pm.response.json()[\"tx-auth:refreshToken\"])",
-							"  pm.collectionVariables.set(\"REFRESH_AUD\", pm.response.json()[\"tx-auth:refreshAudience\"])",
-							"  pm.collectionVariables.set(\"REFRESH_ENDPOINT\", pm.response.json()[\"tx-auth:refreshEndpoint\"])",
-							"}",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "http://localhost/bob/management/v3/edrs/{{TRANSFER_PROCESS_ID}}/refresh?auto_refresh=true",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"bob",
-						"management",
-						"v3",
-						"edrs",
-						"{{TRANSFER_PROCESS_ID}}",
-						"refresh"
-					],
-					"query": [
+					"name": "get cached catalog",
+					"event": [
 						{
-							"key": "auto_refresh",
-							"value": "true"
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// get the policy id of \"asset-1\" and save it as an environment variable",
+									"const asset_1 = pm.response.json()[1][\"dcat:dataset\"].find((asset) => asset[\"@id\"] == \"asset-1\")",
+									"offer_id=asset_1[\"odrl:hasPolicy\"][\"@id\"];",
+									"pm.collectionVariables.set(\"POLICY_ID_ASSET_1\", offer_id);  "
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@type\": \"QuerySpec\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/bob/fc/catalog/v1alpha/catalog/query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"bob",
+								"fc",
+								"catalog",
+								"v1alpha",
+								"catalog",
+								"query"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "initiate negotiation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\",\n        {\n            \"tx\": \"https://w3id.org/tractusx/v0.0.1/ns/\"\n        },\n        {\n            \"tx-auth\": \"https://w3id.org/tractusx/auth/\"\n        },\n        {\n            \"cx-policy\": \"https://w3id.org/catenax/policy/\"\n        }\n    ],\n    \"@type\": \"ContractRequest\",\n    \"counterPartyAddress\": \"http://alice-controlplane:8084/api/v1/dsp\",\n    \"counterPartyId\": \"BPNL000000000001\",\n    \"protocol\": \"dataspace-protocol-http\",\n    \"policy\": {\n        \"@id\": \"{{POLICY_ID_ASSET_1}}\",\n        \"@type\": \"Offer\",\n        \"assigner\": \"BPNL000000000001\",\n        \"odrl:permission\": {\n            \"odrl:action\": {\n                \"@id\": \"odrl:use\"\n            },\n            \"odrl:constraint\": {\n                \"odrl:leftOperand\": {\n                    \"@id\": \"cx-policy:Membership\"\n                },\n                \"odrl:operator\": {\n                    \"@id\": \"odrl:eq\"\n                },\n                \"odrl:rightOperand\": \"active\"\n            }\n        },\n        \"odrl:prohibition\": [],\n        \"odrl:obligation\": [],\n        \"target\": \"asset-1\"\n    },\n    \"callbackAddresses\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/bob/management/v3/contractnegotiations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"bob",
+								"management",
+								"v3",
+								"contractnegotiations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all negotiations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// get the contact agreement id and save it as an environment variable",
+									"if(pm.response.code < 300 && pm.response.code >= 200){",
+									"  //using the first contract agreement id found",
+									"  const contractAgreementId = pm.response.json()[0][\"contractAgreementId\"];",
+									"  pm.collectionVariables.set(\"CONTRACT_AGREEMENT_ID\", contractAgreementId);",
+									"}",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@type\": \"QuerySpec\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost/bob/management/v3/contractnegotiations/request",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"bob",
+								"management",
+								"v3",
+								"contractnegotiations",
+								"request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "start transfer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "password",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"@context\": [\n        { \"@vocab\": \"https://w3id.org/edc/v0.0.1/ns/\" },\n        {\n            \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n        },\n        {\n            \"tx\": \"https://w3id.org/tractusx/v0.0.1/ns/\"\n        },\n        {\n            \"tx-auth\": \"https://w3id.org/tractusx/auth/\"\n        },\n        {\n            \"cx-policy\": \"https://w3id.org/catenax/policy/\"\n        }\n    ],\n    \"@type\": \"TransferRequest\",\n    \"assetId\": \"asset-1\",\n    \"counterPartyAddress\": \"http://alice-controlplane:8084/api/v1/dsp\",\n    \"counterPartyId\": \"BPNL000000000001\",\n    \"contractId\": \"{{CONTRACT_AGREEMENT_ID}}\",\n    \"dataDestination\": {\n        \"type\": \"HttpProxy\"\n    },\n    \"protocol\": \"dataspace-protocol-http\",\n    \"transferType\": \"HttpData-PULL\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/bob/management/v3/transferprocesses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"bob",
+								"management",
+								"v3",
+								"transferprocesses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get transfers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@type\": \"QuerySpec\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/bob/management/v3/transferprocesses/request",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"bob",
+								"management",
+								"v3",
+								"transferprocesses",
+								"request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get EDRs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// get the transfer process id of \"asset-1\" and save it as an environment variable",
+									"if(pm.response.code < 300 && pm.response.code >= 200){",
+									"  const transferProcessId = pm.response.json()[0][\"transferProcessId\"];",
+									"  pm.collectionVariables.set(\"TRANSFER_PROCESS_ID\", transferProcessId);",
+									"}",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@type\": \"QuerySpec\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost/bob/management/v3/edrs/request",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"bob",
+								"management",
+								"v3",
+								"edrs",
+								"request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get EDR DataAddress for TransferId",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if(!pm.collectionVariables.has(\"TRANSFER_PROCESS_ID\")){",
+									"    throw new Error('Transfer Process ID is not yet available, please execute request \"Get Transfer Processes\" first!');",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// get the authorization token and save it as an environment variable",
+									"if(pm.response.code < 300 && pm.response.code >= 200){",
+									"  //using the first authorization token found",
+									"  const authorization = pm.response.json()[\"authorization\"];",
+									"  pm.collectionVariables.set(\"AUTHORIZATION\", authorization);",
+									"",
+									"  pm.collectionVariables.set(\"REFRESH_TOKEN\", pm.response.json()[\"tx-auth:refreshToken\"])",
+									"  pm.collectionVariables.set(\"REFRESH_AUD\", pm.response.json()[\"tx-auth:refreshAudience\"])",
+									"  pm.collectionVariables.set(\"REFRESH_ENDPOINT\", pm.response.json()[\"tx-auth:refreshEndpoint\"])",
+									"}",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/bob/management/v3/edrs/{{TRANSFER_PROCESS_ID}}/dataaddress",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"bob",
+								"management",
+								"v3",
+								"edrs",
+								"{{TRANSFER_PROCESS_ID}}",
+								"dataaddress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download Data from Public API Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if(!pm.collectionVariables.has(\"AUTHORIZATION\")){",
+									"    throw new Error(' The authorization token is not yet available, please execute request \"Get EDR DataAddress for TransferId\" first!');",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AUTHORIZATION}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/alice/api/public",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"alice",
+								"api",
+								"public"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// get the authorization token and save it as an environment variable",
+									"if(pm.response.code < 300 && pm.response.code >= 200){",
+									"  //using the first authorization token found",
+									"  const authorization = pm.response.json()[\"authorization\"];",
+									"  pm.collectionVariables.set(\"AUTHORIZATION\", authorization);",
+									"",
+									"  pm.collectionVariables.set(\"REFRESH_TOKEN\", pm.response.json()[\"tx-auth:refreshToken\"])",
+									"  pm.collectionVariables.set(\"REFRESH_AUD\", pm.response.json()[\"tx-auth:refreshAudience\"])",
+									"  pm.collectionVariables.set(\"REFRESH_ENDPOINT\", pm.response.json()[\"tx-auth:refreshEndpoint\"])",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/bob/management/v3/edrs/{{TRANSFER_PROCESS_ID}}/refresh?auto_refresh=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"bob",
+								"management",
+								"v3",
+								"edrs",
+								"{{TRANSFER_PROCESS_ID}}",
+								"refresh"
+							],
+							"query": [
+								{
+									"key": "auto_refresh",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Contains requests that are needed to negotiate a contract, establish a transfer process and ultimately transfer data between a provider and a consumer.\n\nAll URLs are designed to work with the MXD K8S deployment."
+		},
+		{
+			"name": "Identity API",
+			"item": [
+				{
+					"name": "Participant Context Mgmt API",
+					"item": [
+						{
+							"name": "Get Participant By ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										"{{PARTICIPANT_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all participants",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Participant",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"roles\":[],\n    \"serviceEndpoints\":[],\n    \"active\": true,\n    \"participantId\": \"new-participant-id\",\n    \"did\": \"did:web:new-participant-id\",\n    \"key\":{\n        \"keyId\": \"key-1\",\n        \"privateKeyAlias\": \"new-participant-id-alias\",\n        \"keyGeneratorParams\":{\n            \"algorithm\": \"EdDSA\",\n            \"curve\": \"Ed25519\"\n        }\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Participant (existing key)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"roles\":[],\n    \"serviceEndpoints\":[],\n    \"active\": true,\n    \"participantId\": \"new-participant-id\",\n    \"did\": \"did:web:new-participant-id\",\n    \"key\":{\n        \"keyId\": \"key-1\",\n        \"privateKeyAlias\": \"new-participant-id-alias\",\n        \"publicKeyPem\":\"-----BEGIN PUBLIC KEY-----\\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE1l0Lof0a1yBc8KXhesAnoBvxZw5r\\noYnkAXuqCYfNK3ex+hMWFuiXGUxHlzShAehR6wvwzV23bbC0tcFcVgW//A==\\n-----END PUBLIC KEY-----\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Roles",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n    \"role1\", \"role2\", \"admin\"\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/roles",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										"{{PARTICIPANT_ID}}",
+										"roles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Regenerate Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/token",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										"{{PARTICIPANT_ID}}",
+										"token"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Activate Participant",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"roles\":[],\n    \"serviceEndpoints\":[],\n    \"isActive\": true,\n    \"participantId\": \"foobar\",\n    \"did\": \"did:web:foobar\",\n    \"key\":{\n        \"keyId\": \"key1\",\n        \"privateKeyAlias\": \"foobar-alias\",\n        \"keyGeneratorParams\":{\n            \"algorithm\": \"EC\",\n            \"curve\": \"secp256r1\"\n        }\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/state?isActive=true",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										"{{PARTICIPANT_ID}}",
+										"state"
+									],
+									"query": [
+										{
+											"key": "isActive",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deactivate Participant",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"roles\":[],\n    \"serviceEndpoints\":[],\n    \"isActive\": true,\n    \"participantId\": \"foobar\",\n    \"did\": \"did:web:foobar\",\n    \"key\":{\n        \"keyId\": \"key1\",\n        \"privateKeyAlias\": \"foobar-alias\",\n        \"keyGeneratorParams\":{\n            \"algorithm\": \"EC\",\n            \"curve\": \"secp256r1\"\n        }\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/state?isActive=false",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										"{{PARTICIPANT_ID}}",
+										"state"
+									],
+									"query": [
+										{
+											"key": "isActive",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Participant",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"roles\":[],\n    \"serviceEndpoints\":[],\n    \"isActive\": true,\n    \"participantId\": \"foobar\",\n    \"did\": \"did:web:foobar\",\n    \"key\":{\n        \"keyId\": \"key1\",\n        \"privateKeyAlias\": \"foobar-alias\",\n        \"keyGeneratorParams\":{\n            \"algorithm\": \"EC\",\n            \"curve\": \"secp256r1\"\n        }\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										"{{PARTICIPANT_ID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "KeyPair Resources Mgmt API",
+					"item": [
+						{
+							"name": "Get KeyPair for Participant",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/keypairs",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										"{{PARTICIPANT_ID}}",
+										"keypairs"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all KeyPairs",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/keypairs",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"keypairs"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add KeyPair",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status is OK or conflict\", function() {",
+											"  pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+											"})"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"keyId\": \"key6\",\n    \"privateKeyAlias\": \"new-foobar-alias5\",\n    \"keyGeneratorParams\": {\n        \"algorithm\": \"EdDSA\",\n        \"curve\": \"Ed25519\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/keypairs",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										"{{PARTICIPANT_ID}}",
+										"keypairs"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Rotate key",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"keyId\": \"key2\",\n    \"privateKeyAlias\": \"new-foobar-alias\",\n    \"keyGeneratorParams\": {\n        \"algorithm\": \"EC\",\n        \"curve\": \"secp256r1\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/keypairs/key1/rotate",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										"{{PARTICIPANT_ID}}",
+										"keypairs",
+										"key1",
+										"rotate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Revoke key",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/keypairs/key2/revoke",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										"{{PARTICIPANT_ID}}",
+										"keypairs",
+										"key2",
+										"revoke"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "DID Document Mgmt API",
+					"item": [
+						{
+							"name": "Query DIDs",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/dids/query",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										"{{PARTICIPANT_ID}}",
+										"dids",
+										"query"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All DID Documents",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/dids",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"dids"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Publish DID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"did\": \"did:web:BPN0000001\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/dids/publish",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										"{{PARTICIPANT_ID}}",
+										"dids",
+										"publish"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add endpoint",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"some-other-id\",\n    \"type\": \"CredentialService\",\n    \"serviceEndpoint\": \"https://foobar.myconnector.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/dids/{{DID}}/endpoints",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										"{{PARTICIPANT_ID}}",
+										"dids",
+										"{{DID}}",
+										"endpoints"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Un-Publish DID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"did\": \"did:web:consumer-identityhub%3A7083:connector1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/dids/unpublish",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										"{{PARTICIPANT_ID}}",
+										"dids",
+										"unpublish"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete DID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"did\": \"did:web:super-user\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/dids",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										"{{PARTICIPANT_ID}}",
+										"dids"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get DID Document state",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"did\": \"did:web:super-user\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/dids/state",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										"{{PARTICIPANT_ID}}",
+										"dids",
+										"state"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is OK\", function() {",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 204])",
+									"})"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "VerifiableCredential Mgmt API",
+					"item": [
+						{
+							"name": "Get Credential By ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status is OK\", function() {",
+											"  pm.expect(pm.response.code).to.be.oneOf([200, 204])",
+											"})"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/credentials/CREDENTIAL-ID",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"participants",
+										"{{PARTICIPANT_ID}}",
+										"credentials",
+										"CREDENTIAL-ID"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Credentials",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status is OK\", function() {",
+											"  pm.expect(pm.response.code).to.be.oneOf([200, 204])",
+											"})"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{IH_URL}}/api/identity/v1alpha/credentials",
+									"host": [
+										"{{IH_URL}}"
+									],
+									"path": [
+										"api",
+										"identity",
+										"v1alpha",
+										"credentials"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}
+			],
+			"description": "Contains requests against IdentityHub's Identity API. Requests are in no particular order, and are designed to be executed against the MXD K8S deployment",
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "{{IH_API_TOKEN}}",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "X-Api-Key",
+						"type": "string"
+					}
+				]
 			},
-			"response": []
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status is OK or conflict\", function() {",
+							"  pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+							"})"
+						]
+					}
+				}
+			]
 		}
 	],
 	"auth": {
@@ -489,6 +1791,26 @@
 		{
 			"key": "REFRESH_ENDPOINT",
 			"value": ""
+		},
+		{
+			"key": "PARTICIPANT_ID",
+			"value": "c3VwZXItdXNlcg==",
+			"type": "default"
+		},
+		{
+			"key": "IH_URL",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "IH_API_TOKEN",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "DID",
+			"value": "did:web:super-user",
+			"type": "default"
 		}
 	]
 }
