@@ -13,7 +13,6 @@ with REST APIs provided by the Item-Relationship-Service, visualizes its data, a
 - [How to use the KI assistance](#how-to-use-the-ki-assistance)
 - [Example solution](#example-solution)
 - [Example ChatGPT History of Successful Workshop](#example-chatgpt-history-of-successful-workshop)
-- [Optimization Topics](#optimization-topics)
 - [Contact](#contact)
 
 ## Prerequisites
