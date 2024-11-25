@@ -45,11 +45,6 @@ with REST APIs provided by the Item-Relationship-Service, visualizes its data, a
 8. Get the job details
 9. Check results
 
-## Optimization topics
-- Let the user define the globalAssetId, bpn via input fields.
-- Create different levels of the provided ki guide (e.g. amateur / expert developer) with more or less guidance
-- Refactoring of wording / texts provided to the workshop attendee by the AI Guidance
-
 ## Contact
 
 For questions or further information, please feel free to reach out:
