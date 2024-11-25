@@ -215,6 +215,12 @@ curl --request GET \
   - Get submodel with `aspectType`: `urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt`
   - Attach submodel from submodels to submodels graph edge 
   - Attach fields submodels graph edge (`catenaXId`, `childItems`:[`catenaXId`,`businessPartner`])
+- In case of `aspectType`: `urn:samm:io.catenax.serial_part:3.0.0#SerialPart`
+  - Extract fields from shells (`partInstanceId`, `intrinsicId`, `van`)
+- In case of `aspectType`: `urn:samm:io.catenax.batch:3.0.0#Batch`
+  - Extract fields from shells (`batchId`, `intrinsicId`)
+- In case of `aspectType`: `urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart`
+  - Extract fields from shells (`parentOrderNumber`, `jisNumber`, `jisCallDate`, `intrinsicId`)
 - From submodels[] array
   - Get submodel with `aspectType`: `urn:samm:io.catenax.serial_part:3.0.0#SerialPart`
   - Attach submodel from submodels as graph node
