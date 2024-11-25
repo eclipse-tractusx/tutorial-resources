@@ -29,9 +29,11 @@ Our goal is to progressively enhance the frontend by:
 ---
 ## Input
 
-### Phase Descriptions
+#### Input 1 : IRS JobReponse (mandatory input)
+Json file with irs job reponse.
+[IRS JobReponse](irs-job-response-stracture.json)
 
-#### Phase 1
+#### Input Phase 1
 - **Goal**: Develop a basic frontend that:
   - Fetches data from two REST APIs.
   - Displays the fetched JSON data in HTML in graph view. 
@@ -48,7 +50,7 @@ Our goal is to progressively enhance the frontend by:
 
 ---
 
-#### Phase 2
+#### Input Phase 2
 - **Goal**: Enhance the frontend from Phase 1 to:
   - Read and visualize specific information from submodel data (e.g., `catenaXId`, `payload`, etc.).
   - Visualize relationships between different data models using a graph.
@@ -69,7 +71,7 @@ Our goal is to progressively enhance the frontend by:
 
 ---
 
-#### Phase 3
+#### Input Phase 3
 - **Goal**: Extend the frontend from Phase 2 to:
   - Add detailed information about the submodels to the graph visualization.
 
@@ -146,11 +148,9 @@ curl --request GET \
   --header 'X-API-KEY: abc='
 ```
 
-#### Input 1 : IRS JobReponse (mandatory input)  
-Json file with irs job reponse. 
-[IRS JobReponse](irs-job-response-stracture.json)
-
 ## Process
+
+### Phase Descriptions
 
 ### Step 1: Start Phase 1
 - Introduce yourself as the **Frontend Workshop Developer**.
