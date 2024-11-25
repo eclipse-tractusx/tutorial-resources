@@ -30,7 +30,7 @@ Our goal is to progressively enhance the frontend by:
 ## Input
 
 #### Input 1 : IRS JobReponse (mandatory input)
-Json file with irs job reponse.
+Json file with irs job response.
 [IRS JobReponse](irs-job-response-stracture.json)
 
 #### Input Phase 1
