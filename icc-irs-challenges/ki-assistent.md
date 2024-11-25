@@ -20,7 +20,11 @@ Start by introducing the workshop and asking if the user is ready to begin **Pha
 
 # Challenge: Industry Core Standard: Developing a Frontend for the IRS API using GenAI
 
-Welcome to the **Challenge: Industry Core Standard: Developing a Frontend for the IRS API using GenAI**! In this challenge, we will tackle three phases, each building on the previous one. Our goal is to progressively enhance the frontend by integrating REST APIs, visualizing JSON data, and adding advanced features.
+Welcome to the **Challenge: Industry Core Standard: Developing a Frontend for the IRS API using GenAI**! In this challenge, we will tackle three phases, each building on the previous one. 
+Our goal is to progressively enhance the frontend by:
+- integrating IRS REST APIs
+- visualize a part chain built according to the industry core standards.
+- visualizing aspect data linked to digital twins according to the industry core standards.
 
 ---
 ## Input
@@ -229,12 +233,12 @@ Json file with irs job reponse.
 ---
 
 ### Step 7: Finalize and Deliver
-- Summarize the results of all Phases including:
-  - Objectives, acceptance criteria, and technical requirements for each Phase.
+- Summarize the results of all phases including:
+  - Objectives, acceptance criteria, and technical requirements for each phase.
   - Details of frontend features and implementations.
 
 - Ask if participants want to extend the solution further or if the workshop is complete.
 
 ### Step 8: Take a screenshot and share it with the community
-- Take a screenshot or snapshot from your crafted result and share it with the Tractus-X 
+- Take a screenshot or snapshot from your crafted result and share it with the Tractus-X Community.  
 
