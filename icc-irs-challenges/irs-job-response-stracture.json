@@ -1,0 +1,693 @@
+{
+  "job": {
+    "id": "514df788-3545-4e50-907b-0149952734cc",
+    "globalAssetId": "urn:uuid:e10375f4-6312-4ee5-b6c9-524f54f21384",
+    "state": "COMPLETED",
+    "exception": null,
+    "createdOn": "2024-11-18T12:25:07.189992045Z",
+    "startedOn": "2024-11-18T12:25:07.190094235Z",
+    "lastModifiedOn": "2024-11-18T12:30:31.466514541Z",
+    "completedOn": "2024-11-18T12:30:31.466517336Z",
+    "summary": {
+      "asyncFetchedItems": {
+        "running": 0,
+        "completed": 3,
+        "failed": 0
+      }
+    },
+    "parameter": {
+      "bomLifecycle": "asBuilt",
+      "aspects": [
+        "urn:samm:io.catenax.serial_part:3.0.0#SerialPart",
+        "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+        "urn:samm:io.catenax.batch:3.0.0#Batch",
+        "urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt"
+      ],
+      "depth": 100,
+      "bpn": "BPNL000000000ABC",
+      "direction": "downward",
+      "collectAspects": true,
+      "lookupBPNs": false,
+      "auditContractNegotiation": true,
+      "callbackUrl": null
+    }
+  },
+  "relationships": [
+    {
+      "catenaXId": "urn:uuid:e10375f4-6312-4ee5-b6c9-524f54f21384",
+      "linkedItem": {
+        "quantity": {
+          "quantityNumber": 1.0,
+          "measurementUnit": {
+            "datatypeURI": null,
+            "lexicalValue": "unit:piece"
+          }
+        },
+        "lifecycleContext": "asBuilt",
+        "assembledOn": "2024-11-15T06:03:46.686Z",
+        "lastModifiedOn": "2024-11-15T06:03:46.686Z",
+        "childCatenaXId": "urn:uuid:0c5db84d-723c-2b8f-8ea0-e5da1457bfae",
+        "hasAlternatives": false
+      },
+      "aspectType": "SingleLevelBomAsBuilt",
+      "bpn": "BPNL000000000DEF"
+    },
+    {
+      "catenaXId": "urn:uuid:e10375f4-6312-4ee5-b6c9-524f54f21384",
+      "linkedItem": {
+        "quantity": {
+          "quantityNumber": 1.0,
+          "measurementUnit": {
+            "datatypeURI": null,
+            "lexicalValue": "unit:piece"
+          }
+        },
+        "lifecycleContext": "asBuilt",
+        "assembledOn": "2024-11-15T06:03:46.686Z",
+        "lastModifiedOn": "2024-11-15T06:03:46.686Z",
+        "childCatenaXId": "urn:uuid:c701b520-e204-4063-a16b-3482e5b59d9f",
+        "hasAlternatives": false
+      },
+      "aspectType": "SingleLevelBomAsBuilt",
+      "bpn": "BPNL000000000DEF"
+    }
+  ],
+  "shells": [
+    {
+      "contractAgreementId": "5e7090db-21f5-42be-9f1a-9060c94ee3b9",
+      "payload": {
+        "administration": null,
+        "description": [],
+        "globalAssetId": "urn:uuid:e10375f4-6312-4ee5-b6c9-524f54f21384",
+        "idShort": "Vehicle_BPNL000000000ABC_AAIFx6fw5Jf4BJtrN1mtTCqn8QqS4sskyKX872b+o68VrjR+EvC8UjQKv0DqAW+FS8lQLF",
+        "id": "urn:uuid:e785b87e-ff1d-4b1d-816a-2ccee93dca21",
+        "specificAssetIds": [
+          {
+            "name": "manufacturerId",
+            "externalSubjectId": null,
+            "value": "BPNL000000000ABC",
+            "semanticId": null
+          },
+          {
+            "name": "manufacturerPartId",
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "PUBLIC_READABLE",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "U10",
+            "semanticId": null
+          },
+          {
+            "name": "intrinsicId",
+            "externalSubjectId": null,
+            "value": "24141441231423",
+            "semanticId": null
+          },
+          {
+            "name": "digitalTwinType",
+            "externalSubjectId": null,
+            "value": "PartInstance",
+            "semanticId": null
+          },
+          {
+            "name": "partInstanceId",
+            "externalSubjectId": null,
+            "value": "24141441231423",
+            "semanticId": null
+          },
+          {
+            "name": "van",
+            "externalSubjectId": null,
+            "value": "24141441231423",
+            "semanticId": null
+          }
+        ],
+        "submodelDescriptors": [
+          {
+            "administration": null,
+            "description": [
+              {
+                "language": "de",
+                "text": "hallo"
+              },
+              {
+                "language": "en",
+                "text": "hello"
+              }
+            ],
+            "idShort": "serialPart",
+            "id": "urn:uuid:42076997-6740-4176-986d-20f5e15ef547",
+            "semanticId": {
+              "keys": [
+                {
+                  "value": "urn:samm:io.catenax.serial_part:3.0.0#SerialPart",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "endpoints": [
+              {
+                "protocolInformation": {
+                  "href": "https://dataplane-irs-edc.com/public/urn:uuid:42076997-6740-4176-986d-20f5e15ef547/submodel",
+                  "endpointProtocol": "HTTP",
+                  "endpointProtocolVersion": [
+                    "1.1"
+                  ],
+                  "subprotocol": "DSP",
+                  "subprotocolBody": "id=vehicle_bundle_sp;dspEndpoint=https://connector-trace-irs-edc.com/api/v1/dsp",
+                  "subprotocolBodyEncoding": "plain",
+                  "securityAttributes": [
+                    {
+                      "type": "NONE",
+                      "key": "NONE",
+                      "value": "NONE"
+                    }
+                  ]
+                },
+                "interface": "SUBMODEL-3.0"
+              }
+            ]
+          },
+          {
+            "administration": null,
+            "description": [
+              {
+                "language": "de",
+                "text": "hallo"
+              },
+              {
+                "language": "en",
+                "text": "hello"
+              }
+            ],
+            "idShort": "singleLevelBoMAsBuilt",
+            "id": "urn:uuid:555ae65a-2231-4f24-9da2-39b76063d3bf",
+            "semanticId": {
+              "keys": [
+                {
+                  "value": "urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "endpoints": [
+              {
+                "protocolInformation": {
+                  "href": "https://dataplane-irs-edc.com/public/urn:uuid:555ae65a-2231-4f24-9da2-39b76063d3bf/submodel",
+                  "endpointProtocol": "HTTP",
+                  "endpointProtocolVersion": [
+                    "1.1"
+                  ],
+                  "subprotocol": "DSP",
+                  "subprotocolBody": "id=vehicle_bundle_slbb;dspEndpoint=https://connector-trace-irs-edc.com/api/v1/dsp",
+                  "subprotocolBodyEncoding": "plain",
+                  "securityAttributes": [
+                    {
+                      "type": "NONE",
+                      "key": "NONE",
+                      "value": "NONE"
+                    }
+                  ]
+                },
+                "interface": "SUBMODEL-3.0"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "contractAgreementId": "830c3103-cec9-4824-a9f3-20be4a938029",
+      "payload": {
+        "administration": null,
+        "description": [
+          {
+            "language": "en",
+            "text": "Digital Twin for a part."
+          }
+        ],
+        "globalAssetId": "urn:uuid:c701b520-e204-4063-a16b-3482e5b59d9f",
+        "idShort": "0281009749_084382605323",
+        "id": "urn:uuid:c701b520-e204-4063-a16b-3482e5b59d9f",
+        "specificAssetIds": [
+          {
+            "name": "AbcDefCustomer",
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL000000000ABC",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "NO84905870224B057305323",
+            "semanticId": null
+          },
+          {
+            "name": "customerPartId",
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL000000000ABC",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "8490587",
+            "semanticId": null
+          },
+          {
+            "name": "customerPartInstanceId",
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL000000000ABC",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "24B057305323",
+            "semanticId": null
+          },
+          {
+            "name": "partInstanceId",
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL000000000ABC",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "084382605323",
+            "semanticId": null
+          },
+          {
+            "name": "digitalTwinType",
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL000000000ABC",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "PartInstance",
+            "semanticId": null
+          },
+          {
+            "name": "manufacturerId",
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL000000000ABC",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "BPNL000000000DEF",
+            "semanticId": null
+          },
+          {
+            "name": "manufacturerPartId",
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL000000000ABC",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "0281009749",
+            "semanticId": null
+          }
+        ],
+        "submodelDescriptors": [
+          {
+            "administration": null,
+            "description": [
+              {
+                "language": "de",
+                "text": "Ein serialisiertes Teil ist eine Instanziierung eines (Design-)Teils, wobei die jeweilige Instanziierung eindeutig anhand einer Seriennummer oder einer ähnlichen Kennung (z. B. VAN) oder einer Kombination mehrerer Kennungen (z. B. Kombination aus Hersteller, Datum und Nummer) identifiziert werden kann."
+              },
+              {
+                "language": "en",
+                "text": "A serialized part is an instantiation of a (design-)part, where the particular instantiation can be uniquely identified by means of a serial number or a similar identifier (e.g. VAN) or a combination of multiple identifiers (e.g. combination of manufacturer, date and number)."
+              }
+            ],
+            "idShort": "serial-part:3.0.0",
+            "id": "urn:uuid:2feaaa43-ece3-4be6-b25d-6223a82cad33",
+            "semanticId": {
+              "keys": [
+                {
+                  "value": "urn:samm:io.catenax.serial_part:3.0.0#SerialPart",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "endpoints": [
+              {
+                "protocolInformation": {
+                  "href": "https://edc-1-2.irs-another.com/api/public/submodel/$value?customerPartInstanceId=24B057305323",
+                  "endpointProtocol": "HTTP",
+                  "endpointProtocolVersion": [
+                    "1.1"
+                  ],
+                  "subprotocol": "DSP",
+                  "subprotocolBody": "id=8f4974a5-829d-4bf4-82ce-317eb4dcebae;dspEndpoint=https://edc-1-1.irs-another.com/api/v1/dsp",
+                  "subprotocolBodyEncoding": "plain",
+                  "securityAttributes": [
+                    {
+                      "type": "NONE",
+                      "key": "NONE",
+                      "value": "NONE"
+                    }
+                  ]
+                },
+                "interface": "SUBMODEL-3.0"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "contractAgreementId": "90144789-a8fb-4ba0-8c75-e4cf07b41176",
+      "payload": {
+        "administration": null,
+        "description": [
+          {
+            "language": "en",
+            "text": "Digital Twin for a part."
+          }
+        ],
+        "globalAssetId": "urn:uuid:0c5db84d-723c-2b8f-8ea0-e5da1457bfae",
+        "idShort": "1582409744_084382700815",
+        "id": "urn:uuid:0c5db84d-723c-2b8f-8ea0-e5da1457bfae",
+        "specificAssetIds": [
+          {
+            "name": "AbcDefCustomer",
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL000000000ABC",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "NO68523720223A443220324",
+            "semanticId": null
+          },
+          {
+            "name": "manufacturerPartId",
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL000000000ABC",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "1582409744",
+            "semanticId": null
+          },
+          {
+            "name": "partInstanceId",
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL000000000ABC",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "084382700815",
+            "semanticId": null
+          },
+          {
+            "name": "digitalTwinType",
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL000000000ABC",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "PartInstance",
+            "semanticId": null
+          },
+          {
+            "name": "customerPartInstanceId",
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL000000000ABC",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "23A443220324",
+            "semanticId": null
+          },
+          {
+            "name": "manufacturerId",
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL000000000ABC",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "BPNL000000000DEF",
+            "semanticId": null
+          },
+          {
+            "name": "customerPartId",
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL000000000ABC",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "6852372",
+            "semanticId": null
+          }
+        ],
+        "submodelDescriptors": [
+          {
+            "administration": null,
+            "description": [
+              {
+                "language": "de",
+                "text": "Ein serialisiertes Teil ist eine Instanziierung eines (Design-)Teils, wobei die jeweilige Instanziierung eindeutig anhand einer Seriennummer oder einer ähnlichen Kennung (z. B. VAN) oder einer Kombination mehrerer Kennungen (z. B. Kombination aus Hersteller, Datum und Nummer) identifiziert werden kann."
+              },
+              {
+                "language": "en",
+                "text": "A serialized part is an instantiation of a (design-)part, where the particular instantiation can be uniquely identified by means of a serial number or a similar identifier (e.g. VAN) or a combination of multiple identifiers (e.g. combination of manufacturer, date and number)."
+              }
+            ],
+            "idShort": "serial-part:3.0.0",
+            "id": "urn:uuid:ab3c8426-cedd-4438-be0d-011fb2ad35c2",
+            "semanticId": {
+              "keys": [
+                {
+                  "value": "urn:samm:io.catenax.serial_part:3.0.0#SerialPart",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "endpoints": [
+              {
+                "protocolInformation": {
+                  "href": "https://edc-1-2.irs-another.com/api/public/submodel/$value?customerPartInstanceId=23A443220324",
+                  "endpointProtocol": "HTTP",
+                  "endpointProtocolVersion": [
+                    "1.1"
+                  ],
+                  "subprotocol": "DSP",
+                  "subprotocolBody": "id=8f4974a5-829d-4bf4-82ce-317eb4dcebae;dspEndpoint=https://edc-1-1.irs-another.com/api/v1/dsp",
+                  "subprotocolBodyEncoding": "plain",
+                  "securityAttributes": [
+                    {
+                      "type": "NONE",
+                      "key": "NONE",
+                      "value": "NONE"
+                    }
+                  ]
+                },
+                "interface": "SUBMODEL-3.0"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "tombstones": [],
+  "submodels": [
+    {
+      "identification": "urn:uuid:42076997-6740-4176-986d-20f5e15ef547",
+      "aspectType": "urn:samm:io.catenax.serial_part:3.0.0#SerialPart",
+      "contractAgreementId": "64bd1fe2-6367-449f-a240-fc2d0f494f20",
+      "payload": {
+        "catenaXId": "urn:uuid:e10375f4-6312-4ee5-b6c9-524f54f21384",
+        "localIdentifiers": [
+          {
+            "key": "manufacturerId",
+            "value": "BPNL000000000ABC"
+          },
+          {
+            "key": "partInstanceId",
+            "value": "24141441231423"
+          },
+          {
+            "key": "van",
+            "value": "24141441231423"
+          }
+        ],
+        "manufacturingInformation": {
+          "date": "2024-03-18T00:00:00.000Z",
+          "country": "DEU"
+        },
+        "partTypeInformation": {
+          "manufacturerPartId": "U10",
+          "classification": "product",
+          "nameAtManufacturer": "Vehicle"
+        }
+      }
+    },
+    {
+      "identification": "urn:uuid:555ae65a-2231-4f24-9da2-39b76063d3bf",
+      "aspectType": "urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt",
+      "contractAgreementId": "7f2bd3ae-faf5-121a-afc3-909ec7d29632",
+      "payload": {
+        "catenaXId": "urn:uuid:e10375f4-6312-4ee5-b6c9-524f54f21384",
+        "childItems": [
+          {
+            "catenaXId": "urn:uuid:c701b520-e204-4063-a16b-3482e5b59d9f",
+            "businessPartner": "BPNL000000000DEF",
+            "quantity": {
+              "value": 1,
+              "unit": "unit:piece"
+            },
+            "createdOn": "2024-11-15T06:03:46.686Z",
+            "lastModifiedOn": "2024-11-15T06:03:46.686Z",
+            "hasAlternatives": false
+          },
+          {
+            "catenaXId": "urn:uuid:0c5db84d-723c-2b8f-8ea0-e5da1457bfae",
+            "businessPartner": "BPNL000000000DEF",
+            "quantity": {
+              "value": 1,
+              "unit": "unit:piece"
+            },
+            "createdOn": "2024-11-15T06:03:46.686Z",
+            "lastModifiedOn": "2024-11-15T06:03:46.686Z",
+            "hasAlternatives": false
+          }
+        ]
+      }
+    },
+    {
+      "identification": "urn:uuid:2feaaa43-ece3-4be6-b25d-6223a82cad33",
+      "aspectType": "urn:samm:io.catenax.serial_part:3.0.0#SerialPart",
+      "contractAgreementId": "c8c439ff-6bl6-45ff-3dda-24d089320b7e",
+      "payload": {
+        "catenaXId": "urn:uuid:c701b520-e204-4063-a16b-3482e5b59d9f",
+        "localIdentifiers": [
+          {
+            "key": "partInstanceId",
+            "value": "24B057305323"
+          }
+        ],
+        "manufacturingInformation": {
+          "date": "2024-02-26T12:51:28Z",
+          "country": "ROU",
+          "sites": [
+            {
+              "catenaXsiteId": "BPNS2013247800AB",
+              "function": "production"
+            }
+          ]
+        },
+        "partTypeInformation": {
+          "manufacturerPartId": "0281009749",
+          "customerPartId": "8490587",
+          "nameAtManufacturer": "Vehicle Window",
+          "nameAtCustomer": "ABC FF",
+          "partClassification": [
+            {
+              "classificationStandard": "IEC",
+              "classificationID": "61145- 3:2221",
+              "classificationDescription": "Standard data element."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "identification": "urn:uuid:ab3c8426-cedd-4438-be0d-011fb2ad35c2",
+      "aspectType": "urn:samm:io.catenax.serial_part:3.0.0#SerialPart",
+      "contractAgreementId": "0df61b2a-454d-448d-94aa-afcae2a12342",
+      "payload": {
+        "catenaXId": "urn:uuid:0c5db84d-723c-2b8f-8ea0-e5da1457bfae",
+        "localIdentifiers": [
+          {
+            "key": "partInstanceId",
+            "value": "23A443220324"
+          }
+        ],
+        "manufacturingInformation": {
+          "date": "2024-02-27T01:26:04Z",
+          "country": "ROU",
+          "sites": [
+            {
+              "catenaXsiteId": "BPNS2013247800AB",
+              "function": "production"
+            }
+          ]
+        },
+        "partTypeInformation": {
+          "manufacturerPartId": "1582409744",
+          "customerPartId": "6852372",
+          "nameAtManufacturer": "Vehicle Window",
+          "nameAtCustomer": "ABC FF",
+          "partClassification": [
+            {
+              "classificationStandard": "IEC",
+              "classificationID": "61145- 3:2221",
+              "classificationDescription": "Standard data element."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
