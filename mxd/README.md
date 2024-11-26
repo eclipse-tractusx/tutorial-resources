@@ -31,6 +31,9 @@ For the most bare-bones installation of the dataspace, execute the following com
 
 ### 2.1 Creating the cluster
 
+
+
+
 We are using KinD as Kubernetes runtime, so all commands here relate to that. First, we need to create a cluster and
 install an ingress controller. We'll be using NGINX for that.
 
