@@ -190,7 +190,7 @@ curl --request GET \
     - Attach fields from shells to shells graph node
   - From submodels[] array 
     - Get submodel with `aspectType`: `urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt`
-    - Attach submodel from submodels to submodels graph edge (`catenaXId`, `childItems`:[`catenaXId`,`businessPartner`])
+  - Attach fields submodels graph edge (`submodels[?].payload.catenaXId`, `submodels[?].payload.childItems[?].catenaXId`,`submodels[?].payload.childItems[?].businessPartner`)
 - Ensure JSON data is now structured and visually accessible in HTML.
 - Present the result and gather feedback.
 
@@ -214,7 +214,7 @@ curl --request GET \
 - From submodels[] array
   - Get submodel with `aspectType`: `urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt`
   - Attach submodel from submodels to submodels graph edge 
-  - Attach fields submodels graph edge (`catenaXId`, `childItems`:[`catenaXId`,`businessPartner`])
+  - Attach fields submodels graph edge (`submodels[?].payload.catenaXId`, `submodels[?].payload.childItems[?].catenaXId`,`submodels[?].payload.childItems[?].businessPartner`)
 - In case of `aspectType`: `urn:samm:io.catenax.serial_part:3.0.0#SerialPart`
   - Extract fields from shells (`partInstanceId`, `intrinsicId`, `van`)
 - In case of `aspectType`: `urn:samm:io.catenax.batch:3.0.0#Batch`
@@ -224,15 +224,15 @@ curl --request GET \
 - From submodels[] array
   - Get submodel with `aspectType`: `urn:samm:io.catenax.serial_part:3.0.0#SerialPart`
   - Attach submodel from submodels as graph node
-  - Attach fields submodels graph edge (`manufacturingInformation`:`date`, `manufacturingInformation`:`country`, `nameAtManufacturer`, `nameAtCustomer`, `customerPartId`)
+  - Attach fields submodels graph edge (`submodels[?].payload.manufacturingInformationdate`, `submodels[?].payload.manufacturingInformationcountry`, `submodels[?].payload.partTypeInformation.nameAtManufacturer`, `submodels[?].payload.partTypeInformation.nameAtCustomer`, `submodels[?].payload.partTypeInformation.customerPartId`)
 - From submodels[] array
   - Get submodel with `aspectType`: `urn:samm:io.catenax.batch:3.0.0#Batch`
   - Attach submodel from submodels as graph node
-  - Attach fields submodels graph edge (`manufacturingInformation`:`date`, `manufacturingInformation`:`country`, `nameAtManufacturer`, `nameAtCustomer`, `customerPartId`)
+  - Attach fields submodels graph edge (`submodels[?].payload.manufacturingInformation.date`, `submodels[?].payload.manufacturingInformation.country`, `submodels[?].payload.nameAtManufacturer`, `submodels[?].payload.partTypeInformation..nameAtCustomer`, `submodels[?].payload.partTypeInformation.customerPartId`)
 - From submodels[] array
   - Get submodel with `aspectType`: `urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart`
   - Attach submodel from submodels as graph node
-  - Attach fields submodels graph edge (`manufacturingInformation`:`date`, `manufacturingInformation`:`country`, `partTypeInformation`:`manufacturerPartId`, `partTypeInformation`:`nameAtManufacturer`)
+  - Attach fields submodels graph edge (`submodels[?].payload.manufacturingInformation.date`, `submodels[?].payload.manufacturingInformation.country`, `submodels[?].payload.partTypeInformation.manufacturerPartId`, `submodels[?].payload.partTypeInformation.nameAtManufacturer`)
 - Present the result and gather final feedback.
 - **Next Step**: Inform participants they can refine and style the graph creatively. Encourage questions about styling. Ask if they want to extend the solution further or finalize the workshop.
 
