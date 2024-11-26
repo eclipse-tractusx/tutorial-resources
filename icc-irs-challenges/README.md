@@ -12,6 +12,7 @@ After completing all three phases, you should have a progressive frontend soluti
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
 - [How to use the KI assistance](#how-to-use-the-ki-assistance)
+- [IRS-API-Request-Collection-Insomnia](#irs-api-request-collection)
 - [Example solution](#example-solution)
 - [Example ChatGPT History of Successful Workshop](#example-chatgpt-history-of-successful-workshop)
 - [Contact](#contact)
@@ -30,6 +31,9 @@ After completing all three phases, you should have a progressive frontend soluti
 ## How to use the KI assistance
 1. Copy/Paste [KI assistance](ki-guide.md) into your AI chatbot.
 2. Start the KI assistant and follow the instructions. 
+
+## IRS Api Request Collection
+[Insomnia Request Collection](irs-api-request-collection.json)
 
 ## Execute challenge 
 1. Open your favorite IDE.

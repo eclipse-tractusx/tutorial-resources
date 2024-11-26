@@ -166,6 +166,7 @@ curl --request GET \
 
 - Build a basic frontend with:
   - Buttons for "Register Job" and "Get Job Response."
+  - Inputfields for BPN and globalAssetId which are used in the "Register Job" request.
   - JSON data displayed in HTML.
 
 - Present the result and gather feedback.
@@ -209,16 +210,16 @@ curl --request GET \
 - Optimize the visualization for clarity and completeness.
 - Attach shells to relationships
 - From shells[] array
-  - Extract fields from shells (`manufacturerId`, `manufacturerId`, `manufacturerPartId`, `digitalTwinType`)
+  - Extract fields from shells (`manufacturerId`, `manufacturerPartId`, `digitalTwinType`)
   - Attach fields from shells to shells graph node
 - From submodels[] array
   - Get submodel with `aspectType`: `urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt`
   - Attach submodel from submodels to submodels graph edge 
   - Attach fields submodels graph edge (`submodels[?].payload.catenaXId`, `submodels[?].payload.childItems[?].catenaXId`,`submodels[?].payload.childItems[?].businessPartner`)
 - In case of `aspectType`: `urn:samm:io.catenax.serial_part:3.0.0#SerialPart`
-  - Extract fields from shells (`partInstanceId`, `intrinsicId`, `van`)
+  - Extract fields from shells (`partInstanceId`, `van`)
 - In case of `aspectType`: `urn:samm:io.catenax.batch:3.0.0#Batch`
-  - Extract fields from shells (`batchId`, `intrinsicId`)
+  - Extract fields from shells (`batchId`)
 - In case of `aspectType`: `urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart`
   - Extract fields from shells (`parentOrderNumber`, `jisNumber`, `jisCallDate`, `intrinsicId`)
 - From submodels[] array
