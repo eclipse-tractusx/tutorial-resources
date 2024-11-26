@@ -30,7 +30,7 @@ import org.eclipse.edc.jsonld.spi.JsonLd;
 import org.eclipse.edc.jsonld.util.JacksonJsonLd;
 import org.eclipse.edc.junit.annotations.EndToEndTest;
 import org.eclipse.edc.junit.testfixtures.TestUtils;
-import org.eclipse.edc.spi.agent.ParticipantIdMapper;
+import org.eclipse.edc.participant.spi.ParticipantIdMapper;
 import org.eclipse.edc.spi.monitor.ConsoleMonitor;
 import org.eclipse.edc.transform.TypeTransformerRegistryImpl;
 import org.eclipse.edc.transform.spi.TypeTransformerRegistry;
@@ -71,14 +71,6 @@ public class TransferEndToEndTest {
 
     private final TypeTransformerRegistry transformerRegistry = new TypeTransformerRegistryImpl();
     private final JsonLd jsonLd = new TitaniumJsonLd(new ConsoleMonitor());
-
-    private static RequestSpecification baseRequest() {
-        RestAssured.port = 80;
-        return given()
-                .header("x-api-key", "password")
-                .contentType("application/json")
-                .when();
-    }
 
     @BeforeEach
     void setup() {
@@ -313,6 +305,14 @@ public class TransferEndToEndTest {
                     var state = jp.getString("state");
                     assertThat(state).isEqualTo("TERMINATED");
                 });
+    }
+
+    private static RequestSpecification baseRequest() {
+        RestAssured.port = 80;
+        return given()
+                .header("x-api-key", "password")
+                .contentType("application/json")
+                .when();
     }
 
 }
