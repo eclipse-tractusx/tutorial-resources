@@ -100,7 +100,7 @@ module "alice-catalog-server" {
   }
   dcp-config = {
     id                     = var.alice-did
-    sts_token_url          = local.sts-accounts-url
+    sts_token_url          = local.sts-token-url
     sts_client_id          = var.alice-did
     sts_clientsecret_alias = "participant-alice-sts-client-secret"
   }
