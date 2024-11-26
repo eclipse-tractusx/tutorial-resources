@@ -166,6 +166,7 @@ curl --request GET \
 
 - Build a basic frontend with:
   - Buttons for "Register Job" and "Get Job Response."
+  - Inputfields for BPN and globalAssetId which are used in the "Register Job" request.
   - JSON data displayed in HTML.
 
 - Present the result and gather feedback.
