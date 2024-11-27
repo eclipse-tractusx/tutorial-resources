@@ -23,7 +23,7 @@ const app = express();
 
 // Proxy setup
 app.use('/api', createProxyMiddleware({
-    target: '<BASE_URL>',
+    target: 'https://irs-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io',
     changeOrigin: true,
     pathRewrite: { '^/api': '' },
     on: {

@@ -1,0 +1,1776 @@
+{
+  "job": {
+    "id": "8d4ed6a5-3d42-499f-97ba-2b718dfd91e4",
+    "globalAssetId": "urn:uuid:4509ea7c-c8d2-41a1-83ca-c214ee34af6c",
+    "state": "COMPLETED",
+    "exception": null,
+    "createdOn": "2024-11-27T07:51:10.91988319Z",
+    "startedOn": "2024-11-27T07:51:10.920063894Z",
+    "lastModifiedOn": "2024-11-27T07:51:44.054163487Z",
+    "completedOn": "2024-11-27T07:51:44.054165687Z",
+    "summary": {
+      "asyncFetchedItems": {
+        "running": 0,
+        "completed": 10,
+        "failed": 0
+      }
+    },
+    "parameter": {
+      "bomLifecycle": "asBuilt",
+      "aspects": [
+        "urn:samm:io.catenax.serial_part:3.0.0#SerialPart",
+        "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+        "urn:samm:io.catenax.batch:3.0.0#Batch",
+        "urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt"
+      ],
+      "depth": 100,
+      "bpn": "BPNL00000003AXS3",
+      "direction": "downward",
+      "collectAspects": true,
+      "lookupBPNs": false,
+      "auditContractNegotiation": true,
+      "callbackUrl": null
+    }
+  },
+  "relationships": [
+    {
+      "catenaXId": "urn:uuid:4509ea7c-c8d2-41a1-83ca-c214ee34af6c",
+      "linkedItem": {
+        "quantity": {
+          "quantityNumber": 20.0,
+          "measurementUnit": {
+            "datatypeURI": null,
+            "lexicalValue": "unit:piece"
+          }
+        },
+        "lifecycleContext": "asBuilt",
+        "assembledOn": "2022-02-03T14:48:54.709Z",
+        "lastModifiedOn": "2022-02-03T14:48:54.709Z",
+        "childCatenaXId": "urn:uuid:10bedf9c-b2e2-4cd8-bb55-290107cceb09",
+        "hasAlternatives": false
+      },
+      "aspectType": "SingleLevelBomAsBuilt",
+      "bpn": "BPNL00000003B3NX"
+    },
+    {
+      "catenaXId": "urn:uuid:10bedf9c-b2e2-4cd8-bb55-290107cceb09",
+      "linkedItem": {
+        "quantity": {
+          "quantityNumber": 20.0,
+          "measurementUnit": {
+            "datatypeURI": null,
+            "lexicalValue": "unit:piece"
+          }
+        },
+        "lifecycleContext": "asBuilt",
+        "assembledOn": "2022-02-03T14:48:54.709Z",
+        "lastModifiedOn": "2022-02-03T14:48:54.709Z",
+        "childCatenaXId": "urn:uuid:c9b677d7-de53-4da9-90e9-1f59acb6685e",
+        "hasAlternatives": false
+      },
+      "aspectType": "SingleLevelBomAsBuilt",
+      "bpn": "BPNL00000000BJTL"
+    },
+    {
+      "catenaXId": "urn:uuid:10bedf9c-b2e2-4cd8-bb55-290107cceb09",
+      "linkedItem": {
+        "quantity": {
+          "quantityNumber": 20.0,
+          "measurementUnit": {
+            "datatypeURI": null,
+            "lexicalValue": "unit:piece"
+          }
+        },
+        "lifecycleContext": "asBuilt",
+        "assembledOn": "2022-02-03T14:48:54.709Z",
+        "lastModifiedOn": "2022-02-03T14:48:54.709Z",
+        "childCatenaXId": "urn:uuid:d2f729b6-66b1-47b9-a87e-6150a0115e19",
+        "hasAlternatives": false
+      },
+      "aspectType": "SingleLevelBomAsBuilt",
+      "bpn": "BPNL00000000BJTL"
+    },
+    {
+      "catenaXId": "urn:uuid:10bedf9c-b2e2-4cd8-bb55-290107cceb09",
+      "linkedItem": {
+        "quantity": {
+          "quantityNumber": 20.0,
+          "measurementUnit": {
+            "datatypeURI": null,
+            "lexicalValue": "unit:piece"
+          }
+        },
+        "lifecycleContext": "asBuilt",
+        "assembledOn": "2022-02-03T14:48:54.709Z",
+        "lastModifiedOn": "2022-02-03T14:48:54.709Z",
+        "childCatenaXId": "urn:uuid:e8560e8c-7c92-44e2-9591-a5099bd09815",
+        "hasAlternatives": false
+      },
+      "aspectType": "SingleLevelBomAsBuilt",
+      "bpn": "BPNL00000000BJTL"
+    },
+    {
+      "catenaXId": "urn:uuid:10bedf9c-b2e2-4cd8-bb55-290107cceb09",
+      "linkedItem": {
+        "quantity": {
+          "quantityNumber": 20.0,
+          "measurementUnit": {
+            "datatypeURI": null,
+            "lexicalValue": "unit:piece"
+          }
+        },
+        "lifecycleContext": "asBuilt",
+        "assembledOn": "2022-02-03T14:48:54.709Z",
+        "lastModifiedOn": "2022-02-03T14:48:54.709Z",
+        "childCatenaXId": "urn:uuid:4d47dfb4-4af7-41a8-9d41-b11db51a4b4a",
+        "hasAlternatives": false
+      },
+      "aspectType": "SingleLevelBomAsBuilt",
+      "bpn": "BPNL00000000BJTL"
+    },
+    {
+      "catenaXId": "urn:uuid:10bedf9c-b2e2-4cd8-bb55-290107cceb09",
+      "linkedItem": {
+        "quantity": {
+          "quantityNumber": 20.0,
+          "measurementUnit": {
+            "datatypeURI": null,
+            "lexicalValue": "unit:piece"
+          }
+        },
+        "lifecycleContext": "asBuilt",
+        "assembledOn": "2022-02-03T14:48:54.709Z",
+        "lastModifiedOn": "2022-02-03T14:48:54.709Z",
+        "childCatenaXId": "urn:uuid:ae83cb68-bd73-4819-a782-b7bc6c042948",
+        "hasAlternatives": false
+      },
+      "aspectType": "SingleLevelBomAsBuilt",
+      "bpn": "BPNL00000000BJTL"
+    },
+    {
+      "catenaXId": "urn:uuid:10bedf9c-b2e2-4cd8-bb55-290107cceb09",
+      "linkedItem": {
+        "quantity": {
+          "quantityNumber": 20.0,
+          "measurementUnit": {
+            "datatypeURI": null,
+            "lexicalValue": "unit:piece"
+          }
+        },
+        "lifecycleContext": "asBuilt",
+        "assembledOn": "2022-02-03T14:48:54.709Z",
+        "lastModifiedOn": "2022-02-03T14:48:54.709Z",
+        "childCatenaXId": "urn:uuid:3372ed2c-56ea-4fc3-909b-d193a7721153",
+        "hasAlternatives": false
+      },
+      "aspectType": "SingleLevelBomAsBuilt",
+      "bpn": "BPNL00000000BJTL"
+    },
+    {
+      "catenaXId": "urn:uuid:10bedf9c-b2e2-4cd8-bb55-290107cceb09",
+      "linkedItem": {
+        "quantity": {
+          "quantityNumber": 20.0,
+          "measurementUnit": {
+            "datatypeURI": null,
+            "lexicalValue": "unit:piece"
+          }
+        },
+        "lifecycleContext": "asBuilt",
+        "assembledOn": "2022-02-03T14:48:54.709Z",
+        "lastModifiedOn": "2022-02-03T14:48:54.709Z",
+        "childCatenaXId": "urn:uuid:a5edeb5a-040e-42a6-a4a7-e098ff1121a8",
+        "hasAlternatives": false
+      },
+      "aspectType": "SingleLevelBomAsBuilt",
+      "bpn": "BPNL00000000BJTL"
+    },
+    {
+      "catenaXId": "urn:uuid:10bedf9c-b2e2-4cd8-bb55-290107cceb09",
+      "linkedItem": {
+        "quantity": {
+          "quantityNumber": 20.0,
+          "measurementUnit": {
+            "datatypeURI": null,
+            "lexicalValue": "unit:piece"
+          }
+        },
+        "lifecycleContext": "asBuilt",
+        "assembledOn": "2022-02-03T14:48:54.709Z",
+        "lastModifiedOn": "2022-02-03T14:48:54.709Z",
+        "childCatenaXId": "urn:uuid:6fec45b1-fa4d-487f-8418-b4bbc2955fbd",
+        "hasAlternatives": false
+      },
+      "aspectType": "SingleLevelBomAsBuilt",
+      "bpn": "BPNL00000000BJTL"
+    }
+  ],
+  "shells": [
+    {
+      "contractAgreementId": "b329a6cd-cea1-4258-98d7-086c5128dab9",
+      "payload": {
+        "administration": null,
+        "description": [],
+        "globalAssetId": "urn:uuid:4509ea7c-c8d2-41a1-83ca-c214ee34af6c",
+        "idShort": "VehicleFullyElectric-38d01f3d434e4f92808688907e8288ed",
+        "id": "urn:uuid:a9f28808-18e0-4f80-b6e9-ec3ee86a6bc6",
+        "specificAssetIds": [
+          {
+            "name": "manufacturerId",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "BPNL00000003AVTH",
+            "semanticId": null
+          },
+          {
+            "name": "van",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "OMBXAFHRPALTYNHWL",
+            "semanticId": null
+          },
+          {
+            "name": "digitalTwinType",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "PUBLIC_READABLE",
+                  "type": "GlobalReference"
+                },
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "PartInstance",
+            "semanticId": null
+          },
+          {
+            "name": "manufacturerId",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "BPNL00000003AXS3",
+            "semanticId": null
+          },
+          {
+            "name": "partInstanceId",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "OMBXAFHRPALTYNHWL",
+            "semanticId": null
+          }
+        ],
+        "submodelDescriptors": [
+          {
+            "administration": null,
+            "description": [],
+            "idShort": "urn:samm:io.catenax.serial_part:3.0.0#SerialPart",
+            "id": "urn:uuid:91065414-108b-430b-8258-d698ee31776e",
+            "semanticId": {
+              "keys": [
+                {
+                  "value": "urn:samm:io.catenax.serial_part:3.0.0#SerialPart",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "endpoints": [
+              {
+                "protocolInformation": {
+                  "href": "https://edc-provider1-dataplane-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io/api/public/urn:uuid:91065414-108b-430b-8258-d698ee31776e",
+                  "endpointProtocol": "HTTP",
+                  "endpointProtocolVersion": [
+                    "1.1"
+                  ],
+                  "subprotocol": "DSP",
+                  "subprotocolBody": "id=urn:uuid:9488b0c6-9c11-476f-8a59-dc22528f1a0f;dspEndpoint=https://edc-provider1-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io",
+                  "subprotocolBodyEncoding": "plain",
+                  "securityAttributes": [
+                    {
+                      "type": "NONE",
+                      "key": "NONE",
+                      "value": "NONE"
+                    }
+                  ]
+                },
+                "interface": "SUBMODEL-3.0"
+              }
+            ]
+          },
+          {
+            "administration": null,
+            "description": [],
+            "idShort": "urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt",
+            "id": "urn:uuid:454b3372-d563-49a9-a840-aa9a13b9665c",
+            "semanticId": {
+              "keys": [
+                {
+                  "value": "urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "endpoints": [
+              {
+                "protocolInformation": {
+                  "href": "https://edc-provider1-dataplane-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io/api/public/urn:uuid:454b3372-d563-49a9-a840-aa9a13b9665c",
+                  "endpointProtocol": "HTTP",
+                  "endpointProtocolVersion": [
+                    "1.1"
+                  ],
+                  "subprotocol": "DSP",
+                  "subprotocolBody": "id=urn:uuid:9488b0c6-9c11-476f-8a59-dc22528f1a0f;dspEndpoint=https://edc-provider1-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io",
+                  "subprotocolBodyEncoding": "plain",
+                  "securityAttributes": [
+                    {
+                      "type": "NONE",
+                      "key": "NONE",
+                      "value": "NONE"
+                    }
+                  ]
+                },
+                "interface": "SUBMODEL-3.0"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "contractAgreementId": "d32a1bf4-0c84-4a48-afff-2bb9774ddacf",
+      "payload": {
+        "administration": null,
+        "description": [],
+        "globalAssetId": "urn:uuid:10bedf9c-b2e2-4cd8-bb55-290107cceb09",
+        "idShort": "Battery-e8691b337c9644e996256e28aca5f66c",
+        "id": "urn:uuid:e0f34628-6ee8-46e7-8dd2-67c3b0d08b1b",
+        "specificAssetIds": [
+          {
+            "name": "batchId",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "BPNL00000003B3NX",
+            "semanticId": null
+          },
+          {
+            "name": "manufacturerId",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "BPNL00000003B3NX",
+            "semanticId": null
+          },
+          {
+            "name": "digitalTwinType",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                },
+                {
+                  "value": "PUBLIC_READABLE",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "PartInstance",
+            "semanticId": null
+          }
+        ],
+        "submodelDescriptors": [
+          {
+            "administration": null,
+            "description": [],
+            "idShort": "urn:samm:io.catenax.batch:3.0.0#Batch",
+            "id": "urn:uuid:2a1c15a3-5cbe-464e-bc65-e6e893a6ca68",
+            "semanticId": {
+              "keys": [
+                {
+                  "value": "urn:samm:io.catenax.batch:3.0.0#Batch",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "endpoints": [
+              {
+                "protocolInformation": {
+                  "href": "https://edc-provider2-dataplane-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io/api/public/urn:uuid:2a1c15a3-5cbe-464e-bc65-e6e893a6ca68",
+                  "endpointProtocol": "HTTP",
+                  "endpointProtocolVersion": [
+                    "1.1"
+                  ],
+                  "subprotocol": "DSP",
+                  "subprotocolBody": "id=urn:uuid:9d80824e-2829-4f14-9b7d-ab9fc0a2deac;dspEndpoint=https://edc-provider2-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io",
+                  "subprotocolBodyEncoding": "plain",
+                  "securityAttributes": [
+                    {
+                      "type": "NONE",
+                      "key": "NONE",
+                      "value": "NONE"
+                    }
+                  ]
+                },
+                "interface": "SUBMODEL-3.0"
+              }
+            ]
+          },
+          {
+            "administration": null,
+            "description": [],
+            "idShort": "urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt",
+            "id": "urn:uuid:ce1d3431-9430-46c0-bc6a-ff0b48aa7c16",
+            "semanticId": {
+              "keys": [
+                {
+                  "value": "urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "endpoints": [
+              {
+                "protocolInformation": {
+                  "href": "https://edc-provider2-dataplane-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io/api/public/urn:uuid:ce1d3431-9430-46c0-bc6a-ff0b48aa7c16",
+                  "endpointProtocol": "HTTP",
+                  "endpointProtocolVersion": [
+                    "1.1"
+                  ],
+                  "subprotocol": "DSP",
+                  "subprotocolBody": "id=urn:uuid:9d80824e-2829-4f14-9b7d-ab9fc0a2deac;dspEndpoint=https://edc-provider2-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io",
+                  "subprotocolBodyEncoding": "plain",
+                  "securityAttributes": [
+                    {
+                      "type": "NONE",
+                      "key": "NONE",
+                      "value": "NONE"
+                    }
+                  ]
+                },
+                "interface": "SUBMODEL-3.0"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "contractAgreementId": "b4c76d0d-0055-4ff9-ba62-eacf68048777",
+      "payload": {
+        "administration": null,
+        "description": [],
+        "globalAssetId": "urn:uuid:3372ed2c-56ea-4fc3-909b-d193a7721153",
+        "idShort": "HVMODUL-a4698126355841069a9cb0e5b6d3ed4d",
+        "id": "urn:uuid:2792756a-f418-44ff-af1d-e0236908ff1c",
+        "specificAssetIds": [
+          {
+            "name": "manufacturerId",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "BPNL00000000BJTL",
+            "semanticId": null
+          },
+          {
+            "name": "digitalTwinType",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                },
+                {
+                  "value": "PUBLIC_READABLE",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "PartInstance",
+            "semanticId": null
+          },
+          {
+            "name": "jisNumber",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "81939668QMA",
+            "semanticId": null
+          }
+        ],
+        "submodelDescriptors": [
+          {
+            "administration": null,
+            "description": [],
+            "idShort": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+            "id": "urn:uuid:55ddc611-1d74-4347-bcf2-d0df7b5a8b07",
+            "semanticId": {
+              "keys": [
+                {
+                  "value": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "endpoints": [
+              {
+                "protocolInformation": {
+                  "href": "https://edc-provider3-dataplane-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io/api/public/urn:uuid:55ddc611-1d74-4347-bcf2-d0df7b5a8b07",
+                  "endpointProtocol": "HTTP",
+                  "endpointProtocolVersion": [
+                    "1.1"
+                  ],
+                  "subprotocol": "DSP",
+                  "subprotocolBody": "id=urn:uuid:5a273064-cdcf-41dd-a0cd-8cb941a8d18a;dspEndpoint=https://edc-provider3-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io",
+                  "subprotocolBodyEncoding": "plain",
+                  "securityAttributes": [
+                    {
+                      "type": "NONE",
+                      "key": "NONE",
+                      "value": "NONE"
+                    }
+                  ]
+                },
+                "interface": "SUBMODEL-3.0"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "contractAgreementId": "7b316bfc-844f-4ac4-94b7-f1e474c74d5d",
+      "payload": {
+        "administration": null,
+        "description": [],
+        "globalAssetId": "urn:uuid:a5edeb5a-040e-42a6-a4a7-e098ff1121a8",
+        "idShort": "HVMODUL-3402cfdc243442a1b8ca020339b79b6c",
+        "id": "urn:uuid:ccb9408b-6260-44af-806e-a883ff99f0db",
+        "specificAssetIds": [
+          {
+            "name": "digitalTwinType",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "PUBLIC_READABLE",
+                  "type": "GlobalReference"
+                },
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "PartInstance",
+            "semanticId": null
+          },
+          {
+            "name": "manufacturerId",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "BPNL00000000BJTL",
+            "semanticId": null
+          },
+          {
+            "name": "jisNumber",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "81939668QMA",
+            "semanticId": null
+          }
+        ],
+        "submodelDescriptors": [
+          {
+            "administration": null,
+            "description": [],
+            "idShort": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+            "id": "urn:uuid:4547de8e-f751-4572-921e-f5a488991434",
+            "semanticId": {
+              "keys": [
+                {
+                  "value": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "endpoints": [
+              {
+                "protocolInformation": {
+                  "href": "https://edc-provider3-dataplane-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io/api/public/urn:uuid:4547de8e-f751-4572-921e-f5a488991434",
+                  "endpointProtocol": "HTTP",
+                  "endpointProtocolVersion": [
+                    "1.1"
+                  ],
+                  "subprotocol": "DSP",
+                  "subprotocolBody": "id=urn:uuid:5a273064-cdcf-41dd-a0cd-8cb941a8d18a;dspEndpoint=https://edc-provider3-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io",
+                  "subprotocolBodyEncoding": "plain",
+                  "securityAttributes": [
+                    {
+                      "type": "NONE",
+                      "key": "NONE",
+                      "value": "NONE"
+                    }
+                  ]
+                },
+                "interface": "SUBMODEL-3.0"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "contractAgreementId": "c3be75a6-9573-46b9-ae78-682add1538fe",
+      "payload": {
+        "administration": null,
+        "description": [],
+        "globalAssetId": "urn:uuid:d2f729b6-66b1-47b9-a87e-6150a0115e19",
+        "idShort": "HVMODUL-f31108c1ef8243ce94884b5bd5f423c6",
+        "id": "urn:uuid:85603d18-ce0b-4577-99b7-0a204be35fa0",
+        "specificAssetIds": [
+          {
+            "name": "digitalTwinType",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "PUBLIC_READABLE",
+                  "type": "GlobalReference"
+                },
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "PartInstance",
+            "semanticId": null
+          },
+          {
+            "name": "jisNumber",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "81939668QMA",
+            "semanticId": null
+          },
+          {
+            "name": "manufacturerId",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "BPNL00000000BJTL",
+            "semanticId": null
+          }
+        ],
+        "submodelDescriptors": [
+          {
+            "administration": null,
+            "description": [],
+            "idShort": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+            "id": "urn:uuid:8986f29c-6ae4-4d87-935f-3cecddaf4fb1",
+            "semanticId": {
+              "keys": [
+                {
+                  "value": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "endpoints": [
+              {
+                "protocolInformation": {
+                  "href": "https://edc-provider3-dataplane-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io/api/public/urn:uuid:8986f29c-6ae4-4d87-935f-3cecddaf4fb1",
+                  "endpointProtocol": "HTTP",
+                  "endpointProtocolVersion": [
+                    "1.1"
+                  ],
+                  "subprotocol": "DSP",
+                  "subprotocolBody": "id=urn:uuid:5a273064-cdcf-41dd-a0cd-8cb941a8d18a;dspEndpoint=https://edc-provider3-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io",
+                  "subprotocolBodyEncoding": "plain",
+                  "securityAttributes": [
+                    {
+                      "type": "NONE",
+                      "key": "NONE",
+                      "value": "NONE"
+                    }
+                  ]
+                },
+                "interface": "SUBMODEL-3.0"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "contractAgreementId": "5698710b-1803-423b-8933-c742141a9117",
+      "payload": {
+        "administration": null,
+        "description": [],
+        "globalAssetId": "urn:uuid:4d47dfb4-4af7-41a8-9d41-b11db51a4b4a",
+        "idShort": "HVMODUL-af6eb8ff3edb482f9040003f5777336e",
+        "id": "urn:uuid:8b2f7e2f-fdfb-4d5a-acfc-c808aeb80961",
+        "specificAssetIds": [
+          {
+            "name": "jisNumber",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "81939668QMA",
+            "semanticId": null
+          },
+          {
+            "name": "manufacturerId",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "BPNL00000000BJTL",
+            "semanticId": null
+          },
+          {
+            "name": "digitalTwinType",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "PUBLIC_READABLE",
+                  "type": "GlobalReference"
+                },
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "PartInstance",
+            "semanticId": null
+          }
+        ],
+        "submodelDescriptors": [
+          {
+            "administration": null,
+            "description": [],
+            "idShort": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+            "id": "urn:uuid:78ff2601-f63b-4884-b79d-95d9c6aa4024",
+            "semanticId": {
+              "keys": [
+                {
+                  "value": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "endpoints": [
+              {
+                "protocolInformation": {
+                  "href": "https://edc-provider3-dataplane-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io/api/public/urn:uuid:78ff2601-f63b-4884-b79d-95d9c6aa4024",
+                  "endpointProtocol": "HTTP",
+                  "endpointProtocolVersion": [
+                    "1.1"
+                  ],
+                  "subprotocol": "DSP",
+                  "subprotocolBody": "id=urn:uuid:5a273064-cdcf-41dd-a0cd-8cb941a8d18a;dspEndpoint=https://edc-provider3-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io",
+                  "subprotocolBodyEncoding": "plain",
+                  "securityAttributes": [
+                    {
+                      "type": "NONE",
+                      "key": "NONE",
+                      "value": "NONE"
+                    }
+                  ]
+                },
+                "interface": "SUBMODEL-3.0"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "contractAgreementId": "68d0e504-b4e5-46d5-96d4-c92f1b6932cb",
+      "payload": {
+        "administration": null,
+        "description": [],
+        "globalAssetId": "urn:uuid:c9b677d7-de53-4da9-90e9-1f59acb6685e",
+        "idShort": "HVMODUL-b07bc859ac4744bdb50e595bb6e17491",
+        "id": "urn:uuid:0fd89a14-9722-453a-ad99-d8e640e12b0f",
+        "specificAssetIds": [
+          {
+            "name": "jisNumber",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "81939668QMA",
+            "semanticId": null
+          },
+          {
+            "name": "manufacturerId",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "BPNL00000000BJTL",
+            "semanticId": null
+          },
+          {
+            "name": "digitalTwinType",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "PUBLIC_READABLE",
+                  "type": "GlobalReference"
+                },
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "PartInstance",
+            "semanticId": null
+          }
+        ],
+        "submodelDescriptors": [
+          {
+            "administration": null,
+            "description": [],
+            "idShort": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+            "id": "urn:uuid:a1306c66-a5e6-42aa-a5d4-a358c4b5d12e",
+            "semanticId": {
+              "keys": [
+                {
+                  "value": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "endpoints": [
+              {
+                "protocolInformation": {
+                  "href": "https://edc-provider3-dataplane-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io/api/public/urn:uuid:a1306c66-a5e6-42aa-a5d4-a358c4b5d12e",
+                  "endpointProtocol": "HTTP",
+                  "endpointProtocolVersion": [
+                    "1.1"
+                  ],
+                  "subprotocol": "DSP",
+                  "subprotocolBody": "id=urn:uuid:5a273064-cdcf-41dd-a0cd-8cb941a8d18a;dspEndpoint=https://edc-provider3-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io",
+                  "subprotocolBodyEncoding": "plain",
+                  "securityAttributes": [
+                    {
+                      "type": "NONE",
+                      "key": "NONE",
+                      "value": "NONE"
+                    }
+                  ]
+                },
+                "interface": "SUBMODEL-3.0"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "contractAgreementId": "6d31aa2c-a39c-4399-ba1a-df51523d6e94",
+      "payload": {
+        "administration": null,
+        "description": [],
+        "globalAssetId": "urn:uuid:ae83cb68-bd73-4819-a782-b7bc6c042948",
+        "idShort": "HVMODUL-28c361dffc9d4fe6a5d6b69c58eef61d",
+        "id": "urn:uuid:71207d9b-f307-4a8b-86d6-22701b78ddc5",
+        "specificAssetIds": [
+          {
+            "name": "jisNumber",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "81939668QMA",
+            "semanticId": null
+          },
+          {
+            "name": "digitalTwinType",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "PUBLIC_READABLE",
+                  "type": "GlobalReference"
+                },
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "PartInstance",
+            "semanticId": null
+          },
+          {
+            "name": "manufacturerId",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "BPNL00000000BJTL",
+            "semanticId": null
+          }
+        ],
+        "submodelDescriptors": [
+          {
+            "administration": null,
+            "description": [],
+            "idShort": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+            "id": "urn:uuid:9420caf0-0697-425f-b5a4-605ce47707bb",
+            "semanticId": {
+              "keys": [
+                {
+                  "value": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "endpoints": [
+              {
+                "protocolInformation": {
+                  "href": "https://edc-provider3-dataplane-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io/api/public/urn:uuid:9420caf0-0697-425f-b5a4-605ce47707bb",
+                  "endpointProtocol": "HTTP",
+                  "endpointProtocolVersion": [
+                    "1.1"
+                  ],
+                  "subprotocol": "DSP",
+                  "subprotocolBody": "id=urn:uuid:5a273064-cdcf-41dd-a0cd-8cb941a8d18a;dspEndpoint=https://edc-provider3-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io",
+                  "subprotocolBodyEncoding": "plain",
+                  "securityAttributes": [
+                    {
+                      "type": "NONE",
+                      "key": "NONE",
+                      "value": "NONE"
+                    }
+                  ]
+                },
+                "interface": "SUBMODEL-3.0"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "contractAgreementId": "627f863d-d4d3-4e82-bf82-b458ffda90f3",
+      "payload": {
+        "administration": null,
+        "description": [],
+        "globalAssetId": "urn:uuid:6fec45b1-fa4d-487f-8418-b4bbc2955fbd",
+        "idShort": "HVMODUL-948d47c266f94e03a285408907bed9ba",
+        "id": "urn:uuid:f4d5302d-40e1-43f4-b450-9e1ce563f307",
+        "specificAssetIds": [
+          {
+            "name": "jisNumber",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "81939668QMA",
+            "semanticId": null
+          },
+          {
+            "name": "manufacturerId",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "BPNL00000000BJTL",
+            "semanticId": null
+          },
+          {
+            "name": "digitalTwinType",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                },
+                {
+                  "value": "PUBLIC_READABLE",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "PartInstance",
+            "semanticId": null
+          }
+        ],
+        "submodelDescriptors": [
+          {
+            "administration": null,
+            "description": [],
+            "idShort": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+            "id": "urn:uuid:da2c2ebb-194e-473a-935d-a93f8e837d08",
+            "semanticId": {
+              "keys": [
+                {
+                  "value": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "endpoints": [
+              {
+                "protocolInformation": {
+                  "href": "https://edc-provider3-dataplane-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io/api/public/urn:uuid:da2c2ebb-194e-473a-935d-a93f8e837d08",
+                  "endpointProtocol": "HTTP",
+                  "endpointProtocolVersion": [
+                    "1.1"
+                  ],
+                  "subprotocol": "DSP",
+                  "subprotocolBody": "id=urn:uuid:5a273064-cdcf-41dd-a0cd-8cb941a8d18a;dspEndpoint=https://edc-provider3-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io",
+                  "subprotocolBodyEncoding": "plain",
+                  "securityAttributes": [
+                    {
+                      "type": "NONE",
+                      "key": "NONE",
+                      "value": "NONE"
+                    }
+                  ]
+                },
+                "interface": "SUBMODEL-3.0"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "contractAgreementId": "da88ac5d-1fe3-4138-8f37-17bbb1cb105e",
+      "payload": {
+        "administration": null,
+        "description": [],
+        "globalAssetId": "urn:uuid:e8560e8c-7c92-44e2-9591-a5099bd09815",
+        "idShort": "HVMODUL-c044bd7969cf47099a0f42800c00c3e9",
+        "id": "urn:uuid:0cdf730a-0343-4580-9db6-10c4033ba81e",
+        "specificAssetIds": [
+          {
+            "name": "jisNumber",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "81939668QMA",
+            "semanticId": null
+          },
+          {
+            "name": "digitalTwinType",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                },
+                {
+                  "value": "PUBLIC_READABLE",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "PartInstance",
+            "semanticId": null
+          },
+          {
+            "name": "manufacturerId",
+            "subjectId": null,
+            "externalSubjectId": {
+              "keys": [
+                {
+                  "value": "BPNL00000003AXS3",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "value": "BPNL00000000BJTL",
+            "semanticId": null
+          }
+        ],
+        "submodelDescriptors": [
+          {
+            "administration": null,
+            "description": [],
+            "idShort": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+            "id": "urn:uuid:d15e5e25-1e2d-462b-a9f3-37533bab444a",
+            "semanticId": {
+              "keys": [
+                {
+                  "value": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+                  "type": "GlobalReference"
+                }
+              ],
+              "type": "ExternalReference"
+            },
+            "endpoints": [
+              {
+                "protocolInformation": {
+                  "href": "https://edc-provider3-dataplane-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io/api/public/urn:uuid:d15e5e25-1e2d-462b-a9f3-37533bab444a",
+                  "endpointProtocol": "HTTP",
+                  "endpointProtocolVersion": [
+                    "1.1"
+                  ],
+                  "subprotocol": "DSP",
+                  "subprotocolBody": "id=urn:uuid:5a273064-cdcf-41dd-a0cd-8cb941a8d18a;dspEndpoint=https://edc-provider3-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io",
+                  "subprotocolBodyEncoding": "plain",
+                  "securityAttributes": [
+                    {
+                      "type": "NONE",
+                      "key": "NONE",
+                      "value": "NONE"
+                    }
+                  ]
+                },
+                "interface": "SUBMODEL-3.0"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "tombstones": [],
+  "submodels": [
+    {
+      "identification": "urn:uuid:91065414-108b-430b-8258-d698ee31776e",
+      "aspectType": "urn:samm:io.catenax.serial_part:3.0.0#SerialPart",
+      "contractAgreementId": "10abaf60-9d72-47f7-85d7-7e64a8afc40b",
+      "payload": {
+        "localIdentifiers": [
+          {
+            "value": "BPNL00000003AVTH",
+            "key": "manufacturerId"
+          },
+          {
+            "value": "OMBXAFHRPALTYNHWL",
+            "key": "partInstanceId"
+          },
+          {
+            "value": "OMBXAFHRPALTYNHWL",
+            "key": "van"
+          }
+        ],
+        "manufacturingInformation": {
+          "date": "2020-08-19T11:21:15.000Z",
+          "country": "DEU",
+          "sites": [
+            {
+              "catenaXsiteId": "BPNS00000003AXS3",
+              "function": "production"
+            }
+          ]
+        },
+        "catenaXId": "urn:uuid:4509ea7c-c8d2-41a1-83ca-c214ee34af6c",
+        "partTypeInformation": {
+          "manufacturerPartId": "YF-09",
+          "partClassification": [
+            {
+              "classificationDescription": "Standard data element types with associated classification scheme for electric components.",
+              "classificationStandard": "IEC",
+              "classificationID": "61360- 2:2012 "
+            }
+          ],
+          "nameAtManufacturer": "Vehicle Fully Electric"
+        },
+        "itemVersion": "01"
+      }
+    },
+    {
+      "identification": "urn:uuid:454b3372-d563-49a9-a840-aa9a13b9665c",
+      "aspectType": "urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt",
+      "contractAgreementId": "10abaf60-9d72-47f7-85d7-7e64a8afc40b",
+      "payload": {
+        "catenaXId": "urn:uuid:4509ea7c-c8d2-41a1-83ca-c214ee34af6c",
+        "childItems": [
+          {
+            "catenaXId": "urn:uuid:10bedf9c-b2e2-4cd8-bb55-290107cceb09",
+            "quantity": {
+              "unit": "unit:piece",
+              "value": 20
+            },
+            "hasAlternatives": false,
+            "businessPartner": "BPNL00000003B3NX",
+            "createdOn": "2022-02-03T14:48:54.709Z",
+            "lastModifiedOn": "2022-02-03T14:48:54.709Z"
+          }
+        ]
+      }
+    },
+    {
+      "identification": "urn:uuid:2a1c15a3-5cbe-464e-bc65-e6e893a6ca68",
+      "aspectType": "urn:samm:io.catenax.batch:3.0.0#Batch",
+      "contractAgreementId": "1dd1d876-ab8d-4e08-ba41-fdf129abc328",
+      "payload": {
+        "localIdentifiers": [
+          {
+            "value": "BPNL00000003B3NX",
+            "key": "batchId"
+          }
+        ],
+        "manufacturingInformation": {
+          "date": "2022-02-04T14:48:54Z",
+          "country": "HUR",
+          "sites": [
+            {
+              "catenaXsiteId": "BPNS00000003B3NX",
+              "function": "production"
+            }
+          ]
+        },
+        "catenaXId": "urn:uuid:10bedf9c-b2e2-4cd8-bb55-290107cceb09",
+        "partTypeInformation": {
+          "manufacturerPartId": "VF-21",
+          "partClassification": [
+            {
+              "classificationDescription": "Standard data element types with associated classification scheme for electric components.",
+              "classificationStandard": "IEC",
+              "classificationID": "61360- 2:2012 "
+            }
+          ],
+          "nameAtManufacturer": "Battery"
+        },
+        "itemVersion": "02"
+      }
+    },
+    {
+      "identification": "urn:uuid:ce1d3431-9430-46c0-bc6a-ff0b48aa7c16",
+      "aspectType": "urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt",
+      "contractAgreementId": "1dd1d876-ab8d-4e08-ba41-fdf129abc328",
+      "payload": {
+        "catenaXId": "urn:uuid:10bedf9c-b2e2-4cd8-bb55-290107cceb09",
+        "childItems": [
+          {
+            "catenaXId": "urn:uuid:c9b677d7-de53-4da9-90e9-1f59acb6685e",
+            "quantity": {
+              "unit": "unit:piece",
+              "value": 20
+            },
+            "hasAlternatives": false,
+            "businessPartner": "BPNL00000000BJTL",
+            "createdOn": "2022-02-03T14:48:54.709Z",
+            "lastModifiedOn": "2022-02-03T14:48:54.709Z"
+          },
+          {
+            "catenaXId": "urn:uuid:4d47dfb4-4af7-41a8-9d41-b11db51a4b4a",
+            "quantity": {
+              "unit": "unit:piece",
+              "value": 20
+            },
+            "hasAlternatives": false,
+            "businessPartner": "BPNL00000000BJTL",
+            "createdOn": "2022-02-03T14:48:54.709Z",
+            "lastModifiedOn": "2022-02-03T14:48:54.709Z"
+          },
+          {
+            "catenaXId": "urn:uuid:a5edeb5a-040e-42a6-a4a7-e098ff1121a8",
+            "quantity": {
+              "unit": "unit:piece",
+              "value": 20
+            },
+            "hasAlternatives": false,
+            "businessPartner": "BPNL00000000BJTL",
+            "createdOn": "2022-02-03T14:48:54.709Z",
+            "lastModifiedOn": "2022-02-03T14:48:54.709Z"
+          },
+          {
+            "catenaXId": "urn:uuid:6fec45b1-fa4d-487f-8418-b4bbc2955fbd",
+            "quantity": {
+              "unit": "unit:piece",
+              "value": 20
+            },
+            "hasAlternatives": false,
+            "businessPartner": "BPNL00000000BJTL",
+            "createdOn": "2022-02-03T14:48:54.709Z",
+            "lastModifiedOn": "2022-02-03T14:48:54.709Z"
+          },
+          {
+            "catenaXId": "urn:uuid:e8560e8c-7c92-44e2-9591-a5099bd09815",
+            "quantity": {
+              "unit": "unit:piece",
+              "value": 20
+            },
+            "hasAlternatives": false,
+            "businessPartner": "BPNL00000000BJTL",
+            "createdOn": "2022-02-03T14:48:54.709Z",
+            "lastModifiedOn": "2022-02-03T14:48:54.709Z"
+          },
+          {
+            "catenaXId": "urn:uuid:d2f729b6-66b1-47b9-a87e-6150a0115e19",
+            "quantity": {
+              "unit": "unit:piece",
+              "value": 20
+            },
+            "hasAlternatives": false,
+            "businessPartner": "BPNL00000000BJTL",
+            "createdOn": "2022-02-03T14:48:54.709Z",
+            "lastModifiedOn": "2022-02-03T14:48:54.709Z"
+          },
+          {
+            "catenaXId": "urn:uuid:ae83cb68-bd73-4819-a782-b7bc6c042948",
+            "quantity": {
+              "unit": "unit:piece",
+              "value": 20
+            },
+            "hasAlternatives": false,
+            "businessPartner": "BPNL00000000BJTL",
+            "createdOn": "2022-02-03T14:48:54.709Z",
+            "lastModifiedOn": "2022-02-03T14:48:54.709Z"
+          },
+          {
+            "catenaXId": "urn:uuid:3372ed2c-56ea-4fc3-909b-d193a7721153",
+            "quantity": {
+              "unit": "unit:piece",
+              "value": 20
+            },
+            "hasAlternatives": false,
+            "businessPartner": "BPNL00000000BJTL",
+            "createdOn": "2022-02-03T14:48:54.709Z",
+            "lastModifiedOn": "2022-02-03T14:48:54.709Z"
+          }
+        ]
+      }
+    },
+    {
+      "identification": "urn:uuid:55ddc611-1d74-4347-bcf2-d0df7b5a8b07",
+      "aspectType": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+      "contractAgreementId": "87eae990-7e1e-420b-8897-fb227d2d8da0",
+      "payload": {
+        "localIdentifiers": [
+          {
+            "value": "81939668QMA",
+            "key": "jisNumber"
+          }
+        ],
+        "manufacturingInformation": {
+          "date": "2022-02-04T14:48:54Z",
+          "country": "HUR",
+          "sites": [
+            {
+              "catenaXsiteId": "BPNS00000000BJTL",
+              "function": "production"
+            }
+          ]
+        },
+        "catenaXId": "urn:uuid:3372ed2c-56ea-4fc3-909b-d193a7721153",
+        "partTypeInformation": {
+          "manufacturerPartId": "123-0.740-3434-A",
+          "customerPartId": "PRT-12345",
+          "partClassification": [
+            {
+              "classificationDescription": "Standard data element types with associated classification scheme for electric components.",
+              "classificationStandard": "IEC",
+              "classificationID": "61360- 2:2012 "
+            }
+          ],
+          "nameAtManufacturer": "HV MODUL",
+          "nameAtCustomer": "HV MODUL"
+        }
+      }
+    },
+    {
+      "identification": "urn:uuid:4547de8e-f751-4572-921e-f5a488991434",
+      "aspectType": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+      "contractAgreementId": "41ec8605-60ed-4139-8cd0-20284b8330cc",
+      "payload": {
+        "localIdentifiers": [
+          {
+            "value": "81939668QMA",
+            "key": "jisNumber"
+          }
+        ],
+        "manufacturingInformation": {
+          "date": "2022-02-04T14:48:54Z",
+          "country": "HUR",
+          "sites": [
+            {
+              "catenaXsiteId": "BPNS00000000BJTL",
+              "function": "production"
+            }
+          ]
+        },
+        "catenaXId": "urn:uuid:a5edeb5a-040e-42a6-a4a7-e098ff1121a8",
+        "partTypeInformation": {
+          "manufacturerPartId": "123-0.740-3434-A",
+          "customerPartId": "PRT-12345",
+          "partClassification": [
+            {
+              "classificationDescription": "Standard data element types with associated classification scheme for electric components.",
+              "classificationStandard": "IEC",
+              "classificationID": "61360- 2:2012 "
+            }
+          ],
+          "nameAtManufacturer": "HV MODUL",
+          "nameAtCustomer": "HV MODUL"
+        }
+      }
+    },
+    {
+      "identification": "urn:uuid:8986f29c-6ae4-4d87-935f-3cecddaf4fb1",
+      "aspectType": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+      "contractAgreementId": "f4dc28f3-ff9f-4f3d-863d-0bd93f086642",
+      "payload": {
+        "localIdentifiers": [
+          {
+            "value": "81939668QMA",
+            "key": "jisNumber"
+          }
+        ],
+        "manufacturingInformation": {
+          "date": "2022-02-04T14:48:54Z",
+          "country": "HUR",
+          "sites": [
+            {
+              "catenaXsiteId": "BPNS00000000BJTL",
+              "function": "production"
+            }
+          ]
+        },
+        "catenaXId": "urn:uuid:d2f729b6-66b1-47b9-a87e-6150a0115e19",
+        "partTypeInformation": {
+          "manufacturerPartId": "123-0.740-3434-A",
+          "customerPartId": "PRT-12345",
+          "partClassification": [
+            {
+              "classificationDescription": "Standard data element types with associated classification scheme for electric components.",
+              "classificationStandard": "IEC",
+              "classificationID": "61360- 2:2012 "
+            }
+          ],
+          "nameAtManufacturer": "HV MODUL",
+          "nameAtCustomer": "HV MODUL"
+        }
+      }
+    },
+    {
+      "identification": "urn:uuid:78ff2601-f63b-4884-b79d-95d9c6aa4024",
+      "aspectType": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+      "contractAgreementId": "2e5711f1-0726-478d-8519-90911a9caf15",
+      "payload": {
+        "localIdentifiers": [
+          {
+            "value": "81939668QMA",
+            "key": "jisNumber"
+          }
+        ],
+        "manufacturingInformation": {
+          "date": "2022-02-04T14:48:54Z",
+          "country": "HUR",
+          "sites": [
+            {
+              "catenaXsiteId": "BPNS00000000BJTL",
+              "function": "production"
+            }
+          ]
+        },
+        "catenaXId": "urn:uuid:4d47dfb4-4af7-41a8-9d41-b11db51a4b4a",
+        "partTypeInformation": {
+          "manufacturerPartId": "123-0.740-3434-A",
+          "customerPartId": "PRT-12345",
+          "partClassification": [
+            {
+              "classificationDescription": "Standard data element types with associated classification scheme for electric components.",
+              "classificationStandard": "IEC",
+              "classificationID": "61360- 2:2012 "
+            }
+          ],
+          "nameAtManufacturer": "HV MODUL",
+          "nameAtCustomer": "HV MODUL"
+        }
+      }
+    },
+    {
+      "identification": "urn:uuid:9420caf0-0697-425f-b5a4-605ce47707bb",
+      "aspectType": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+      "contractAgreementId": "36f4f82b-885b-4bef-94e2-e32a72566b35",
+      "payload": {
+        "localIdentifiers": [
+          {
+            "value": "81939668QMA",
+            "key": "jisNumber"
+          }
+        ],
+        "manufacturingInformation": {
+          "date": "2022-02-04T14:48:54Z",
+          "country": "HUR",
+          "sites": [
+            {
+              "catenaXsiteId": "BPNS00000000BJTL",
+              "function": "production"
+            }
+          ]
+        },
+        "catenaXId": "urn:uuid:ae83cb68-bd73-4819-a782-b7bc6c042948",
+        "partTypeInformation": {
+          "manufacturerPartId": "123-0.740-3434-A",
+          "customerPartId": "PRT-12345",
+          "partClassification": [
+            {
+              "classificationDescription": "Standard data element types with associated classification scheme for electric components.",
+              "classificationStandard": "IEC",
+              "classificationID": "61360- 2:2012 "
+            }
+          ],
+          "nameAtManufacturer": "HV MODUL",
+          "nameAtCustomer": "HV MODUL"
+        }
+      }
+    },
+    {
+      "identification": "urn:uuid:da2c2ebb-194e-473a-935d-a93f8e837d08",
+      "aspectType": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+      "contractAgreementId": "571d0b0b-a9da-4495-9cb7-26363d48b390",
+      "payload": {
+        "localIdentifiers": [
+          {
+            "value": "81939668QMA",
+            "key": "jisNumber"
+          }
+        ],
+        "manufacturingInformation": {
+          "date": "2022-02-04T14:48:54Z",
+          "country": "HUR",
+          "sites": [
+            {
+              "catenaXsiteId": "BPNS00000000BJTL",
+              "function": "production"
+            }
+          ]
+        },
+        "catenaXId": "urn:uuid:6fec45b1-fa4d-487f-8418-b4bbc2955fbd",
+        "partTypeInformation": {
+          "manufacturerPartId": "123-0.740-3434-A",
+          "customerPartId": "PRT-12345",
+          "partClassification": [
+            {
+              "classificationDescription": "Standard data element types with associated classification scheme for electric components.",
+              "classificationStandard": "IEC",
+              "classificationID": "61360- 2:2012 "
+            }
+          ],
+          "nameAtManufacturer": "HV MODUL",
+          "nameAtCustomer": "HV MODUL"
+        }
+      }
+    },
+    {
+      "identification": "urn:uuid:d15e5e25-1e2d-462b-a9f3-37533bab444a",
+      "aspectType": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+      "contractAgreementId": "614f51b2-c521-4642-817e-52b71434ae53",
+      "payload": {
+        "localIdentifiers": [
+          {
+            "value": "81939668QMA",
+            "key": "jisNumber"
+          }
+        ],
+        "manufacturingInformation": {
+          "date": "2022-02-04T14:48:54Z",
+          "country": "HUR",
+          "sites": [
+            {
+              "catenaXsiteId": "BPNS00000000BJTL",
+              "function": "production"
+            }
+          ]
+        },
+        "catenaXId": "urn:uuid:e8560e8c-7c92-44e2-9591-a5099bd09815",
+        "partTypeInformation": {
+          "manufacturerPartId": "123-0.740-3434-A",
+          "customerPartId": "PRT-12345",
+          "partClassification": [
+            {
+              "classificationDescription": "Standard data element types with associated classification scheme for electric components.",
+              "classificationStandard": "IEC",
+              "classificationID": "61360- 2:2012 "
+            }
+          ],
+          "nameAtManufacturer": "HV MODUL",
+          "nameAtCustomer": "HV MODUL"
+        }
+      }
+    }
+  ],
+  "bpns": []
+}

@@ -1,0 +1,227 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "job": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "globalAssetId": { "type": "string" },
+        "state": { "type": "string" },
+        "exception": { "type": ["null", "string"] },
+        "createdOn": { "type": "string", "format": "date-time" },
+        "startedOn": { "type": "string", "format": "date-time" },
+        "lastModifiedOn": { "type": "string", "format": "date-time" },
+        "completedOn": { "type": "string", "format": "date-time" },
+        "summary": {
+          "type": "object",
+          "properties": {
+            "asyncFetchedItems": {
+              "type": "object",
+              "properties": {
+                "running": { "type": "integer" },
+                "completed": { "type": "integer" },
+                "failed": { "type": "integer" }
+              },
+              "required": ["running", "completed", "failed"]
+            }
+          },
+          "required": ["asyncFetchedItems"]
+        },
+        "parameter": {
+          "type": "object",
+          "properties": {
+            "bomLifecycle": { "type": "string" },
+            "aspects": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "depth": { "type": "integer" },
+            "bpn": { "type": "string" },
+            "direction": { "type": "string" },
+            "collectAspects": { "type": "boolean" },
+            "lookupBPNs": { "type": "boolean" },
+            "auditContractNegotiation": { "type": "boolean" },
+            "callbackUrl": { "type": ["null", "string"], "format": "uri" }
+          },
+          "required": ["bomLifecycle", "aspects", "depth", "bpn", "direction", "collectAspects", "lookupBPNs", "auditContractNegotiation"]
+        }
+      },
+      "required": ["id", "globalAssetId", "state", "exception", "createdOn", "startedOn", "lastModifiedOn", "completedOn", "summary", "parameter"]
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "catenaXId": { "type": "string" },
+          "linkedItem": {
+            "type": "object",
+            "properties": {
+              "quantity": {
+                "type": "object",
+                "properties": {
+                  "quantityNumber": { "type": "number" },
+                  "measurementUnit": {
+                    "type": "object",
+                    "properties": {
+                      "datatypeURI": { "type": ["null", "string"] },
+                      "lexicalValue": { "type": "string" }
+                    },
+                    "required": ["lexicalValue"]
+                  }
+                },
+                "required": ["quantityNumber", "measurementUnit"]
+              },
+              "lifecycleContext": { "type": "string" },
+              "assembledOn": { "type": "string", "format": "date-time" },
+              "lastModifiedOn": { "type": "string", "format": "date-time" },
+              "childCatenaXId": { "type": "string" },
+              "hasAlternatives": { "type": "boolean" }
+            },
+            "required": ["quantity", "lifecycleContext", "assembledOn", "lastModifiedOn", "childCatenaXId", "hasAlternatives"]
+          },
+          "aspectType": { "type": "string" },
+          "bpn": { "type": "string" }
+        },
+        "required": ["catenaXId", "linkedItem", "aspectType", "bpn"]
+      }
+    },
+    "shells": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "contractAgreementId": { "type": "string", "format": "uuid" },
+          "payload": {
+            "type": "object",
+            "properties": {
+              "administration": { "type": ["null", "object"] },
+              "description": { "type": "array", "items": { "type": "string" } },
+              "globalAssetId": { "type": "string" },
+              "idShort": { "type": "string" },
+              "id": { "type": "string" },
+              "specificAssetIds": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "subjectId": { "type": ["null", "string"] },
+                    "externalSubjectId": {
+                      "type": "object",
+                      "properties": {
+                        "keys": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "value": { "type": "string" },
+                              "type": { "type": "string" }
+                            },
+                            "required": ["value", "type"]
+                          }
+                        },
+                        "type": { "type": "string" }
+                      },
+                      "required": ["keys", "type"]
+                    },
+                    "value": { "type": "string" },
+                    "semanticId": { "type": ["null", "string"] }
+                  },
+                  "required": ["name", "externalSubjectId", "value"]
+                }
+              },
+              "submodelDescriptors": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "administration": { "type": ["null", "object"] },
+                    "description": { "type": "array", "items": { "type": "string" } },
+                    "idShort": { "type": "string" },
+                    "id": { "type": "string" },
+                    "semanticId": {
+                      "type": "object",
+                      "properties": {
+                        "keys": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "value": { "type": "string" },
+                              "type": { "type": "string" }
+                            },
+                            "required": ["value", "type"]
+                          }
+                        },
+                        "type": { "type": "string" }
+                      },
+                      "required": ["keys", "type"]
+                    },
+                    "endpoints": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "protocolInformation": {
+                            "type": "object",
+                            "properties": {
+                              "href": { "type": "string", "format": "uri" },
+                              "endpointProtocol": { "type": "string" },
+                              "endpointProtocolVersion": {
+                                "type": "array",
+                                "items": { "type": "string" }
+                              },
+                              "subprotocol": { "type": "string" },
+                              "subprotocolBody": { "type": "string" },
+                              "subprotocolBodyEncoding": { "type": "string" },
+                              "securityAttributes": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": { "type": "string" },
+                                    "key": { "type": "string" },
+                                    "value": { "type": "string" }
+                                  },
+                                  "required": ["type", "key", "value"]
+                                }
+                              }
+                            },
+                            "required": ["href", "endpointProtocol", "endpointProtocolVersion", "subprotocol", "subprotocolBody", "subprotocolBodyEncoding", "securityAttributes"]
+                          },
+                          "interface": { "type": "string" }
+                        },
+                        "required": ["protocolInformation", "interface"]
+                      }
+                    }
+                  },
+                  "required": ["idShort", "id", "semanticId", "endpoints"]
+                }
+              }
+            },
+            "required": ["globalAssetId", "idShort", "id", "specificAssetIds", "submodelDescriptors"]
+          }
+        },
+        "required": ["contractAgreementId", "payload"]
+      }
+    },
+    "tombstones": { "type": "array" },
+    "submodels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "identification": { "type": "string" },
+          "aspectType": { "type": "string" },
+          "contractAgreementId": { "type": "string" },
+          "payload": { "type": "object" }
+        },
+        "required": ["identification", "aspectType", "contractAgreementId", "payload"]
+      }
+    },
+    "bpns": { "type": "array" }
+  },
+  "required": ["job", "relationships", "shells", "tombstones", "submodels", "bpns"]
+}
