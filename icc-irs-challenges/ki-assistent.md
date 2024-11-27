@@ -95,7 +95,7 @@ const app = express();
 
 // Proxy setup
 app.use('/api', createProxyMiddleware({
-  target: '<BASE_URL>',
+  target: 'https://irs-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io',
   changeOrigin: true,
   pathRewrite: {'^/api': ''}, // Remove '/api' prefix
   on: {
@@ -160,7 +160,7 @@ curl --request GET \
 ---
 
 ### Step 2: Request IRS Response example from the user
-- Ask the user to provide this IRS Response example: https://github.com/eclipse-tractusx/tutorial-resources/blob/main/icc-irs-challenges/irs-job-response-stracture.json
+- Ask the user to provide the raw content of this IRS Response example: https://github.com/eclipse-tractusx/tutorial-resources/blob/main/icc-irs-challenges/irs-job-response-stracture.json
 - Do not allow them to skip this phase.
 - Providing the IRS Response is mandatory
 
