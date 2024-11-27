@@ -38,7 +38,7 @@ Json file with irs job response.
   - Fetches data from two REST APIs.
   - Displays the fetched JSON data in HTML in graph view. 
   - Uses first the 'POST /irs/jobs' Register Job HTTP Request from the IRS Service.
-  - Secondly the 'GET /irs/jobs'  Get Job Details from the IRS Service is used with the globalAssetId returned by Register Job request.
+  - Secondly the 'GET /irs/jobs'  Get Job Details from the IRS Service is used with the jobId returned by Register Job request.
 
 - **Acceptance Criteria**:
   - A functional web client is created and starts without errors.
@@ -162,7 +162,8 @@ curl --request GET \
 ### Step 2: Request IRS Response example from the user
 - Ask the user to provide the raw content of this IRS Response example: https://github.com/eclipse-tractusx/tutorial-resources/blob/main/icc-irs-challenges/irs-job-response-structure.json
 - Do not allow them to skip this phase.
-- Providing the IRS Response is mandatory
+- Do not use this response for further implementation, it is only there to help you understand the response model for visualizing.
+- Providing the IRS Response example is mandatory for the participant
 
 ### Step 3: Develop Solution for Phase 1
 - Use the provided requests to:

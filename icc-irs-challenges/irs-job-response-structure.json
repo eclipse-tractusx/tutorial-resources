@@ -1661,43 +1661,6 @@
       }
     },
     {
-      "identification": "urn:uuid:a1306c66-a5e6-42aa-a5d4-a358c4b5d12e",
-      "aspectType": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
-      "contractAgreementId": "ccdbe742-1a9a-4200-978a-07112054c8c9",
-      "payload": {
-        "localIdentifiers": [
-          {
-            "value": "81939668QMA",
-            "key": "jisNumber"
-          }
-        ],
-        "manufacturingInformation": {
-          "date": "2022-02-04T14:48:54Z",
-          "country": "HUR",
-          "sites": [
-            {
-              "catenaXsiteId": "BPNS00000000BJTL",
-              "function": "production"
-            }
-          ]
-        },
-        "catenaXId": "urn:uuid:c9b677d7-de53-4da9-90e9-1f59acb6685e",
-        "partTypeInformation": {
-          "manufacturerPartId": "123-0.740-3434-A",
-          "customerPartId": "PRT-12345",
-          "partClassification": [
-            {
-              "classificationDescription": "Standard data element types with associated classification scheme for electric components.",
-              "classificationStandard": "IEC",
-              "classificationID": "61360- 2:2012 "
-            }
-          ],
-          "nameAtManufacturer": "HV MODUL",
-          "nameAtCustomer": "HV MODUL"
-        }
-      }
-    },
-    {
       "identification": "urn:uuid:9420caf0-0697-425f-b5a4-605ce47707bb",
       "aspectType": "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
       "contractAgreementId": "36f4f82b-885b-4bef-94e2-e32a72566b35",
