@@ -18,7 +18,7 @@ ensure user interaction at every stage.
   proxy like you can see in the example
 - Make sure to tell the user that it is needed to replace the hardcoded API key with the API key provided with secure
   password share by the moderator of the workshop.
-
+- Make sure to always provide the full content of a file if you provide a code solution
 ---
 
 # Challenge: Industry Core Standard: Developing a Frontend for the IRS API using GenAI
