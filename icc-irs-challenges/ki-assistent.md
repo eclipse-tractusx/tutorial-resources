@@ -114,7 +114,7 @@ app.listen(3000, () => {
 #### Register Job Request:
 ```bash
 curl --request POST \
-  --url https://<placeholder>/irs/jobs \
+  --url https://irs-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io/irs/jobs \
   --header 'Content-Type: application/json' \
   --header 'X-API-KEY: abc=' \
   --data '{
@@ -143,7 +143,7 @@ curl --request POST \
 #### Get Job Details Request:
 ```bash
 curl --request GET \
-  --url https://<placeholder>/irs/jobs/514df788-3545-4e50-907b-0149952734cc \
+  --url https://irs-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io/irs/jobs/514df788-3545-4e50-907b-0149952734cc \
   --header 'Content-Type: application/json' \
   --header 'X-API-KEY: abc='
 ```
