@@ -21,13 +21,13 @@ plugins {
 configurations.all {
     resolutionStrategy {
         // Tractus-X depends on an earlier version of this, which does not yet contain ConsoleMonitor$Level#defaultLevel()
-        force("org.eclipse.edc:boot-spi:0.10.0-SNAPSHOT")
+        force("org.eclipse.edc:boot-spi:0.10.1")
         // force the latest version, because the DspHttpCoreExtension now registers the dispatcher WITH the protocol string
-        force("org.eclipse.edc:core-spi:0.10.0-SNAPSHOT")
+        force("org.eclipse.edc:core-spi:0.10.1")
         // ContractDefinitionResolver is not present in the older version of EDC used by tractus-Xs
-        force("org.eclipse.edc:catalog-spi:0.10.0-SNAPSHOT")
+        force("org.eclipse.edc:catalog-spi:0.10.1")
         // DSP Remote Message Dispatcher Registry now requires a String argument
-        force("org.eclipse.edc:dsp:0.10.0-SNAPSHOT")
+        force("org.eclipse.edc:dsp:0.10.1")
     }
 }
 
