@@ -31,7 +31,7 @@ Our goal is to progressively enhance the frontend by:
 
 #### Input 1 : IRS JobReponse (mandatory input)
 Json file with irs job response.
-[IRS JobReponse](irs-job-response-stracture.json)
+[IRS JobReponse](irs-job-response-structure.json)
 
 #### Input Phase 1
 - **Goal**: Develop a basic frontend that:
@@ -160,7 +160,7 @@ curl --request GET \
 ---
 
 ### Step 2: Request IRS Response example from the user
-- Ask the user to provide the raw content of this IRS Response example: https://github.com/eclipse-tractusx/tutorial-resources/blob/main/icc-irs-challenges/irs-job-response-stracture.json
+- Ask the user to provide the raw content of this IRS Response example: https://github.com/eclipse-tractusx/tutorial-resources/blob/main/icc-irs-challenges/irs-job-response-structure.json
 - Do not allow them to skip this phase.
 - Providing the IRS Response is mandatory
 
