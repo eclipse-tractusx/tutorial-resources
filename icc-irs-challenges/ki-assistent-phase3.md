@@ -69,44 +69,54 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
 - Add detailed submodel information to the graph created in Phase 2.
 - Optimize the visualization for clarity and completeness.
 - From submodels[] array
-  - Get submodel with `aspectType`: `urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt`
-  - Attach submodel from submodels to submodels graph edge
-  - Attach fields submodels graph edge (`submodels[?].payload.catenaXId`,
-    `submodels[?].payload.childItems[?].catenaXId`,`submodels[?].payload.childItems[?].businessPartner`, 
-  - `submodels[?].payload.childItems[?].quantity.unit`, `submodels[?].payload.childItems[?].quantity.value`,
-  - `submodels[?].payload.childItems[?].hasAlternatives`)
 - In case of `aspectType`: `urn:samm:io.catenax.serial_part:3.0.0#SerialPart`
-  - Extract fields from shells (`submodels[?].payload.localIdentifiers.partInstanceId`,
+  - Extract fields from submodels (
+  - `submodels[?].payload.localIdentifiers.partInstanceId`,
   - `submodels[?].payload.localIdentifiers.van`, 
-  - `submodels[?].payload.localIdentifiers.manufacturerId`)
+  - `submodels[?].payload.localIdentifiers.manufacturerId`, 
+  - `submodels[?].payload.manufacturingInformation.date`, 
+  - `submodels[?].payload.manufacturingInformation.country`,
+  - `submodels[?].payload.manufacturingInformation.sites.catenaXsiteId`, 
+  - `submodels[?].payload.manufacturingInformation.sites.function`,
+  - `submodels[?].payload.partTypeInformation.manufacturerPartId`,
+  - `submodels[?].payload.partTypeInformation.partClassification.classificationDescription`,
+  - `submodels[?].payload.partTypeInformation.partClassification.classificationStandard`,
+  - `submodels[?].payload.partTypeInformation.partClassification.classificationID`,
+  - `submodels[?].payload.partTypeInformation.partClassification.classificationDescription`,
+  - `submodels[?].payload.partTypeInformation.nameAtManufacturer`,
+  - `submodels[?].payload.partTypeInformation.nameAtCustomer`)
 - In case of `aspectType`: `urn:samm:io.catenax.batch:3.0.0#Batch`
-  - Extract fields from shells (`submodels[?].payload.localIdentifiers.partInstanceId`,
+  - Extract fields from submodels (
+  - `submodels[?].payload.localIdentifiers.batchId`,
   - `submodels[?].payload.localIdentifiers.van`,
-  - `submodels[?].payload.localIdentifiers.manufacturerId`)
+  - `submodels[?].payload.localIdentifiers.manufacturerId`,
+  - `submodels[?].payload.manufacturingInformation.date`,
+  - `submodels[?].payload.manufacturingInformation.country`,
+  - `submodels[?].payload.manufacturingInformation.sites.catenaXsiteId`,
+  - `submodels[?].payload.manufacturingInformation.sites.function`,
+  - `submodels[?].payload.partTypeInformation.manufacturerPartId`,
+  - `submodels[?].payload.partTypeInformation.partClassification.classificationDescription`,
+  - `submodels[?].payload.partTypeInformation.partClassification.classificationStandard`,
+  - `submodels[?].payload.partTypeInformation.partClassification.classificationID`,
+  - `submodels[?].payload.partTypeInformation.partClassification.classificationDescription`,
+  - `submodels[?].payload.partTypeInformation.nameAtManufacturer`,
+  - `submodels[?].payload.partTypeInformation.nameAtCustomer`)
 - In case of `aspectType`: `urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart`
-  - Extract fields from shells (`parentOrderNumber`, `jisNumber`, `jisCallDate`, `intrinsicId`)
-- From submodels[] array
-  - Get submodel with `aspectType`: `urn:samm:io.catenax.serial_part:3.0.0#SerialPart`
-  - Attach submodel from submodels as graph node
-  - Attach fields submodels graph edge (`submodels[?].payload.manufacturingInformationdate`,
-    `submodels[?].payload.manufacturingInformationcountry`,
-    `submodels[?].payload.partTypeInformation.nameAtManufacturer`,
-    `submodels[?].payload.partTypeInformation.nameAtCustomer`,
-    `submodels[?].payload.partTypeInformation.customerPartId`)
-- From submodels[] array
-  - Get submodel with `aspectType`: `urn:samm:io.catenax.batch:3.0.0#Batch`
-  - Attach submodel from submodels as graph node
-  - Attach fields submodels graph edge (`submodels[?].payload.manufacturingInformation.date`,
-    `submodels[?].payload.manufacturingInformation.country`, `submodels[?].payload.nameAtManufacturer`,
-    `submodels[?].payload.partTypeInformation..nameAtCustomer`,
-    `submodels[?].payload.partTypeInformation.customerPartId`)
-- From submodels[] array
-  - Get submodel with `aspectType`: `urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart`
-  - Attach submodel from submodels as graph node
-  - Attach fields submodels graph edge (`submodels[?].payload.manufacturingInformation.date`,
-    `submodels[?].payload.manufacturingInformation.country`,
-    `submodels[?].payload.partTypeInformation.manufacturerPartId`,
-    `submodels[?].payload.partTypeInformation.nameAtManufacturer`)
+  - `submodels[?].payload.localIdentifiers.jisNumber`,
+  - `submodels[?].payload.localIdentifiers.van`,
+  - `submodels[?].payload.localIdentifiers.manufacturerId`,
+  - `submodels[?].payload.manufacturingInformation.date`,
+  - `submodels[?].payload.manufacturingInformation.country`,
+  - `submodels[?].payload.manufacturingInformation.sites.catenaXsiteId`,
+  - `submodels[?].payload.manufacturingInformation.sites.function`,
+  - `submodels[?].payload.partTypeInformation.manufacturerPartId`,
+  - `submodels[?].payload.partTypeInformation.partClassification.classificationDescription`,
+  - `submodels[?].payload.partTypeInformation.partClassification.classificationStandard`,
+  - `submodels[?].payload.partTypeInformation.partClassification.classificationID`,
+  - `submodels[?].payload.partTypeInformation.partClassification.classificationDescription`,
+  - `submodels[?].payload.partTypeInformation.nameAtManufacturer`,
+  - `submodels[?].payload.partTypeInformation.nameAtCustomer`)
+
 - Present the result and gather final feedback.
 - **Next Step**: Inform participants they can refine and style the graph creatively. Encourage questions about styling.
   Ask if they want to extend the solution further or finalize the workshop.

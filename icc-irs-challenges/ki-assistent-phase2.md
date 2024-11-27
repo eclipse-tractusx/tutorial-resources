@@ -52,7 +52,14 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
     `SingleLevelBomAsBuilt`.
   - By adhering to these rules, the graph accurately represents the hierarchical and relational structure of the data,
     making it easier to interpret the connections between `SerialParts` and their relationships.
-
+  - Use exactly this mermaid version: <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  - Initialize mermaid like this: 
+  ```js 
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'default'
+    });
+  ```
 - **Acceptance Criteria**:
   - All criteria from Phase 1 are met.
   - Specific submodel data fields are extracted and visualized.
@@ -85,12 +92,12 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
 - Extend the frontend from Phase 1, which was provided in Step 2 by the user to:
   - Extract fields (e.g., `job.globalAssetId`, `job.state`, `job.parameter.bpn`,
     `submodels[?].payload.catenaXId`, `submodels[?].payload.localIdentifiers`) from the job detail response.
-  - Visualize these fields and relationships as a graph like structure, do not use a library for this. Only plain html, js and css.
-  - Make sure that each parent or child part is a circle.
-  - The requested globalAssetId (catenaXId) is the highest parent and should be on top.
-  - The childs of this parent should be below have have a line. If there are multiple childs to one parent, then the childs should be next to each other.
-  - Each have its own line to the parent above them.
-  - If a child of the first parent has other childs it should be in the same graph. But only has a connecting line between itself and its own parent.
+  - Visualize these fields and relationships with a mermaid graph. Embed the graph in the html and visualize it with mermaid. Use Mermaid version 11
+  - The requested globalAssetId (catenaXId) is the beginning node. This is found with "data.job.globalassetid" from the response.
+  - The names of the nodes should be the catenaxid
+  - A Parent-Child relation should be oriented from top to bottom (TD)
+  - If there are multiple children to one parent, then the children should be next to each other horizontally.
+  - If a child of the first parent has other children it should act as parent to its children.
   - From shells[] array
     - Extract fields from shells (`manufacturerId`, `manufacturerId`, `manufacturerPartId`, `digitalTwinType`)
     - Attach fields from shells to shells graph node
