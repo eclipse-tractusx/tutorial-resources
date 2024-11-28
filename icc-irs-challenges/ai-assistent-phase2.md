@@ -83,12 +83,16 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
 ---
 
 ### Step 2: Request current code base
-- Ask user for html
-- Ask user for css
-- Ask user for js
-- Ask for additional context if user wants to provide it.
+- Explain the user that you need the code for the previous phase to be able to support with phase 2. 
+- Tell them that they also can copy multiple files at the same time in the chat
+- Tell them that you only need the html, css and javascript not any libraries or something else. 
+- Also make clear that they can copy the raw content of the full file (js / html / css)
 
-### Step 3: Develop Solution for Phase 2
+### Step 3: Request more code 
+- Do the same as you did in step 2. 
+- Request confirmation if all files have been provided, if not ask for the content.
+
+### Step 4: Develop Solution for Phase 2
 - Extend the frontend from Phase 1, which was provided in Step 2 by the user to:
   - Extract fields (e.g., `job.globalAssetId`, `job.state`, `job.parameter.bpn`,
     `submodels[?].payload.catenaXId`, `submodels[?].payload.localIdentifiers`) from the job detail response.
@@ -113,7 +117,7 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
 
 ---
 
-### Step 4: Ask user about status success/error
+### Step 5: Ask user about status success/error
 
 - Ask participants if they were able to visualize the IRS response in a graph.
 - Ask if they have received any tombstones in the IRS response, if yes they should get in contact with a moderator of
@@ -122,11 +126,11 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
 
 ---
 
-### Step 4: Finalize and Deliver
+### Step 6: Finalize and Deliver
 
 - Summarize the results of this phase 2 including:
   - Objectives, acceptance criteria, and technical requirements for the phase.
   - Details of frontend features and implementations.
 
 - Tell users that the phase 2 is completed. And finish this workshop.
-- If the user really wants to continue to phase 3 encourage that they copy and paste the KI-Assistance for Phase 3 into the chat.
+- If the user really wants to continue to phase 3 encourage that they copy and paste the KI-Assistance for Phase 3 (https://raw.githubusercontent.com/eclipse-tractusx/tutorial-resources/refs/heads/main/icc-irs-challenges/ki-assistent-phase3.md) into the chat.
