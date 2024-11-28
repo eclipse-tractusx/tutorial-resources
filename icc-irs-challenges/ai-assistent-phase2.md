@@ -40,14 +40,14 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
   - Visualize relationships between different data models using a graph.
   - The `globalAssetId` and the `catenaXId` are the same, providing a direct link between these identifiers across
     different components
-  - Child Relationships: - The children of a `SingleLevelUsageAsBuilt` are represented as complete `SerialPart`
+  - Child Relationships: - The children of a `SingleLevelBomAsBuilt` are represented as complete `SerialPart`
     entities within the `submodels`. Each child is fully modeled to provide detailed information.
   - Parent and Child Connections:  In the payload of `SingleLevelBomAsBuilt`, the `catenaXId` refers to a`SerialPart`.
     This `SerialPart` serves as the **parent part**, positioned above the `SingleLevelBomAsBuilt` in the graph
     hierarchy.
-  - The `SingleLevelBomAsBuilt` acts as the **relationship node** connecting two `SerialParts`. It is positioned *
-    *between** the parent `SerialPart` and its children.
-  - The children of the `SingleLevelUsageAsBuilt` are positioned **below** the corresponding `SerialPart` in the
+  - The `SingleLevelBomAsBuilt` acts as the **relationship node** connecting two `SerialParts`. It is positioned 
+    **between** the parent `SerialPart` and its children.
+  - The children of the `SingleLevelBomAsBuilt` are positioned **below** the corresponding `SerialPart` in the
     graph. This visualization clearly delineates parent-child relationships and highlights the intermediary role of
     `SingleLevelBomAsBuilt`.
   - By adhering to these rules, the graph accurately represents the hierarchical and relational structure of the data,
@@ -94,19 +94,28 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
 
 ### Step 4: Develop Solution for Phase 2
 - Extend the frontend from Phase 1, which was provided in Step 2 by the user to:
-  - Extract fields (e.g., `job.globalAssetId`, `job.state`, `job.parameter.bpn`,
-    `submodels[?].payload.catenaXId`, `submodels[?].payload.localIdentifiers`) from the job detail response.
+  - Extract fields (e.g., `job.globalAssetId`, `job.state`, `job.parameter.bpn`, `shells[?].payload.globalAssetId`,
+    `shells[?].payload.submodelDescriptors.semanticId.keys[0].value`, `shells[?].payload.submodelDescriptors.id`,
+    `submodels[?].identification`, `submodels[?].payload.catenaXId`, `submodels[?].payload.localIdentifiers`) from the
+    job detail response.
   - Visualize these fields and relationships with a mermaid graph. Embed the graph in the html and visualize it with mermaid. Use Mermaid version 11
-  - The requested globalAssetId (catenaXId) is the beginning node. This is found with "data.job.globalassetid" from the response.
   - The names of the nodes should be the catenaxid
+  - The requested globalAssetId (catenaXId) is the beginning node. This is found with `data.job.globalAssetId` from the response.
   - A Parent-Child relation should be oriented from top to bottom (TD)
   - If there are multiple children to one parent, then the children should be next to each other horizontally.
   - If a child of the first parent has other children it should act as parent to its children.
+  - Find the shells[] array from `data.shells[]`
   - From shells[] array
-    - Extract fields from shells (`manufacturerId`, `manufacturerId`, `manufacturerPartId`, `digitalTwinType`)
+    - Extract fields from shells (`payload.globalAssetId`, `payload.specificAssetIds[]`,
+      `payload.submodelDescriptors[]`)
+    - From array submodelDescriptors[] get the submodelDescriptor where `semanticId.keys[0].value` is equal to `urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt`
+    - Extract field from submodelDescriptor: `id`
+    - From array specificAssetIds[] get the name value pairs where `name` is one of `manufacturerId`,
+      `manufacturerPartId`, `digitalTwinType` if they are present.
     - Attach fields from shells to shells graph node
+  - Find the submodels[] array from `data.submodels[]`
   - From submodels[] array
-    - Get submodel with `aspectType`: `urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt`
+    - Get submodel with `identification` equal to the `id` from the submodelDescriptor
   - Attach fields submodels graph edge (`submodels[?].payload.catenaXId`,
     `submodels[?].payload.childItems[?].catenaXId`,`submodels[?].payload.childItems[?].businessPartner`)
 - Ensure JSON data is now structured and visually accessible in HTML.
