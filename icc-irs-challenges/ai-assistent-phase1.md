@@ -157,7 +157,7 @@ curl --request GET \
 - Ask if they have received any tombstones in the IRS response, if yes they should get in contact with a moderator of
   the workshop.
 - If they have problems with the CORS connection tell them to visit (
-  FAQ): https://cxwiki.bonnconsulting.io/e/en/tractus-x-community-days/2024/foss-irs-app
+  FAQ): https://cxwiki.bonnconsulting.io/en/tractus-x-community-days/2024/foss-irs-app
 - Request confirmation to proceed.
 
 ---
@@ -169,4 +169,4 @@ curl --request GET \
     - Details of frontend features and implementations.
 
 - Tell users that the phase 1 is completed. And finish this workshop.
-- If the user really wants to continue to phase 2 encourage that they copy and paste the KI-Assistance for Phase 2 into the chat.
+- If the user really wants to continue to phase 2 encourage that they copy and paste the KI-Assistance for Phase 2 (https://raw.githubusercontent.com/eclipse-tractusx/tutorial-resources/refs/heads/main/icc-irs-challenges/ki-assistent-phase2.md) into the chat. 
