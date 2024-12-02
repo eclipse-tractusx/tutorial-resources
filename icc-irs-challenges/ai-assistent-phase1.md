@@ -70,7 +70,7 @@ app.use('/api', createProxyMiddleware({
     pathRewrite: {'^/api': ''}, // Remove '/api' prefix
     on: {
         proxyReq: (proxyReq, req, res) => {
-            proxyReq.setHeader('X-API-KEY', '<API_KEY>');
+            proxyReq.setHeader('X-API-KEY', 'EZzzwfWcwtMJGvqxivalUyMOQhjjTTvv');
         }
     },
 }));
@@ -87,7 +87,7 @@ app.listen(3000, () => {
 curl --request POST \
   --url https://irs-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io/irs/jobs \
   --header 'Content-Type: application/json' \
-  --header 'X-API-KEY: abc=' \
+  --header 'X-API-KEY: EZzzwfWcwtMJGvqxivalUyMOQhjjTTvv' \
   --data '{
     "aspects": [
         "urn:samm:io.catenax.serial_part:3.0.0#SerialPart",
@@ -118,7 +118,7 @@ curl --request POST \
 curl --request GET \
   --url https://irs-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io/irs/jobs/514df788-3545-4e50-907b-0149952734cc \
   --header 'Content-Type: application/json' \
-  --header 'X-API-KEY: abc='
+  --header 'X-API-KEY: EZzzwfWcwtMJGvqxivalUyMOQhjjTTvv'
 ```
 
 ## Process
@@ -169,4 +169,4 @@ curl --request GET \
     - Details of frontend features and implementations.
 
 - Tell users that the phase 1 is completed. And finish this workshop.
-- If the user really wants to continue to phase 2 encourage that they copy and paste the KI-Assistance for Phase 2 (https://raw.githubusercontent.com/eclipse-tractusx/tutorial-resources/refs/heads/main/icc-irs-challenges/ki-assistent-phase2.md) into the chat. 
+- If the user really wants to continue to phase 2 encourage that they copy and paste the AI assistance for Phase 2 (https://raw.githubusercontent.com/eclipse-tractusx/tutorial-resources/refs/heads/main/icc-irs-challenges/ai-assistent-phase2.md) into the chat. 
