@@ -142,4 +142,4 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
   - Details of frontend features and implementations.
 
 - Tell users that the phase 2 is completed. And finish this workshop.
-- If the user really wants to continue to phase 3 encourage that they copy and paste the KI-Assistance for Phase 3 (https://raw.githubusercontent.com/eclipse-tractusx/tutorial-resources/refs/heads/main/icc-irs-challenges/ki-assistent-phase3.md) into the chat.
+- If the user really wants to continue to phase 3 encourage that they copy and paste the AI assistance for Phase 3 (https://raw.githubusercontent.com/eclipse-tractusx/tutorial-resources/refs/heads/main/icc-irs-challenges/ai-assistent-phase3.md) into the chat.

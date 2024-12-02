@@ -20,7 +20,7 @@ const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
-
+// MOCK URL: https://irs-mock-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io
 // Proxy setup
 app.use('/api', createProxyMiddleware({
     target: 'https://irs-ic.a3fb75c369e540489a65.germanywestcentral.aksapp.io',
@@ -29,7 +29,7 @@ app.use('/api', createProxyMiddleware({
     on: {
         proxyReq: (proxyReq, req, res) => {
             console.log('Proxy Request incoming for http://localhost:3000');
-            proxyReq.setHeader('X-API-KEY', '<API_KEY>');
+            proxyReq.setHeader('X-API-KEY', 'EZzzwfWcwtMJGvqxivalUyMOQhjjTTvv');
         }
     },
 }));
