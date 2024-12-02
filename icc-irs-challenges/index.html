@@ -1,9 +1,16 @@
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IRS API Frontend</title>
+    <title>IRS API Frontend with Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'default'
+        });
+    </script>
 </head>
 <body>
 <h1>IRS API Job Registration</h1>
@@ -15,25 +22,30 @@
 <label for="globalAssetId">Global Asset ID:</label>
 <input type="text" id="globalAssetId" placeholder="Enter Global Asset ID" required><br><br>
 
-<!-- Buttons to register job and get job details -->
+<!-- Buttons to register job, get job details, and visualize graph -->
 <button id="registerJobBtn">Register Job</button>
 <button id="getJobResponseBtn" style="display:none;">Get Job Response</button>
+<button id="visualizeGraphBtn" style="display:none;">Visualize Graph</button>
 
 <h3>Response:</h3>
 <pre id="responseDisplay"></pre>
 
+<h3>Graph Visualization:</h3>
+<div id="graphContainer"></div>
+
 <script>
     document.getElementById('registerJobBtn').addEventListener('click', registerJob);
     document.getElementById('getJobResponseBtn').addEventListener('click', getJobResponse);
+    document.getElementById('visualizeGraphBtn').addEventListener('click', visualizeGraph);
 
-    let jobId = '';  // To store the job ID for subsequent request
+    let jobId = '';
+    let irsResponse = null;
 
     // Function to register a job
     function registerJob() {
         const bpn = document.getElementById('bpn').value;
         const globalAssetId = document.getElementById('globalAssetId').value;
 
-        // Prepare the data for the Register Job request
         const data = {
             aspects: [
                 "urn:samm:io.catenax.serial_part:3.0.0#SerialPart",
@@ -49,48 +61,88 @@
             direction: "downward"
         };
 
-        // Send the POST request to register the job
         fetch('http://localhost:3000/api/irs/jobs', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data),
         })
             .then(response => response.json())
             .then(data => {
-                jobId = data.id;  // Save the job ID for the next request
-                document.getElementById('getJobResponseBtn').style.display = 'inline';  // Show the Get Job Response button
-                displayResponse(data);  // Display the response from the Register Job request
+                jobId = data.id;
+                document.getElementById('getJobResponseBtn').style.display = 'inline';
+                displayResponse(data);
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            .catch(error => console.error('Error:', error));
     }
 
     // Function to get the job response details
     function getJobResponse() {
-        // Send the GET request to retrieve job details
         fetch(`http://localhost:3000/api/irs/jobs/${jobId}`, {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
         })
             .then(response => response.json())
             .then(data => {
-                displayResponse(data);  // Display the response from the Get Job Details request
+                irsResponse = data;
+                displayResponse(data);
+                document.getElementById('visualizeGraphBtn').style.display = 'inline';
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            .catch(error => console.error('Error:', error));
     }
 
-    // Function to display JSON response in the HTML
+    // Function to display JSON response
     function displayResponse(data) {
         document.getElementById('responseDisplay').textContent = JSON.stringify(data, null, 2);
     }
 
+    // Function to visualize the graph using mermaid.js
+    function visualizeGraph() {
+        if (!irsResponse || !irsResponse.job.globalAssetId || !irsResponse.shells) {
+            alert('Invalid IRS Response.');
+            return;
+        }
+
+        const globalAssetId = irsResponse.job.globalAssetId;
+        const shells = irsResponse.shells;
+        const submodels = irsResponse.submodels;
+
+        let graphDefinition = "graph TD\n";
+        const visited = new Set();
+
+        function buildGraph(parentId) {
+            const parentShell = shells.find(shell => shell.payload.globalAssetId === parentId);
+            console.log(parentShell, "parent");
+            if (!parentShell) return;
+
+            const submodelDescriptor = parentShell.payload.submodelDescriptors.find(descriptor =>
+                descriptor.semanticId.keys[0].value === "urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt"
+            );
+
+            if (!submodelDescriptor) return;
+
+            const submodel = submodels.find(sub =>
+                sub.identification === submodelDescriptor.id
+            );
+
+            if (!submodel || visited.has(parentId)) return;
+            visited.add(parentId);
+
+            graphDefinition += `${parentId}["${parentId}"]\n`;
+
+            if (submodel.aspectType === 'urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt'){
+                submodel.payload.childItems.forEach(child => {
+                    graphDefinition += `${parentId} --> ${child.catenaXId}["${child.catenaXId}"]\n`;
+                    buildGraph(child.catenaXId);
+                });
+            }
+
+        }
+
+        buildGraph(globalAssetId);
+
+        document.getElementById('graphContainer').innerHTML = `<div class="mermaid">${graphDefinition}</div>`;
+        mermaid.init();
+    }
 </script>
 </body>
 </html>
