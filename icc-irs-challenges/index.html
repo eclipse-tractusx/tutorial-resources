@@ -1,43 +1,26 @@
-<!--
-Copyright (c) 2024 Contributors to the Eclipse Foundation
 
-See the NOTICE file(s) distributed with this work for additional
-information regarding copyright ownership.
-
-This program and the accompanying materials are made available under the
-terms of the Apache License, Version 2.0 which is available at
-https://www.apache.org/licenses/LICENSE-2.0.
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-License for the specific language governing permissions and limitations
-under the License.
-
-SPDX-License-Identifier: Apache-2.0
--->
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frontend Workshop - Challenge 1</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
+    <title>IRS API Frontend</title>
 </head>
 <body>
-<div id="data-visualization">
-    <h2>Structured Data</h2>
-    <div id="structured-output"></div>
-    <h2>Graph Visualization</h2>
-    <canvas id="relationship-graph" width="600" height="400"></canvas>
-</div>
+<h1>IRS API Job Registration</h1>
 
-<h1>Frontend Workshop: Challenge 1</h1>
-<button id="register-job">Register Job</button>
-<button id="get-job-details" disabled>Get Job Details</button>
-<pre id="output"></pre>
+<!-- Input fields for BPN and Global Asset ID -->
+<label for="bpn">BPN:</label>
+<input type="text" id="bpn" placeholder="Enter BPN" required><br><br>
+
+<label for="globalAssetId">Global Asset ID:</label>
+<input type="text" id="globalAssetId" placeholder="Enter Global Asset ID" required><br><br>
+
+<!-- Buttons to register job and get job details -->
+<button id="registerJobBtn">Register Job</button>
+<button id="getJobResponseBtn" style="display:none;">Get Job Response</button>
+
+<h3>Response:</h3>
+<pre id="responseDisplay"></pre>
 
 <script src="script.js"></script>
 </body>
