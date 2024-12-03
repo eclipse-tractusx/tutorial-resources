@@ -37,8 +37,8 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
 
 - **Goal**: Enhance the frontend from Phase 1 to:
   - Visualize a graph using mermaid.
-  - First parent node is the globalAssetId provided in the job.globalAssetId. Use this to search through shells[] and find the corresponding shell object. 
-  - Take the shell object to find the corresponding submodeldescriptior object only for urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt
+  - First parent node is the globalAssetId provided in the job.globalAssetId. Use this to search through shells[] shell.payload.globalAssetId and find the corresponding shell object. 
+  - Take the shell object to find the corresponding submodeldescriptior parentShell.payload.submodelDescriptors object only for urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt
   - Use the id of the submodeldescriptior and search for the submodel which corresponds to it submodels[?].identification === submodelDescriptor `semanticId.keys[0].value`
   - The element will be a node in the graph. 
   - Do that as long as you find elements.
@@ -68,6 +68,157 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
     theme: 'default'
     });
   ```
+ - Use the provided html / js to achieve the expected behaviour 
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRS API Frontend with Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'default'
+        });
+    </script>
+</head>
+<body>
+<h1>IRS API Job Registration</h1>
+
+<!-- Input fields for BPN and Global Asset ID -->
+<label for="bpn">BPN:</label>
+<input type="text" id="bpn" placeholder="Enter BPN" required><br><br>
+
+<label for="globalAssetId">Global Asset ID:</label>
+<input type="text" id="globalAssetId" placeholder="Enter Global Asset ID" required><br><br>
+
+<!-- Buttons to register job, get job details, and visualize graph -->
+<button id="registerJobBtn">Register Job</button>
+<button id="getJobResponseBtn" style="display:none;">Get Job Response</button>
+<button id="visualizeGraphBtn" style="display:none;">Visualize Graph</button>
+
+<h3>Response:</h3>
+<pre id="responseDisplay"></pre>
+
+<h3>Graph Visualization:</h3>
+<div id="graphContainer"></div>
+
+<script>
+    document.getElementById('registerJobBtn').addEventListener('click', registerJob);
+    document.getElementById('getJobResponseBtn').addEventListener('click', getJobResponse);
+    document.getElementById('visualizeGraphBtn').addEventListener('click', visualizeGraph);
+
+    let jobId = '';
+    let irsResponse = null;
+
+    // Function to register a job
+    function registerJob() {
+        const bpn = document.getElementById('bpn').value;
+        const globalAssetId = document.getElementById('globalAssetId').value;
+
+        const data = {
+            aspects: [
+                "urn:samm:io.catenax.serial_part:3.0.0#SerialPart",
+                "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+                "urn:samm:io.catenax.batch:3.0.0#Batch",
+                "urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt"
+            ],
+            key: {
+                globalAssetId: globalAssetId,
+                bpn: bpn
+            },
+            collectAspects: true,
+            direction: "downward"
+        };
+
+        fetch('http://localhost:3000/api/irs/jobs', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(data => {
+                jobId = data.id;
+                document.getElementById('getJobResponseBtn').style.display = 'inline';
+                displayResponse(data);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Function to get the job response details
+    function getJobResponse() {
+        fetch(`http://localhost:3000/api/irs/jobs/${jobId}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        })
+            .then(response => response.json())
+            .then(data => {
+                irsResponse = data;
+                displayResponse(data);
+                document.getElementById('visualizeGraphBtn').style.display = 'inline';
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Function to display JSON response
+    function displayResponse(data) {
+        document.getElementById('responseDisplay').textContent = JSON.stringify(data, null, 2);
+    }
+
+    // Function to visualize the graph using mermaid.js
+    function visualizeGraph() {
+        if (!irsResponse || !irsResponse.job.globalAssetId || !irsResponse.shells) {
+            alert('Invalid IRS Response.');
+            return;
+        }
+
+        const globalAssetId = irsResponse.job.globalAssetId;
+        const shells = irsResponse.shells;
+        const submodels = irsResponse.submodels;
+
+        let graphDefinition = "graph TD\n";
+        const visited = new Set();
+
+        function buildGraph(parentId) {
+            const parentShell = shells.find(shell => shell.payload.globalAssetId === parentId);
+            console.log(parentShell, "parent");
+            if (!parentShell) return;
+
+            const submodelDescriptor = parentShell.payload.submodelDescriptors.find(descriptor =>
+                descriptor.semanticId.keys[0].value === "urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt"
+            );
+
+            if (!submodelDescriptor) return;
+
+            const submodel = submodels.find(sub =>
+                sub.identification === submodelDescriptor.id
+            );
+
+            if (!submodel || visited.has(parentId)) return;
+            visited.add(parentId);
+
+            graphDefinition += `${parentId}["${parentId}"]\n`;
+
+            if (submodel.aspectType === 'urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt'){
+                submodel.payload.childItems.forEach(child => {
+                    graphDefinition += `${parentId} --> ${child.catenaXId}["${child.catenaXId}"]\n`;
+                    buildGraph(child.catenaXId);
+                });
+            }
+
+        }
+
+        buildGraph(globalAssetId);
+
+        document.getElementById('graphContainer').innerHTML = `<div class="mermaid">${graphDefinition}</div>`;
+        mermaid.init();
+    }
+</script>
+</body>
+</html>
+```
 
 - Present the result and gather feedback.
 
