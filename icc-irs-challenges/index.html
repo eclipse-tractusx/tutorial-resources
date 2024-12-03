@@ -173,9 +173,55 @@
             detailsHtml += `<p><strong>${assetName}:</strong> ${assetValue}</p>`;
         });
 
+        // Extract and display Submodel details
+        const submodel = irsResponse.submodels.find(sm => sm.identification === shell.payload.submodelDescriptors[0].id);
+        if (submodel) {
+            console.log(submodel, "submodel");
+            detailsHtml += `<h4>Submodel Details:</h4>`;
+
+            // Fields to display from the submodel
+            const fields = [
+                { name: "Aspect Type", value: submodel.aspectType },
+                { name: "Manufacturing Date", value: submodel.payload.manufacturingInformation?.date },
+                { name: "Manufacturing Country", value: submodel.payload.manufacturingInformation?.country },
+                { name: "Manufacturer Part ID", value: submodel.payload.partTypeInformation?.manufacturerPartId },
+                { name: "Name at Manufacturer", value: submodel.payload.partTypeInformation?.nameAtManufacturer },
+                { name: "Name at Customer", value: submodel.payload.partTypeInformation?.nameAtCustomer },
+            ];
+
+// Add fields for each site entry
+            if (Array.isArray(submodel.payload.manufacturingInformation?.sites)) {
+                submodel.payload.manufacturingInformation.sites.forEach((site, index) => {
+                    fields.push(
+                        { name: `CatenaX Site ID ${index + 1}`, value: site.catenaXsiteId },
+                        { name: `Function ${index + 1}`, value: site.function }
+                    );
+                });
+            }
+
+
+            if (Array.isArray(submodel.payload.partTypeInformation?.partClassification)) {
+                submodel.payload.partTypeInformation.partClassification.forEach((classification, index) => {
+                    fields.push(
+                        { name: `Classification Description ${index + 1}`, value: classification.classificationDescription },
+                        { name: `Classification Standard ${index + 1}`, value: classification.classificationStandard },
+                        { name: `Classification ID ${index + 1}`, value: classification.classificationID }
+                    );
+                });
+            }
+
+            console.log(fields);
+
+
+            fields.forEach(field => {
+                detailsHtml += `<p><strong>${field.name}:</strong> ${field.value || 'N/A'}</p>`;
+            });
+        }
+
         document.getElementById('nodeDetails').innerHTML = detailsHtml;
         document.getElementById('nodeDetails').style.display = 'block';
     }
+
 </script>
 </body>
 
