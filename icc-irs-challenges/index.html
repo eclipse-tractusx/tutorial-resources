@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IRS API Frontend with Graph</title>
+    <title>IRS API Frontend with Graph and Details</title>
+
+    <!-- Mermaid.js library for graph visualization -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>
         mermaid.initialize({
@@ -12,6 +15,7 @@
         });
     </script>
 </head>
+
 <body>
 <h1>IRS API Job Registration</h1>
 
@@ -33,12 +37,21 @@
 <h3>Graph Visualization:</h3>
 <div id="graphContainer"></div>
 
+<h3>Node Detail Information:</h3>
+<div id="nodeDetails" style="border: 1px solid #ccc; padding: 10px; display: none;">
+    <h4>Shell Details for Node:</h4>
+    <p id="nodeName">Node (GlobalAssetId): </p>
+    <p id="manufacturerId">Manufacturer ID: </p>
+    <p id="manufacturerPartId">Manufacturer Part ID: </p>
+    <p id="digitalTwinType">Digital Twin Type: </p>
+</div>
+
 <script>
     document.getElementById('registerJobBtn').addEventListener('click', registerJob);
     document.getElementById('getJobResponseBtn').addEventListener('click', getJobResponse);
     document.getElementById('visualizeGraphBtn').addEventListener('click', visualizeGraph);
 
-    let jobId = '';
+    let jobId = '';  // To store the job ID for subsequent request
     let irsResponse = null;
 
     // Function to register a job
@@ -75,7 +88,6 @@
             .catch(error => console.error('Error:', error));
     }
 
-    // Function to get the job response details
     function getJobResponse() {
         fetch(`http://localhost:3000/api/irs/jobs/${jobId}`, {
             method: 'GET',
@@ -90,12 +102,10 @@
             .catch(error => console.error('Error:', error));
     }
 
-    // Function to display JSON response
     function displayResponse(data) {
         document.getElementById('responseDisplay').textContent = JSON.stringify(data, null, 2);
     }
 
-    // Function to visualize the graph using mermaid.js
     function visualizeGraph() {
         if (!irsResponse || !irsResponse.job.globalAssetId || !irsResponse.shells) {
             alert('Invalid IRS Response.');
@@ -119,29 +129,54 @@
 
             if (!submodelDescriptor) return;
 
-            const submodel = submodels.find(sub =>
-                sub.identification === submodelDescriptor.id
-            );
-
+            const submodel = submodels.find(sub => sub.identification === submodelDescriptor.id);
             if (!submodel || visited.has(parentId)) return;
             visited.add(parentId);
 
             graphDefinition += `${parentId}["${parentId}"]\n`;
 
-            if (submodel.aspectType === 'urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt'){
+            if (submodel.aspectType === 'urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt') {
                 submodel.payload.childItems.forEach(child => {
                     graphDefinition += `${parentId} --> ${child.catenaXId}["${child.catenaXId}"]\n`;
                     buildGraph(child.catenaXId);
                 });
             }
-
         }
 
         buildGraph(globalAssetId);
 
         document.getElementById('graphContainer').innerHTML = `<div class="mermaid">${graphDefinition}</div>`;
         mermaid.init();
+
+        // Add event listener to nodes for detail display
+        document.querySelectorAll('.mermaid').forEach((node) => {
+            node.addEventListener('click', (event) => {
+                const nodeId = event.target.textContent;
+                showNodeDetails(nodeId);
+            });
+        });
+    }
+
+    function showNodeDetails(nodeId) {
+        if (!irsResponse || !irsResponse.shells) return;
+
+        const shell = irsResponse.shells.find(s => s.payload.globalAssetId === nodeId);
+        if (!shell || !shell.payload.specificAssetIds) return;
+
+        const specificAssets = shell.payload.specificAssetIds;
+        let detailsHtml = `<h4>Details for Node: ${nodeId}</h4>`;
+
+        specificAssets.forEach(asset => {
+            const assetName = asset.name;
+            const assetValue = asset.value || 'N/A';
+
+            detailsHtml += `<p><strong>${assetName}:</strong> ${assetValue}</p>`;
+        });
+
+        document.getElementById('nodeDetails').innerHTML = detailsHtml;
+        document.getElementById('nodeDetails').style.display = 'block';
     }
 </script>
 </body>
+
 </html>
