@@ -111,7 +111,6 @@
 
         function buildGraph(parentId) {
             const parentShell = shells.find(shell => shell.payload.globalAssetId === parentId);
-            console.log(parentShell, "parent");
             if (!parentShell) return;
 
             const submodelDescriptor = parentShell.payload.submodelDescriptors.find(descriptor =>
