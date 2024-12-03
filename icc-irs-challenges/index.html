@@ -44,6 +44,10 @@
     <p id="manufacturerId">Manufacturer ID: </p>
     <p id="manufacturerPartId">Manufacturer Part ID: </p>
     <p id="digitalTwinType">Digital Twin Type: </p>
+
+    <!-- New Submodel Section -->
+    <h4>Submodel:</h4>
+    <div id="submodelDetails"></div>
 </div>
 
 <script>
@@ -173,10 +177,9 @@
             detailsHtml += `<p><strong>${assetName}:</strong> ${assetValue}</p>`;
         });
 
-        // Extract and display Submodel details
+        // New Submodel Details Section
         const submodel = irsResponse.submodels.find(sm => sm.identification === shell.payload.submodelDescriptors[0].id);
         if (submodel) {
-            console.log(submodel, "submodel");
             detailsHtml += `<h4>Submodel Details:</h4>`;
 
             // Fields to display from the submodel
@@ -189,7 +192,7 @@
                 { name: "Name at Customer", value: submodel.payload.partTypeInformation?.nameAtCustomer },
             ];
 
-// Add fields for each site entry
+            // Add fields for each site entry in manufacturingInformation
             if (Array.isArray(submodel.payload.manufacturingInformation?.sites)) {
                 submodel.payload.manufacturingInformation.sites.forEach((site, index) => {
                     fields.push(
@@ -199,7 +202,7 @@
                 });
             }
 
-
+            // Add fields for part classification
             if (Array.isArray(submodel.payload.partTypeInformation?.partClassification)) {
                 submodel.payload.partTypeInformation.partClassification.forEach((classification, index) => {
                     fields.push(
@@ -210,9 +213,7 @@
                 });
             }
 
-            console.log(fields);
-
-
+            // Display the fields
             fields.forEach(field => {
                 detailsHtml += `<p><strong>${field.name}:</strong> ${field.value || 'N/A'}</p>`;
             });
