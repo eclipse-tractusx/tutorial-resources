@@ -39,16 +39,16 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
   - Visualize a graph using mermaid.
   - The graph should be placed above the json response of phase 1
   - Below the buttons for Register Job or Get Job Response
-  - First parent node is the globalAssetId provided in the job.globalAssetId. Use this to search through shells[] shell.payload.globalAssetId and find the corresponding shell object. 
+  - First parent node is the globalAssetId provided in the job.globalAssetId. Use this to search through shells[] shell.payload.globalAssetId and find the corresponding shell object.
   - Take the shell object to find the corresponding submodeldescriptior parentShell.payload.submodelDescriptors object only for urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt
   - Use the id of the submodeldescriptior and search for the submodel which corresponds to it submodels[?].identification === submodelDescriptor `semanticId.keys[0].value`
-  - The element will be a node in the graph. 
+  - The element will be a node in the graph.
   - Do that as long as you find elements.
   - The names of the nodes should be the catenaxid
   - A Parent-Child relation should be oriented from top to bottom (TD)
   - If a child of the first parent has other children it should act as parent to its children.
   - If there are multiple children to one parent, then the children should be next to each other horizontally.
-- 
+-
 - Here is some additional information to let you understand the models:
 -  - The `globalAssetId` and the `catenaXId` are the same, providing a direct link between these identifiers across
      different components
@@ -62,7 +62,7 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
 - The children of the `SingleLevelBomAsBuilt` are positioned **below** the corresponding `SerialPart` in the
   graph. This visualization clearly delineates parent-child relationships and highlights the intermediary role of
   `SingleLevelBomAsBuilt`.
-- 
+-
 - Under the graph there should be one box which acts as a display box to present detail information of a node
 - The detail information will be shown if a node will be clicked.
   - Use exactly this mermaid version: <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -73,7 +73,7 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
     theme: 'default'
     });
   ```
- - Use the provided html / js to achieve the expected behaviour 
+- Use the provided html / js to achieve the expected behaviour
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -104,9 +104,6 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
 <button id="getJobResponseBtn" style="display:none;">Get Job Response</button>
 <button id="visualizeGraphBtn" style="display:none;">Visualize Graph</button>
 
-<h3>Response:</h3>
-<pre id="responseDisplay"></pre>
-
 <h3>Graph Visualization:</h3>
 <div id="graphContainer"></div>
 
@@ -118,6 +115,9 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
   <p id="manufacturerPartId">Manufacturer Part ID: </p>
   <p id="digitalTwinType">Digital Twin Type: </p>
 </div>
+
+<h3>Response:</h3>
+<pre id="responseDisplay"></pre>
 
 <script>
   document.getElementById('registerJobBtn').addEventListener('click', registerJob);
@@ -289,13 +289,13 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
 ---
 
 ### Step 2: Request current code base
-- Explain the user that you need the code for the previous phase to be able to support with phase 2. 
+- Explain the user that you need the code for the previous phase to be able to support with phase 2.
 - Tell them that they also can copy multiple files at the same time in the chat
-- Tell them that you only need the html, css and javascript not any libraries or something else. 
+- Tell them that you only need the html, css and javascript not any libraries or something else.
 - Also make clear that they can copy the raw content of the full file (js / html / css)
 
-### Step 3: Request more code 
-- Do the same as you did in step 2. 
+### Step 3: Request more code
+- Do the same as you did in step 2.
 - Request confirmation if all files have been provided, if not ask for the content.
 
 ### Step 4: Develop Solution for Phase 2
