@@ -36,6 +36,7 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
 
 - **Goal**: Extend the frontend from Phase 2 to:
   - Add detailed information about the submodels to the graph visualization.
+  - The submodel data can be retrieved by matching the nodeId against submodels[?].payload.catenaXId
 
 - **Acceptance Criteria**:
   - All criteria from Phase 2 are met.
@@ -44,6 +45,237 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
 - **Technical Requirements**:
   - Use HTML and JavaScript for the frontend.
 
+- Use the provided html / js to achieve the expected behaviour
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IRS API Frontend with Graph and Details</title>
+
+  <!-- Mermaid.js library for graph visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'default'
+    });
+  </script>
+</head>
+
+<body>
+<h1>IRS API Job Registration</h1>
+
+<!-- Input fields for BPN and Global Asset ID -->
+<label for="bpn">BPN:</label>
+<input type="text" id="bpn" placeholder="Enter BPN" required><br><br>
+
+<label for="globalAssetId">Global Asset ID:</label>
+<input type="text" id="globalAssetId" placeholder="Enter Global Asset ID" required><br><br>
+
+<!-- Buttons to register job, get job details, and visualize graph -->
+<button id="registerJobBtn">Register Job</button>
+<button id="getJobResponseBtn" style="display:none;">Get Job Response</button>
+<button id="visualizeGraphBtn" style="display:none;">Visualize Graph</button>
+
+<h3>Graph Visualization:</h3>
+<div id="graphContainer"></div>
+
+<h3>Node Detail Information:</h3>
+<div id="nodeDetails" style="border: 1px solid #ccc; padding: 10px; display: none;">
+  <h4>Shell Details for Node:</h4>
+  <p id="nodeName">Node (GlobalAssetId): </p>
+  <p id="manufacturerId">Manufacturer ID: </p>
+  <p id="manufacturerPartId">Manufacturer Part ID: </p>
+  <p id="digitalTwinType">Digital Twin Type: </p>
+</div>
+
+<h3>Response:</h3>
+<pre id="responseDisplay"></pre>
+
+<script>
+  document.getElementById('registerJobBtn').addEventListener('click', registerJob);
+  document.getElementById('getJobResponseBtn').addEventListener('click', getJobResponse);
+  document.getElementById('visualizeGraphBtn').addEventListener('click', visualizeGraph);
+
+  let jobId = '';  // To store the job ID for subsequent request
+  let irsResponse = null;
+
+  // Function to register a job
+  function registerJob() {
+    const bpn = document.getElementById('bpn').value;
+    const globalAssetId = document.getElementById('globalAssetId').value;
+
+    const data = {
+      aspects: [
+        "urn:samm:io.catenax.serial_part:3.0.0#SerialPart",
+        "urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart",
+        "urn:samm:io.catenax.batch:3.0.0#Batch",
+        "urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt"
+      ],
+      key: {
+        globalAssetId: globalAssetId,
+        bpn: bpn
+      },
+      collectAspects: true,
+      direction: "downward"
+    };
+
+    fetch('http://localhost:3000/api/irs/jobs', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+            .then(response => response.json())
+            .then(data => {
+              jobId = data.id;
+              document.getElementById('getJobResponseBtn').style.display = 'inline';
+              displayResponse(data);
+            })
+            .catch(error => console.error('Error:', error));
+  }
+
+  function getJobResponse() {
+    fetch(`http://localhost:3000/api/irs/jobs/${jobId}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    })
+            .then(response => response.json())
+            .then(data => {
+              irsResponse = data;
+              displayResponse(data);
+              document.getElementById('visualizeGraphBtn').style.display = 'inline';
+            })
+            .catch(error => console.error('Error:', error));
+  }
+
+  function displayResponse(data) {
+    document.getElementById('responseDisplay').textContent = JSON.stringify(data, null, 2);
+  }
+
+  function visualizeGraph() {
+    if (!irsResponse || !irsResponse.job.globalAssetId || !irsResponse.shells) {
+      alert('Invalid IRS Response.');
+      return;
+    }
+
+    const globalAssetId = irsResponse.job.globalAssetId;
+    const shells = irsResponse.shells;
+    const submodels = irsResponse.submodels;
+
+    let graphDefinition = "graph TD\n";
+    const visited = new Set();
+
+    function buildGraph(parentId) {
+      const parentShell = shells.find(shell => shell.payload.globalAssetId === parentId);
+      if (!parentShell) return;
+
+      const submodelDescriptor = parentShell.payload.submodelDescriptors.find(descriptor =>
+              descriptor.semanticId.keys[0].value === "urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt"
+      );
+
+      if (!submodelDescriptor) return;
+
+      const submodel = submodels.find(sub => sub.identification === submodelDescriptor.id);
+      if (!submodel || visited.has(parentId)) return;
+      visited.add(parentId);
+
+      graphDefinition += `${parentId}["${parentId}"]\n`;
+
+      if (submodel.aspectType === 'urn:samm:io.catenax.single_level_bom_as_built:3.0.0#SingleLevelBomAsBuilt') {
+        submodel.payload.childItems.forEach(child => {
+          graphDefinition += `${parentId} --> ${child.catenaXId}["${child.catenaXId}"]\n`;
+          buildGraph(child.catenaXId);
+        });
+      }
+    }
+
+    buildGraph(globalAssetId);
+
+    document.getElementById('graphContainer').innerHTML = `<div class="mermaid">${graphDefinition}</div>`;
+    mermaid.init();
+
+    // Add event listener to nodes for detail display
+    document.querySelectorAll('.mermaid').forEach((node) => {
+      node.addEventListener('click', (event) => {
+        const nodeId = event.target.textContent;
+        showNodeDetails(nodeId);
+      });
+    });
+  }
+
+  function showNodeDetails(nodeId) {
+    if (!irsResponse || !irsResponse.shells) return;
+
+    const shell = irsResponse.shells.find(s => s.payload.globalAssetId === nodeId);
+    if (!shell || !shell.payload.specificAssetIds) return;
+
+    const specificAssets = shell.payload.specificAssetIds;
+    let detailsHtml = `<h4>Details for Node: ${nodeId}</h4>`;
+
+    specificAssets.forEach(asset => {
+      const assetName = asset.name;
+      const assetValue = asset.value || 'N/A';
+
+      detailsHtml += `<p><strong>${assetName}:</strong> ${assetValue}</p>`;
+    });
+
+    // Extract and display Submodel details
+    const submodel = irsResponse.submodels.find(sm => sm.identification === shell.payload.submodelDescriptors[0].id);
+    if (submodel) {
+      console.log(submodel, "submodel");
+      detailsHtml += `<h4>Submodel Details:</h4>`;
+
+      // Fields to display from the submodel
+      const fields = [
+        { name: "Aspect Type", value: submodel.aspectType },
+        { name: "Manufacturing Date", value: submodel.payload.manufacturingInformation?.date },
+        { name: "Manufacturing Country", value: submodel.payload.manufacturingInformation?.country },
+        { name: "Manufacturer Part ID", value: submodel.payload.partTypeInformation?.manufacturerPartId },
+        { name: "Name at Manufacturer", value: submodel.payload.partTypeInformation?.nameAtManufacturer },
+        { name: "Name at Customer", value: submodel.payload.partTypeInformation?.nameAtCustomer },
+      ];
+
+// Add fields for each site entry
+      if (Array.isArray(submodel.payload.manufacturingInformation?.sites)) {
+        submodel.payload.manufacturingInformation.sites.forEach((site, index) => {
+          fields.push(
+                  { name: `CatenaX Site ID ${index + 1}`, value: site.catenaXsiteId },
+                  { name: `Function ${index + 1}`, value: site.function }
+          );
+        });
+      }
+
+
+      if (Array.isArray(submodel.payload.partTypeInformation?.partClassification)) {
+        submodel.payload.partTypeInformation.partClassification.forEach((classification, index) => {
+          fields.push(
+                  { name: `Classification Description ${index + 1}`, value: classification.classificationDescription },
+                  { name: `Classification Standard ${index + 1}`, value: classification.classificationStandard },
+                  { name: `Classification ID ${index + 1}`, value: classification.classificationID }
+          );
+        });
+      }
+
+      console.log(fields);
+
+
+      fields.forEach(field => {
+        detailsHtml += `<p><strong>${field.name}:</strong> ${field.value || 'N/A'}</p>`;
+      });
+    }
+
+    document.getElementById('nodeDetails').innerHTML = detailsHtml;
+    document.getElementById('nodeDetails').style.display = 'block';
+  }
+
+</script>
+</body>
+
+</html>
+```
 ---
 
 ## Process
@@ -66,56 +298,25 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
 
 ### Step 3: Develop Solution for Phase 3
 
-- Add detailed submodel information to the graph created in Phase 2.
-- Optimize the visualization for clarity and completeness.
+- Add detailed submodel information to the detail info box below the graph from Phase 2
+- Make sure to add a new header named "Submodel" below the currently implemented: Details for Node
+- Make sure that all extracted fiels will be simply displayed with name and value do not add those attributes as varialb
 - From submodels[] array
-- In case of `aspectType`: `urn:samm:io.catenax.serial_part:3.0.0#SerialPart`
-  - Extract fields from submodels (
-  - `submodels[?].payload.localIdentifiers.partInstanceId`,
-  - `submodels[?].payload.localIdentifiers.van`, 
-  - `submodels[?].payload.localIdentifiers.manufacturerId`, 
+  - Extract fields from submodels(
+  - `submodels[?].aspectType`,
   - `submodels[?].payload.manufacturingInformation.date`, 
   - `submodels[?].payload.manufacturingInformation.country`,
-  - `submodels[?].payload.manufacturingInformation.sites.catenaXsiteId`, 
-  - `submodels[?].payload.manufacturingInformation.sites.function`,
+  - `submodels[?].payload.manufacturingInformation.sites[?].catenaXsiteId`, 
+  - `submodels[?].payload.manufacturingInformation.sites[?].function`,
   - `submodels[?].payload.partTypeInformation.manufacturerPartId`,
-  - `submodels[?].payload.partTypeInformation.partClassification.classificationDescription`,
-  - `submodels[?].payload.partTypeInformation.partClassification.classificationStandard`,
-  - `submodels[?].payload.partTypeInformation.partClassification.classificationID`,
-  - `submodels[?].payload.partTypeInformation.partClassification.classificationDescription`,
+  - `submodels[?].payload.partTypeInformation.partClassification[?].classificationDescription`,
+  - `submodels[?].payload.partTypeInformation.partClassification[?].classificationStandard`,
+  - `submodels[?].payload.partTypeInformation.partClassification[?].classificationID`,
+  - `submodels[?].payload.partTypeInformation.partClassification[?].classificationDescription`,
   - `submodels[?].payload.partTypeInformation.nameAtManufacturer`,
   - `submodels[?].payload.partTypeInformation.nameAtCustomer`)
-- In case of `aspectType`: `urn:samm:io.catenax.batch:3.0.0#Batch`
-  - Extract fields from submodels (
-  - `submodels[?].payload.localIdentifiers.batchId`,
-  - `submodels[?].payload.localIdentifiers.van`,
-  - `submodels[?].payload.localIdentifiers.manufacturerId`,
-  - `submodels[?].payload.manufacturingInformation.date`,
-  - `submodels[?].payload.manufacturingInformation.country`,
-  - `submodels[?].payload.manufacturingInformation.sites.catenaXsiteId`,
-  - `submodels[?].payload.manufacturingInformation.sites.function`,
-  - `submodels[?].payload.partTypeInformation.manufacturerPartId`,
-  - `submodels[?].payload.partTypeInformation.partClassification.classificationDescription`,
-  - `submodels[?].payload.partTypeInformation.partClassification.classificationStandard`,
-  - `submodels[?].payload.partTypeInformation.partClassification.classificationID`,
-  - `submodels[?].payload.partTypeInformation.partClassification.classificationDescription`,
-  - `submodels[?].payload.partTypeInformation.nameAtManufacturer`,
-  - `submodels[?].payload.partTypeInformation.nameAtCustomer`)
-- In case of `aspectType`: `urn:samm:io.catenax.just_in_sequence_part:3.0.0#JustInSequencePart`
-  - `submodels[?].payload.localIdentifiers.jisNumber`,
-  - `submodels[?].payload.localIdentifiers.van`,
-  - `submodels[?].payload.localIdentifiers.manufacturerId`,
-  - `submodels[?].payload.manufacturingInformation.date`,
-  - `submodels[?].payload.manufacturingInformation.country`,
-  - `submodels[?].payload.manufacturingInformation.sites.catenaXsiteId`,
-  - `submodels[?].payload.manufacturingInformation.sites.function`,
-  - `submodels[?].payload.partTypeInformation.manufacturerPartId`,
-  - `submodels[?].payload.partTypeInformation.partClassification.classificationDescription`,
-  - `submodels[?].payload.partTypeInformation.partClassification.classificationStandard`,
-  - `submodels[?].payload.partTypeInformation.partClassification.classificationID`,
-  - `submodels[?].payload.partTypeInformation.partClassification.classificationDescription`,
-  - `submodels[?].payload.partTypeInformation.nameAtManufacturer`,
-  - `submodels[?].payload.partTypeInformation.nameAtCustomer`)
+
+
 
 - Present the result and gather final feedback.
 - **Next Step**: Inform participants they can refine and style the graph creatively. Encourage questions about styling.
