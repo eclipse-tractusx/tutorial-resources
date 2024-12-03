@@ -80,9 +80,6 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
 <button id="getJobResponseBtn" style="display:none;">Get Job Response</button>
 <button id="visualizeGraphBtn" style="display:none;">Visualize Graph</button>
 
-<h3>Response:</h3>
-<pre id="responseDisplay"></pre>
-
 <h3>Graph Visualization:</h3>
 <div id="graphContainer"></div>
 
@@ -94,6 +91,9 @@ Our goal is to progressively enhance the frontend. In this second phase of the w
   <p id="manufacturerPartId">Manufacturer Part ID: </p>
   <p id="digitalTwinType">Digital Twin Type: </p>
 </div>
+
+<h3>Response:</h3>
+<pre id="responseDisplay"></pre>
 
 <script>
   document.getElementById('registerJobBtn').addEventListener('click', registerJob);
