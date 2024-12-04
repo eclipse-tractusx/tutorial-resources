@@ -3,9 +3,9 @@
 ## Introduction
 This guide explains how to use the provided AI assistant and how to start the  solution developed in the challenge.
 After completing all three phases, you should have a progressive frontend solution that: 
-* phase 1: integrates with REST APIs provided by the Item-Relationship-Service
-* phase 2: visualizes part chains with relationships between digital twins in a network 
-* phase 3: visualizes aspect data linked to digital twins.
+* Phase 1: Integrates with REST APIs provided by the Item-Relationship-Service
+* Phase 2: Visualizes part chains with relationships between digital twins in a network 
+* Phase 3: Visualizes semantic data linked to digital twins.
 
 ## Table of Contents
 
