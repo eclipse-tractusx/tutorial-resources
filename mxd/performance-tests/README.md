@@ -150,6 +150,8 @@ The script ```./experiment_controller.sh```
 2. Starts the ```mxd-performance-test``` container which runs
    ```small_experiment.properties``` by default with latest changes from .jmx files.
 
+On Windows OS, change the EOF to LF for shell scripts.
+
 #### Display help
 ```./experiment_controller.sh -h```
 For more information about arguments visit [help.txt](help.txt).
