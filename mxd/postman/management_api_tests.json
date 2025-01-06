@@ -278,7 +278,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"@context\": {\r\n    \"edc\": \"https://w3id.org/edc/v0.0.1/ns/\"\r\n  },\r\n  \"@type\": \"CatalogRequest\",\r\n  \"counterPartyAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\r\n  \"protocol\": \"dataspace-protocol-http\",\r\n  \"querySpec\": {\r\n    \"offset\": 0,\r\n    \"limit\": 50\r\n  }\r\n}",
+					"raw": "{\r\n  \"@context\": {\r\n    \"edc\": \"https://w3id.org/edc/v0.0.1/ns/\"\r\n  },\r\n  \"@type\": \"CatalogRequest\",\r\n  \"counterPartyAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\r\n  \"counterPartyId\": \"{{PROVIDER_ID}}\",\r\n  \"protocol\": \"dataspace-protocol-http\",\r\n  \"querySpec\": {\r\n    \"offset\": 0,\r\n    \"limit\": 50\r\n  }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
