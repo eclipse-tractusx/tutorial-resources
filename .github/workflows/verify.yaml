@@ -55,7 +55,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: "Validate Terrform format"
+
+      - name: "Setup Terraform"
+        uses: hashicorp/setup-terraform@v3
+
+      - name: "Validate Terraform format"
         working-directory: mxd
         run: |-
           terraform fmt -check -recursive  
