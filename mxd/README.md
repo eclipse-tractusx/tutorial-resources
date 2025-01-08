@@ -5,6 +5,7 @@
 In order to run the Minimum Tractus-X Dataspace "MXD" on your local machine, please make sure the following
 preconditions are met.
 
+- Install Java Development Kit ([JDK](https://www.oracle.com/java/technologies/downloads/)) and set the `JAVA_HOME` variable in your environment.
 - Have a local Kubernetes runtime ready. We've tested this setup with [KinD](https://kind.sigs.k8s.io/), but other
   runtimes such
   as [Minikube](https://minikube.sigs.k8s.io/docs/start/) may work as well, we just haven't tested them. All following
