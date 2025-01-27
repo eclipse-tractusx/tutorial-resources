@@ -96,7 +96,24 @@ switch.
 
 ![img.png](assets/img.png)
 
-### Inspect terraform output
+### 2.4 JVM crashes with `SIGILL` on ARM platforms
+
+We have noticed that the JVM inside the Docker container sometimes crashes with a `SIGILL` signal right
+away without even starting the runtime. So far we've only seen this on ARM platforms such as Apple Silicon. The `UseSVE`
+option seems to [mitigate this](https://github.com/corretto/corretto-21/issues/85). If you are affected by this, please
+try enabling the `useSVE` switch:
+
+```
+terraform apply -var="useSVE=true"
+```
+
+This will add the `-XX:UseSVE=0` switch to the `JAVA_TOOL_OPTIONS` in all runtimes, enabling the Scalable Vector
+Extensions that are available on ARM processors. Alternatively, you can also set the `useSVE = true` variable in a
+`*.tfvars` file, cf. [documentation](https://developer.hashicorp.com/terraform/language/values/variables).
+
+_Important note: on non-ARM platforms, the `-XX:UseSVE=0` VM option is not recognized and will crash the JVM!_
+
+### 2.5 Inspect terraform output
 
 After the `terraform` command has successfully completed, it will output a few configuration and setup values
 that we will need in later steps. Please note that some values will be different on your local system.
@@ -132,7 +149,7 @@ bob-urls = {
 }
 ```
 
-### Inspect the databases
+### 2.6 Inspect the databases
 
 None of the services and applications that were deployed in the previous step are accessible from
 outside the Kubernetes cluster. That means, for example, the Postgres database cannot be reached out-of-the-box. Every
@@ -159,7 +176,7 @@ Every service in the cluster has their own PostgreSQL instance, containing table
 Control Plane, Federated Catalog Cache and Identity Hub. Feel free to inspect the tables, some of them already have data
 in them which got automatically seeded assets, policies and contract definitions as well as IdentityHub data.
 
-### Verify your local installation
+### 2.6 Verify your local installation
 
 In order to check that the connectors were deployed successfully, please execute the following commands in a shell:
 
@@ -288,7 +305,7 @@ curl -X POST http://localhost/alice/management/v2/policydefinitions/request -H "
 curl -X POST http://localhost/alice/management/v2/contractdefinitions/request -H "x-api-key: password" -H "content-type: application/json" | jq
 ```
 
-### Use Postman collections to communicate with your services
+### 2.7 Use Postman collections to communicate with your services
 
 There are several collections in the `mxd/postman` folder:
 

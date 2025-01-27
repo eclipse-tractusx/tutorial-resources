@@ -13,7 +13,7 @@
 
 resource "kubernetes_deployment" "sts" {
   metadata {
-    name      = lower(var.humanReadableName)
+    name = lower(var.humanReadableName)
     namespace = var.namespace
     labels = {
       App = lower(var.humanReadableName)
@@ -107,7 +107,7 @@ resource "kubernetes_config_map" "sts-config" {
 
   data = {
     # STS variables
-    EDC_API_ACCOUNTS_KEY            = var.accounts-api-key
+    WEB_HTTP_STS-ACCOUNTS_KEY            = var.accounts-api-key
     WEB_HTTP_ACCOUNTS_PORT          = var.ports.accounts
     WEB_HTTP_ACCOUNTS_PATH          = var.paths.accounts
     WEB_HTTP_STS_PORT               = var.ports.sts
@@ -120,5 +120,6 @@ resource "kubernetes_config_map" "sts-config" {
     EDC_SQL_SCHEMA_AUTOCREATE       = true
     EDC_VAULT_HASHICORP_URL         = var.vault-url
     EDC_VAULT_HASHICORP_TOKEN       = var.vault-token
+    JAVA_TOOL_OPTIONS = "${var.useSVE ? "-XX:UseSVE=0 " : ""}-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044"
   }
 }

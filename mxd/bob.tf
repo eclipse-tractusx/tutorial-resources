@@ -60,6 +60,7 @@ module "bob-identityhub" {
   participantId     = var.bob-did
   vault-url         = "http://bob-vault:8200"
   url-path          = var.bob-identityhub-host
+  useSVE = var.useSVE
 }
 
 module "bob-minio" {

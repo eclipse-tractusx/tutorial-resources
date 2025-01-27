@@ -119,3 +119,8 @@ variable "sts_accounts_api_key" {
   default     = "password"
   description = "API Key for the STS Accounts API of a standalone STS"
 }
+variable "useSVE" {
+  type        = bool
+  description = "If true, the -XX:UseSVE=0 switch (Scalable Vector Extensions) will be appended to the JAVA_TOOL_OPTIONS. Can help on macOs on Apple Silicon processors"
+  default     = false
+}

@@ -108,6 +108,11 @@ variable "aliases" {
     sts-public-key-id = "key-1"
   }
 }
+variable "useSVE" {
+  type        = bool
+  description = "If true, the -XX:UseSVE=0 switch (Scalable Vector Extensions) will be appended to the JAVA_TOOL_OPTIONS. Can help on macOs on Apple Silicon processors"
+  default     = false
+}
 
 locals {
   name = lower(var.serviceName)
