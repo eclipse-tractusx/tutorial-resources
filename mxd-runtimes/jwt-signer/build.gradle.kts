@@ -21,8 +21,8 @@ plugins {
 dependencies {
 
     implementation(libs.edc.spi.did)
-    implementation(libs.edc.lib.crypto)
-    implementation(libs.edc.lib.keys)
+    implementation(libs.edc.lib.crypto.ih)
+    implementation(libs.edc.lib.keys.ih)
     implementation(libs.edc.junit)
 }
 

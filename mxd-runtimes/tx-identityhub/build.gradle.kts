@@ -24,14 +24,14 @@ dependencies {
     runtimeOnly(libs.bom.ih)
     runtimeOnly(libs.bom.ih.sql)
     runtimeOnly(libs.edc.ih.account.remote)
-    runtimeOnly(libs.edc.vault.hashicorp)
+    runtimeOnly(libs.edc.vault.hashicorp.ih)
 
     // used for custom extensions
-    implementation(libs.edc.core.connector)
+    implementation(libs.edc.core.connector.ih)
     implementation(libs.edc.ih.spi)
 
-    testImplementation(libs.edc.lib.crypto)
-    testImplementation(libs.edc.lib.keys)
+    testImplementation(libs.edc.lib.crypto.ih)
+    testImplementation(libs.edc.lib.keys.ih)
     testImplementation(libs.edc.junit)
 }
 

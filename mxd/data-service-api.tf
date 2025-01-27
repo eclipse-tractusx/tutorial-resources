@@ -64,7 +64,7 @@ resource "kubernetes_deployment" "data-service-api" {
           }
           env {
             name  = "JAVA_TOOL_OPTIONS"
-            value = "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044"
+            value = "${var.useSVE ? "-XX:UseSVE=0 " : ""}-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044"
           }
           readiness_probe {
             http_get {

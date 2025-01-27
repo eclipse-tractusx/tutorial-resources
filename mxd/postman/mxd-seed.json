@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "079819cb-65da-40ac-9808-c19411a81c49",
+		"_postman_id": "33b50155-e66e-4c82-88e6-a7c5fa73aa37",
 		"name": "MXD Management API Seed",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "647585"
@@ -953,8 +953,11 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"exec": [],
-								"type": "text/javascript"
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -963,7 +966,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"membership-credential\",\n    \"participantId\": \"{{PARTICIPANT_CONTEXT_ID}}\",\n    \"issuancePolicy\": null,\n    \"reissuancePolicy\": null,\n    \"verifiableCredentialContainer\": {\n        \"format\": \"JWT\",\n        \"credential\": {\n            \"@context\": [\n                \"https://www.w3.org/2018/credentials/v1\",\n                \"https://w3id.org/security/suites/jws-2020/v1\",\n                \"https://www.w3.org/ns/did/v1\",\n                {\n                    \"mxd-credentials\": \"https://w3id.org/mxd/credentials/\",\n                    \"membership\": \"mxd-credentials:membership\",\n                    \"membershipType\": \"mxd-credentials:membershipType\",\n                    \"website\": \"mxd-credentials:website\",\n                    \"contact\": \"mxd-credentials:contact\",\n                    \"since\": \"mxd-credentials:since\"\n                }\n            ],\n            \"id\": \"http://org.yourdataspace.com/credentials/2347\",\n            \"type\": [\n                \"VerifiableCredential\",\n                \"MembershipCredential\"\n            ],\n            \"issuer\": \"did:web:dataspace-issuer\",\n            \"issuanceDate\": \"2023-08-18T00:00:00Z\",\n            \"credentialSubject\": {\n                \"id\": \"{{PARTICIPANT_DID}}\",\n                \"membership\": {\n                    \"membershipType\": \"FullMember\",\n                    \"website\": \"www.whatever.com\",\n                    \"contact\": \"fizz.buzz@whatever.com\",\n                    \"since\": \"2023-01-01T00:00:00Z\"\n                }\n            }\n        },\n        \"rawVc\": \"{{MEMBERSHIP_CREDENTIAL}}\"\n    }\n}",
+							"raw": "{\n    \"id\": \"membership-credential\",\n    \"participantContextId\": \"{{PARTICIPANT_CONTEXT_ID}}\",\n    \"issuancePolicy\": null,\n    \"reissuancePolicy\": null,\n    \"verifiableCredentialContainer\": {\n        \"format\": \"JWT\",\n        \"credential\": {\n            \"@context\": [\n                \"https://www.w3.org/2018/credentials/v1\",\n                \"https://w3id.org/security/suites/jws-2020/v1\",\n                \"https://www.w3.org/ns/did/v1\",\n                {\n                    \"mxd-credentials\": \"https://w3id.org/mxd/credentials/\",\n                    \"membership\": \"mxd-credentials:membership\",\n                    \"membershipType\": \"mxd-credentials:membershipType\",\n                    \"website\": \"mxd-credentials:website\",\n                    \"contact\": \"mxd-credentials:contact\",\n                    \"since\": \"mxd-credentials:since\"\n                }\n            ],\n            \"id\": \"http://org.yourdataspace.com/credentials/2347\",\n            \"type\": [\n                \"VerifiableCredential\",\n                \"MembershipCredential\"\n            ],\n            \"issuer\": \"did:web:dataspace-issuer\",\n            \"issuanceDate\": \"2023-08-18T00:00:00Z\",\n            \"credentialSubject\": {\n                \"id\": \"{{PARTICIPANT_DID}}\",\n                \"membership\": {\n                    \"membershipType\": \"FullMember\",\n                    \"website\": \"www.whatever.com\",\n                    \"contact\": \"fizz.buzz@whatever.com\",\n                    \"since\": \"2023-01-01T00:00:00Z\"\n                }\n            }\n        },\n        \"rawVc\": \"{{MEMBERSHIP_CREDENTIAL}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1018,7 +1021,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"deg-credential\",\n    \"participantId\": \"{{PARTICIPANT_CONTEXT_ID}}\",\n    \"issuancePolicy\": null,\n    \"reissuancePolicy\": null,\n    \"verifiableCredentialContainer\": {\n        \"format\": \"JWT\",\n        \"credential\": {\n            \"@context\": [\n                \"https://www.w3.org/2018/credentials/v1\",\n                \"https://w3id.org/catenax/credentials/v1.0.0\"\n            ],\n            \"id\": \"1f36af58-0fc0-4b24-9b1c-e37d59668089\",\n            \"type\": [\n                \"VerifiableCredential\",\n                \"DataExchangeGovernanceCredential\"\n            ],\n            \"issuer\": \"did:web:dataspace-issuer\",\n            \"issuanceDate\": \"2021-06-16T18:56:59Z\",\n            \"expirationDate\": \"2032-06-16T18:56:59Z\",\n            \"credentialSubject\": {\n                \"id\": \"{{PARTICIPANT_DID}}\",\n                \"holderIdentifier\": \"{{BPN}}\",\n                \"contractTemplate\": \"https://public.catena-x.org/contracts/DataExchangeGovernance.v1.pdf\",\n                \"contractVersion\": \"1.0.0\"\n            }\n        },\n        \"rawVc\": \"{{FRAMEWORK_CREDENTIAL}}\"\n    }\n}",
+							"raw": "{\n    \"id\": \"deg-credential\",\n    \"participantContextId\": \"{{PARTICIPANT_CONTEXT_ID}}\",\n    \"issuancePolicy\": null,\n    \"reissuancePolicy\": null,\n    \"verifiableCredentialContainer\": {\n        \"format\": \"JWT\",\n        \"credential\": {\n            \"@context\": [\n                \"https://www.w3.org/2018/credentials/v1\",\n                \"https://w3id.org/catenax/credentials/v1.0.0\"\n            ],\n            \"id\": \"1f36af58-0fc0-4b24-9b1c-e37d59668089\",\n            \"type\": [\n                \"VerifiableCredential\",\n                \"DataExchangeGovernanceCredential\"\n            ],\n            \"issuer\": \"did:web:dataspace-issuer\",\n            \"issuanceDate\": \"2021-06-16T18:56:59Z\",\n            \"expirationDate\": \"2032-06-16T18:56:59Z\",\n            \"credentialSubject\": {\n                \"id\": \"{{PARTICIPANT_DID}}\",\n                \"holderIdentifier\": \"{{BPN}}\",\n                \"contractTemplate\": \"https://public.catena-x.org/contracts/DataExchangeGovernance.v1.pdf\",\n                \"contractVersion\": \"1.0.0\"\n            }\n        },\n        \"rawVc\": \"{{FRAMEWORK_CREDENTIAL}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"

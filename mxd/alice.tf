@@ -66,6 +66,7 @@ module "alice-identityhub" {
   sts_token_url     = local.sts-token-url
   sts_accounts_url  = local.sts-accounts-url
   image             = "tx-identityhub:latest" # the one without the STS, which is deployed standalone
+  useSVE            = var.useSVE
 }
 
 module "alice-sts" {
@@ -80,6 +81,7 @@ module "alice-sts" {
     password = local.databases.alice.database-password
     url      = "jdbc:postgresql://${local.alice-postgres.database-host}/${local.databases.alice.database-name}"
   }
+  useSVE = var.useSVE
 }
 
 # alice's catalog server
@@ -104,6 +106,7 @@ module "alice-catalog-server" {
     sts_client_id          = var.alice-did
     sts_clientsecret_alias = "participant-alice-sts-client-secret"
   }
+  useSVE = var.useSVE
 }
 
 

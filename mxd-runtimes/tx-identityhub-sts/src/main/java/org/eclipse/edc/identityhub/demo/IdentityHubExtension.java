@@ -14,7 +14,7 @@
 
 package org.eclipse.edc.identityhub.demo;
 
-import org.eclipse.edc.identityhub.spi.ScopeToCriterionTransformer;
+import org.eclipse.edc.identityhub.spi.transformation.ScopeToCriterionTransformer;
 import org.eclipse.edc.runtime.metamodel.annotation.Extension;
 import org.eclipse.edc.runtime.metamodel.annotation.Provider;
 import org.eclipse.edc.spi.system.ServiceExtension;

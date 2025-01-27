@@ -5,6 +5,7 @@ format.version = "1.1"
 awaitility = "4.2.2"
 assertj = "3.25.3"
 edc = "0.10.1"
+ih = "0.12.0-SNAPSHOT"
 tractusx = "0.8.0"
 commons = "2.11.0"
 opentelemetry = "1.32.0"
@@ -22,6 +23,7 @@ swagger = "2.2.24"
 # Connector dependencies
 edc-build-plugin = { module = "org.eclipse.edc.edc-build:org.eclipse.edc.edc-build.gradle.plugin", version.ref = "edc" }
 edc-vault-hashicorp = { module = "org.eclipse.edc:vault-hashicorp", version.ref = "edc" }
+edc-vault-hashicorp-ih = { module = "org.eclipse.edc:vault-hashicorp", version.ref = "ih" }
 edc-boot = { module = "org.eclipse.edc:boot", version.ref = "edc" }
 edc-junit = { module = "org.eclipse.edc:junit", version.ref = "edc" }
 
@@ -32,6 +34,7 @@ edc-sql-transactionlocal = { module = "org.eclipse.edc:transaction-local", versi
 edc-did-core = { module = "org.eclipse.edc:identity-did-core", version.ref = "edc" }
 edc-did-web = { module = "org.eclipse.edc:identity-did-web", version.ref = "edc" }
 edc-core-connector = { module = "org.eclipse.edc:connector-core", version.ref = "edc" }
+edc-core-connector-ih = { module = "org.eclipse.edc:connector-core", version.ref = "ih" }
 edc-ext-http = { module = "org.eclipse.edc:http", version.ref = "edc" }
 edc-core-jersey = { module = "org.eclipse.edc:jersey-core", version.ref = "edc" }
 edc-ext-jsonld = { module = "org.eclipse.edc:json-ld", version.ref = "edc" }
@@ -47,23 +50,25 @@ edc-api-observability = { module = "org.eclipse.edc:api-observability", version.
 # EDC lib dependencies
 edc-http-lib = { module = "org.eclipse.edc:http-lib", version.ref = "edc" }
 edc-lib-crypto = { module = "org.eclipse.edc:crypto-common-lib", version.ref = "edc" }
+edc-lib-crypto-ih = { module = "org.eclipse.edc:crypto-common-lib", version.ref = "ih" }
 edc-lib-keys = { module = "org.eclipse.edc:keys-lib", version.ref = "edc" }
+edc-lib-keys-ih = { module = "org.eclipse.edc:keys-lib", version.ref = "ih" }
 edc-lib-transform = { module = "org.eclipse.edc:transform-lib", version.ref = "edc" }
 edc-lib-jsonld = { module = "org.eclipse.edc:json-ld-lib", version.ref = "edc" }
 
 # identith-hub modules
-edc-ih-spi = { module = "org.eclipse.edc:identity-hub-spi", version.ref = "edc" }
-edc-ih-account-remote = { module = "org.eclipse.edc:sts-account-service-remote", version.ref = "edc" }
+edc-ih-spi = { module = "org.eclipse.edc:identity-hub-spi", version.ref = "ih" }
+edc-ih-account-remote = { module = "org.eclipse.edc:sts-account-service-remote", version.ref = "ih" }
 
 # identity hub BOM modules
-bom-ih-withsts = { module = "org.eclipse.edc:identityhub-with-sts-bom", version.ref = "edc" }
-bom-ih = { module = "org.eclipse.edc:identityhub-bom", version.ref = "edc" }
-bom-ih-sql = { module = "org.eclipse.edc:identityhub-feature-sql-bom", version.ref = "edc" }
-bom-ih-sql-sts = { module = "org.eclipse.edc:identityhub-feature-sql-sts-bom", version.ref = "edc" }
+bom-ih-withsts = { module = "org.eclipse.edc:identityhub-with-sts-bom", version.ref = "ih" }
+bom-ih = { module = "org.eclipse.edc:identityhub-bom", version.ref = "ih" }
+bom-ih-sql = { module = "org.eclipse.edc:identityhub-feature-sql-bom", version.ref = "ih" }
+bom-ih-sql-sts = { module = "org.eclipse.edc:identityhub-feature-sql-sts-bom", version.ref = "ih" }
 
 # STS modules
-edc-sql-sts-store = { module = "org.eclipse.edc:sts-client-store-sql", version.ref = "edc" }
-bom-sts = { module = "org.eclipse.edc:sts-feature-bom", version.ref = "edc" }
+edc-sql-sts-store = { module = "org.eclipse.edc:sts-client-store-sql", version.ref = "ih" }
+bom-sts = { module = "org.eclipse.edc:sts-feature-bom", version.ref = "ih" }
 
 # Tractus-X Runtime BOMs
 edc-tx-controlplane = { module = "org.eclipse.tractusx.edc:edc-controlplane-postgresql-hashicorp-vault", version.ref = "tractusx" }
