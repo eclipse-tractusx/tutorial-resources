@@ -66,7 +66,7 @@ module "alice-identityhub" {
   sts_token_url     = local.sts-token-url
   sts_accounts_url  = local.sts-accounts-url
   image             = "tx-identityhub:latest" # the one without the STS, which is deployed standalone
-  useSVE = var.useSVE
+  useSVE            = var.useSVE
 }
 
 module "alice-sts" {
