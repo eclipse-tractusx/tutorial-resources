@@ -68,8 +68,8 @@ jobs:
         run: |-
           kind load docker-image --name mxd data-service-api tx-identityhub tx-identityhub-sts tx-catalog-server tx-sts
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+      - name: "Setup Terraform"
+        uses: hashicorp/setup-terraform@v3
 
       - name: "Terraform init"
         working-directory: mxd
