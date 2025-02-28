@@ -335,6 +335,7 @@ For the sake of simplicity, all requests listed in this [Postman collection](pos
 - [File Transfer: Amazon S3 to Amazon S3](./docs/File%20Transfer%20S3%20to%20S3.md)
 - [File Transfer: Amazon S3 to Azure Blob Storage](./docs/File%20Transfer%20S3%20to%20Azure.md)
 - [Simplify negotiation and transfer using the EDR API](./docs/EDR%20Transfer%20Tutorial.md)
+- [Credential Issuance](./docs/CredentialIssuance.md)
 
 ### **possibly out-of-date**:
 

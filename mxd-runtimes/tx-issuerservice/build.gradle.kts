@@ -21,13 +21,15 @@ plugins {
 dependencies {
 
     // used for the runtime
-    runtimeOnly(libs.bom.ih)
-    runtimeOnly(libs.bom.ih.sql)
-    runtimeOnly(libs.edc.vault.hashicorp.ih)
+    runtimeOnly(libs.bom.issuer)
+
+    // DID and Participant Context API - they should eventually be provided by the BOM
+    runtimeOnly(libs.edc.ih.api.did)
+    runtimeOnly(libs.edc.ih.api.participants)
 
     // used for custom extensions
-    implementation(libs.edc.core.connector.ih)
     implementation(libs.edc.ih.spi)
+    implementation(libs.edc.spi.issuance)
 
     testImplementation(libs.edc.lib.crypto.ih)
     testImplementation(libs.edc.lib.keys.ih)

@@ -1,5 +1,5 @@
 #
-#  Copyright (c) 2023 Contributors to the Eclipse Foundation
+#  Copyright (c) 2024 Contributors to the Eclipse Foundation
 #
 #  See the NOTICE file(s) distributed with this work for additional
 #  information regarding copyright ownership.
@@ -17,26 +17,17 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-output "bob-database-credentials" {
-  value = local.alice-postgres
+variable "humanReadableName" {
+  type        = string
+  description = "Human readable name. Should not contain special characters"
 }
 
-output "alice-database-credentials" {
-  value = local.bob-postgres
+variable "namespace" {
+  type = string
 }
 
-output "bob-urls" {
-  value = module.bob-connector.urls
-}
-
-output "alice-urls" {
-  value = module.alice-connector.urls
-}
-
-# output "bob-node-ip" {
-#   value = module.bob-connector.node-ip
-# }
-
-output "alice-node-ip" {
-  value = module.alice-connector.node-ip
+variable "vault-token" {
+  default     = "root"
+  description = "This is the authentication token for the vault. DO NOT USE THIS IN PRODUCTION!"
+  type        = string
 }
