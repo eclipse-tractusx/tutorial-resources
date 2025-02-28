@@ -1,0 +1,3 @@
+until we have an official release of Tractus-X IssuerService we have to craft our own runtime here and deploy using
+raw Kubernetes resources.
+Once we have the official release, we can use the Helm chart.

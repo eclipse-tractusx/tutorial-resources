@@ -39,7 +39,22 @@ jobs:
       - name: "Setup Kubectl"
         uses: azure/setup-kubectl@v4
 
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
       - uses: actions/checkout@v4
+      - name: "Build Runtime Docker Images"
+
+        working-directory: mxd-runtimes
+        run: |-
+          ./gradlew clean dockerize
+
+      - name: "Setup Terraform"
+        uses: hashicorp/setup-terraform@v3
+
       - name: "Create k8s Kind Cluster"
         uses: helm/kind-action@v1.10.0
         with:
@@ -54,31 +69,21 @@ jobs:
             --for=condition=ready pod \
             --selector=app.kubernetes.io/component=controller \
             --timeout=90s
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-
-      - name: "Build Runtime Docker Images"
-        working-directory: mxd-runtimes
-        run: |-
-          ./gradlew clean dockerize
       - name: "Load Docker Images"
         run: |-
           kind load docker-image --name mxd data-service-api tx-identityhub tx-identityhub-sts tx-catalog-server tx-sts
 
       - name: "Terraform init"
-        working-directory: mxd
+        working-directory: ./mxd
         run: |-
           terraform init -reconfigure
       - name: "Terraform plan"
-        working-directory: mxd
+        working-directory: ./mxd
         run: |-
           terraform plan -out=$GITHUB_SHA.out
 
       - name: "Terraform apply"
-        working-directory: mxd
+        working-directory: ./mxd
         run: |-
           terraform apply "$GITHUB_SHA.out"
 

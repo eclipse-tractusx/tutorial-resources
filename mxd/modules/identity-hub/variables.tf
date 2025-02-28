@@ -38,22 +38,20 @@ variable "namespace" {
 }
 variable "ports" {
   type = object({
-    web              = number
-    debug            = number
-    ih-debug         = number
-    ih-did           = number
-    ih-identity-api  = number
-    presentation-api = number
-    ih-sts           = number
+    web             = number
+    ih-identity-api = number
+    credentials-api = number
+    ih-did          = number
+    sts-api         = number
+    debug           = number
   })
   default = {
-    web              = 7080
-    debug            = 1044
-    ih-debug         = 1045
-    ih-identity-api  = 7081
-    presentation-api = 7082
-    ih-did           = 7083
-    ih-sts           = 7084
+    web             = 7080
+    ih-identity-api = 7081
+    credentials-api = 7082
+    ih-did          = 7083
+    sts-api         = 7084
+    debug           = 1044
   }
 }
 
@@ -101,26 +99,17 @@ variable "database" {
 
 variable "image" {
   type    = string
-  default = "tx-identityhub-sts:latest"
+  default = "tx-identityhub:latest"
 }
 
-variable "sts_token_url" {
-  default = ""
-  type    = string
-}
-
-variable "sts_accounts_url" {
-  default = ""
-  type    = string
-}
-
-variable "sts_accounts_api_key" {
-  type        = string
-  default     = "password"
-  description = "API Key for the STS Accounts API of a standalone STS"
-}
 variable "useSVE" {
   type        = bool
   description = "If true, the -XX:UseSVE=0 switch (Scalable Vector Extensions) will be appended to the JAVA_TOOL_OPTIONS. Can help on macOs on Apple Silicon processors"
   default     = false
+}
+
+variable "sts-token-path" {
+  description = "path suffix of the STS token API"
+  type        = string
+  default     = "/api/sts"
 }
