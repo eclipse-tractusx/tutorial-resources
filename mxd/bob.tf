@@ -26,7 +26,7 @@ module "bob-connector" {
   }
   dcp-config = {
     id                     = var.bob-did
-    sts_token_url          = "http://${var.bob-identityhub-host}:7084/api/credentials/token"
+    sts_token_url          = "http://alice-ih:7084/api/sts/token"
     sts_client_id          = var.bob-did
     sts_clientsecret_alias = "participant-bob-sts-client-secret"
   }
@@ -45,10 +45,11 @@ module "bob-connector" {
     password = module.bob-minio.minio-password
     url      = module.bob-minio.minio-url
   }
+  useSVE = var.useSVE
 }
 
 module "bob-identityhub" {
-  depends_on = [module.bob-connector]
+  depends_on = [module.bob-connector] // depends because of the vault
   source     = "./modules/identity-hub"
   database = {
     user     = local.databases.bob.database-username

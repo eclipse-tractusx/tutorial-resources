@@ -4,9 +4,10 @@ format.version = "1.1"
 [versions]
 awaitility = "4.2.2"
 assertj = "3.25.3"
-edc = "0.10.1"
+edc = "0.12.0-SNAPSHOT"
 ih = "0.12.0-SNAPSHOT"
 tractusx = "0.8.0"
+tractusx-issuer = "0.1.0-SNAPSHOT"
 commons = "2.11.0"
 opentelemetry = "1.32.0"
 postgres = "42.7.3"
@@ -44,6 +45,7 @@ edc-spi-did = { module = "org.eclipse.edc:did-spi", version.ref = "edc" }
 edc-spi-catalog = { module = "org.eclipse.edc:catalog-spi", version.ref = "edc" }
 edc-spi-crawler = { module = "org.eclipse.edc:crawler-spi", version.ref = "edc" }
 edc-spi-identitytrust = { module = "org.eclipse.edc:identity-trust-spi", version.ref = "edc" }
+edc-spi-issuance = { module = "org.eclipse.edc:issuerservice-issuance-spi", version.ref = "edc" }
 edc-controlplane-transform = { module = "org.eclipse.edc:control-plane-transform", version.ref = "edc" }
 edc-api-observability = { module = "org.eclipse.edc:api-observability", version.ref = "edc" }
 
@@ -59,19 +61,19 @@ edc-lib-jsonld = { module = "org.eclipse.edc:json-ld-lib", version.ref = "edc" }
 # identith-hub modules
 edc-ih-spi = { module = "org.eclipse.edc:identity-hub-spi", version.ref = "ih" }
 edc-ih-account-remote = { module = "org.eclipse.edc:sts-account-service-remote", version.ref = "ih" }
+edc-ih-api-did = { module = "org.eclipse.edc:did-api", version.ref = "edc" }
+edc-ih-api-participants = { module = "org.eclipse.edc:participant-context-api", version.ref = "edc" }
 
 # identity hub BOM modules
-bom-ih-withsts = { module = "org.eclipse.edc:identityhub-with-sts-bom", version.ref = "ih" }
 bom-ih = { module = "org.eclipse.edc:identityhub-bom", version.ref = "ih" }
 bom-ih-sql = { module = "org.eclipse.edc:identityhub-feature-sql-bom", version.ref = "ih" }
-bom-ih-sql-sts = { module = "org.eclipse.edc:identityhub-feature-sql-sts-bom", version.ref = "ih" }
 
 # STS modules
 edc-sql-sts-store = { module = "org.eclipse.edc:sts-client-store-sql", version.ref = "ih" }
-bom-sts = { module = "org.eclipse.edc:sts-feature-bom", version.ref = "ih" }
 
 # Tractus-X Runtime BOMs
 edc-tx-controlplane = { module = "org.eclipse.tractusx.edc:edc-controlplane-postgresql-hashicorp-vault", version.ref = "tractusx" }
+bom-issuer = { module = "org.eclipse.tractusx.issuer:issuerservice", version.ref = "tractusx-issuer" }
 
 # third-party libraries
 apache-commons = { module = "org.apache.commons:commons-dbcp2", version.ref = "commons" }
@@ -87,7 +89,6 @@ testcontainers-postgres = { module = "org.testcontainers:postgresql", version.re
 
 [bundles]
 connector = ["edc-boot", "edc-core-connector", "edc-ext-http", "edc-api-observability", "edc-ext-jsonld"]
-sql-sts = [ "edc-sql-sts-store", "edc-sql-core", "edc-sql-pool", "edc-sql-transactionlocal", "postgres"]
 
 
 [plugins]

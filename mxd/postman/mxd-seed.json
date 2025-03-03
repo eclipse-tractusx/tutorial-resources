@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "33b50155-e66e-4c82-88e6-a7c5fa73aa37",
+		"_postman_id": "3c948550-5aa6-41f7-b239-6557794d5f1b",
 		"name": "MXD Management API Seed",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "647585"
@@ -1083,6 +1083,260 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "Seed Dataspace Issuer",
+			"item": [
+				{
+					"name": "Create Dataspace Issuer Participant Context",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"clientId\", jsonData.clientId);",
+									"pm.environment.set(\"clientSecret\", jsonData.clientSecret);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n            \"roles\":[\"admin\"],\n            \"serviceEndpoints\":[\n              {\n                 \"type\": \"IssuerService\",\n                 \"serviceEndpoint\": \"http://dataspace-issuer-service:10012/api/issuance/v1alpha/issuers/ZGlkOndlYjpkYXRhc3BhY2UtaXNzdWVyLXNlcnZpY2UlM0ExMDAxNjppc3N1ZXI=\",\n                 \"id\": \"issuer-service-1\"\n              }\n            ],\n            \"active\": true,\n            \"participantId\": \"did:web:dataspace-issuer-service%3A10016:issuer\",\n            \"did\": \"did:web:dataspace-issuer-service%3A10016:issuer\",\n            \"key\":{\n                \"keyId\": \"did:web:dataspace-issuer-service%3A10016:issuer#key-1\",\n                \"privateKeyAlias\": \"key-1\",\n                \"keyGeneratorParams\":{\n                  \"algorithm\": \"EdDSA\"\n                }\n            }\n      }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ISSUER_CS_URL}}/api/identity/v1alpha/participants",
+							"host": [
+								"{{ISSUER_CS_URL}}"
+							],
+							"path": [
+								"api",
+								"identity",
+								"v1alpha",
+								"participants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Account for Alice in IssuerService",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"did\": \"{{CONSUMER_ID}}\",\n    \"participantId\": \"{{CONSUMER_ID}}\",\n    \"name\": \"{{CONSUMER_NAME}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ISSUER_ADMIN_URL}}/api/admin/v1alpha/participants",
+							"host": [
+								"{{ISSUER_ADMIN_URL}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"v1alpha",
+								"participants"
+							]
+						},
+						"description": "Generated from cURL: curl -sL -X POST 'http://localhost:10013/api/admin/v1alpha/participants' \\\n-H 'Content-Type: application/json' \\\n-d '{ \"did\": \"did:web:localhost%3A7083\", \"participantId\": \"did:web:localhost%3A7083\", \"name\": \"Consumer Participant\"}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Account for Bob in IssuerService",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"did\": \"{{PROVIDER_ID}}\",\n    \"participantId\": \"{{PROVIDER_ID}}\",\n    \"name\": \"{{PROVIDER_NAME}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ISSUER_ADMIN_URL}}/api/admin/v1alpha/participants",
+							"host": [
+								"{{ISSUER_ADMIN_URL}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"v1alpha",
+								"participants"
+							]
+						},
+						"description": "Generated from cURL: curl -sL -X POST 'http://localhost:10013/api/admin/v1alpha/participants' \\\n-H 'Content-Type: application/json' \\\n-d '{ \"did\": \"did:web:localhost%3A7083\", \"participantId\": \"did:web:localhost%3A7083\", \"name\": \"Consumer Participant\"}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Create attestation definitions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"attestationType\": \"demo\",\n  \"configuration\": {\n  },\n  \"id\": \"name-attestation-def-1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ISSUER_ADMIN_URL}}/api/admin/v1alpha/attestations",
+							"host": [
+								"{{ISSUER_ADMIN_URL}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"v1alpha",
+								"attestations"
+							]
+						},
+						"description": "Generated from cURL: curl -sL -X POST 'http://localhost:10013/api/admin/v1alpha/attestations' \\\n-H 'Content-Type: application/json' \\\n-d '{\n  \"attestationType\": \"demo\",\n  \"configuration\": {\n  },\n  \"id\": \"demo-attestation-def-1\"\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Create credential definitions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"attestations\": [\n        \"name-attestation-def-1\"\n    ],\n    \"credentialType\": \"NameCredential\",\n    \"dataModel\": \"V_1_1\",\n    \"id\": \"name-credential-def-1\",\n    \"jsonSchema\": \"{}\",\n    \"jsonSchemaUrl\": \"https://example.com/schema/name-credential.json\",\n    \"mappings\": [\n        {\n            \"input\": \"participant.name\",\n            \"output\": \"credentialSubject.name\",\n            \"required\": \"true\"\n        },\n        {\n            \"input\": \"credential.id\",\n            \"output\": \"credentialSubject.id\",\n            \"required\": \"true\"\n        }\n    ],\n    \"rules\": [\n        {\n            \"type\": \"expression\",\n            \"configuration\": {\n                \"claim\": \"onboarding.signedDocuments\",\n                \"operator\": \"eq\",\n                \"value\": true\n            }\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ISSUER_ADMIN_URL}}/api/admin/v1alpha/credentialdefinitions",
+							"host": [
+								"{{ISSUER_ADMIN_URL}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"v1alpha",
+								"credentialdefinitions"
+							]
+						},
+						"description": "Generated from cURL: curl -sL -X POST 'http://localhost:10013/api/admin/v1alpha/credentialdefinitions' \\\n-H 'Content-Type: application/json' \\\n-d '{\n      \"attestations\": [\n        \"demo-attestation-def-1\"\n      ],\n      \"credentialType\": \"DemoCredential\",\n      \"dataModel\": \"V_1_1\",\n      \"id\": \"demo-credential-def-1\",\n      \"jsonSchema\": \"\",\n      \"jsonSchemaUrl\": \"https://example.com/schema/demo-credential.json\",\n      \"mappings\": [\n        {\n          \"input\": \"name\",\n          \"output\": \"credentialSubject.name\",\n          \"required\": \"true\"\n        }\n      ],\n      \"rules\": []\n    }'"
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "c3VwZXItdXNlcg==.c3VwZXItc2VjcmV0LWtleQo=",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "x-api-key",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"pm.test(\"Response status code is 20x or 409\", function () {",
+							"  pm.expect(pm.response.code).to.be.oneOf([200,201,204, 409]);",
+							"});"
+						]
+					}
+				}
+			]
 		}
 	],
 	"auth": {
@@ -1228,6 +1482,36 @@
 			"key": "PROVIDER_DSP_ENDPOINT",
 			"value": "",
 			"type": "string"
+		},
+		{
+			"key": "ISSUER_ADMIN_URL",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "ISSUER_CS_URL",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "CONSUMER_ID",
+			"value": "did:web:alice-ih%3A7083:alice",
+			"type": "default"
+		},
+		{
+			"key": "CONSUMER_NAME",
+			"value": "MXD Participant Alice",
+			"type": "string"
+		},
+		{
+			"key": "PROVIDER_ID",
+			"value": "did:web:bob-ih%3A7083:bob",
+			"type": "default"
+		},
+		{
+			"key": "PROVIDER_NAME",
+			"value": "MXD Participant Bob",
+			"type": "default"
 		}
 	]
 }

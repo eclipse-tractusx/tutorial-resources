@@ -106,7 +106,7 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
             "--env-var", "PARTICIPANT_CONTEXT_ID=participant-alice",
             "--env-var", "PARTICIPANT_CONTEXT_ID_BASE64=cGFydGljaXBhbnQtYWxpY2U=",
             "--env-var",
-            "IDENTITYHUB_URL=http://${var.alice-identityhub-host}:${module.alice-identityhub.ports.presentation-api}/api/presentation",
+            "IDENTITYHUB_URL=http://${var.alice-identityhub-host}:${module.alice-identityhub.ports.credentials-api}/api/credentials",
             "--env-var", "MEMBERSHIP_CREDENTIAL=${file("${path.module}/assets/alice.membership.jwt")}",
             "--env-var", "FRAMEWORK_CREDENTIAL=${file("${path.module}/assets/alice.dataexchangegov.jwt")}",
             "--env-var", "BPN=${var.alice-bpn}",
@@ -131,7 +131,7 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
             "--env-var", "PARTICIPANT_CONTEXT_ID=participant-bob",
             "--env-var", "PARTICIPANT_CONTEXT_ID_BASE64=cGFydGljaXBhbnQtYm9i",
             "--env-var",
-            "IDENTITYHUB_URL=http://${var.bob-identityhub-host}:${module.bob-identityhub.ports.presentation-api}/api/presentation",
+            "IDENTITYHUB_URL=http://${var.bob-identityhub-host}:${module.bob-identityhub.ports.credentials-api}/api/credentials",
             "--env-var", "MEMBERSHIP_CREDENTIAL=${file("${path.module}/assets/bob.membership.jwt")}",
             "--env-var", "FRAMEWORK_CREDENTIAL=${file("${path.module}/assets/bob.dataexchangegov.jwt")}",
             "--env-var", "BPN=${var.bob-bpn}",
@@ -142,6 +142,28 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
             name       = "seed-collection"
           }
         }
+
+        // seed the dataspace issuer service
+        container {
+          name  = "dataspace-issuer"
+          image = "postman/newman:ubuntu"
+          command = [
+            "newman", "run",
+            "--folder", "Seed Dataspace Issuer",
+            "--env-var", "ISSUER_ADMIN_URL=http://${module.dataspace-issuer.endpoints.admin}",
+            "--env-var", "ISSUER_CS_URL=http://${module.dataspace-issuer.endpoints.identity}",
+            "--env-var", "CONSUMER_ID=${var.alice-did}",
+            "--env-var", "CONSUMER_NAME=MXD Participant Alice",
+            "--env-var", "PROVIDER_DID=${var.bob-did}",
+            "--env-var", "PROVIDER_NAME=MXD Participant Bob",
+            "/opt/collection/${local.newman_collection_name}"
+          ]
+          volume_mount {
+            mount_path = "/opt/collection"
+            name       = "seed-collection"
+          }
+        }
+
         volume {
           name = "seed-collection"
           config_map {

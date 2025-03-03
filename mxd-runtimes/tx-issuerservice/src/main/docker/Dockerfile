@@ -20,7 +20,7 @@ RUN adduser \
 USER "$APP_USER"
 WORKDIR /app
 
-COPY ${JAR} identityhub.jar
+COPY ${JAR} issuerservice.jar
 COPY ${OTEL_JAR} opentelemetry-javaagent.jar
 COPY ${ADDITIONAL_FILES} ./
 
@@ -34,5 +34,5 @@ ENTRYPOINT ["java", \
      "-Dotel.exporter.prometheus.port=9090", \
      "-Djava.security.egd=file:/dev/urandom", \
      "-jar", \
-     "identityhub.jar", \
+     "issuerservice.jar", \
      "--log-level=debug"]
