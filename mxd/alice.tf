@@ -17,6 +17,7 @@ module "alice-connector" {
   depends_on        = [module.azurite]
   source            = "./modules/connector"
   humanReadableName = var.alice-humanReadableName
+  namespace         = kubernetes_namespace.mxd-ns.metadata.0.name
   participantId     = var.alice-bpn
   database-host     = local.alice-postgres.database-host
   database-name     = local.databases.alice.database-name
@@ -26,9 +27,9 @@ module "alice-connector" {
   }
   dcp-config = {
     id                     = var.alice-did
-    sts_token_url          = local.sts-token-url
+    sts_token_url          = "http://alice-ih:7084/api/sts/token"
     sts_client_id          = var.alice-did
-    sts_clientsecret_alias = "participant-alice-sts-client-secret"
+    sts_clientsecret_alias = "${var.alice-did}-sts-client-secret"
   }
   dataplane = {
     privatekey-alias = "${var.alice-did}#signing-key-1"
@@ -47,12 +48,12 @@ module "alice-connector" {
     password = module.alice-minio.minio-password
     url      = module.alice-minio.minio-url
   }
+  useSVE = var.useSVE
 }
 
 module "alice-identityhub" {
-  depends_on = [module.alice-connector]
-
-  source = "./modules/identity-hub"
+  depends_on = [module.alice-connector] // depends because of the vault
+  source     = "./modules/identity-hub"
   database = {
     user     = local.databases.alice.database-username
     password = local.databases.alice.database-password
@@ -63,25 +64,7 @@ module "alice-identityhub" {
   participantId     = var.alice-did
   vault-url         = local.vault-url
   url-path          = var.alice-identityhub-host
-  sts_token_url     = local.sts-token-url
-  sts_accounts_url  = local.sts-accounts-url
-  image             = "tx-identityhub:latest" # the one without the STS, which is deployed standalone
   useSVE            = var.useSVE
-}
-
-module "alice-sts" {
-  source            = "./modules/sts"
-  humanReadableName = "alice-sts"
-  accounts-api-key  = "password"
-  namespace         = kubernetes_namespace.mxd-ns.metadata.0.name
-  vault-url         = local.vault-url
-
-  database = {
-    user     = local.databases.alice.database-username
-    password = local.databases.alice.database-password
-    url      = "jdbc:postgresql://${local.alice-postgres.database-host}/${local.databases.alice.database-name}"
-  }
-  useSVE = var.useSVE
 }
 
 # alice's catalog server
@@ -102,9 +85,9 @@ module "alice-catalog-server" {
   }
   dcp-config = {
     id                     = var.alice-did
-    sts_token_url          = local.sts-token-url
+    sts_token_url          = "${module.alice-identityhub.sts-token-url}/token"
     sts_client_id          = var.alice-did
-    sts_clientsecret_alias = "participant-alice-sts-client-secret"
+    sts_clientsecret_alias = "${var.alice-did}-sts-client-secret"
   }
   useSVE = var.useSVE
 }
@@ -119,7 +102,5 @@ module "alice-minio" {
 
 locals {
   alice-azure-key-base64 = base64encode(var.alice-azure-account-key)
-  sts-accounts-url       = module.alice-sts.account-url
-  sts-token-url          = module.alice-sts.token-url
   vault-url              = "http://alice-vault:8200"
 }

@@ -43,9 +43,8 @@ dependencyResolutionManagement {
 }
 
 include(":tx-identityhub")
-include(":tx-identityhub-sts")
+include(":tx-issuerservice")
 include(":tx-catalog-server")
-include(":tx-sts")
 include(":data-service-api")
 include(":jwt-signer")
 include(":e2e-test")

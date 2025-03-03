@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "33b50155-e66e-4c82-88e6-a7c5fa73aa37",
+		"_postman_id": "6fd606c8-64d5-455d-aa50-0770cc93bd0a",
 		"name": "MXD Management API Seed",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "647585"
@@ -40,7 +40,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"asset-1\",\n    \"description\": \"MXD Asset 1: this Asset is available to holders of the DataExchangeGovernance credential\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"http://data-service-api:8080/v1/data\",\n    \"proxyPath\": \"true\",\n    \"proxyQueryParams\": \"true\"\n  }\n}",
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@id\": \"asset-1\",\n    \"@type\": \"Asset\",\n    \"properties\": {\n        \"id\": \"asset-1\",\n        \"description\": \"MXD Asset 1: this Asset is available to holders of the DataExchangeGovernance credential\"\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"http://data-service-api:8080/v1/data\",\n        \"proxyPath\": \"true\",\n        \"proxyQueryParams\": \"true\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -91,7 +91,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"asset-2\",\n    \"description\": \"MXD Asset 2: this Asset is available to holders of the DataExchangeGovernance credential\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"http://data-service-api:8080/v1/data\",\n    \"proxyPath\": \"true\",\n    \"proxyQueryParams\": \"true\"\n  }\n}",
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@id\": \"asset-2\",\n    \"@type\": \"Asset\",\n    \"properties\": {\n        \"id\": \"asset-2\",\n        \"description\": \"MXD Asset 2: this Asset is available to holders of the DataExchangeGovernance credential\"\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"http://data-service-api:8080/v1/data\",\n        \"proxyPath\": \"true\",\n        \"proxyQueryParams\": \"true\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -193,7 +193,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": [\n        {\n            \"@vocab\": \"https://w3id.org/edc/v0.0.1/ns/\"\n        },\n        \"https://w3id.org/tractusx/policy/v1.0.0\",\n        \"http://www.w3.org/ns/odrl.jsonld\"\n    ],\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"require-membership\",\n    \"policy\": {\n        \"@type\": \"http://www.w3.org/ns/odrl/2/Set\",\n        \"permission\": [\n            {\n                \"action\": \"use\",\n                \"constraint\": {\n                    \"@type\": \"LogicalConstraint\",\n                    \"leftOperand\": \"Membership\",\n                    \"operator\": \"eq\",\n                    \"rightOperand\": \"active\"\n                }\n            }\n        ]\n    }\n}",
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@type\": \"PolicyDefinition\",\n    \"@id\": \"require-membership\",\n    \"policy\": {\n        \"@type\": \"http://www.w3.org/ns/odrl/2/Set\",\n        \"permission\": [\n            {\n                \"action\": \"use\",\n                \"constraint\": {\n                    \"@type\": \"LogicalConstraint\",\n                    \"leftOperand\": \"Membership\",\n                    \"operator\": \"eq\",\n                    \"rightOperand\": \"active\"\n                }\n            }\n        ]\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -244,7 +244,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": [\n        {\n            \"@vocab\": \"https://w3id.org/edc/v0.0.1/ns/\"\n        },\n        \"https://w3id.org/tractusx/policy/v1.0.0\",\n        \"http://www.w3.org/ns/odrl.jsonld\"\n    ],\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"require-deg\",\n    \"policy\": {\n        \"@type\": \"http://www.w3.org/ns/odrl/2/Set\",\n        \"permission\": [\n            {\n                \"action\": \"use\",\n                \"constraint\": {\n                    \"@type\": \"LogicalConstraint\",\n                    \"leftOperand\": \"FrameworkAgreement\",\n                    \"operator\": \"eq\",\n                    \"rightOperand\": \"DataExchangeGovernance\"\n                }\n            }\n        ]\n    }\n}",
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@type\": \"PolicyDefinition\",\n    \"@id\": \"require-deg\",\n    \"policy\": {\n        \"@type\": \"http://www.w3.org/ns/odrl/2/Set\",\n        \"permission\": [\n            {\n                \"action\": \"use\",\n                \"constraint\": {\n                    \"@type\": \"LogicalConstraint\",\n                    \"leftOperand\": \"FrameworkAgreement\",\n                    \"operator\": \"eq\",\n                    \"rightOperand\": \"DataExchangeGovernance\"\n                }\n            }\n        ]\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -295,7 +295,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": [\n        {\n            \"@vocab\": \"https://w3id.org/edc/v0.0.1/ns/\"\n        },\n        \"https://w3id.org/tractusx/policy/v1.0.0\",\n        \"http://www.w3.org/ns/odrl.jsonld\"\n    ],\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"require-dismantler\",\n    \"policy\": {\n        \"@type\": \"http://www.w3.org/ns/odrl/2/Set\",\n        \"permission\": [\n            {\n                \"action\": \"use\",\n                \"constraint\": {\n                    \"@type\": \"LogicalConstraint\",\n                    \"leftOperand\": \"Dismantler\",\n                    \"operator\": \"eq\",\n                    \"rightOperand\": \"active\"\n                }\n            }\n        ]\n    }\n}",
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@type\": \"PolicyDefinition\",\n    \"@id\": \"require-dismantler\",\n    \"policy\": {\n        \"@type\": \"http://www.w3.org/ns/odrl/2/Set\",\n        \"permission\": [\n            {\n                \"action\": \"use\",\n                \"constraint\": {\n                    \"@type\": \"LogicalConstraint\",\n                    \"leftOperand\": \"Dismantler\",\n                    \"operator\": \"eq\",\n                    \"rightOperand\": \"active\"\n                }\n            }\n        ]\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -346,7 +346,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": {},\n    \"@id\": \"1\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"require-membership\",\n    \"contractPolicyId\": \"require-membership\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"https://w3id.org/edc/v0.0.1/ns/id\",\n        \"operator\": \"in\",\n        \"operandRight\": [\"asset-1\", \"asset-2\"]\n    }\n}",
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@id\": \"1\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"require-membership\",\n    \"contractPolicyId\": \"require-membership\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"https://w3id.org/edc/v0.0.1/ns/id\",\n        \"operator\": \"in\",\n        \"operandRight\": [\"asset-1\", \"asset-2\"]\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -397,7 +397,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": {},\n    \"@id\": \"3\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"require-membership\",\n    \"contractPolicyId\": \"require-dismantler\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"https://w3id.org/edc/v0.0.1/ns/id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"asset-3\"\n    }\n}",
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@id\": \"3\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"require-membership\",\n    \"contractPolicyId\": \"require-dismantler\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"https://w3id.org/edc/v0.0.1/ns/id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"asset-3\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -473,7 +473,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": {},\n    \"@id\": \"linked-asset-1\",\n    \"@type\": \"CatalogAsset\",\n    \"properties\": {\n        \"description\": \"This is a linked asset that points to the catalog of the ALICE connector.\",\n        \"isCatalog\": \"true\"\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"{{PROVIDER_DSP_ENDPOINT}}\"\n    }\n}",
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@id\": \"linked-asset-1\",\n    \"@type\": \"CatalogAsset\",\n    \"properties\": {\n        \"description\": \"This is a linked asset that points to the catalog of the ALICE connector.\",\n        \"isCatalog\": \"true\"\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"{{PROVIDER_DSP_ENDPOINT}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -524,7 +524,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"asset-1\",\n    \"description\": \"Normal Asset on the Catalog Server\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"http://data-service-api:8080/v1/data\",\n    \"proxyPath\": \"true\",\n    \"proxyQueryParams\": \"true\"\n  }\n}",
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@type\": \"Asset\",\n    \"@id\": \"asset-1\",\n    \"properties\": {\n        \"id\": \"asset-1\",\n        \"description\": \"Normal Asset on the Catalog Server\"\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"http://data-service-api:8080/v1/data\",\n        \"proxyPath\": \"true\",\n        \"proxyQueryParams\": \"true\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -575,7 +575,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": [\n        {\n            \"@vocab\": \"https://w3id.org/edc/v0.0.1/ns/\"\n        },\n        \"https://w3id.org/tractusx/policy/v1.0.0\",\n        \"http://www.w3.org/ns/odrl.jsonld\"\n    ],\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"require-membership\",\n    \"policy\": {\n        \"@type\": \"http://www.w3.org/ns/odrl/2/Set\",\n        \"permission\": [\n            {\n                \"action\": \"use\",\n                \"constraint\": {\n                    \"@type\": \"LogicalConstraint\",\n                    \"leftOperand\": \"Membership\",\n                    \"operator\": \"eq\",\n                    \"rightOperand\": \"active\"\n                }\n            }\n        ]\n    }\n}",
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@type\": \"PolicyDefinition\",\n    \"@id\": \"require-membership\",\n    \"policy\": {\n        \"@type\": \"http://www.w3.org/ns/odrl/2/Set\",\n        \"permission\": [\n            {\n                \"action\": \"use\",\n                \"constraint\": {\n                    \"@type\": \"LogicalConstraint\",\n                    \"leftOperand\": \"Membership\",\n                    \"operator\": \"eq\",\n                    \"rightOperand\": \"active\"\n                }\n            }\n        ]\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -626,7 +626,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": [\n        {\n            \"@vocab\": \"https://w3id.org/edc/v0.0.1/ns/\"\n        },\n        \"https://w3id.org/tractusx/policy/v1.0.0\",\n        \"http://www.w3.org/ns/odrl.jsonld\"\n    ],\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"require-deg\",\n    \"policy\": {\n        \"@type\": \"http://www.w3.org/ns/odrl/2/Set\",\n        \"permission\": [\n            {\n                \"action\": \"use\",\n                \"constraint\": {\n                    \"@type\": \"LogicalConstraint\",\n                    \"leftOperand\": \"FrameworkAgreement\",\n                    \"operator\": \"eq\",\n                    \"rightOperand\": \"DataExchangeGovernance\"\n                }\n            }\n        ]\n    }\n}",
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@type\": \"PolicyDefinition\",\n    \"@id\": \"require-deg\",\n    \"policy\": {\n        \"@type\": \"http://www.w3.org/ns/odrl/2/Set\",\n        \"permission\": [\n            {\n                \"action\": \"use\",\n                \"constraint\": {\n                    \"@type\": \"LogicalConstraint\",\n                    \"leftOperand\": \"FrameworkAgreement\",\n                    \"operator\": \"eq\",\n                    \"rightOperand\": \"DataExchangeGovernance\"\n                }\n            }\n        ]\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -677,7 +677,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": {},\n    \"@id\": \"1\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"require-membership\",\n    \"contractPolicyId\": \"require-deg\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"https://w3id.org/edc/v0.0.1/ns/id\",\n        \"operator\": \"in\",\n        \"operandRight\": [\"asset-1\", \"linked-asset-1\"]\n    }\n}",
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@id\": \"membership-required-def\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"require-membership\",\n    \"contractPolicyId\": \"require-deg\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"https://w3id.org/edc/v0.0.1/ns/id\",\n        \"operator\": \"in\",\n        \"operandRight\": [\"asset-1\", \"linked-asset-1\"]\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -966,7 +966,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"membership-credential\",\n    \"participantContextId\": \"{{PARTICIPANT_CONTEXT_ID}}\",\n    \"issuancePolicy\": null,\n    \"reissuancePolicy\": null,\n    \"verifiableCredentialContainer\": {\n        \"format\": \"JWT\",\n        \"credential\": {\n            \"@context\": [\n                \"https://www.w3.org/2018/credentials/v1\",\n                \"https://w3id.org/security/suites/jws-2020/v1\",\n                \"https://www.w3.org/ns/did/v1\",\n                {\n                    \"mxd-credentials\": \"https://w3id.org/mxd/credentials/\",\n                    \"membership\": \"mxd-credentials:membership\",\n                    \"membershipType\": \"mxd-credentials:membershipType\",\n                    \"website\": \"mxd-credentials:website\",\n                    \"contact\": \"mxd-credentials:contact\",\n                    \"since\": \"mxd-credentials:since\"\n                }\n            ],\n            \"id\": \"http://org.yourdataspace.com/credentials/2347\",\n            \"type\": [\n                \"VerifiableCredential\",\n                \"MembershipCredential\"\n            ],\n            \"issuer\": \"did:web:dataspace-issuer\",\n            \"issuanceDate\": \"2023-08-18T00:00:00Z\",\n            \"credentialSubject\": {\n                \"id\": \"{{PARTICIPANT_DID}}\",\n                \"membership\": {\n                    \"membershipType\": \"FullMember\",\n                    \"website\": \"www.whatever.com\",\n                    \"contact\": \"fizz.buzz@whatever.com\",\n                    \"since\": \"2023-01-01T00:00:00Z\"\n                }\n            }\n        },\n        \"rawVc\": \"{{MEMBERSHIP_CREDENTIAL}}\"\n    }\n}",
+							"raw": "{\n    \"id\": \"membership-credential\",\n    \"participantContextId\": \"{{PARTICIPANT_CONTEXT_ID}}\",\n    \"issuancePolicy\": null,\n    \"reissuancePolicy\": null,\n    \"verifiableCredentialContainer\": {\n        \"format\": \"VC1_0_JWT\",\n        \"credential\": {\n            \"@context\": [\n                \"https://www.w3.org/2018/credentials/v1\",\n                \"https://w3id.org/security/suites/jws-2020/v1\",\n                \"https://www.w3.org/ns/did/v1\",\n                {\n                    \"mxd-credentials\": \"https://w3id.org/mxd/credentials/\",\n                    \"membership\": \"mxd-credentials:membership\",\n                    \"membershipType\": \"mxd-credentials:membershipType\",\n                    \"website\": \"mxd-credentials:website\",\n                    \"contact\": \"mxd-credentials:contact\",\n                    \"since\": \"mxd-credentials:since\"\n                }\n            ],\n            \"id\": \"http://org.yourdataspace.com/credentials/2347\",\n            \"type\": [\n                \"VerifiableCredential\",\n                \"MembershipCredential\"\n            ],\n            \"issuer\": \"did:web:dataspace-issuer\",\n            \"issuanceDate\": \"2023-08-18T00:00:00Z\",\n            \"credentialSubject\": {\n                \"id\": \"{{PARTICIPANT_DID}}\",\n                \"membership\": {\n                    \"membershipType\": \"FullMember\",\n                    \"website\": \"www.whatever.com\",\n                    \"contact\": \"fizz.buzz@whatever.com\",\n                    \"since\": \"2023-01-01T00:00:00Z\"\n                }\n            }\n        },\n        \"rawVc\": \"{{MEMBERSHIP_CREDENTIAL}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1021,7 +1021,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"deg-credential\",\n    \"participantContextId\": \"{{PARTICIPANT_CONTEXT_ID}}\",\n    \"issuancePolicy\": null,\n    \"reissuancePolicy\": null,\n    \"verifiableCredentialContainer\": {\n        \"format\": \"JWT\",\n        \"credential\": {\n            \"@context\": [\n                \"https://www.w3.org/2018/credentials/v1\",\n                \"https://w3id.org/catenax/credentials/v1.0.0\"\n            ],\n            \"id\": \"1f36af58-0fc0-4b24-9b1c-e37d59668089\",\n            \"type\": [\n                \"VerifiableCredential\",\n                \"DataExchangeGovernanceCredential\"\n            ],\n            \"issuer\": \"did:web:dataspace-issuer\",\n            \"issuanceDate\": \"2021-06-16T18:56:59Z\",\n            \"expirationDate\": \"2032-06-16T18:56:59Z\",\n            \"credentialSubject\": {\n                \"id\": \"{{PARTICIPANT_DID}}\",\n                \"holderIdentifier\": \"{{BPN}}\",\n                \"contractTemplate\": \"https://public.catena-x.org/contracts/DataExchangeGovernance.v1.pdf\",\n                \"contractVersion\": \"1.0.0\"\n            }\n        },\n        \"rawVc\": \"{{FRAMEWORK_CREDENTIAL}}\"\n    }\n}",
+							"raw": "{\n    \"id\": \"deg-credential\",\n    \"participantContextId\": \"{{PARTICIPANT_CONTEXT_ID}}\",\n    \"issuancePolicy\": null,\n    \"reissuancePolicy\": null,\n    \"verifiableCredentialContainer\": {\n        \"format\": \"VC1_0_JWT\",\n        \"credential\": {\n            \"@context\": [\n                \"https://www.w3.org/2018/credentials/v1\",\n                \"https://w3id.org/catenax/credentials/v1.0.0\"\n            ],\n            \"id\": \"1f36af58-0fc0-4b24-9b1c-e37d59668089\",\n            \"type\": [\n                \"VerifiableCredential\",\n                \"DataExchangeGovernanceCredential\"\n            ],\n            \"issuer\": \"did:web:dataspace-issuer\",\n            \"issuanceDate\": \"2021-06-16T18:56:59Z\",\n            \"expirationDate\": \"2032-06-16T18:56:59Z\",\n            \"credentialSubject\": {\n                \"id\": \"{{PARTICIPANT_DID}}\",\n                \"holderIdentifier\": \"{{BPN}}\",\n                \"contractTemplate\": \"https://public.catena-x.org/contracts/DataExchangeGovernance.v1.pdf\",\n                \"contractVersion\": \"1.0.0\"\n            }\n        },\n        \"rawVc\": \"{{FRAMEWORK_CREDENTIAL}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1079,6 +1079,260 @@
 						"packages": {},
 						"exec": [
 							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Seed Dataspace Issuer",
+			"item": [
+				{
+					"name": "Create Dataspace Issuer Participant Context",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"clientId\", jsonData.clientId);",
+									"pm.environment.set(\"clientSecret\", jsonData.clientSecret);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n            \"roles\":[\"admin\"],\n            \"serviceEndpoints\":[\n              {\n                 \"type\": \"IssuerService\",\n                 \"serviceEndpoint\": \"http://dataspace-issuer-service:10012/api/issuance/v1alpha/issuers/ZGlkOndlYjpkYXRhc3BhY2UtaXNzdWVyLXNlcnZpY2UlM0ExMDAxNjppc3N1ZXI=\",\n                 \"id\": \"issuer-service-1\"\n              }\n            ],\n            \"active\": true,\n            \"participantId\": \"did:web:dataspace-issuer-service%3A10016:issuer\",\n            \"did\": \"did:web:dataspace-issuer-service%3A10016:issuer\",\n            \"key\":{\n                \"keyId\": \"did:web:dataspace-issuer-service%3A10016:issuer#key-1\",\n                \"privateKeyAlias\": \"key-1\",\n                \"keyGeneratorParams\":{\n                  \"algorithm\": \"EdDSA\"\n                }\n            }\n      }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ISSUER_CS_URL}}/api/identity/v1alpha/participants",
+							"host": [
+								"{{ISSUER_CS_URL}}"
+							],
+							"path": [
+								"api",
+								"identity",
+								"v1alpha",
+								"participants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Account for Alice in IssuerService",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"did\": \"{{CONSUMER_ID}}\",\n    \"participantId\": \"{{CONSUMER_ID}}\",\n    \"name\": \"{{CONSUMER_NAME}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ISSUER_ADMIN_URL}}/api/admin/v1alpha/participants",
+							"host": [
+								"{{ISSUER_ADMIN_URL}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"v1alpha",
+								"participants"
+							]
+						},
+						"description": "Generated from cURL: curl -sL -X POST 'http://localhost:10013/api/admin/v1alpha/participants' \\\n-H 'Content-Type: application/json' \\\n-d '{ \"did\": \"did:web:localhost%3A7083\", \"participantId\": \"did:web:localhost%3A7083\", \"name\": \"Consumer Participant\"}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Account for Bob in IssuerService",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"did\": \"{{PROVIDER_ID}}\",\n    \"participantId\": \"{{PROVIDER_ID}}\",\n    \"name\": \"{{PROVIDER_NAME}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ISSUER_ADMIN_URL}}/api/admin/v1alpha/participants",
+							"host": [
+								"{{ISSUER_ADMIN_URL}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"v1alpha",
+								"participants"
+							]
+						},
+						"description": "Generated from cURL: curl -sL -X POST 'http://localhost:10013/api/admin/v1alpha/participants' \\\n-H 'Content-Type: application/json' \\\n-d '{ \"did\": \"did:web:localhost%3A7083\", \"participantId\": \"did:web:localhost%3A7083\", \"name\": \"Consumer Participant\"}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Create attestation definitions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"attestationType\": \"demo\",\n  \"configuration\": {\n  },\n  \"id\": \"name-attestation-def-1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ISSUER_ADMIN_URL}}/api/admin/v1alpha/attestations",
+							"host": [
+								"{{ISSUER_ADMIN_URL}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"v1alpha",
+								"attestations"
+							]
+						},
+						"description": "Generated from cURL: curl -sL -X POST 'http://localhost:10013/api/admin/v1alpha/attestations' \\\n-H 'Content-Type: application/json' \\\n-d '{\n  \"attestationType\": \"demo\",\n  \"configuration\": {\n  },\n  \"id\": \"demo-attestation-def-1\"\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Create credential definitions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"attestations\": [\n        \"name-attestation-def-1\"\n    ],\n    \"credentialType\": \"NameCredential\",\n    \"dataModel\": \"V_1_1\",\n    \"id\": \"name-credential-def-1\",\n    \"jsonSchema\": \"{}\",\n    \"jsonSchemaUrl\": \"https://example.com/schema/name-credential.json\",\n    \"mappings\": [\n        {\n            \"input\": \"participant.name\",\n            \"output\": \"credentialSubject.name\",\n            \"required\": \"true\"\n        },\n        {\n            \"input\": \"credential.id\",\n            \"output\": \"credentialSubject.id\",\n            \"required\": \"true\"\n        }\n    ],\n    \"rules\": [\n        {\n            \"type\": \"expression\",\n            \"configuration\": {\n                \"claim\": \"onboarding.signedDocuments\",\n                \"operator\": \"eq\",\n                \"value\": true\n            }\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ISSUER_ADMIN_URL}}/api/admin/v1alpha/credentialdefinitions",
+							"host": [
+								"{{ISSUER_ADMIN_URL}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"v1alpha",
+								"credentialdefinitions"
+							]
+						},
+						"description": "Generated from cURL: curl -sL -X POST 'http://localhost:10013/api/admin/v1alpha/credentialdefinitions' \\\n-H 'Content-Type: application/json' \\\n-d '{\n      \"attestations\": [\n        \"demo-attestation-def-1\"\n      ],\n      \"credentialType\": \"DemoCredential\",\n      \"dataModel\": \"V_1_1\",\n      \"id\": \"demo-credential-def-1\",\n      \"jsonSchema\": \"\",\n      \"jsonSchemaUrl\": \"https://example.com/schema/demo-credential.json\",\n      \"mappings\": [\n        {\n          \"input\": \"name\",\n          \"output\": \"credentialSubject.name\",\n          \"required\": \"true\"\n        }\n      ],\n      \"rules\": []\n    }'"
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "c3VwZXItdXNlcg==.c3VwZXItc2VjcmV0LWtleQo=",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "x-api-key",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"pm.test(\"Response status code is 20x or 409\", function () {",
+							"  pm.expect(pm.response.code).to.be.oneOf([200,201,204, 409]);",
+							"});"
 						]
 					}
 				}
@@ -1196,7 +1450,7 @@
 		},
 		{
 			"key": "PARTICIPANT_CONTEXT_ID",
-			"value": "participant-alice",
+			"value": "did:web:alice",
 			"type": "string"
 		},
 		{
@@ -1228,6 +1482,36 @@
 			"key": "PROVIDER_DSP_ENDPOINT",
 			"value": "",
 			"type": "string"
+		},
+		{
+			"key": "ISSUER_ADMIN_URL",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "ISSUER_CS_URL",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "CONSUMER_ID",
+			"value": "did:web:alice-ih%3A7083:alice",
+			"type": "default"
+		},
+		{
+			"key": "CONSUMER_NAME",
+			"value": "MXD Participant Alice",
+			"type": "string"
+		},
+		{
+			"key": "PROVIDER_ID",
+			"value": "did:web:bob-ih%3A7083:bob",
+			"type": "default"
+		},
+		{
+			"key": "PROVIDER_NAME",
+			"value": "MXD Participant Bob",
+			"type": "default"
 		}
 	]
 }
