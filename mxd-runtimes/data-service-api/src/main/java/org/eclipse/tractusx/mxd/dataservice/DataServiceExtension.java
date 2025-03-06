@@ -25,6 +25,7 @@ import org.eclipse.edc.runtime.metamodel.annotation.Setting;
 import org.eclipse.edc.runtime.metamodel.annotation.Settings;
 import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
+import org.eclipse.edc.spi.types.TypeManager;
 import org.eclipse.edc.web.spi.WebServer;
 import org.eclipse.edc.web.spi.WebService;
 import org.eclipse.edc.web.spi.configuration.PortMapping;
@@ -46,6 +47,8 @@ public class DataServiceExtension implements ServiceExtension {
     private DataServiceApiConfiguration apiConfig;
     @Inject
     private PortMappingRegistry portMappingRegistry;
+    @Inject
+    private TypeManager typeManager;
 
     @Override
     public String name() {
@@ -59,7 +62,7 @@ public class DataServiceExtension implements ServiceExtension {
 
         var database = new ConcurrentHashMap<String, DataRecord>();
         populate(database);
-        webService.registerResource(DATA_API_CONTEXT_NAME, new DataServiceApiController(database));
+        webService.registerResource(DATA_API_CONTEXT_NAME, new DataServiceApiController(database, typeManager.getMapper()));
     }
 
     private void populate(Map<String, DataRecord> database) {
