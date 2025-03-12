@@ -124,3 +124,44 @@ resource "kubernetes_service" "data-service-api" {
   }
 }
 
+resource "kubernetes_ingress_v1" "api-ingress" {
+  metadata {
+    name      = "${var.humanReadableName}-ingress"
+    namespace = var.namespace
+    annotations = {
+      "nginx.ingress.kubernetes.io/rewrite-target" = "/$2"
+      "nginx.ingress.kubernetes.io/use-regex"      = "true"
+    }
+  }
+  spec {
+    ingress_class_name = "nginx"
+    rule {
+      host = var.ingress-host
+      http {
+        path {
+          path = "/data-service(/|$)(.*)"
+          backend {
+            service {
+              name = "data-service-api"
+              port {
+                number = 8080
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+variable "ingress-host" {
+  description = "Ingress Host"
+  default     = "localhost"
+}
+
+variable "humanReadableName" {
+  type        = string
+  description = "Human readable name of the data service, NOT the ID!!. Required."
+  default     = "data-service"
+}
+

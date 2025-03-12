@@ -29,8 +29,8 @@ resource "kubernetes_ingress_v1" "api-ingress" {
   spec {
     ingress_class_name = "nginx"
     rule {
-      host = "localhost"
       http {
+        # ingress path for the IdentityHub Identity (=management) API
         path {
           path = "/${var.url-path}/cs(/|$)(.*)"
           backend {
@@ -49,7 +49,7 @@ resource "kubernetes_ingress_v1" "api-ingress" {
             service {
               name = kubernetes_service.ih-service.metadata.0.name
               port {
-                number = var.ports.ih-sts
+                number = var.ports.sts-api
               }
             }
           }
@@ -72,7 +72,6 @@ resource "kubernetes_ingress_v1" "did-ingress" {
   spec {
     ingress_class_name = "nginx"
     rule {
-      host = "localhost"
       http {
         # ingress routes for the DID endpoint
         path {

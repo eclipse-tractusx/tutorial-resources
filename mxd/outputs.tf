@@ -33,9 +33,9 @@ output "alice-urls" {
   value = module.alice-connector.urls
 }
 
-output "bob-node-ip" {
-  value = module.bob-connector.node-ip
-}
+# output "bob-node-ip" {
+#   value = module.bob-connector.node-ip
+# }
 
 output "alice-node-ip" {
   value = module.alice-connector.node-ip

@@ -14,6 +14,8 @@
 
 package org.eclipse.tractusx.mxd.dataservice.api;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -23,13 +25,13 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import org.eclipse.edc.web.spi.exception.InvalidRequestException;
+import org.eclipse.edc.spi.EdcException;
 import org.eclipse.edc.web.spi.exception.ObjectConflictException;
 import org.eclipse.edc.web.spi.exception.ObjectNotFoundException;
 import org.eclipse.tractusx.mxd.dataservice.model.DataRecord;
 
+import java.io.IOException;
 import java.util.Collection;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Consumes(MediaType.APPLICATION_JSON)
@@ -38,9 +40,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DataServiceApiController implements DataServiceApi {
 
     private final ConcurrentHashMap<String, DataRecord> database;
+    private final ObjectMapper objectMapper;
 
-    public DataServiceApiController(ConcurrentHashMap<String, DataRecord> database) {
+    public DataServiceApiController(ConcurrentHashMap<String, DataRecord> database, ObjectMapper objectMapper) {
         this.database = database;
+        this.objectMapper = objectMapper;
     }
 
     @GET
@@ -61,11 +65,12 @@ public class DataServiceApiController implements DataServiceApi {
 
     @POST
     @Override
-    public void create(DataRecord dataRecord) {
+    public String create(DataRecord dataRecord) {
         if (database.containsKey(dataRecord.id())) {
             throw new ObjectConflictException("DataRecord with id " + dataRecord.id() + " already exists");
         }
         database.put(dataRecord.id(), dataRecord);
+        return createJsonResponse(dataRecord.id());
     }
 
     @PUT
@@ -85,5 +90,14 @@ public class DataServiceApiController implements DataServiceApi {
             throw new ObjectNotFoundException(DataRecord.class, id);
         }
         database.remove(id);
+    }
+
+    private String createJsonResponse(String id) {
+        JsonNode jsonResponse = objectMapper.createObjectNode().put("id", id);
+        try {
+            return objectMapper.writeValueAsString(jsonResponse);
+        } catch (IOException e) {
+            throw new EdcException(e.getMessage());
+        }
     }
 }
