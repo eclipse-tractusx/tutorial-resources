@@ -73,7 +73,7 @@ this should compile the Java code and build Docker images out of all runtimes. O
 KinD:
 
 ```shell
-kind load docker-image --name mxd data-service-api tx-identityhub tx-identityhub-sts tx-identityhub tx-catalog-server tx-sts
+kind load docker-image --name mxd data-service-api tx-identityhub tx-catalog-server tx-issuerservice
 ```
 
 ### 2.3 Bring up the data space

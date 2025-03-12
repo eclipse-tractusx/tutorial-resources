@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "e2aebd59-90e7-46f5-bd35-cd131baeddab",
+		"_postman_id": "9194639c-c353-4885-b3f5-21ca177350ff",
 		"name": "Management API Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "34215553"
+		"_exporter_id": "38297939"
 	},
 	"item": [
 		{
@@ -17,10 +17,14 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"pm.test(\"Post Content\", function () {\r",
-							"     pm.collectionVariables.set('CONTENT_ID', pm.response.json().id);\r",
+							"    let responseJson = pm.response.json();\r",
+							"    if (responseJson.id) {\r",
+							"        pm.collectionVariables.set('CONTENT_ID', responseJson.id);\r",
+							"    }\r",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -36,7 +40,7 @@
 						}
 					}
 				},
-				"url": "{{BACKEND_SERVICE}}/api/v1/contents"
+				"url": "{{BACKEND_SERVICE}}/v1/data"
 			},
 			"response": []
 		},
@@ -76,7 +80,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"@context\": {},\n  \"@id\": \"{{ASSET_ID}}\",\n  \"properties\": {\n    \"description\": \"Product EDC Demo Asset\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"{{BACKEND_SERVICE_PROTOCOL}}/api/v1/contents/{{CONTENT_ID}}\"\n  }\n}",
+					"raw": "{\n  \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n  \"@id\": \"{{ASSET_ID}}\",\n  \"@type\": \"Asset\",\n  \"properties\": {\n    \"description\": \"Product EDC Demo Asset\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"{{BACKEND_SERVICE_PROTOCOL}}/v1/data/{{CONTENT_ID}}\"\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -133,7 +137,8 @@
 							"    pm.expect(jsonData[\"@id\"]).to.eql(expectedId)\r",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -142,7 +147,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"@context\": {\n    \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n  },\n  \"@type\": \"PolicyDefinitionRequestDto\",\n  \"@id\": \"{{POLICY_ID}}\",\n  \"policy\": {\n    \"@type\": \"odrl:Set\",\n    \"odrl:permission\": [\n      {\n        \"odrl:action\": \"USE\",\n        \"odrl:constraint\": {\n          \"@type\": \"LogicalConstraint\",\n          \"odrl:or\": [\n            {\n              \"@type\": \"Constraint\",\n              \"odrl:leftOperand\": \"BusinessPartnerNumber\",\n              \"odrl:operator\": {\n                \"@id\": \"odrl:eq\"\n              },\n              \"odrl:rightOperand\": \"{{CONSUMER_ID}}\"\n            }\n          ]\n        }\n      }\n    ]\n  }\n}",
+					"raw": "{\n  \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n  \"@type\": \"PolicyDefinition\",\n  \"@id\": \"{{POLICY_ID}}\",\n  \"policy\": {\n    \"@type\": \"odrl:Set\",\n    \"odrl:permission\": [\n      {\n        \"odrl:action\": \"USE\",\n        \"odrl:constraint\": {\n          \"@type\": \"LogicalConstraint\",\n          \"odrl:or\": [\n            {\n              \"@type\": \"Constraint\",\n              \"odrl:leftOperand\": \"BusinessPartnerNumber\",\n              \"odrl:operator\": {\n                \"@id\": \"odrl:eq\"\n              },\n              \"odrl:rightOperand\": \"{{CONSUMER_ID}}\"\n            }\n          ]\n        }\n      }\n    ]\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -199,7 +204,8 @@
 							"    pm.expect(jsonData[\"@id\"]).to.eql(expectedId)\r",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -208,7 +214,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"@context\": {},\n  \"@id\": \"{{CONTRACT_DEFINITION_ID}}\",\n  \"@type\": \"ContractDefinition\",\n  \"accessPolicyId\": \"{{POLICY_ID}}\",\n  \"contractPolicyId\": \"{{POLICY_ID}}\",\n  \"assetsSelector\": {\n    \"@type\": \"CriterionDto\",\n    \"operandLeft\": \"{{EDC_NAMESPACE}}id\",\n    \"operator\": \"=\",\n    \"operandRight\": \"{{ASSET_ID}}\"\n  }\n}",
+					"raw": "{\n   \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n  \"@id\": \"{{CONTRACT_DEFINITION_ID}}\",\n  \"@type\": \"ContractDefinition\",\n  \"accessPolicyId\": \"{{POLICY_ID}}\",\n  \"contractPolicyId\": \"{{POLICY_ID}}\",\n  \"assetsSelector\": {\n    \"@type\": \"CriterionDto\",\n    \"operandLeft\": \"{{EDC_NAMESPACE}}id\",\n    \"operator\": \"=\",\n    \"operandRight\": \"{{ASSET_ID}}\"\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -269,7 +275,8 @@
 							"",
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -278,7 +285,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"@context\": {\r\n    \"edc\": \"https://w3id.org/edc/v0.0.1/ns/\"\r\n  },\r\n  \"@type\": \"CatalogRequest\",\r\n  \"counterPartyAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\r\n  \"counterPartyId\": \"{{PROVIDER_ID}}\",\r\n  \"protocol\": \"dataspace-protocol-http\",\r\n  \"querySpec\": {\r\n    \"offset\": 0,\r\n    \"limit\": 50\r\n  }\r\n}",
+					"raw": "{\r\n  \"@context\": [\r\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\r\n    ],\r\n  \"@type\": \"CatalogRequest\",\r\n  \"counterPartyAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\r\n  \"counterPartyId\": \"{{PROVIDER_ID}}\",\r\n  \"protocol\": \"dataspace-protocol-http\",\r\n  \"querySpec\": {\r\n    \"offset\": 0,\r\n    \"limit\": 50\r\n  }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -324,7 +331,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"@context\": {\n    \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n  },\n  \"@type\": \"NegotiationInitiateRequestDto\",\n  \"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n  \"protocol\": \"dataspace-protocol-http\",\n  \"connectorId\": \"{{PROVIDER_ID}}\",\n  \"providerId\": \"{{PROVIDER_ID}}\",\n  \"offer\": {\n    \"offerId\": \"{{OFFER_ID}}\",\n    \"assetId\": \"{{ASSET_ID}}\",\n    \"policy\": {\n      \"@type\": \"odrl:Set\",\n      \"odrl:permission\": {\n        \"odrl:target\": \"{{ASSET_ID}}\",\n        \"odrl:action\": {\n          \"odrl:type\": \"USE\"\n        },\n        \"odrl:constraint\": {\n          \"odrl:or\": {\n            \"odrl:leftOperand\": \"BusinessPartnerNumber\",\n            \"odrl:operator\": {\n              \"@id\": \"odrl:eq\"\n            },\n            \"odrl:rightOperand\": \"{{CONSUMER_ID}}\"\n          }\n        }\n      },\n      \"odrl:prohibition\": [],\n      \"odrl:obligation\": [],\n      \"odrl:target\": \"{{ASSET_ID}}\"\n    }\n  }\n}",
+					"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\",\n        {\n            \"tx\": \"https://w3id.org/tractusx/v0.0.1/ns/\"\n        },\n        {\n            \"tx-auth\": \"https://w3id.org/tractusx/auth/\"\n        },\n        {\n            \"cx-policy\": \"https://w3id.org/catenax/policy/\"\n        }\n    ],\n    \"@type\": \"ContractRequest\",\n    \"counterPartyAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n    \"protocol\": \"dataspace-protocol-http\",\n    \"counterPartyId\": \"{{PROVIDER_ID}}\",\n    \"policy\": {\n        \"@type\": \"Offer\",\n        \"@id\": \"{{OFFER_ID}}\",\n        \"assigner\": \"{{PROVIDER_ID}}\",\n        \"odrl:permission\": {\n            \"odrl:target\": \"{{ASSET_ID}}\",\n            \"odrl:action\": {\n                \"odrl:type\": \"USE\"\n            },\n            \"odrl:constraint\": {\n                \"odrl:or\": {\n                    \"odrl:leftOperand\": \"BusinessPartnerNumber\",\n                    \"odrl:operator\": {\n                        \"@id\": \"odrl:eq\"\n                    },\n                    \"odrl:rightOperand\": \"{{CONSUMER_ID}}\"\n                }\n            }\n        },\n        \"odrl:prohibition\": [],\n        \"odrl:obligation\": [],\n        \"target\": \"{{ASSET_ID}}\"\n    },\n    \"callbackAddresses\": []\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -439,7 +446,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"@context\": {\n    \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n  },\n  \"assetId\": \"{{ASSET_ID}}\",\n  \"connectorAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n  \"connectorId\": \"{{PROVIDER_ID}}\",\n  \"contractId\": \"{{CONTRACT_AGREEMENT_ID}}\",\n  \"dataDestination\": {\n    \"type\": \"HttpData-PULL\"\n  },\n  \"privateProperties\": {\n    \"receiverHttpEndpoint\": \"{{BACKEND_SERVICE_PROTOCOL}}/api/v1/transfers\"\n  },\n  \"protocol\": \"dataspace-protocol-http\"\n}",
+					"raw": "{\n    \"@context\": [\n        {\n            \"@vocab\": \"https://w3id.org/edc/v0.0.1/ns/\"\n        },\n        {\n            \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n        },\n        {\n            \"tx\": \"https://w3id.org/tractusx/v0.0.1/ns/\"\n        },\n        {\n            \"tx-auth\": \"https://w3id.org/tractusx/auth/\"\n        },\n        {\n            \"cx-policy\": \"https://w3id.org/catenax/policy/\"\n        }\n    ],\n    \"@type\": \"TransferRequest\",\n    \"assetId\": \"{{ASSET_ID}}\",\n    \"counterPartyAddress\": \"{{PROVIDER_PROTOCOL_URL}}\",\n    \"counterPartyId\": \"{{PROVIDER_ID}}\",\n    \"contractId\": \"{{CONTRACT_AGREEMENT_ID}}\",\n    \"dataDestination\": {\n        \"type\": \"HttpProxy\"\n    },\n    \"protocol\": \"dataspace-protocol-http\",\n    \"transferType\": \"HttpData-PULL\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -517,6 +524,60 @@
 			"response": []
 		},
 		{
+			"name": "Get EDR DataAddress for TransferId",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"if(!pm.collectionVariables.has(\"TRANSFER_ID\")){",
+							"    throw new Error('Transfer ID is not yet available, please execute request \"Initiate Transfer\" first!');",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// get the authorization token and save it as an environment variable",
+							"if(pm.response.code < 300 && pm.response.code >= 200){",
+							"  //using the first authorization token found",
+							"  const authorization = pm.response.json()[\"authorization\"];",
+							"  pm.collectionVariables.set(\"AUTHORIZATION\", authorization);",
+							"",
+							"  pm.collectionVariables.set(\"REFRESH_TOKEN\", pm.response.json()[\"tx-auth:refreshToken\"])",
+							"  pm.collectionVariables.set(\"REFRESH_AUD\", pm.response.json()[\"tx-auth:refreshAudience\"])",
+							"  pm.collectionVariables.set(\"REFRESH_ENDPOINT\", pm.response.json()[\"tx-auth:refreshEndpoint\"])",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{CONSUMER_MANAGEMENT_URL}}/v3/edrs/{{TRANSFER_ID}}/dataaddress"
+			},
+			"response": []
+		},
+		{
 			"name": "Validate Transfer",
 			"event": [
 				{
@@ -550,8 +611,81 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
-				"url": "{{BACKEND_SERVICE}}/api/v1/transfers/{{TRANSFER_ID}}/contents"
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{AUTHORIZATION}}",
+						"type": "text"
+					}
+				],
+				"url": "{{PROVIDER_PUBLIC_URL}}"
+			},
+			"response": []
+		},
+		{
+			"name": "refresh token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// get the authorization token and save it as an environment variable",
+							"if(pm.response.code < 300 && pm.response.code >= 200){",
+							"  //using the first authorization token found",
+							"  const authorization = pm.response.json()[\"authorization\"];",
+							"  pm.collectionVariables.set(\"AUTHORIZATION\", authorization);",
+							"",
+							"  pm.collectionVariables.set(\"REFRESH_TOKEN\", pm.response.json()[\"tx-auth:refreshToken\"])",
+							"  pm.collectionVariables.set(\"REFRESH_AUD\", pm.response.json()[\"tx-auth:refreshAudience\"])",
+							"  pm.collectionVariables.set(\"REFRESH_ENDPOINT\", pm.response.json()[\"tx-auth:refreshEndpoint\"])",
+							"}",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost/bob/management/v3/edrs/{{TRANSFER_ID}}/refresh?auto_refresh=true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"bob",
+						"management",
+						"v3",
+						"edrs",
+						"{{TRANSFER_ID}}",
+						"refresh"
+					],
+					"query": [
+						{
+							"key": "auto_refresh",
+							"value": "true"
+						}
+					]
+				}
 			},
 			"response": []
 		}
@@ -633,17 +767,17 @@
 		},
 		{
 			"key": "BACKEND_SERVICE",
-			"value": "http://localhost/backend-service",
+			"value": "http://localhost/data-service",
 			"type": "string"
 		},
 		{
 			"key": "BACKEND_SERVICE_PROTOCOL",
-			"value": "http://backend-service:8080",
+			"value": "http://data-service-api:8080",
 			"type": "string"
 		},
 		{
 			"key": "JSON_CONTENT",
-			"value": "{\"userId\": 918704604,\"title\": \"agwng\",\"text\": \"oz\"}"
+			"value": "{\"id\": 918704604,\"name\": \"agwng\",\"description\": \"oz\"}"
 		},
 		{
 			"key": "CONTENT_ID",
@@ -664,6 +798,27 @@
 		{
 			"key": "CONTRACT_AGREEMENT_ID",
 			"value": ""
+		},
+		{
+			"key": "AUTHORIZATION",
+			"value": ""
+		},
+		{
+			"key": "REFRESH_TOKEN",
+			"value": ""
+		},
+		{
+			"key": "REFRESH_AUD",
+			"value": ""
+		},
+		{
+			"key": "REFRESH_ENDPOINT",
+			"value": ""
+		},
+		{
+			"key": "PROVIDER_PUBLIC_URL",
+			"value": "http://localhost/alice/api/public",
+			"type": "string"
 		}
 	]
 }

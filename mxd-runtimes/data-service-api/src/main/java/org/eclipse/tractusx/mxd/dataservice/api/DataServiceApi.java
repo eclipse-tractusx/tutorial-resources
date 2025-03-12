@@ -22,7 +22,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.eclipse.edc.spi.query.QuerySpec;
 import org.eclipse.edc.web.spi.ApiErrorDetail;
 import org.eclipse.tractusx.mxd.dataservice.model.DataRecord;
 
@@ -63,7 +62,7 @@ public interface DataServiceApi {
                     @ApiResponse(responseCode = "401", description = "Not authenticated: principal could not be identified",
                             content = @Content(array = @ArraySchema(schema = @Schema(implementation = ApiErrorDetail.class))))
             })
-    void create(DataRecord dataRecord);
+    String create(DataRecord dataRecord);
 
 
     @Operation(description = "Updates an existing DataRecord with new values.",
