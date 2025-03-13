@@ -25,6 +25,7 @@ import org.eclipse.edc.catalog.transform.JsonObjectToDistributionTransformer;
 import org.eclipse.edc.connector.controlplane.catalog.spi.Catalog;
 import org.eclipse.edc.connector.controlplane.catalog.spi.Dataset;
 import org.eclipse.edc.connector.controlplane.transform.odrl.OdrlTransformersFactory;
+import org.eclipse.edc.json.JacksonTypeManager;
 import org.eclipse.edc.jsonld.TitaniumJsonLd;
 import org.eclipse.edc.jsonld.spi.JsonLd;
 import org.eclipse.edc.jsonld.util.JacksonJsonLd;
@@ -46,6 +47,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
+import static org.eclipse.edc.spi.constants.CoreConstants.JSON_LD;
 
 /**
  * This test is designed to run against an MVD deployed in a Kubernetes cluster, with an active ingress controller.
@@ -63,7 +65,6 @@ public class TransferEndToEndTest {
     private static final String PROVIDER_ID = "BPNL000000000001";
     // public API endpoint of the provider-qna connector, goes through the ingress controller
     private static final String PROVIDER_PUBLIC_URL = "http://localhost/alice/api/public";
-    private static final String PROVIDER_MANAGEMENT_URL = "http://localhost/alice";
 
 
     private static final Duration TEST_TIMEOUT_DURATION = Duration.ofSeconds(120);
@@ -78,7 +79,7 @@ public class TransferEndToEndTest {
         transformerRegistry.register(new JsonObjectToDatasetTransformer());
         transformerRegistry.register(new JsonObjectToDataServiceTransformer());
         transformerRegistry.register(new JsonObjectToDistributionTransformer());
-        transformerRegistry.register(new JsonValueToGenericTypeTransformer(JacksonJsonLd.createObjectMapper()));
+        transformerRegistry.register(new JsonValueToGenericTypeTransformer(new JacksonTypeManager(), JSON_LD));
         OdrlTransformersFactory.jsonObjectToOdrlTransformers(new ParticipantIdMapper() {
             @Override
             public String toIri(String s) {

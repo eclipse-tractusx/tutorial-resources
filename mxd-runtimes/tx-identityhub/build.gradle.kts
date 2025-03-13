@@ -23,7 +23,6 @@ dependencies {
     // used for the runtime
     runtimeOnly(libs.bom.ih)
     runtimeOnly(libs.bom.ih.sql)
-    runtimeOnly(libs.edc.ih.account.remote)
     runtimeOnly(libs.edc.vault.hashicorp.ih)
 
     // used for custom extensions

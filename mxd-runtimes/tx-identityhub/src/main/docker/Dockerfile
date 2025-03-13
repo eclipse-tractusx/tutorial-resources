@@ -34,4 +34,5 @@ ENTRYPOINT ["java", \
      "-Dotel.exporter.prometheus.port=9090", \
      "-Djava.security.egd=file:/dev/urandom", \
      "-jar", \
-     "identityhub.jar"]
+     "identityhub.jar", \
+     "--log-level=debug"]
