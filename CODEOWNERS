@@ -8,13 +8,14 @@
 # Each line is a file pattern followed by one or more contact persons. The last matching pattern has the most precedence.
 # For more details, read the following article on GitHub: https://help.github.com/articles/about-codeowners/.
 
-CONTRIBUTING.md @paullatzelsperger @stefan-ettl
-LICENSE @alexandrudanciu
-NOTICE.md @alexandrudanciu @paullatzelsperger
-pr_etiquette.md @paullatzelsperger
-SECURITY.md @stefan-ettl @paullatzelsperger
-styleguide.md @paullatzelsperger
+CONTRIBUTING.md @lgblaumeiser
+LICENSE @lgblaumeiser
+NOTICE.md @lgblaumeiser
+pr_etiquette.md @lgblaumeiser @ndr-brt @rafaelmag110
+SECURITY.md @lgblaumeiser @ndr-brt @rafaelmag110
+styleguide.md @lgblaumeiser @ndr-brt @rafaelmag110
 
-.github/ @paullatzelsperger
+.github/ @ndr-brt @rafaelmag110
 
-/mxd/ @paullatzelsperger
+/mxd/ @ndr-brt @rafaelmag110
+/mxd-runtimes/ @ndr-brt @rafaelmag110
