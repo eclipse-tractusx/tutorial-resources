@@ -23,7 +23,7 @@
 
 resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
   // wait until the connectors are running, otherwise terraform may report an error
-  depends_on = [module.alice-connector, module.bob-connector]
+  depends_on = [module.alice-connector, module.alice-identityhub, module.bob-connector, module.bob-identityhub]
   metadata {
     name      = "seed-connectors"
     namespace = kubernetes_namespace.mxd-ns.metadata.0.name
