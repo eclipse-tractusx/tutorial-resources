@@ -18,11 +18,11 @@
 #
 
 output "bob-database-credentials" {
-  value = local.alice-postgres
+  value = local.bob-postgres
 }
 
 output "alice-database-credentials" {
-  value = local.bob-postgres
+  value = local.alice-postgres
 }
 
 output "bob-urls" {

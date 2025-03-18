@@ -110,7 +110,7 @@ resource "kubernetes_deployment" "identityhub" {
 
 resource "kubernetes_config_map" "identityhub-config" {
   metadata {
-    name      = "${lower(var.humanReadableName)}-ih-config"
+    name      = "${lower(var.humanReadableName)}-config"
     namespace = var.namespace
   }
 
