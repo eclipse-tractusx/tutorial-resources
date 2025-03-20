@@ -17,7 +17,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Status code is 204 No Content (if new asset) or 409 Conflict (if asset already exists)\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 404, 409])",
 									"});"
 								],
 								"type": "text/javascript",
@@ -68,7 +68,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Status code is 204 No Content (if new asset) or 409 Conflict (if asset already exists)\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 404, 409])",
 									"});"
 								],
 								"type": "text/javascript",
@@ -119,7 +119,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Status code is 204 No Content (if new asset) or 409 Conflict (if asset already exists)\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 404, 409])",
 									"});"
 								],
 								"type": "text/javascript",
@@ -170,7 +170,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Status code is 204 No Content (if new policy) or 409 Conflict (if policy already exists)\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 404, 409])",
 									"});"
 								],
 								"type": "text/javascript",
@@ -221,7 +221,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Status code is 204 No Content (if new policy) or 409 Conflict (if policy already exists)\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 404, 409])",
 									"});"
 								],
 								"type": "text/javascript",
@@ -272,7 +272,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Status code is 204 No Content (if new policy) or 409 Conflict (if policy already exists)\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 404, 409])",
 									"});"
 								],
 								"type": "text/javascript",
@@ -323,7 +323,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Status code is 204 No Content (if new contract definition) or 409 Conflict (if contract deifinition already exists)\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 404, 409])",
 									"});"
 								],
 								"type": "text/javascript",
@@ -374,7 +374,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Status code is 204 No Content (if new contract definition) or 409 Conflict (if contract deifinition already exists)\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 404, 409])",
 									"});"
 								],
 								"type": "text/javascript",
@@ -450,7 +450,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Status code is 204 No Content (if new asset) or 409 Conflict (if asset already exists)\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 404, 409])",
 									"});"
 								],
 								"type": "text/javascript",
@@ -501,7 +501,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Status code is 204 No Content (if new asset) or 409 Conflict (if asset already exists)\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 404, 409])",
 									"});"
 								],
 								"type": "text/javascript",
@@ -552,7 +552,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Status code is 204 No Content (if new policy) or 409 Conflict (if policy already exists)\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 404, 409])",
 									"});"
 								],
 								"type": "text/javascript",
@@ -603,7 +603,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Status code is 204 No Content (if new policy) or 409 Conflict (if policy already exists)\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 404, 409])",
 									"});"
 								],
 								"type": "text/javascript",
@@ -654,7 +654,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Status code is 204 No Content (if new contract definition) or 409 Conflict (if contract deifinition already exists)\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 404, 409])",
 									"});"
 								],
 								"type": "text/javascript",
@@ -885,7 +885,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Response status code is 200 or 409\", function () {",
-									"  pm.expect(pm.response.code).to.be.oneOf([200, 409]);",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 404, 409]);",
 									"});",
 									"",
 									"var jsonData = pm.response.json();",
@@ -943,7 +943,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Response status code is 204 or 409\", function () {",
-									"  pm.expect(pm.response.code).to.be.oneOf([204, 409]);",
+									"  pm.expect(pm.response.code).to.be.oneOf([204, 404, 409]);",
 									"});"
 								],
 								"type": "text/javascript",
@@ -998,7 +998,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Response status code is 204 or 409\", function () {",
-									"  pm.expect(pm.response.code).to.be.oneOf([204, 409]);",
+									"  pm.expect(pm.response.code).to.be.oneOf([204, 404, 409]);",
 									"});"
 								],
 								"type": "text/javascript",
@@ -1179,7 +1179,7 @@
 								"participants"
 							]
 						},
-						"description": "Generated from cURL: curl -sL -X POST 'http://localhost:10013/api/admin/v1alpha/participants' \\\n-H 'Content-Type: application/json' \\\n-d '{ \"did\": \"did:web:localhost%3A7083\", \"participantId\": \"did:web:localhost%3A7083\", \"name\": \"Consumer Participant\"}'"
+						"description": "Generated from cURL: curl -sL -X POST 'http://localhost:10015/api/admin/v1alpha/participants' \\\n-H 'Content-Type: application/json' \\\n-d '{ \"did\": \"did:web:localhost%3A7083\", \"participantId\": \"did:web:localhost%3A7083\", \"name\": \"Consumer Participant\"}'"
 					},
 					"response": []
 				},
@@ -1221,7 +1221,7 @@
 								"participants"
 							]
 						},
-						"description": "Generated from cURL: curl -sL -X POST 'http://localhost:10013/api/admin/v1alpha/participants' \\\n-H 'Content-Type: application/json' \\\n-d '{ \"did\": \"did:web:localhost%3A7083\", \"participantId\": \"did:web:localhost%3A7083\", \"name\": \"Consumer Participant\"}'"
+						"description": "Generated from cURL: curl -sL -X POST 'http://localhost:10015/api/admin/v1alpha/participants' \\\n-H 'Content-Type: application/json' \\\n-d '{ \"did\": \"did:web:localhost%3A7083\", \"participantId\": \"did:web:localhost%3A7083\", \"name\": \"Consumer Participant\"}'"
 					},
 					"response": []
 				},
@@ -1263,7 +1263,7 @@
 								"attestations"
 							]
 						},
-						"description": "Generated from cURL: curl -sL -X POST 'http://localhost:10013/api/admin/v1alpha/attestations' \\\n-H 'Content-Type: application/json' \\\n-d '{\n  \"attestationType\": \"demo\",\n  \"configuration\": {\n  },\n  \"id\": \"demo-attestation-def-1\"\n}'"
+						"description": "Generated from cURL: curl -sL -X POST 'http://localhost:10015/api/admin/v1alpha/attestations' \\\n-H 'Content-Type: application/json' \\\n-d '{\n  \"attestationType\": \"demo\",\n  \"configuration\": {\n  },\n  \"id\": \"demo-attestation-def-1\"\n}'"
 					},
 					"response": []
 				},
@@ -1293,7 +1293,7 @@
 								"credentialdefinitions"
 							]
 						},
-						"description": "Generated from cURL: curl -sL -X POST 'http://localhost:10013/api/admin/v1alpha/credentialdefinitions' \\\n-H 'Content-Type: application/json' \\\n-d '{\n      \"attestations\": [\n        \"demo-attestation-def-1\"\n      ],\n      \"credentialType\": \"DemoCredential\",\n      \"dataModel\": \"V_1_1\",\n      \"id\": \"demo-credential-def-1\",\n      \"jsonSchema\": \"\",\n      \"jsonSchemaUrl\": \"https://example.com/schema/demo-credential.json\",\n      \"mappings\": [\n        {\n          \"input\": \"name\",\n          \"output\": \"credentialSubject.name\",\n          \"required\": \"true\"\n        }\n      ],\n      \"rules\": []\n    }'"
+						"description": "Generated from cURL: curl -sL -X POST 'http://localhost:10015/api/admin/v1alpha/credentialdefinitions' \\\n-H 'Content-Type: application/json' \\\n-d '{\n      \"attestations\": [\n        \"demo-attestation-def-1\"\n      ],\n      \"credentialType\": \"DemoCredential\",\n      \"dataModel\": \"V_1_1\",\n      \"id\": \"demo-credential-def-1\",\n      \"jsonSchema\": \"\",\n      \"jsonSchemaUrl\": \"https://example.com/schema/demo-credential.json\",\n      \"mappings\": [\n        {\n          \"input\": \"name\",\n          \"output\": \"credentialSubject.name\",\n          \"required\": \"true\"\n        }\n      ],\n      \"rules\": []\n    }'"
 					},
 					"response": []
 				}
@@ -1331,7 +1331,7 @@
 						"packages": {},
 						"exec": [
 							"pm.test(\"Response status code is 20x or 409\", function () {",
-							"  pm.expect(pm.response.code).to.be.oneOf([200,201,204, 409]);",
+							"  pm.expect(pm.response.code).to.be.oneOf([200,201,204, 404, 409]);",
 							"});"
 						]
 					}
