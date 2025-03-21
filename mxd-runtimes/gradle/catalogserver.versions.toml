@@ -2,8 +2,8 @@
 format.version = "1.1"
 
 [versions]
-edc = "0.12.0-SNAPSHOT"
-tractusx = "0.8.0"
+edc = "0.12.0"
+tractusx = "0.9.0"
 postgres = "42.7.3"
 
 [libraries]

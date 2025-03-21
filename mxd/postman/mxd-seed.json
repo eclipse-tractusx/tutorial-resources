@@ -193,7 +193,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@type\": \"PolicyDefinition\",\n    \"@id\": \"require-membership\",\n    \"policy\": {\n        \"@type\": \"http://www.w3.org/ns/odrl/2/Set\",\n        \"permission\": [\n            {\n                \"action\": \"use\",\n                \"constraint\": {\n                    \"@type\": \"LogicalConstraint\",\n                    \"leftOperand\": \"Membership\",\n                    \"operator\": \"eq\",\n                    \"rightOperand\": \"active\"\n                }\n            }\n        ]\n    }\n}",
+							"raw": "{\n    \"@context\": [\n        {\n            \"@vocab\": \"https://w3id.org/edc/v0.0.1/ns/\"\n        },\n        \"https://w3id.org/tractusx/policy/v1.0.0\",\n        \"http://www.w3.org/ns/odrl.jsonld\"\n    ],\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"require-membership\",\n    \"policy\": {\n        \"@type\": \"http://www.w3.org/ns/odrl/2/Set\",\n        \"permission\": [\n            {\n                \"action\": \"use\",\n                \"constraint\": {\n                    \"@type\": \"LogicalConstraint\",\n                    \"leftOperand\": \"Membership\",\n                    \"operator\": \"eq\",\n                    \"rightOperand\": \"active\"\n                }\n            }\n        ]\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -244,7 +244,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@type\": \"PolicyDefinition\",\n    \"@id\": \"require-deg\",\n    \"policy\": {\n        \"@type\": \"http://www.w3.org/ns/odrl/2/Set\",\n        \"permission\": [\n            {\n                \"action\": \"use\",\n                \"constraint\": {\n                    \"@type\": \"LogicalConstraint\",\n                    \"leftOperand\": \"FrameworkAgreement\",\n                    \"operator\": \"eq\",\n                    \"rightOperand\": \"DataExchangeGovernance\"\n                }\n            }\n        ]\n    }\n}",
+							"raw": "{\n    \"@context\": [\n        {\n            \"@vocab\": \"https://w3id.org/edc/v0.0.1/ns/\"\n        },\n        \"https://w3id.org/tractusx/policy/v1.0.0\",\n        \"http://www.w3.org/ns/odrl.jsonld\"\n    ],\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"require-deg\",\n    \"policy\": {\n        \"@type\": \"http://www.w3.org/ns/odrl/2/Set\",\n        \"permission\": [\n            {\n                \"action\": \"use\",\n                \"constraint\": {\n                    \"@type\": \"LogicalConstraint\",\n                    \"leftOperand\": \"FrameworkAgreement\",\n                    \"operator\": \"eq\",\n                    \"rightOperand\": \"DataExchangeGovernance\"\n                }\n            }\n        ]\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -295,7 +295,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@type\": \"PolicyDefinition\",\n    \"@id\": \"require-dismantler\",\n    \"policy\": {\n        \"@type\": \"http://www.w3.org/ns/odrl/2/Set\",\n        \"permission\": [\n            {\n                \"action\": \"use\",\n                \"constraint\": {\n                    \"@type\": \"LogicalConstraint\",\n                    \"leftOperand\": \"Dismantler\",\n                    \"operator\": \"eq\",\n                    \"rightOperand\": \"active\"\n                }\n            }\n        ]\n    }\n}",
+							"raw": "{\n    \"@context\": [\n        {\n            \"@vocab\": \"https://w3id.org/edc/v0.0.1/ns/\"\n        },\n        \"https://w3id.org/tractusx/policy/v1.0.0\",\n        \"http://www.w3.org/ns/odrl.jsonld\"\n    ],\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"require-dismantler\",\n    \"policy\": {\n        \"@type\": \"http://www.w3.org/ns/odrl/2/Set\",\n        \"permission\": [\n            {\n                \"action\": \"use\",\n                \"constraint\": {\n                    \"@type\": \"LogicalConstraint\",\n                    \"leftOperand\": \"Dismantler\",\n                    \"operator\": \"eq\",\n                    \"rightOperand\": \"active\"\n                }\n            }\n        ]\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1160,7 +1160,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"did\": \"{{CONSUMER_ID}}\",\n    \"participantId\": \"{{CONSUMER_ID}}\",\n    \"name\": \"{{CONSUMER_NAME}}\"\n}",
+							"raw": "{\n            \"roles\":[\"admin\"],\n            \"serviceEndpoints\":[\n              {\n                 \"type\": \"IssuerService\",\n                 \"serviceEndpoint\": \"http://dataspace-issuer-service:10012/api/issuance/v1alpha/issuers/ZGlkOndlYjpkYXRhc3BhY2UtaXNzdWVyLXNlcnZpY2UlM0ExMDAxNjppc3N1ZXI=\",\n                 \"id\": \"issuer-service-1\"\n              }\n            ],\n            \"active\": true,\n            \"participantId\": \"{{CONSUMER_ID}}\",\n            \"did\": \"{{CONSUMER_ID}}\",\n            \"key\":{\n                \"keyId\": \"{{CONSUMER_ID}}#key-1\",\n                \"privateKeyAlias\": \"key-1\",\n                \"keyGeneratorParams\":{\n                  \"algorithm\": \"EdDSA\"\n                }\n            }\n      }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1168,13 +1168,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{ISSUER_ADMIN_URL}}/api/admin/v1alpha/participants",
+							"raw": "{{ISSUER_CS_URL}}/api/identity/v1alpha/participants",
 							"host": [
-								"{{ISSUER_ADMIN_URL}}"
+								"{{ISSUER_CS_URL}}"
 							],
 							"path": [
 								"api",
-								"admin",
+								"identity",
 								"v1alpha",
 								"participants"
 							]
@@ -1202,7 +1202,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"did\": \"{{PROVIDER_ID}}\",\n    \"participantId\": \"{{PROVIDER_ID}}\",\n    \"name\": \"{{PROVIDER_NAME}}\"\n}",
+							"raw": "{\n            \"roles\":[\"admin\"],\n            \"serviceEndpoints\":[\n              {\n                 \"type\": \"IssuerService\",\n                 \"serviceEndpoint\": \"http://dataspace-issuer-service:10012/api/issuance/v1alpha/issuers/ZGlkOndlYjpkYXRhc3BhY2UtaXNzdWVyLXNlcnZpY2UlM0ExMDAxNjppc3N1ZXI=\",\n                 \"id\": \"issuer-service-1\"\n              }\n            ],\n            \"active\": true,\n            \"participantId\": \"{{PROVIDER_ID}}\",\n            \"did\": \"{{PROVIDER_ID}}\",\n            \"key\":{\n                \"keyId\": \"{{PROVIDER_ID}}#key-1\",\n                \"privateKeyAlias\": \"key-1\",\n                \"keyGeneratorParams\":{\n                  \"algorithm\": \"EdDSA\"\n                }\n            }\n      }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1210,13 +1210,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{ISSUER_ADMIN_URL}}/api/admin/v1alpha/participants",
+							"raw": "{{ISSUER_CS_URL}}/api/identity/v1alpha/participants",
 							"host": [
-								"{{ISSUER_ADMIN_URL}}"
+								"{{ISSUER_CS_URL}}"
 							],
 							"path": [
 								"api",
-								"admin",
+								"identity",
 								"v1alpha",
 								"participants"
 							]
@@ -1252,7 +1252,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{ISSUER_ADMIN_URL}}/api/admin/v1alpha/attestations",
+							"raw": "{{ISSUER_ADMIN_URL}}/api/admin/v1alpha/participants/{{PARTICIPANT_CONTEXT_ID_BASE64}}/attestations",
 							"host": [
 								"{{ISSUER_ADMIN_URL}}"
 							],
@@ -1260,6 +1260,8 @@
 								"api",
 								"admin",
 								"v1alpha",
+								"participants",
+								"{{PARTICIPANT_CONTEXT_ID_BASE64}}",
 								"attestations"
 							]
 						},
@@ -1274,7 +1276,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"attestations\": [\n        \"name-attestation-def-1\"\n    ],\n    \"credentialType\": \"NameCredential\",\n    \"dataModel\": \"V_1_1\",\n    \"id\": \"name-credential-def-1\",\n    \"jsonSchema\": \"{}\",\n    \"jsonSchemaUrl\": \"https://example.com/schema/name-credential.json\",\n    \"mappings\": [\n        {\n            \"input\": \"participant.name\",\n            \"output\": \"credentialSubject.name\",\n            \"required\": \"true\"\n        },\n        {\n            \"input\": \"credential.id\",\n            \"output\": \"credentialSubject.id\",\n            \"required\": \"true\"\n        }\n    ],\n    \"rules\": [\n        {\n            \"type\": \"expression\",\n            \"configuration\": {\n                \"claim\": \"onboarding.signedDocuments\",\n                \"operator\": \"eq\",\n                \"value\": true\n            }\n        }\n    ]\n}",
+							"raw": "{\n    \"attestations\": [\n        \"name-attestation-def-1\"\n    ],\n    \"formats\": [\n        \"VC1_0_JWT\"\n    ],\n    \"credentialType\": \"NameCredential\",\n    \"validity\": \"1000000000000\",\n    \"id\": \"name-credential-def-1\",\n    \"jsonSchema\": \"{}\",\n    \"jsonSchemaUrl\": \"https://example.com/schema/name-credential.json\",\n    \"mappings\": [\n        {\n            \"input\": \"participant.name\",\n            \"output\": \"credentialSubject.name\",\n            \"required\": \"true\"\n        },\n        {\n            \"input\": \"credential.id\",\n            \"output\": \"credentialSubject.id\",\n            \"required\": \"true\"\n        }\n    ],\n    \"rules\": [\n        {\n            \"type\": \"expression\",\n            \"configuration\": {\n                \"claim\": \"onboarding.signedDocuments\",\n                \"operator\": \"eq\",\n                \"value\": true\n            }\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1282,7 +1284,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{ISSUER_ADMIN_URL}}/api/admin/v1alpha/credentialdefinitions",
+							"raw": "{{ISSUER_ADMIN_URL}}/api/admin/v1alpha/participants/{{PARTICIPANT_CONTEXT_ID_BASE64}}/credentialdefinitions",
 							"host": [
 								"{{ISSUER_ADMIN_URL}}"
 							],
@@ -1290,6 +1292,8 @@
 								"api",
 								"admin",
 								"v1alpha",
+								"participants",
+								"{{PARTICIPANT_CONTEXT_ID_BASE64}}",
 								"credentialdefinitions"
 							]
 						},

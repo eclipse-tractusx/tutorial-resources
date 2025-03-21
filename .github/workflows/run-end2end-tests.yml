@@ -71,7 +71,7 @@ jobs:
             --timeout=90s
       - name: "Load Docker Images"
         run: |-
-          kind load docker-image --name mxd data-service-api tx-identityhub tx-identityhub-sts tx-catalog-server tx-sts
+          kind load docker-image --name mxd data-service-api tx-identityhub tx-catalog-server tx-issuerservice
 
       - name: "Terraform init"
         working-directory: ./mxd
