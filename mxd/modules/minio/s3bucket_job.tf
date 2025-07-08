@@ -36,8 +36,7 @@ resource "kubernetes_job" "create_minio_bucket" {
           name    = "minio-client"
           image   = "minio/mc"
           command = ["/bin/sh", "-c"]
-          args    = ["mc config host add minio http://${local.minio-url} ${var.minio-username} ${var.minio-password} && mc mb --ignore-existing minio/${local.bucket-name}"]
-        }
+          args    = ["mc alias set minio http://${local.minio-url} ${var.minio-username} ${var.minio-password} && mc mb --ignore-existing minio/${local.bucket-name}"]
         restart_policy = "OnFailure"
       }
     }
@@ -65,7 +64,7 @@ resource "kubernetes_job" "minio-upload-document" {
           name    = "mc"
           image   = "minio/mc"
           command = ["/bin/sh", "-c"]
-          args    = ["mc config host add minio http://${local.minio-url} ${var.minio-username} ${var.minio-password} && mc cp /opt/config/${local.file-name} minio/${local.bucket-name}/${var.humanReadableName}-${local.file-name}"]
+          args    = ["mc alias set minio http://${local.minio-url} ${var.minio-username} ${var.minio-password} && mc cp /opt/config/${local.file-name} minio/${local.bucket-name}/${var.humanReadableName}-${local.file-name}"]
           volume_mount {
             name       = "${var.humanReadableName}-minio-document"
             mount_path = "/opt/config"
