@@ -39,7 +39,7 @@ jobs:
   verify-license-headers:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: "Check for files without a license header"
         run: |-
           # checks all java, yaml, kts and sql files for an Apache 2.0 license header
@@ -54,7 +54,7 @@ jobs:
   validate-terraform-format:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: "Setup Terraform"
         uses: hashicorp/setup-terraform@v3
