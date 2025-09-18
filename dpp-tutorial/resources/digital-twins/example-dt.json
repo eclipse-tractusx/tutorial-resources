@@ -1,0 +1,112 @@
+{
+  "description": [
+    {
+      "language": "en",
+      "text": "Car/part Digital Twin"
+    }
+  ],
+  "displayName": [],
+  "globalAssetId": "urn:uuid:<digitalTwinId>",
+  "idShort": "<PART_NAME>",
+  "id": "<digitalTwinId>",
+  "specificAssetIds": [
+    {
+      "name": "manufacturerId",
+      "value": "BPNL00000003CSGV",
+      "externalSubjectId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "BPNL00000003CSGV"
+          }
+        ]
+      }
+    },
+    {
+      "name": "partInstanceId",
+      "value": "<YOUR PART INSTANCE ID>",
+      "externalSubjectId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "BPNL00000003CSGV"
+          }
+        ]
+      }
+    },
+    {
+      "name": "manufacturerPartId",
+      "value": "MPI7654",
+      "externalSubjectId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "PUBLIC_READABLE"
+          },
+          {
+            "type": "GlobalReference",
+            "value": "BPNL00000003CSGV"
+          }
+        ]
+      }
+    },
+    {
+      "name": "digitalTwinType",
+      "value": "PartInstance",
+      "externalSubjectId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "BPNL00000003CSGV"
+          }
+        ]
+      }
+    }
+  ],
+  "submodelDescriptors": [
+    {
+      "endpoints": [
+        {
+          "interface": "SUBMODEL-3.0",
+          "protocolInformation": {
+            "href": "<EDC_DATAPLANE_URL>/api/public/urn:uuid:<digitalTwinSubmodelId>",
+            "endpointProtocol": "HTTP",
+            "endpointProtocolVersion": ["1.1"],
+            "subprotocol": "DSP",
+            "subprotocolBody": "id=urn:uuid:9dc73b86-ef48-4cb9-b63e-4a392f04ecf1;dspEndpoint=<EDC_CONTROLPLANE_URL>",
+            "subprotocolBodyEncoding": "plain",
+            "securityAttributes": [
+              {
+                "type": "NONE",
+                "key": "NONE",
+                "value": "NONE"
+              }
+            ]
+          }
+        }
+      ],
+      "idShort": "digitalProductPass",
+      "id": "urn:uuid:<digitalTwinSubmodelId>",
+      "semanticId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "Submodel",
+            "value": "urn:samm:io.catenax.generic.digital_product_passport:5.0.0#DigitalProductPassport"
+          }
+        ]
+      },
+      "description": [
+        {
+          "language": "en",
+          "text": "Digital Product Pass Submodel"
+        }
+      ],
+      "displayName": []
+    }
+  ]
+}
