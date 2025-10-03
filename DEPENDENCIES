@@ -430,7 +430,7 @@ npm/npmjs/-/node-forge/1.3.1, (BSD-3-Clause OR GPL-2.0-only) AND MIT, approved, 
 npm/npmjs/-/node-gyp-build-optional-packages/5.1.1, MIT, approved, clearlydefined
 npm/npmjs/-/node-gyp-build-optional-packages/5.2.2, MIT, approved, clearlydefined
 npm/npmjs/-/node-gyp-build/4.8.1, MIT, approved, #14661
-npm/npmjs/-/node-gyp/10.1.0, MIT, restricted, clearlydefined
+npm/npmjs/-/node-gyp/10.1.0, MIT AND BSD-3-Clause AND (Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause) AND (Apache-2.0 AND BSD-3-Clause) AND Apache-2.0 AND BSD-2-Clause, approved, #23706
 npm/npmjs/-/node-machine-id/1.1.12, MIT, approved, clearlydefined
 npm/npmjs/-/node-releases/2.0.14, MIT, approved, #1954
 npm/npmjs/-/nopt/7.2.1, ISC, approved, #9086
@@ -723,7 +723,7 @@ npm/npmjs/@angular-eslint/template-parser/18.2.0, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/utils/18.2.0, MIT, approved, clearlydefined
 npm/npmjs/@angular-eslint/utils/18.3.1, MIT, approved, clearlydefined
 npm/npmjs/@angular/animations/18.0.6, MIT, approved, clearlydefined
-npm/npmjs/@angular/build/18.0.7, MIT AND (JSON AND MIT), restricted, #23710
+npm/npmjs/@angular/build/18.0.7, MIT, approved, #23710
 npm/npmjs/@angular/cdk/18.0.6, MIT, approved, clearlydefined
 npm/npmjs/@angular/cli/18.0.7, MIT, approved, clearlydefined
 npm/npmjs/@angular/common/18.0.6, MIT, approved, clearlydefined
