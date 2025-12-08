@@ -11,12 +11,12 @@
 CONTRIBUTING.md @lgblaumeiser
 LICENSE @lgblaumeiser
 NOTICE.md @lgblaumeiser
-pr_etiquette.md @lgblaumeiser @bmg13 @rafaelmag110
-SECURITY.md @lgblaumeiser @bmg13 @rafaelmag110
-styleguide.md @lgblaumeiser @bmg13 @rafaelmag110
+pr_etiquette.md @lgblaumeiser @bmg13
+SECURITY.md @lgblaumeiser @bmg13
+styleguide.md @lgblaumeiser @bmg13
 
-.github/ @bmg13 @rafaelmag110
+.github/ @bmg13
 
-/mxd/ @bmg13 @rafaelmag110
-/mxd-runtimes/ @bmg13 @rafaelmag110
+/mxd/ @bmg13
+/mxd-runtimes/ @bmg13
 /dpp-tutorial/ @matbmoser
