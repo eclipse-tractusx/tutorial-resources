@@ -1,35 +1,59 @@
-# Migration Guide: Bitnami Keycloak → CloudPirates Keycloak
+# Generic Migration Guide: Bitnami Keycloak → CloudPirates Keycloak
 
 **Version**: Keycloak 25.x (Bitnami) → Keycloak 26.x (CloudPirates)
 
 > ⚠️ **Important**: This migration requires downtime. Schedule a maintenance window.
 
-## Overview
-
-This guide covers migrating from the Bitnami Keycloak Helm chart to the CloudPirates Keycloak Helm chart. CloudPirates provides a lighter, more maintainable chart using the official Keycloak image.
-
-### Key Differences
-
-| Aspect | Bitnami | CloudPirates |
-|--------|---------|--------------|
-| Image | `bitnami/keycloak` (custom) | `keycloak/keycloak` (official) |
-| Chart version | 23.x | 0.13.x |
-| Keycloak version | 25.x | 26.x |
-| Configuration style | Flat structure | Nested under `keycloak.*` |
-| Themes path | `/opt/bitnami/keycloak/themes/` | `/opt/keycloak/themes/` |
+This guide provides generic migration instructions for any project using the Bitnami Keycloak Helm chart that wants to migrate to CloudPirates. For Industry Core Hub specific instructions, see the [ICHub Migration Guide](./BITNAMI_TO_CLOUDPIRATES_KEYCLOAK_MIGRATION_GUIDE.md).
 
 ---
 
-## Chart.yaml Changes
+## Why Migrate?
 
-Update your Keycloak dependency:
+| Aspect | Bitnami | CloudPirates |
+|--------|---------|--------------|
+| Docker Image | Custom Bitnami image | Official Keycloak image |
+| Maintenance | Bitnami wrapper layer | Direct from Keycloak team |
+| Keycloak Version | 25.x | 26.x (latest) |
+| Chart Complexity | Heavy, many features | Lightweight, focused |
+| Future Support | May lag behind upstream | Tracks upstream closely |
+
+---
+
+## Migration Steps
+
+### Step 1: Backup Current Installation
+
+```bash
+# Get the Keycloak admin password
+KEYCLOAK_PASSWORD=$(kubectl get secret <release-name>-keycloak -n <namespace> \
+  -o jsonpath="{.data.admin-password}" | base64 --decode)
+
+# Port forward to Keycloak
+kubectl port-forward svc/<release-name>-keycloak 8080:80 -n <namespace> &
+
+# Export realm from Admin Console:
+# 1. Navigate to http://localhost:8080/auth/admin
+# 2. Login with admin credentials
+# 3. Go to Realm Settings → Action → Partial Export
+# 4. Select all options and export to JSON
+# 5. Save the JSON file
+
+# If using dedicated PostgreSQL, backup the database:
+kubectl exec <postgresql-pod> -n <namespace> -- \
+  pg_dump -U keycloak -d keycloak > keycloak_backup.sql
+```
+
+### Step 2: Update Chart.yaml
+
+Change the Keycloak dependency:
 
 ```yaml
 # Before (Bitnami)
 dependencies:
   - condition: keycloak.enabled
     name: keycloak
-    repository: oci://registry-1.docker.io/bitnamicharts
+    repository: oci://registry-1.docker.io/bitnamicharts  # or https://raw.githubusercontent.com/bitnami/charts/...
     version: 23.0.0
 
 # After (CloudPirates)
@@ -38,6 +62,140 @@ dependencies:
     name: keycloak
     repository: oci://registry-1.docker.io/cloudpirates
     version: 0.13.6
+```
+
+### Step 3: Update values.yaml
+
+Migrate your configuration using the [Configuration Mapping](#configuration-mapping) below.
+
+**Key changes to make:**
+
+```yaml
+keycloak:
+  # Image (CloudPirates uses official image)
+  image:
+    tag: "26.5.2"
+  
+  # Admin config - now nested under keycloak.*
+  keycloak:
+    adminUser: admin
+    adminPassword: "your-password"
+    proxyHeaders: "xforwarded"  # Was: proxy: edge
+    production: false
+    httpRelativePath: /auth  # NO trailing slash!
+  
+  # Database - different structure
+  database:
+    type: postgres
+    host: "postgresql-service"
+    name: keycloak
+    existingSecret: "keycloak-db-secret"  # Must have db-username, db-password keys
+  
+  postgres:
+    enabled: false  # Use external PostgreSQL
+```
+
+### Step 4: Create Database Secret
+
+CloudPirates requires a secret with specific keys:
+
+```bash
+kubectl create secret generic keycloak-db-secret -n <namespace> \
+  --from-literal=db-username="keycloak_user" \
+  --from-literal=db-password="your_db_password"
+```
+
+Or create a template:
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keycloak-db-secret
+type: Opaque
+stringData:
+  db-username: "keycloak_user"
+  db-password: "your_db_password"
+```
+
+### Step 5: Update Init Containers and Volume Mounts
+
+Update paths from `/opt/bitnami/keycloak/` to `/opt/keycloak/`:
+
+```yaml
+# Before (Bitnami)
+initContainers:
+  - name: import
+    volumeMounts:
+      - name: themes
+        mountPath: /opt/bitnami/keycloak/themes/custom
+
+# After (CloudPirates)
+extraInitContainers:
+  - name: import-themes
+    volumeMounts:
+      - name: themes
+        mountPath: /opt/keycloak/themes/custom
+```
+
+### Step 6: Uninstall Current Deployment
+
+```bash
+# Uninstall current Keycloak
+helm uninstall <release-name> -n <namespace>
+
+# Wait for pods to terminate
+kubectl wait --for=delete pod/<release-name>-keycloak-0 -n <namespace> --timeout=120s
+
+# Optional: Delete PVCs if you want a clean start
+# kubectl delete pvc data-<release-name>-keycloak-0 -n <namespace>
+```
+
+### Step 7: Deploy CloudPirates Keycloak
+
+```bash
+# Update dependencies
+helm dependency update
+
+# Install new version
+helm install <release-name> . -n <namespace>
+
+# Wait for Keycloak to be ready
+kubectl wait --for=condition=ready pod/<release-name>-keycloak-0 -n <namespace> --timeout=600s
+```
+
+### Step 8: Verify Migration
+
+```bash
+# Check pod status
+kubectl get pods -n <namespace>
+
+# Port forward and test
+kubectl port-forward svc/<release-name>-keycloak 8080:80 -n <namespace> &
+
+# Verify Keycloak is responding
+curl -s http://localhost:8080/auth/realms/master | jq .realm
+
+# Access admin console
+echo "Admin Console: http://localhost:8080/auth/admin"
+```
+
+### Step 9: Import Realm (if needed)
+
+If realm was not auto-imported, use the backup from Step 1:
+
+```bash
+# Via Admin Console:
+# 1. Go to http://localhost:8080/auth/admin
+# 2. Create realm → Import → Select your backup JSON
+
+# Or via keycloak-config-cli:
+kubectl run realm-import --rm -i --restart=Never \
+  --image=adorsys/keycloak-config-cli:latest-26 \
+  -- java -jar /app/keycloak-config-cli.jar \
+  --keycloak.url=http://<release-name>-keycloak \
+  --keycloak.user=admin \
+  --keycloak.password=<admin-password> \
+  --import.files.locations=/realm.json
 ```
 
 ---
@@ -68,11 +226,9 @@ dependencies:
 | `keycloak.externalDatabase.host` | `keycloak.database.host` | |
 | `keycloak.externalDatabase.port` | `keycloak.database.port` | |
 | `keycloak.externalDatabase.database` | `keycloak.database.name` | |
-| `keycloak.externalDatabase.user` | Via `existingSecret` | See below |
-| `keycloak.externalDatabase.password` | Via `existingSecret` | See below |
-| `keycloak.externalDatabase.existingSecret` | `keycloak.database.existingSecret` | Different key names |
+| `keycloak.externalDatabase.existingSecret` | `keycloak.database.existingSecret` | Different key names! |
 
-### Database Secret Format
+### Database Secret Keys
 
 **Critical Change**: CloudPirates expects different secret keys:
 
@@ -80,18 +236,6 @@ dependencies:
 |--------------|-------------------|
 | `password` or custom | `db-password` |
 | `username` or custom | `db-username` |
-
-Create a secret with the correct format:
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: keycloak-db-secret
-type: Opaque
-stringData:
-  db-username: "your_db_user"
-  db-password: "your_db_password"
-```
 
 ### Ingress Configuration
 
@@ -132,10 +276,7 @@ keycloak:
 | `keycloak.initContainers` | `keycloak.extraInitContainers` |
 | `keycloak.extraVolumes` | `keycloak.extraVolumes` |
 | `keycloak.extraVolumeMounts` | `keycloak.extraVolumeMounts` |
-
-**Path changes for volume mounts:**
-- Bitnami: `/opt/bitnami/keycloak/...`
-- CloudPirates: `/opt/keycloak/...`
+| `/opt/bitnami/keycloak/...` | `/opt/keycloak/...` |
 
 ---
 
@@ -153,10 +294,6 @@ keycloak:
   keycloak:
     httpRelativePath: /auth  # NOT /auth/
 ```
-
-The chart concatenates `httpRelativePath + /realms/master`:
-- `/auth` → `/auth/realms/master` ✅
-- `/auth/` → `/auth//realms/master` ❌
 
 ### 2. Database Authentication Failed
 
@@ -218,179 +355,6 @@ keycloak:
 
 ---
 
-## Migration Steps
-
-### Step 1: Backup Current Installation
-
-```bash
-# Get the Keycloak admin password
-KEYCLOAK_PASSWORD=$(kubectl get secret <release-name>-keycloak -n <namespace> \
-  -o jsonpath="{.data.admin-password}" | base64 --decode)
-
-# Port forward to Keycloak
-kubectl port-forward svc/<release-name>-keycloak 8080:80 -n <namespace> &
-
-# Access Admin Console and export realm:
-# 1. Navigate to http://localhost:8080/auth/admin
-# 2. Login with admin credentials
-# 3. Go to Realm Settings → Action → Partial Export
-# 4. Select all options and export to JSON
-
-# If using dedicated PostgreSQL, backup the database:
-kubectl exec <postgresql-pod> -n <namespace> -- \
-  pg_dump -U keycloak -d keycloak > keycloak_backup.sql
-```
-
-### Step 2: Update Chart.yaml
-
-Change the Keycloak dependency:
-
-```yaml
-# Before (Bitnami)
-dependencies:
-  - condition: keycloak.enabled
-    name: keycloak
-    repository: oci://registry-1.docker.io/bitnamicharts
-    version: 23.0.0
-
-# After (CloudPirates)
-dependencies:
-  - condition: keycloak.enabled
-    name: keycloak
-    repository: oci://registry-1.docker.io/cloudpirates
-    version: 0.13.6
-```
-
-### Step 3: Update values.yaml
-
-Migrate configuration using the mapping tables above. Key changes:
-
-```yaml
-keycloak:
-  # Image (CloudPirates uses official image)
-  image:
-    tag: "26.5.2"
-  
-  # Admin config - nested under keycloak.*
-  keycloak:
-    adminUser: admin
-    adminPassword: "your-password"
-    proxyHeaders: "xforwarded"  # Was: proxy: edge
-    production: false
-    httpRelativePath: /auth  # NO trailing slash!
-  
-  # Database - different structure
-  database:
-    type: postgres
-    host: "postgresql-service"
-    name: keycloak
-    existingSecret: "keycloak-db-secret"  # Must have db-username, db-password keys
-  
-  postgres:
-    enabled: false  # Use external PostgreSQL
-```
-
-### Step 4: Create Database Secret
-
-CloudPirates requires specific secret keys:
-
-```bash
-kubectl create secret generic keycloak-db-secret -n <namespace> \
-  --from-literal=db-username="keycloak_user" \
-  --from-literal=db-password="your_db_password"
-```
-
-Or via template:
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: keycloak-db-secret
-type: Opaque
-stringData:
-  db-username: "keycloak_user"
-  db-password: "your_db_password"
-```
-
-### Step 5: Update Volume Mounts (if using custom themes)
-
-```yaml
-# Before (Bitnami)
-extraVolumeMounts:
-  - name: themes
-    mountPath: /opt/bitnami/keycloak/themes/custom
-
-# After (CloudPirates)
-extraVolumeMounts:
-  - name: themes
-    mountPath: /opt/keycloak/themes/custom
-```
-
-### Step 6: Uninstall Current Deployment
-
-```bash
-# Uninstall current Keycloak
-helm uninstall <release-name> -n <namespace>
-
-# Optional: Delete PVCs if you want a clean start
-kubectl delete pvc data-<release-name>-keycloak-0 -n <namespace>
-
-# Wait for pods to terminate
-kubectl wait --for=delete pod/<release-name>-keycloak-0 -n <namespace> --timeout=120s
-```
-
-### Step 7: Deploy CloudPirates Keycloak
-
-```bash
-# Update dependencies
-helm dependency update
-
-# Install new version
-helm install <release-name> . -n <namespace>
-
-# Wait for Keycloak to be ready
-kubectl wait --for=condition=ready pod/<release-name>-keycloak-0 -n <namespace> --timeout=600s
-```
-
-### Step 8: Verify Migration
-
-```bash
-# Check pod status
-kubectl get pods -n <namespace>
-
-# Check Keycloak version
-kubectl logs <release-name>-keycloak-0 -n <namespace> | head -20
-
-# Port forward and test
-kubectl port-forward svc/<release-name>-keycloak 8080:80 -n <namespace> &
-
-# Verify Keycloak is responding
-curl -s http://localhost:8080/auth/realms/master | jq .realm
-
-# Access admin console
-echo "Admin Console: http://localhost:8080/auth/admin"
-```
-
-### Step 9: Import Realm (if needed)
-
-If realm was not auto-imported, use the backup from Step 1:
-
-```bash
-# Via Admin Console:
-# 1. Go to http://localhost:8080/auth/admin
-# 2. Create realm → Import → Select your backup JSON
-
-# Or via keycloak-config-cli:
-kubectl run realm-import --rm -i --restart=Never \
-  --image=adorsys/keycloak-config-cli:latest-26 \
-  --env="KEYCLOAK_URL=http://<release-name>-keycloak" \
-  --env="KEYCLOAK_USER=admin" \
-  --env="KEYCLOAK_PASSWORD=<admin-password>" \
-  -- java -jar /app/keycloak-config-cli.jar --import.files.locations=/realm.json
-```
-
----
-
 ## Migration Checklist
 
 - [ ] Backup existing realm data (export from Admin Console)
@@ -403,6 +367,7 @@ kubectl run realm-import --rm -i --restart=Never \
 - [ ] Remove trailing slash from `httpRelativePath`
 - [ ] Run `helm dependency update`
 - [ ] Deploy and verify
+- [ ] Test all authentication flows
 
 ---
 
@@ -447,6 +412,9 @@ keycloak:
         hosts:
           - keycloak.example.com
   
+  service:
+    httpPort: 80
+  
   extraVolumes:
     - name: themes
       emptyDir: {}
@@ -454,6 +422,14 @@ keycloak:
   extraVolumeMounts:
     - name: themes
       mountPath: /opt/keycloak/themes/custom
+  
+  extraInitContainers:
+    - name: import-themes
+      image: your-themes-image:tag
+      command: ["sh", "-c", "cp -R /themes/* /dest"]
+      volumeMounts:
+        - name: themes
+          mountPath: /dest
 ```
 
 ---
