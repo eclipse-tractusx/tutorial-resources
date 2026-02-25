@@ -24,25 +24,94 @@ This guide provides generic migration instructions for any project using the Bit
 
 ### Step 1: Backup Current Installation
 
+#### 1a. Export Realm from Keycloak Admin Console
+
 ```bash
 # Get the Keycloak admin password
 KEYCLOAK_PASSWORD=$(kubectl get secret <release-name>-keycloak -n <namespace> \
   -o jsonpath="{.data.admin-password}" | base64 --decode)
 
-# Port forward to Keycloak
+# Port forward to Keycloak (skip if using ingress)
 kubectl port-forward svc/<release-name>-keycloak 8080:80 -n <namespace> &
-
-# Export realm from Admin Console:
-# 1. Navigate to http://localhost:8080/auth/admin
-# 2. Login with admin credentials
-# 3. Go to Realm Settings → Action → Partial Export
-# 4. Select all options and export to JSON
-# 5. Save the JSON file
-
-# If using dedicated PostgreSQL, backup the database:
-kubectl exec <postgresql-pod> -n <namespace> -- \
-  pg_dump -U keycloak -d keycloak > keycloak_backup.sql
 ```
+
+1. Navigate to the Keycloak Admin Console (`http://localhost:8080/auth/admin` or your ingress URL)
+2. Login with admin credentials
+3. Go to **Realm Settings → Action → Partial Export**
+4. Select all options and export to JSON
+5. Save the JSON file (e.g., `realm-export.json`)
+
+#### 1b. Backup Database Using pgAdmin
+
+> 💡 **Tip**: If your Helm chart already deploys pgAdmin as a subchart (e.g., `pgadmin4.enabled: true`), you can use that instance directly — it already has network access to the PostgreSQL service within the cluster.
+>
+> Example subchart configuration:
+> ```yaml
+> pgadmin4:
+>   enabled: true
+>   env:
+>     email: admin@example.com
+>     password: admin-password
+>   ingress:
+>     enabled: true
+>     hosts:
+>       - host: pgadmin.example.com
+>         paths:
+>           - path: /
+>             pathType: Prefix
+> ```
+
+**Option A — pgAdmin runs inside the same cluster (recommended):**
+
+Since pgAdmin can resolve Kubernetes service names directly, no port-forward is needed:
+
+| Field | Value |
+|-------|-------|
+| **Host name/address** | `<release-name>-postgresql` (Kubernetes service name) |
+| **Port** | `5432` |
+| **Maintenance database** | your Keycloak database name |
+| **Username** | your Keycloak database user |
+| **Password** | *(retrieve from your Kubernetes secret, see below)* |
+
+**Option B — pgAdmin runs outside the cluster:**
+
+Create a port-forward first, then connect to `localhost`:
+
+```bash
+kubectl port-forward svc/<release-name>-postgresql 5432:5432 -n <namespace> &
+```
+
+| Field | Value |
+|-------|-------|
+| **Host name/address** | `localhost` |
+| **Port** | `5432` |
+| **Maintenance database** | your Keycloak database name |
+| **Username** | your Keycloak database user |
+| **Password** | *(retrieve from your Kubernetes secret, see below)* |
+
+To retrieve the database password from your Kubernetes secret:
+```bash
+kubectl get secret <your-db-secret> -n <namespace> -o jsonpath='{.data.<password-key>}' | base64 -d
+```
+
+**Register the server and create the backup:**
+
+1. Open pgAdmin and log in
+2. Right-click **Servers** → **Register** → **Server...**
+3. In the **General** tab, set a name (e.g., `Keycloak PostgreSQL`)
+4. In the **Connection** tab, fill in the values from the table above
+5. Click **Save**
+6. In the browser tree, expand **Servers → Keycloak PostgreSQL → Databases**
+7. Right-click your database → **Backup...**
+8. Configure the backup:
+   - **Filename**: `keycloak_backup` (pgAdmin will add the extension)
+   - **Format**: `Custom` (recommended, supports selective restore) or `Plain` (SQL text)
+   - **Encoding**: `UTF8`
+9. *(Optional)* In the **Data/Objects** tab:
+   - Enable **Include CREATE DATABASE statement** for a full restore option
+   - Enable **Use Column Inserts** for maximum compatibility
+10. Click **Backup**
+11. Verify the backup completed successfully in the pgAdmin notifications panel (bell icon, bottom-right)
 
 ### Step 2: Update Chart.yaml
 
@@ -358,7 +427,7 @@ keycloak:
 ## Migration Checklist
 
 - [ ] Backup existing realm data (export from Admin Console)
-- [ ] Backup database (if applicable)
+- [ ] Backup database using pgAdmin (or equivalent tool)
 - [ ] Update `Chart.yaml` dependency
 - [ ] Update `values.yaml` configuration structure
 - [ ] Create/update database secret with `db-username`/`db-password` keys
@@ -439,4 +508,4 @@ keycloak:
 This work is licensed under the [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/legalcode).
 
 - SPDX-License-Identifier: CC-BY-4.0
-- SPDX-FileCopyrightText: 2025 Contributors to the Eclipse Foundation
+- SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
