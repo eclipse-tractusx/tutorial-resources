@@ -48,6 +48,15 @@ Set these variables according to your deployment **before starting**:
 export NAMESPACE="your-namespace"                    # e.g., "production", "staging"
 export RELEASE_NAME="your-release"                   # e.g., "my-app", "backend-service"
 export POSTGRES_POD="${RELEASE_NAME}-postgresql-0"   # StatefulSet pod name
+
+## NOTICE
+
+This work is licensed under the [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/legalcode).
+
+- SPDX-License-Identifier: CC-BY-4.0
+- SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+- SPDX-FileCopyrightText: 2026 Catena-X Automotive Network e.V.
+- SPDX-FileCopyrightText: 2026 LKS Next
 export PG_USER="postgres"                            # PostgreSQL admin user
 export PG_DATABASE="your-database"                   # Main database name
 export SECRET_NAME="your-postgres-secret"            # Secret containing passwords
