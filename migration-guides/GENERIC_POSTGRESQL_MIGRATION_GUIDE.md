@@ -12,7 +12,7 @@ This guide provides a generic, reusable procedure for migrating PostgreSQL deplo
 
 ### What This Guide Covers
 
-- Full database backup using `pg_dumpall`
+- Full database backup using `pg_dumpall` (CLI) or pgAdmin (GUI alternative)
 - Safe uninstallation of Bitnami PostgreSQL
 - Installation of CloudPirates PostgreSQL
 - Data restoration with integrity verification
@@ -31,11 +31,13 @@ This guide provides a generic, reusable procedure for migrating PostgreSQL deplo
 
 ## Prerequisites
 
-- Kubernetes cluster access with `kubectl`
+- Kubernetes cluster access with `kubectl` (the `pg_dumpall` method in Step 2 requires `kubectl exec` / RBAC `pods/exec` permissions)
 - Helm 3.x installed
 - Maintenance window scheduled
 - Sufficient local disk space for database backup (2-3x database size recommended)
 - Access to modify Helm chart files (Chart.yaml, values.yaml)
+
+> 💡 **No `kubectl exec` access?** If your environment is managed exclusively through ArgoCD or you lack direct cluster shell access, use the [pgAdmin alternative (Step 2b)](#step-2b-alternative-backup-database-using-pgadmin) instead of `pg_dumpall`.
 
 ---
 
@@ -123,6 +125,84 @@ sha256sum ${BACKUP_FILE} > ${BACKUP_FILE}.sha256
 echo "=== Backup Verification ==="
 ls -lh ${BACKUP_FILE}
 ```
+
+---
+
+### Step 2b (Alternative): Backup Database Using pgAdmin
+
+If you do not have `kubectl exec` access (e.g., environments managed exclusively via ArgoCD), you can use **pgAdmin** to create the backup through a web UI instead.
+
+> 💡 **Tip**: If your Helm chart already deploys pgAdmin as a subchart (e.g., `pgadmin4.enabled: true`), you can use that instance directly — it already has network access to the PostgreSQL service within the cluster.
+>
+> Example subchart configuration:
+> ```yaml
+> pgadmin4:
+>   enabled: true
+>   env:
+>     email: admin@example.com
+>     password: admin-password
+>   ingress:
+>     enabled: true
+>     hosts:
+>       - host: pgadmin.example.com
+>         paths:
+>           - path: /
+>             pathType: Prefix
+> ```
+
+**Option A — pgAdmin runs inside the same cluster (recommended):**
+
+Since pgAdmin can resolve Kubernetes service names directly, no port-forward is needed:
+
+| Field | Value |
+|-------|-------|
+| **Host name/address** | `<release-name>-postgresql` (Kubernetes service name) |
+| **Port** | `5432` |
+| **Maintenance database** | your database name (e.g., `PG_DATABASE`) |
+| **Username** | your PostgreSQL admin user (e.g., `postgres`) |
+| **Password** | *(retrieve from your Kubernetes secret, see below)* |
+
+**Option B — pgAdmin runs outside the cluster:**
+
+Create a port-forward first, then connect to `localhost`:
+
+```bash
+kubectl port-forward svc/<release-name>-postgresql 5432:5432 -n <namespace> &
+```
+
+| Field | Value |
+|-------|-------|
+| **Host name/address** | `localhost` |
+| **Port** | `5432` |
+| **Maintenance database** | your database name (e.g., `PG_DATABASE`) |
+| **Username** | your PostgreSQL admin user (e.g., `postgres`) |
+| **Password** | *(retrieve from your Kubernetes secret, see below)* |
+
+To retrieve the database password from your Kubernetes secret:
+```bash
+kubectl get secret <your-db-secret> -n <namespace> -o jsonpath='{.data.<password-key>}' | base64 -d
+```
+
+**Register the server and create the backup:**
+
+1. Open pgAdmin and log in
+2. Right-click **Servers** → **Register** → **Server...**
+3. In the **General** tab, set a name (e.g., `Migration PostgreSQL`)
+4. In the **Connection** tab, fill in the values from the table above
+5. Click **Save**
+6. In the browser tree, expand **Servers → Migration PostgreSQL → Databases**
+7. Right-click your database → **Backup...**
+8. Configure the backup:
+   - **Filename**: `postgresql_backup` (pgAdmin will add the extension)
+   - **Format**: `Custom` (recommended, supports selective restore) or `Plain` (SQL text)
+   - **Encoding**: `UTF8`
+9. *(Optional)* In the **Data/Objects** tab:
+   - Enable **Include CREATE DATABASE statement** for a full restore option
+   - Enable **Use Column Inserts** for maximum compatibility
+10. Click **Backup**
+11. Verify the backup completed successfully in the pgAdmin notifications panel (bell icon, bottom-right)
+
+> ⚠️ **Note**: Unlike `pg_dumpall`, a pgAdmin single-database backup does **not** include roles or other databases. If you need to preserve roles and permissions, either use `pg_dumpall` (Step 2) or back up the global objects separately via pgAdmin's **Backup Server** option.
 
 ---
 
