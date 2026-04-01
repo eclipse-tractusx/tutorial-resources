@@ -10,12 +10,31 @@
 
 This guide provides a generic, reusable procedure for migrating PostgreSQL deployments from **Bitnami Helm charts** to **CloudPirates Helm charts** in Kubernetes environments. It is designed to be adaptable to any project using these chart types.
 
+### Scope: INT/TEST vs PROD Environments
+
+⚠️ **Important**: This guide is **primarily designed for INT/TEST environments**. Production migrations with customer data require additional validation and security measures.
+
+**For INT/TEST environments:**
+- Limited data loss is generally acceptable
+- Missing database can be re-onboarded with test data
+- This guide provides sufficient checks for test deployments
+
+**For PROD environments:**
+- Requires comprehensive data integrity validation (beyond this guide)
+- May require external backup solutions and certified recovery procedures
+- Should involve database specialists and change management processes
+- Test data should first be migrated to shadow PROD to verify behavior changes
+
+**Version Parity Recommendation**: Test environments should run the **same PostgreSQL version as PROD** to detect potential behavioral changes early, before they occur in production. Treat version upgrades in test as mandatory validation steps, not as optional trials.
+
 ### What This Guide Covers
 
+- Pre-migration verification (connectivity, extensions, custom parameters)
 - Full database backup using `pg_dumpall` (CLI) or pgAdmin (GUI alternative)
 - Safe uninstallation of Bitnami PostgreSQL
 - Installation of CloudPirates PostgreSQL
-- Data restoration with integrity verification
+- Data restoration with comprehensive integrity verification
+- Business/functional testing post-migration
 - Rollback procedure if issues occur
 
 ### Version Compatibility
@@ -26,6 +45,13 @@ This guide provides a generic, reusable procedure for migrating PostgreSQL deplo
 | Target | CloudPirates PostgreSQL 18.x |
 | Helm | 3.x |
 | Kubernetes | 1.25+ |
+
+> ⚠️ **Major Version Upgrade Note**: Migration from PostgreSQL 15 to 18 involves a major version jump (spanning 16, 17, releasing 18). Behavioral changes between versions are expected:
+> - Query plans and performance may differ significantly
+> - Some SQL syntax or functions may behave differently
+> - Extension compatibility should be verified
+> - It is **strongly recommended** to test in parallel on duplicate databases before production migration
+> - See [PostgreSQL Release Notes](https://www.postgresql.org/docs/release/) for detailed changes between versions
 
 ---
 
@@ -77,6 +103,8 @@ echo "Password retrieved successfully"
 
 ### Step 1: Pre-Migration Checks
 
+#### 1a. Basic Connectivity and Documentation
+
 ```bash
 # Verify connectivity to PostgreSQL pod
 kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
@@ -100,6 +128,41 @@ kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
 ```
 
 **Save the output** - you'll compare this after migration to verify data integrity.
+
+#### 1b. Check PostgreSQL Extensions
+
+Document all extensions currently in use before migration. Extensions may require manual reinstallation or reconfiguration in the new version:
+
+```bash
+# List all installed extensions
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -c '\dx'
+
+# Get detailed extension info
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -c \
+  "SELECT extname, extversion, extschema FROM pg_extension ORDER BY extname;"
+```
+
+**Before proceeding**: Review the [PostgreSQL version upgrade notes](https://www.postgresql.org/docs/release/) for your target version to verify all extensions are still supported. Document which extensions need to be migrated and whether they require special handling.
+
+#### 1c. Check Customized Database Parameters
+
+If database parameters have been manually adjusted (autovacuum settings, shared_buffers, work_mem, etc.), document them so they can be reapplied to the target instance:
+
+```bash
+# List all non-default configuration values
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -c \
+  "SELECT name, setting, unit FROM pg_settings WHERE NOT source IN ('default', 'override') ORDER BY name;"
+
+# Export configuration to file for reference
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -c \
+  "SELECT name, setting FROM pg_settings WHERE NOT source IN ('default', 'override') ORDER BY name;" > custom_parameters.txt
+```
+
+**Important**: After migration, verify these parameters are still valid for PostgreSQL 18.x and reapply them if needed (some parameter names or ranges may have changed).
 
 ---
 
@@ -403,7 +466,74 @@ kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
    FROM pg_stat_user_tables ORDER BY n_live_tup DESC;"
 ```
 
-**Compare the row counts with Step 1 output** - they should match exactly.
+**Compare the row counts with Step 1 output** - note that n_live_tup is a statistics estimate and may deviate slightly (especially if statistics were out of date).
+
+#### Step 8b: Extended Data Integrity Checks
+
+For comprehensive validation, especially important after major version upgrades, perform these additional checks:
+
+```bash
+# Check constraints and foreign keys
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -d ${PG_DATABASE} -c \
+  "SELECT schemaname, tablename, indexname FROM pg_indexes 
+   WHERE schemaname NOT IN ('pg_catalog', 'information_schema') 
+   ORDER BY schemaname, tablename;"
+
+# Verify sequences are at expected state
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -d ${PG_DATABASE} -c \
+  "SELECT schemaname, sequencename, last_value FROM pg_sequences 
+   WHERE schemaname NOT IN ('pg_catalog', 'information_schema') 
+   ORDER BY schemaname, sequencename;"
+
+# Check roles and permissions were migrated
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -c \
+  "SELECT usename, usesuper, usecreatedb, usecanlogin FROM pg_user ORDER BY usename;"
+
+# Verify no foreign key constraint violations
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -d ${PG_DATABASE} -c \
+  "SELECT constraint_name, table_name FROM information_schema.table_constraints 
+   WHERE constraint_type = 'FOREIGN KEY' 
+   AND table_schema NOT IN ('pg_catalog', 'information_schema');"
+```
+
+**Save this output** for comparison and troubleshooting if issues arise.
+
+#### Step 8c: Verify Extensions Were Migrated
+
+Compare the extensions list from Step 1b with the current state:
+
+```bash
+# List extensions again in the new installation
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -c \
+  "SELECT extname, extversion FROM pg_extension ORDER BY extname;"
+```
+
+**If extensions are missing**: They may need to be manually reinstalled. Check the PostgreSQL documentation for each extension to determine compatibility with version 18.x.
+
+#### Step 8d: Test Critical Queries
+
+After major version upgrades (e.g., 15→18), query behavior can change. Run a sample of critical SQL queries against the migrated database and compare execution plans and results with the source system:
+
+```bash
+# Example: Get top 10 slowest queries (if pg_stat_statements is enabled)
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -d ${PG_DATABASE} -c \
+  "SELECT query, calls, total_time, mean_time FROM pg_stat_statements 
+   ORDER BY mean_time DESC LIMIT 10;" 2>/dev/null || echo "pg_stat_statements not enabled"
+
+# Compare execution plans for critical queries
+# Example: replace 'SELECT * FROM orders;' with your actual query
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -d ${PG_DATABASE} -c \
+  "EXPLAIN ANALYZE SELECT * FROM <your_critical_table> LIMIT 1;"
+```
+
+**Document any significant changes** in query performance or execution plans.
 
 ---
 
@@ -425,6 +555,45 @@ else
   echo "No application pods found - verify separately"
 fi
 ```
+
+---
+
+### Step 10: Business and Functional Testing
+
+After successful migration, run functional/business tests to ensure the application behaves correctly with the new PostgreSQL version. This is especially important after major version upgrades:
+
+```bash
+# Example functional tests (adjust for your application)
+
+# 1. Test critical business workflows
+echo "Running business workflow tests..."
+# - Create a test order/transaction
+# - Query data across multiple tables
+# - Verify calculations are correct
+# - Test report generation
+
+# 2. Test data consistency
+echo "Verifying data integrity and calculations..."
+# - Run integrity checks for your domain logic
+# - Verify totals, counts, and aggregations
+# - Test time-based queries and date calculations
+
+# 3. Performance testing
+echo "Testing performance characteristics..."
+# - Measure query response times
+# - Run typical batch operations
+# - Verify data export/import performance
+
+# 4. Edge case testing
+echo "Testing edge cases..."
+# - Test with maximum data volumes
+# - Test concurrent user scenarios
+# - Test with unusual character sets or data types
+```
+
+**Document results**: Record any performance differences or behavioral changes compared to the source system. If significant differences are observed, they may indicate incompatibility with the new PostgreSQL version that requires investigation.
+
+**For major version upgrades specifically**: Compare query execution times and patterns. PostgreSQL 18 introduces various optimizations, but some older queries may need rewriting for optimal performance. Consider running these tests in parallel with the source system to identify needed query optimizations.
 
 ---
 
@@ -581,8 +750,33 @@ postgresql:  # Note: uses alias in Chart.yaml
 
 ## Version History
 
+---
+
+## Important Reminders
+
+### For INT/TEST Environments
+- Follow this guide as written
+- Document all extensions and custom parameters before migration
+- Run business tests after migration to validate behavior
+- Use test migration as a learning opportunity for PROD migration planning
+- Keep test environment version in sync with PROD for consistency
+
+### For PROD Environments
+- Engage database specialists early
+- Test on a shadow copy of PROD data first
+- Implement additional backup and recovery validations beyond this guide
+- Have a certified rollback plan and recovery Time Objective (RTO) agreement
+- Schedule downtime during low-usage windows
+- Document all manual customizations before migration
+- Plan for extended testing and monitoring after cutover
+
+---
+
+## Version History
+
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.1 | April 2026 | Added extension checks, custom parameter documentation, enhanced data integrity checks, business testing, INT/TEST vs PROD scope clarification, major version upgrade warning |
 | 1.0 | January 2026 | Initial release, tested with PostgreSQL 15→18 migration |
 
 ---
