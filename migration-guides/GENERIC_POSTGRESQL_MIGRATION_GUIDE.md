@@ -1,7 +1,7 @@
 # Generic Migration Guide: Bitnami PostgreSQL → CloudPirates PostgreSQL
 
-**Version**: 1.0  
-**Last Updated**: January 2026  
+**Version**: 1.2  
+**Last Updated**: April 2026  
 **Estimated Time**: 15-60 minutes depending on database size
 
 > ⚠️ **Important**: This migration requires downtime. Schedule a maintenance window.
@@ -10,13 +10,32 @@
 
 This guide provides a generic, reusable procedure for migrating PostgreSQL deployments from **Bitnami Helm charts** to **CloudPirates Helm charts** in Kubernetes environments. It is designed to be adaptable to any project using these chart types.
 
-### What This Guide Covers
+### Quick Navigation
 
-- Full database backup using `pg_dumpall`
-- Safe uninstallation of Bitnami PostgreSQL
-- Installation of CloudPirates PostgreSQL
-- Data restoration with integrity verification
-- Rollback procedure if issues occur
+| Step | Action | Details |
+|------|--------|---------|
+| [1](#step-1-pre-migration-checks) | Pre-migration checks | Connectivity, extensions, parameters, row counts |
+| [2](#step-2-create-full-backup) | Backup (CLI) | `pg_dumpall` via `kubectl exec` |
+| [2b](#step-2b-alternative-backup-database-using-pgadmin) | Backup (GUI) | pgAdmin alternative if no `kubectl exec` access |
+| [3](#step-3-validate-backup-integrity) | Validate backup | Header, size, checksum |
+| [4](#step-4-stop-current-deployment) | Stop Bitnami | Uninstall release, delete PVC |
+| [5](#step-5-update-chart-configuration) | Update chart config | Switch `Chart.yaml` + `values.yaml` to CloudPirates |
+| [6](#step-6-deploy-cloudpirates-postgresql) | Deploy CloudPirates | `helm install`, verify version |
+| [7](#step-7-restore-data) | Restore data | Pipe backup into new pod |
+| [8](#step-8-verify-migration) | Verify & test | Data integrity, extensions, app connectivity, functional tests |
+
+### Scope: INT/TEST vs PROD Environments
+
+> ⚠️ This guide is **primarily designed for INT/TEST environments**. For PROD, additional validation and specialist involvement is required.
+
+| Aspect | INT/TEST | PROD |
+|--------|----------|------|
+| Data loss tolerance | Limited loss acceptable | Not acceptable |
+| Recovery | Re-onboard with test data | Certified recovery procedures |
+| Pre-migration testing | This guide is sufficient | Shadow PROD migration first |
+| Stakeholders | Development team | Database specialists + change management |
+
+**Version Parity**: Test environments should run the **same PostgreSQL version as PROD** to detect behavioral changes early.
 
 ### Version Compatibility
 
@@ -27,15 +46,23 @@ This guide provides a generic, reusable procedure for migrating PostgreSQL deplo
 | Helm | 3.x |
 | Kubernetes | 1.25+ |
 
+> ⚠️ **Major Version Upgrade Note**: Migration from PostgreSQL 15 to 18 spans multiple major versions. Query plans, SQL behavior, and extension compatibility may differ. **Test in parallel on duplicate databases before production migration.** See [PostgreSQL Release Notes](https://www.postgresql.org/docs/release/) for details.
+
+### Chart Version Pinning
+
+The CloudPirates chart is released more frequently than Bitnami. For reproducibility and stability, **always pin a specific chart version** in your `Chart.yaml`. See [Step 5](#step-5-update-chart-configuration) for the recommended configuration.
+
 ---
 
 ## Prerequisites
 
-- Kubernetes cluster access with `kubectl`
+- Kubernetes cluster access with `kubectl` (the `pg_dumpall` method in Step 2 requires `kubectl exec` / RBAC `pods/exec` permissions)
 - Helm 3.x installed
 - Maintenance window scheduled
 - Sufficient local disk space for database backup (2-3x database size recommended)
 - Access to modify Helm chart files (Chart.yaml, values.yaml)
+
+> 💡 **No `kubectl exec` access?** If your environment is managed exclusively through ArgoCD or you lack direct cluster shell access, use the [pgAdmin alternative (Step 2b)](#step-2b-alternative-backup-database-using-pgadmin) instead of `pg_dumpall`.
 
 ---
 
@@ -75,6 +102,8 @@ echo "Password retrieved successfully"
 
 ### Step 1: Pre-Migration Checks
 
+#### 1a. Basic Connectivity and Documentation
+
 ```bash
 # Verify connectivity to PostgreSQL pod
 kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
@@ -98,6 +127,41 @@ kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
 ```
 
 **Save the output** - you'll compare this after migration to verify data integrity.
+
+#### 1b. Check PostgreSQL Extensions
+
+Document all extensions before migration — they may require reinstallation in the new version:
+
+```bash
+# List all installed extensions
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -c '\dx'
+
+# Get detailed extension info
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -c \
+  "SELECT extname, extversion, extschema FROM pg_extension ORDER BY extname;"
+```
+
+**Before proceeding**: Review the [PostgreSQL version upgrade notes](https://www.postgresql.org/docs/release/) to verify all extensions are supported in your target version.
+
+#### 1c. Check Customized Database Parameters
+
+Document any non-default parameters so they can be reapplied after migration:
+
+```bash
+# List all non-default configuration values
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -c \
+  "SELECT name, setting, unit FROM pg_settings WHERE NOT source IN ('default', 'override') ORDER BY name;"
+
+# Export configuration to file for reference
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -c \
+  "SELECT name, setting FROM pg_settings WHERE NOT source IN ('default', 'override') ORDER BY name;" > custom_parameters.txt
+```
+
+**Important**: After migration, verify these parameters are still valid for PostgreSQL 18.x (some parameter names or ranges may have changed).
 
 ---
 
@@ -123,6 +187,84 @@ sha256sum ${BACKUP_FILE} > ${BACKUP_FILE}.sha256
 echo "=== Backup Verification ==="
 ls -lh ${BACKUP_FILE}
 ```
+
+---
+
+### Step 2b (Alternative): Backup Database Using pgAdmin
+
+If you do not have `kubectl exec` access (e.g., environments managed exclusively via ArgoCD), you can use **pgAdmin** to create the backup through a web UI instead.
+
+> 💡 **Tip**: If your Helm chart already deploys pgAdmin as a subchart (e.g., `pgadmin4.enabled: true`), you can use that instance directly — it already has network access to the PostgreSQL service within the cluster.
+>
+> Example subchart configuration:
+> ```yaml
+> pgadmin4:
+>   enabled: true
+>   env:
+>     email: admin@example.com
+>     password: admin-password
+>   ingress:
+>     enabled: true
+>     hosts:
+>       - host: pgadmin.example.com
+>         paths:
+>           - path: /
+>             pathType: Prefix
+> ```
+
+**Option A — pgAdmin runs inside the same cluster (recommended):**
+
+Since pgAdmin can resolve Kubernetes service names directly, no port-forward is needed:
+
+| Field | Value |
+|-------|-------|
+| **Host name/address** | `<release-name>-postgresql` (Kubernetes service name) |
+| **Port** | `5432` |
+| **Maintenance database** | your database name (e.g., `PG_DATABASE`) |
+| **Username** | your PostgreSQL admin user (e.g., `postgres`) |
+| **Password** | *(retrieve from your Kubernetes secret, see below)* |
+
+**Option B — pgAdmin runs outside the cluster:**
+
+Create a port-forward first, then connect to `localhost`:
+
+```bash
+kubectl port-forward svc/<release-name>-postgresql 5432:5432 -n <namespace> &
+```
+
+| Field | Value |
+|-------|-------|
+| **Host name/address** | `localhost` |
+| **Port** | `5432` |
+| **Maintenance database** | your database name (e.g., `PG_DATABASE`) |
+| **Username** | your PostgreSQL admin user (e.g., `postgres`) |
+| **Password** | *(retrieve from your Kubernetes secret, see below)* |
+
+To retrieve the database password from your Kubernetes secret:
+```bash
+kubectl get secret <your-db-secret> -n <namespace> -o jsonpath='{.data.<password-key>}' | base64 -d
+```
+
+**Register the server and create the backup:**
+
+1. Open pgAdmin and log in
+2. Right-click **Servers** → **Register** → **Server...**
+3. In the **General** tab, set a name (e.g., `Migration PostgreSQL`)
+4. In the **Connection** tab, fill in the values from the table above
+5. Click **Save**
+6. In the browser tree, expand **Servers → Migration PostgreSQL → Databases**
+7. Right-click your database → **Backup...**
+8. Configure the backup:
+   - **Filename**: `postgresql_backup` (pgAdmin will add the extension)
+   - **Format**: `Custom` (recommended, supports selective restore) or `Plain` (SQL text)
+   - **Encoding**: `UTF8`
+9. *(Optional)* In the **Data/Objects** tab:
+   - Enable **Include CREATE DATABASE statement** for a full restore option
+   - Enable **Use Column Inserts** for maximum compatibility
+10. Click **Backup**
+11. Verify the backup completed successfully in the pgAdmin notifications panel (bell icon, bottom-right)
+
+> ⚠️ **Note**: Unlike `pg_dumpall`, a pgAdmin single-database backup does **not** include roles or other databases. If you need to preserve roles and permissions, either use `pg_dumpall` (Step 2) or back up the global objects separately via pgAdmin's **Backup Server** option.
 
 ---
 
@@ -204,8 +346,10 @@ dependencies:
     alias: postgresql
     condition: postgresql.enabled
     repository: oci://registry-1.docker.io/cloudpirates
-    version: 0.11.0
+    version: 0.11.0   # Pin an exact version — CloudPirates releases frequently
 ```
+
+> ⚠️ **Always pin an exact chart version.** The CloudPirates chart is updated more frequently than Bitnami. Pinning a specific version prevents unexpected changes between deployments. Check the [CloudPirates registry](https://hub.docker.com/r/cloudpirates/postgres/tags) for the latest stable release and update the pinned version deliberately after testing.
 
 #### Update `values.yaml`
 
@@ -215,12 +359,13 @@ Adjust the PostgreSQL configuration for CloudPirates:
 # CloudPirates PostgreSQL configuration
 postgresql:
   enabled: true
-  fullnameOverride: ""           # Override the full name
+  nameOverride: "my-service-postgresql"  # Optional: set a unique value when deploying
+                                          # multiple PostgreSQL instances in the same release
   
   image:
     registry: docker.io
     repository: postgres
-    # tag: "18.0"                # Optional: pin specific version
+    # tag: "18.0"                # Optional: pin specific PostgreSQL version
   
   auth:
     password: ""                 # Will use existing secret
@@ -303,6 +448,8 @@ You will see various messages during restore. Here's what to expect:
 
 ### Step 8: Verify Migration
 
+#### 8a. Data Verification
+
 ```bash
 # Verify PostgreSQL version
 kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
@@ -316,18 +463,48 @@ kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
 kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
   env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -d ${PG_DATABASE} -c '\dt'
 
-# Verify row counts match pre-migration
+# Verify row counts match pre-migration (compare with Step 1 output)
 kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
   env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -d ${PG_DATABASE} -c \
   "SELECT schemaname, relname as table_name, n_live_tup as row_count 
    FROM pg_stat_user_tables ORDER BY n_live_tup DESC;"
 ```
 
-**Compare the row counts with Step 1 output** - they should match exactly.
+> Note: `n_live_tup` is a statistics estimate and may deviate slightly.
 
----
+#### 8b. Extended Integrity Checks
 
-### Step 9: Test Application Connectivity
+Run these additional checks, especially after major version upgrades:
+
+```bash
+# Verify indexes
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -d ${PG_DATABASE} -c \
+  "SELECT schemaname, tablename, indexname FROM pg_indexes 
+   WHERE schemaname NOT IN ('pg_catalog', 'information_schema') 
+   ORDER BY schemaname, tablename;"
+
+# Verify sequences
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -d ${PG_DATABASE} -c \
+  "SELECT schemaname, sequencename, last_value FROM pg_sequences 
+   WHERE schemaname NOT IN ('pg_catalog', 'information_schema') 
+   ORDER BY schemaname, sequencename;"
+
+# Verify roles and permissions
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -c \
+  "SELECT usename, usesuper, usecreatedb, usecanlogin FROM pg_user ORDER BY usename;"
+
+# Verify extensions (compare with Step 1b output)
+kubectl exec -n ${NAMESPACE} ${POSTGRES_POD} -- \
+  env PGPASSWORD="${PG_PASSWORD}" psql -U ${PG_USER} -c \
+  "SELECT extname, extversion FROM pg_extension ORDER BY extname;"
+```
+
+If extensions are missing, they may need manual reinstallation. Check compatibility with PostgreSQL 18.x.
+
+#### 8c. Application Connectivity
 
 ```bash
 # Get application pod name (adjust label selector for your deployment)
@@ -336,15 +513,23 @@ APP_POD=$(kubectl get pod -n ${NAMESPACE} \
   -o jsonpath='{.items[0].metadata.name}' 2>/dev/null)
 
 if [ -n "$APP_POD" ]; then
-  # Check application logs for database connectivity
   kubectl logs -n ${NAMESPACE} ${APP_POD} --tail=100 | grep -i "database\|postgres\|connection"
-  
-  # Check health endpoint (adjust port and path for your app)
   kubectl exec -n ${NAMESPACE} ${APP_POD} -- curl -s http://localhost:8080/health || true
 else
   echo "No application pods found - verify separately"
 fi
 ```
+
+#### 8d. Functional Testing Checklist
+
+After successful migration, validate application behavior — especially important after major version upgrades:
+
+- [ ] **Business workflows**: Create/read/update/delete operations work correctly
+- [ ] **Data consistency**: Totals, counts, and aggregations match expectations
+- [ ] **Query performance**: Critical queries execute within acceptable time
+- [ ] **Date/time operations**: Time-based queries and calculations are correct
+- [ ] **Batch operations**: Data export/import and batch processing work as expected
+- [ ] **Critical query plans**: Run `EXPLAIN ANALYZE` on key queries and compare with pre-migration plans
 
 ---
 
@@ -503,6 +688,8 @@ postgresql:  # Note: uses alias in Chart.yaml
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.2 | April 2026 | Added chart version pinning recommendation, streamlined verification steps, improved readability |
+| 1.1 | April 2026 | Added extension checks, custom parameter documentation, enhanced data integrity checks, business testing, INT/TEST vs PROD scope clarification, major version upgrade warning |
 | 1.0 | January 2026 | Initial release, tested with PostgreSQL 15→18 migration |
 
 ---
