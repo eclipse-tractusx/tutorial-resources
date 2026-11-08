@@ -32,20 +32,20 @@ jobs:
     steps:
 
       - name: "Setup Helm"
-        uses: azure/setup-helm@v4
+        uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4.3.1
         with:
           version: v3.8.1
 
       - name: "Setup Kubectl"
-        uses: azure/setup-kubectl@v4
+        uses: azure/setup-kubectl@776406bce94f63e41d621b960d78ee25c8b76ede # v4.0.1
 
       - name: Setup JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4.9.1
         with:
           java-version: '21'
           distribution: 'temurin'
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       - name: "Build Runtime Docker Images"
 
         working-directory: mxd-runtimes
@@ -53,10 +53,10 @@ jobs:
           ./gradlew clean dockerize
 
       - name: "Setup Terraform"
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3.1.2
 
       - name: "Create k8s Kind Cluster"
-        uses: helm/kind-action@v1.10.0
+        uses: helm/kind-action@0025e74a8c7512023d06dc019c617aa3cf561fde # v1.10.0
         with:
           config: mxd/kind.config.yaml
           cluster_name: mxd
