@@ -35,7 +35,7 @@ chapters 4 and 5, and keep the two checkpoints.
 | --- | --- | --- | --- |
 | 0 | [1 · Start here](../tutorial/01-start-here.md) | "Read box A. Pick Driver, Navigator, Skeptic." | Teams with an empty box on the handout |
 | 5 | [2 · Your product](../tutorial/02-your-product.md) | "Write your sentence. Press Fork now." | Teams that cannot find a refusal: suggest "what was never offered is not found" |
-| 10 | [3 · IDE and LLM](../tutorial/03-open-the-ide.md) | "Hands up when your assistant has answered." | Teams without a model: seat them with a team that has one |
+| 10 | [3 · Choose your AI](../tutorial/03-choose-your-ai.md) | "Hands up when your assistant has answered." | Teams without a model: seat them with a team that has one |
 | 15 | [4 · Build](../tutorial/04-build-the-test.md) | "Plan first. Do not let it write before you agree with the plan." | Teams whose compile stays red after three rounds |
 | 30 | [5 · Run](../tutorial/05-run-it.md) | **Checkpoint:** "Who has a green compile?" | Runs that wait: check the connectors at the Desk |
 | 40 | [6 · Repository](../tutorial/06-add-to-repository.md) | **Checkpoint:** "Who has seen a green run? Who has seen a red one and knows why?" | Git push problems, missing sign-off |
@@ -56,7 +56,7 @@ chapters 4 and 5, and keep the two checkpoints.
 
 | Behind at | Do |
 | --- | --- |
-| Minute 10, no API key but an AI coding assistant on the laptop | Send them down the [alternative route](../tutorial/03-alternative-your-own-ai-tool.md). It needs Python and a `git clone`, so decide early. |
+| Minute 10, no API key but an AI coding assistant on the laptop | Send them down the [route C](../tutorial/03-alternative-your-own-ai-tool.md). It needs Python and a `git clone`, so decide early. |
 | Minute 20, no assistant | Give them the [worked example](../reference/worked-example.md) to read and adapt by hand, or seat them with another team. |
 | Minute 35, compile still red | Have them open the template again and change only the names. A small green test beats a large red one. |
 | Minute 45, no green run | Skip the run. Go to chapter 6: the workflow will run the test in CI. |

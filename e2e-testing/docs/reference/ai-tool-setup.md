@@ -2,7 +2,7 @@
 
 How to give your own AI coding assistant the **agent kit**, so that it can write a
 [TCK project](glossary.md#tck-project). You need this only for the
-[alternative route](../tutorial/03-alternative-your-own-ai-tool.md), when you build on
+[route C](../tutorial/03-alternative-your-own-ai-tool.md), when you build on
 your laptop instead of with the assistant in the IDE.
 
 [Home](../index.md) · Files: [`agent-kit`](https://github.com/eclipse-tractusx/tutorial-resources/tree/main/e2e-testing/agent-kit)
@@ -120,7 +120,7 @@ ChatGPT, Claude or another chat in the browser. It works, with you as the hands.
     testlab docs -o - > tck-steps.md
     ```
 
-3. Send the prompt from the [alternative route](../tutorial/03-alternative-your-own-ai-tool.md), step 5.
+3. Send the prompt from the [route C](../tutorial/03-alternative-your-own-ai-tool.md), step 5.
 4. Save each file the chat gives you under `tck/e2e` in your repository.
 5. Run `testlab validate tck/e2e/index.yaml` and paste the output back. Repeat until it
    prints `OK`.
@@ -158,7 +158,7 @@ rm -rf ~/.claude/skills/tractusx-e2e-test ~/.claude/agents/e2e-test-author.md
 
 ---
 
-[← Before you come](prepare.md) · [Home](../index.md) · [The alternative route →](../tutorial/03-alternative-your-own-ai-tool.md)
+[← Before you come](prepare.md) · [Home](../index.md) · [Route C →](../tutorial/03-alternative-your-own-ai-tool.md)
 
 ## NOTICE
 

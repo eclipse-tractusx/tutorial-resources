@@ -1,6 +1,6 @@
-<span class="route">The tutorial · chapter 3 of 8 · ● ● ● ○ ○ ○ ○ ○</span>
+<span class="route">The tutorial · chapter 3, route A · ● ● ● ○ ○ ○ ○ ○</span>
 
-# 3 · Open the IDE and connect your LLM
+# 3A · Open the IDE and connect your API key
 
 > **Goal:** the assistant in the IDE answers you.
 > **Time:** 5 minutes
@@ -22,7 +22,6 @@ faster: blocks, a YAML editor and an AI assistant in the browser.
     | An OpenAI key | A **GPT** model | Your key, then **Connect OpenAI** |
     | An Anthropic key | A **Claude** model | Your key, then **Connect Anthropic** |
     | Catena-X AI access | **Catena-X AI** | Your key and agent ID |
-    | Your own server | **Local / self-hosted LLM** | **Server**, **Server URL**, a key if it needs one, then **Connect** |
 
 7. Type `Hello. What is in this project?` and press Enter.
 
@@ -33,10 +32,6 @@ The template project on the left, with its two tests, and the assistant panel on
 ![The IDE with the template project open and the assistant's connect panel on the right](../assets/screenshots/03-ide-connect-model.png)
 
 After step 7, the assistant answers with a short description of the two tests.
-
-For your own server, the panel looks like this:
-
-![The assistant panel with Local / self-hosted LLM selected: Server, Server URL, API key and Connect](../assets/screenshots/03b-local-model.png)
 
 > [!NOTE]
 > Your key goes from your browser straight to the provider you chose. The Test Suite has no
@@ -49,17 +44,15 @@ For your own server, the panel looks like this:
 > - **A "Welcome" dialog covers the page:** close it with the **×** at its top right.
 > - **The key is refused:** copy it again without spaces. A ChatGPT or Claude subscription
 >   is not an API key.
-> - **A local model cannot be reached:** its server must allow the IDE's address as an
->   origin. See [Troubleshooting](../reference/troubleshooting.md#the-assistant).
-> - **No API key, but a subscription to an AI coding assistant:** take the
->   [alternative route](03-alternative-your-own-ai-tool.md). You build on your laptop with
+> - **No API key, but a subscription to an AI coding assistant:** take
+>   [route C](03-alternative-your-own-ai-tool.md). You build on your laptop with
 >   your own tool and open the result here.
 > - **Nobody in the team has a model:** join a team that has one, or build by hand from the
 >   [worked example](../reference/worked-example.md).
 
 ---
 
-[← 2 · Your product and your connectors](02-your-product.md) · [Home](../index.md) · [Next: 4 · Build the test with the assistant →](04-build-the-test.md)
+[← 3 · Choose your AI](03-choose-your-ai.md) · [Home](../index.md) · [Next: 4 · Build the test with the assistant →](04-build-the-test.md)
 
 ## NOTICE
 

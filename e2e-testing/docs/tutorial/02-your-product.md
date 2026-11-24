@@ -58,7 +58,7 @@ Their finished project is the [worked example](../reference/worked-example.md).
 
 ---
 
-[← 1 · Start here](01-start-here.md) · [Home](../index.md) · [Next: 3 · Open the IDE and connect your LLM →](03-open-the-ide.md)
+[← 1 · Start here](01-start-here.md) · [Home](../index.md) · [Next: 3 · Choose your AI →](03-choose-your-ai.md)
 
 ## NOTICE
 

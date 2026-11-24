@@ -55,6 +55,12 @@ Read them in the [worked example](../reference/worked-example.md).
 
 </details>
 
+> [!NOTE]
+> **On route B, with a local model:** send one change per message and name the file in
+> each one, for example `In tests/partner_uses_my_product.yaml rename the step
+> call_product to "Partner calls my product"`. A whole test in one message is too much for a
+> small model.
+
 > [!TIP]
 > **Stuck?**
 >
@@ -69,7 +75,7 @@ Read them in the [worked example](../reference/worked-example.md).
 
 ---
 
-[← 3 · Open the IDE and connect your LLM](03-open-the-ide.md) · [Home](../index.md) · [Next: 5 · Run it against your connectors →](05-run-it.md)
+[← 3 · Choose your AI](03-choose-your-ai.md) · [Home](../index.md) · [Next: 5 · Run it against your connectors →](05-run-it.md)
 
 ## NOTICE
 

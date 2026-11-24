@@ -36,7 +36,7 @@ with a token or an SSH key. If you have never pushed from it, do it once now.
 
 ## 4 · A model for the assistant
 
-You bring your own. No key is shared in the workshop. One of these is enough:
+You bring your own. No key is shared in the workshop. One of these is enough. Not sure which? See [Choose your AI option](ai-options.md).
 
 | Option | What you need | Good to know |
 | --- | --- | --- |

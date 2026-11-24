@@ -1,6 +1,6 @@
-<span class="route">The tutorial · alternative to chapters 3 and 4 · ● ● ● ● ○ ○ ○ ○</span>
+<span class="route">The tutorial · chapter 3, route C · ● ● ● ● ○ ○ ○ ○</span>
 
-# 3–4 · Alternative: build with your own AI tool
+# 3C · Build with your own AI tool
 
 > **Goal:** a test project for your product that compiles, built on your laptop with the
 > AI coding assistant you already have.
@@ -114,7 +114,7 @@ In the IDE, your tests in the explorer on the left and the message **Compilation
 
 ---
 
-[← 2 · Your product and your connectors](02-your-product.md) · [Home](../index.md) · [Next: 5 · Run it against your connectors →](05-run-it.md)
+[← 3 · Choose your AI](03-choose-your-ai.md) · [Home](../index.md) · [Next: 5 · Run it against your connectors →](05-run-it.md)
 
 ## NOTICE
 

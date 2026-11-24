@@ -29,7 +29,7 @@ Today you write the first one for your product.
 
 ```mermaid
 flowchart LR
-    A["1 Start"] --> B["2 Your product"] --> C["3 IDE + LLM"] --> D["4 Build"]
+    A["1 Start"] --> B["2 Your product"] --> C["3 Choose your AI"] --> D["4 Build"]
     D --> E["5 Run"] --> F["6 Repository"] --> G["7 Pull request"] --> H["8 Next"]
 ```
 
@@ -37,8 +37,8 @@ flowchart LR
 | --- | --- | --- | --- |
 | 1 | [Start here](tutorial/01-start-here.md) | 5 | Your handout, and the mission |
 | 2 | [Your product and your connectors](tutorial/02-your-product.md) | 5 | One sentence that says what you will prove |
-| 3 | [Open the IDE and connect your LLM](tutorial/03-open-the-ide.md) | 5 | An assistant that answers |
-| | *No API key? [Build with your own AI tool](tutorial/03-alternative-your-own-ai-tool.md) instead of 3 and 4* | *20* | |
+| 3 | [Choose your AI](tutorial/03-choose-your-ai.md): [A · API key](tutorial/03-open-the-ide.md), [B · local model](tutorial/03b-local-model.md) or [C · your own AI tool](tutorial/03-alternative-your-own-ai-tool.md) | 5–10 | An assistant that answers |
+| | *Route C builds on your laptop and replaces chapter 4* | *20* | |
 | 4 | [Build the test with the assistant](tutorial/04-build-the-test.md) | 15 | A test project that compiles |
 | 5 | [Run it against your connectors](tutorial/05-run-it.md) | 10 | A green run, for the right reasons |
 | 6 | [Add it to your repository](tutorial/06-add-to-repository.md) | 10 | The test and its workflow, committed |
