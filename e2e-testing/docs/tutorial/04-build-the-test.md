@@ -1,4 +1,4 @@
-<span class="route">The 60 minutes · chapter 4 of 8 · ● ● ● ● ○ ○ ○ ○</span>
+<span class="route">The tutorial · chapter 4 of 8 · ● ● ● ● ○ ○ ○ ○</span>
 
 # 4 · Build the test with the assistant
 
@@ -61,8 +61,10 @@ Read them in the [worked example](../reference/worked-example.md).
 > - **The assistant invents steps:** say `Use only steps from the block catalog.`
 > - **Compile stays red after three rounds:** switch to **Ask**, paste the finding and ask
 >   what the compiler expects there, before you let it edit again.
-> - **Minute 30 and still red:** press **Undo all**, change only the names in the template,
->   and move on. A small green test beats a large red one.
+> - **Minute 30 and still red, or no model at all:** press **Undo all** and change only the
+>   names by hand. Click a file, open the **YAML Editor** tab, press **Edit**, replace
+>   `my-product` with your product's id and `My Product` with its name, and press **Save**.
+>   Do it in `index.yaml` and in both tests. A small green test beats a large red one.
 > - **More prompts:** [Starter prompts](../reference/prompts.md).
 
 ---

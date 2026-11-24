@@ -1,4 +1,4 @@
-<span class="route">The 60 minutes · chapter 3 of 8 · ● ● ● ○ ○ ○ ○ ○</span>
+<span class="route">The tutorial · chapter 3 of 8 · ● ● ● ○ ○ ○ ○ ○</span>
 
 # 3 · Open the IDE and connect your LLM
 
@@ -11,7 +11,7 @@ faster: blocks, a YAML editor and an AI assistant in the browser.
 ## Steps
 
 1. Open the address in box **B** of your handout and sign in with the account next to it.
-2. In the bar on the left, click the **TestLab IDE** icon. You see the welcome screen.
+2. In the bar on the left, click the **Test Suite IDE** icon. The page is titled **TCK Builder**. You see the welcome screen.
 3. Download the template: [`e2e-test-template.zip`](../downloads/e2e-test-template.zip).
 4. On the welcome screen, click **Open File** and choose the ZIP you just downloaded.
 5. At the top right, click **Ask AI**.
@@ -42,7 +42,7 @@ After step 7, the assistant answers with a short description of the two tests.
 > [!TIP]
 > **Stuck?**
 >
-> - **A "Welcome" dialog covers the page:** close it with **Later**.
+> - **A "Welcome" dialog covers the page:** close it with the **×** at its top right.
 > - **The key is refused:** copy it again without spaces. A ChatGPT or Claude subscription
 >   is not an API key.
 > - **A local model cannot be reached:** its server must allow the IDE's address as an

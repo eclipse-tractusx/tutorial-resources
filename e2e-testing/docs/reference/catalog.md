@@ -2,13 +2,13 @@
 
 # Product catalog
 
-29 Eclipse Tractus-X products that should get an E2E test. 5 of them can be built **and run** in the one-hour workshop.
+29 Eclipse Tractus-X products that should get an E2E test. 5 of them can be built **and run** in the workshop.
 
 Collected on 2026-11-24 from the `eclipse-tractusx` organization: the repository list, each repository's `.tractusx` metafile and the Umbrella chart.
 
 [Home](../index.md) · [Glossary](glossary.md)
 
-## Fits the one-hour workshop
+## Fits the workshop
 
 These need only what every team gets: connector, Digital Twin Registry, wallet, BDRS.
 
@@ -22,7 +22,7 @@ These need only what every team gets: connector, Digital Twin Registry, wallet, 
 
 ## Needs more than the workshop environment
 
-Build, validate and compile the test in the hour. Run it where the product is deployed, or in CI once the workflow can bring the product up.
+Build, validate and compile the test in the workshop. Run it where the product is deployed, or in CI once the workflow can bring the product up.
 
 | Product | Suggested E2E scenario | Needs | In the Umbrella | Difficulty |
 | --- | --- | --- | --- | --- |
@@ -55,11 +55,11 @@ Build, validate and compile the test in the hour. Run it where the product is de
 
 | Product | To run its test you also need |
 | --- | --- |
-| Discovery Finder | Small REST API with an OpenAPI document: build and compile in the hour, run where the service and its identity provider are deployed. |
-| BPN Discovery | Small REST API with an OpenAPI document: build and compile in the hour, run where the service and its identity provider are deployed. |
-| Semantic Hub | Small REST API with an OpenAPI document: build and compile in the hour, run where the service and its identity provider are deployed. |
-| Business Partner Data Management (BPDM) | Needs BPDM and its identity provider deployed. Build from the Gate and Pool OpenAPI documents in the hour. |
-| Portal | Needs the Portal backend and both identity providers deployed. A long flow: plan more than one hour. |
+| Discovery Finder | Small REST API with an OpenAPI document: build and compile in the workshop, run where the service and its identity provider are deployed. |
+| BPN Discovery | Small REST API with an OpenAPI document: build and compile in the workshop, run where the service and its identity provider are deployed. |
+| Semantic Hub | Small REST API with an OpenAPI document: build and compile in the workshop, run where the service and its identity provider are deployed. |
+| Business Partner Data Management (BPDM) | Needs BPDM and its identity provider deployed. Build from the Gate and Pool OpenAPI documents in the workshop. |
+| Portal | Needs the Portal backend and both identity providers deployed. A long flow: plan more than one session. |
 | Portal IAM (Keycloak instances) | Needs both Keycloak instances deployed. The token request needs client credentials supplied at run time. |
 | Self-Description Factory | Needs the service, its identity provider and a signing service deployed. |
 | SSI Credential Issuer | Needs the issuer, the Portal backend, an identity provider and a wallet deployed. |
@@ -67,7 +67,7 @@ Build, validate and compile the test in the hour. Run it where the product is de
 | Item Relationship Service (IRS) | Needs the IRS, a Digital Twin Registry with linked test twins, a submodel server and the discovery services. |
 | Trace-X (Traceability FOSS) | Needs Trace-X, the IRS and a full data provider stack deployed on two sides. |
 | PURIS | Needs two PURIS instances, each with a connector and a Digital Twin Registry. |
-| Industry Core Hub | Needs the hub deployed next to the provider's connector and registry. Build from its OpenAPI document in the hour. |
+| Industry Core Hub | Needs the hub deployed next to the provider's connector and registry. Build from its OpenAPI document in the workshop. |
 | AAS Suite | Needs the suite deployed next to a connector. |
 | Knowledge Agents | Needs connectors built with the agent extensions and a provisioning agent on the provider side. |
 | Tractus-X EDC Kafka Extension | Needs connectors built with the extension and a Kafka broker. |

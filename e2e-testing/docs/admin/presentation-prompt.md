@@ -29,10 +29,10 @@ FILL IN BEFORE YOU PASTE
 - Where to get help in the room: <who, and which chat room>
 
 OCCASION
-The opening of a 60-minute hands-on session, "AI and Test Management", at the
+The opening of a hands-on session, "AI and Test Management", at the
 7th Eclipse Tractus-X Community Days (3-4 December 2026, ARENA2036,
 Stuttgart). It is presented live by the session administrators and takes 10
-minutes. The hands-on hour starts right after the last slide.
+minutes. The hands-on work starts right after the last slide.
 
 AUDIENCE
 Developers, architects and product people from companies that build or use
@@ -100,7 +100,7 @@ STORYLINE: one slide per minute
    tests/) beside the three phases setup, execution, teardown. Caption: "YAML
    made of ready-made steps. No framework to learn." This is the slide for
    the sentence about other dataspaces and standards.
-7. Why one hour is enough (5:30-6:30). Three cards: ready-made steps · an AI
+7. Why one session is enough (5:30-6:30). Three cards: ready-made steps · an AI
    assistant that writes the YAML while you decide what must be proven · a
    dataspace in a box, created by the workflow.
 8. It failed first, and that was useful (6:30-7:30). The worked example's

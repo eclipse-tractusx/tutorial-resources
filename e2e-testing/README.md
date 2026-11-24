@@ -1,6 +1,6 @@
 # E2E tests for Tractus-X products
 
-**One green check for every product.** In one hour a team builds an end-to-end test for
+**One green check for every product.** In about an hour a team builds an end-to-end test for
 one Eclipse Tractus-X product, with an AI assistant, commits it to the product's
 repository, links it in `.tractusx` and sees it run in GitHub Actions.
 
@@ -17,7 +17,7 @@ Made for the "AI and Test Management" session of the 7th Eclipse Tractus-X Commu
 | Looking up a word | [Glossary](docs/reference/glossary.md) |
 | Running the session | [For administrators](docs/admin/index.md) |
 
-## The 60 minutes
+## The tutorial
 
 | | Chapter | Minutes |
 | --- | --- | --- |
@@ -29,7 +29,7 @@ Made for the "AI and Test Management" session of the 7th Eclipse Tractus-X Commu
 | 6 | [Add it to your repository](docs/tutorial/06-add-to-repository.md) | 10 |
 | 7 | [Link it and open the pull request](docs/tutorial/07-link-and-pull-request.md) | 5 |
 | 8 | [What comes next](docs/tutorial/08-what-comes-next.md) | 5 |
-| | | **60** |
+| | | **about 60** |
 
 ## What is in this folder
 
@@ -39,6 +39,7 @@ Made for the "AI and Test Management" session of the 7th Eclipse Tractus-X Commu
 | [`catalog/`](catalog/) | `products.json`: every product that should get an E2E test. `assignments.json`: which team has which product. |
 | [`template/`](template/tck/e2e/) | An E2E test project to copy and fill in |
 | [`examples/digital-twin-registry/`](examples/digital-twin-registry/) | A complete example that passes in GitHub Actions: the project, the workflow and the `.tractusx` link |
+| [`agent-kit/`](agent-kit/) | A skill and an agent that teach your own AI coding tool the format, for teams without an API key |
 | [`admin/handouts/`](admin/handouts/) | Generator for one printable page per team |
 | [`tools/`](tools/) | Small scripts that keep generated files in step with their sources |
 | [`mkdocs.yml`](mkdocs.yml) | Turns `docs/` into a site with navigation and search |
@@ -61,11 +62,11 @@ Then open <http://localhost:8000>.
 | You changed | Then run |
 | --- | --- |
 | `catalog/products.json` or `catalog/assignments.json` | `python catalog/build_catalog.py` |
-| Anything under `template/tck/e2e` | `python tools/build_template_zip.py` |
+| Anything under `template/tck/e2e` or the example | `python tools/build_template_zip.py` and `python tools/build_agent_kit.py` |
 | A page under `docs/` | `mkdocs build --strict` |
 
 The workflow [`e2e-testing-site.yml`](../.github/workflows/e2e-testing-site.yml) runs the
-same three checks on every pull request.
+same checks on every pull request.
 
 ## NOTICE
 

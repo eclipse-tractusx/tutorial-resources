@@ -1,7 +1,7 @@
 # Before you come
 
 Ten minutes, best done **before** the workshop. Conference Wi-Fi is not the place to
-install things, and the hour has no slack for it.
+install things, and the session has no slack for it.
 
 [Home](../index.md)
 
@@ -76,7 +76,7 @@ You should see the commands `validate`, `compile`, `inspect` and `run`.
 
 ---
 
-[Home](../index.md) · [Start the 60 minutes →](../tutorial/01-start-here.md)
+[Home](../index.md) · [Start the tutorial →](../tutorial/01-start-here.md)
 
 ## NOTICE
 

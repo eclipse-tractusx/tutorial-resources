@@ -127,14 +127,14 @@ def render(data: dict) -> str:
         "# Product catalog",
         "",
         f"{len(products)} Eclipse Tractus-X products that should get an E2E test. "
-        f"{len(fit)} of them can be built **and run** in the one-hour workshop.",
+        f"{len(fit)} of them can be built **and run** in the workshop.",
         "",
         f"Collected on {source['collectedOn']} from the `{source['organization']}` organization: "
         "the repository list, each repository's `.tractusx` metafile and the Umbrella chart.",
         "",
         "[Home](../index.md) · [Glossary](glossary.md)",
         "",
-        "## Fits the one-hour workshop",
+        "## Fits the workshop",
         "",
         f"These need only what every team gets: {environment}.",
         "",
@@ -142,7 +142,7 @@ def render(data: dict) -> str:
         "",
         "## Needs more than the workshop environment",
         "",
-        "Build, validate and compile the test in the hour. Run it where the product is deployed, "
+        "Build, validate and compile the test in the workshop. Run it where the product is deployed, "
         "or in CI once the workflow can bring the product up.",
         "",
         *table(later),

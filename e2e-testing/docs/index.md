@@ -2,13 +2,13 @@
 
 **7th Eclipse Tractus-X Community Days · 3–4 December 2026 · ARENA2036, Stuttgart**
 
-In one hour your team builds an end-to-end test for one Eclipse Tractus-X product,
+In about an hour your team builds an end-to-end test for one Eclipse Tractus-X product,
 with an AI assistant doing the typing and you doing the thinking. You leave with a
 pull request in that product's repository and a test that runs on every change.
 
 No test framework to learn. No code to write. A laptop and curiosity are enough.
 
-[Start the 60 minutes](tutorial/01-start-here.md){ .md-button .md-button--primary }
+[Start the tutorial](tutorial/01-start-here.md){ .md-button .md-button--primary }
 [New here? Read the story first](story/why.md){ .md-button }
 
 ## The problem we solve together
@@ -44,7 +44,10 @@ flowchart LR
 | 6 | [Add it to your repository](tutorial/06-add-to-repository.md) | 10 | The test and its workflow, committed |
 | 7 | [Link it and open the pull request](tutorial/07-link-and-pull-request.md) | 5 | A pull request with a green check |
 | 8 | [What comes next](tutorial/08-what-comes-next.md) | 5 | A plan for the second test |
-| | | **60** | |
+| | | **about 60** | |
+
+The minutes are a guide for a team that has done it before. A first-time reader in our dry
+run needed closer to 90: if your session is longer, spend the extra time on chapters 4 and 5.
 
 ## Where to start
 

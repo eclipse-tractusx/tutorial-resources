@@ -47,7 +47,7 @@ server with an OpenAI-compatible API).
 
 ---
 
-[← What a test is made of](test-anatomy.md) · [Home](../index.md) · [Start the 60 minutes →](../tutorial/01-start-here.md)
+[← What a test is made of](test-anatomy.md) · [Home](../index.md) · [Start the tutorial →](../tutorial/01-start-here.md)
 
 ## NOTICE
 

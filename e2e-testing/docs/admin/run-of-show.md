@@ -1,6 +1,6 @@
 # Run of show
 
-The hour, minute by minute, for the people running it.
+The session, minute by minute, for the people running it.
 
 [Home](../index.md) · [For administrators](index.md)
 
@@ -23,9 +23,13 @@ The hour, minute by minute, for the people running it.
 ## The opening: 10 minutes
 
 Present the deck made with the [presentation prompt](presentation-prompt.md).
-It ends with "the clock starts now". Start a visible 60-minute timer.
+It ends with "the clock starts now". Start a visible timer.
 
-## The hour
+## The session
+
+The table assumes about 60 minutes of work. A dry run with a first-time reader came to
+about 90, most of the difference in chapters 4 and 5. With a longer slot, give the extra time to
+chapters 4 and 5, and keep the two checkpoints.
 
 | Minute | Teams are in | Host says | Floor looks for |
 | --- | --- | --- | --- |
@@ -58,7 +62,7 @@ It ends with "the clock starts now". Start a visible 60-minute timer.
 | Minute 45, no green run | Skip the run. Go to chapter 6: the workflow will run the test in CI. |
 | Minute 55, no push | A pull request to their own fork still counts on the wall. |
 
-## After the hour
+## After the session
 
 - Note which products now have a pull request. Update the count in your report.
 - Collect what the assistants got wrong. It is input for the starter prompts.

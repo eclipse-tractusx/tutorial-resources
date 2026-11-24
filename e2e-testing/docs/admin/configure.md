@@ -31,6 +31,8 @@ The Test Suite's engine runs the tests from **its own** connector. A team cannot
 that side: values in the `infrastructure.engine` namespace are refused. So:
 
 - The engine needs a connector registered for the release the tests declare (`saturn`).
+  Without it every run fails at once with "requires infrastructure that is not fully
+  bound: engine.connector". This was seen in the dry run.
 - That connector must be a participant of the **same dataspace** as the teams'
   connectors: same BDRS, same issuer, credentials issued.
 

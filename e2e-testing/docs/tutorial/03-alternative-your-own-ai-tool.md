@@ -1,4 +1,4 @@
-<span class="route">The 60 minutes · alternative to chapters 3 and 4 · ● ● ● ● ○ ○ ○ ○</span>
+<span class="route">The tutorial · alternative to chapters 3 and 4 · ● ● ● ● ○ ○ ○ ○</span>
 
 # 3–4 · Alternative: build with your own AI tool
 

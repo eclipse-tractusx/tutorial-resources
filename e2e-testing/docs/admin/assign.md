@@ -15,7 +15,7 @@ catalog stays stable.
 ## Steps
 
 1. Open the [product catalog](../reference/catalog.md) and look at the first table,
-   **Fits the one-hour workshop**. These products can be built **and run** with what
+   **Fits the workshop**. These products can be built **and run** with what
    every team gets.
 2. Give each team one of them. Prefer a product the team maintains or uses.
 3. More teams than products in that table? Choose, in this order:

@@ -118,7 +118,7 @@
         },
         "difficulty": { "enum": ["starter", "intermediate", "advanced"] },
         "fitsWorkshop": {
-          "description": "True when a team can build AND run the test in the one-hour workshop with what every team gets.",
+          "description": "True when a team can build AND run the test in the workshop with what every team gets.",
           "type": "boolean"
         },
         "workshopNote": { "description": "Why it fits, or what is missing.", "type": "string", "maxLength": 220 },

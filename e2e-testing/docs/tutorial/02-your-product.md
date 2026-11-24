@@ -1,4 +1,4 @@
-<span class="route">The 60 minutes · chapter 2 of 8 · ● ● ○ ○ ○ ○ ○ ○</span>
+<span class="route">The tutorial · chapter 2 of 8 · ● ● ○ ○ ○ ○ ○ ○</span>
 
 # 2 · Your product and your connectors
 
@@ -7,8 +7,8 @@
 
 ## Steps
 
-1. Open your product's repository (handout, box **A**) and read the first paragraph of
-   its README.
+1. Open your product's repository (handout, box **A**) and read in its README
+   what the product does.
 2. Press **Fork** at the top right of the repository page, then **Create fork**.
    Leave the tab open; you need the [fork](../reference/glossary.md#fork-and-pull-request)
    in chapter 6.

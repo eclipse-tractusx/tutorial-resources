@@ -1,4 +1,4 @@
-<span class="route">The 60 minutes · chapter 5 of 8 · ● ● ● ● ● ○ ○ ○</span>
+<span class="route">The tutorial · chapter 5 of 8 · ● ● ● ● ● ○ ○ ○</span>
 
 # 5 · Run it against your connectors
 
@@ -13,14 +13,16 @@
     | --- | --- |
     | **Build** | Nothing. It ends with "Compiled — ready to run." Press **Next**. |
     | **Infrastructure** | Choose your product under **App under test** and your connector under **EDC Connector**. If your test uses a registry, choose it under **Digital Twin Registry**. Press **Next**. |
-    | **Variables** | Click each value in the list. Fill in what is empty from box **C** of your handout; where the dialog offers a list, choose from it. Press **Next**. |
+    | **Variables** | Click each value in the list. Fill in what is empty from box **C** of your handout: `product_internal_url` is "Product, as the connector reaches it", `dtr_internal_url` is "Registry, as the connector reaches it". Where the dialog offers a list, choose from it. Press **Next**. |
     | **SUT Setup** | Press **Start review**, then **Accept all** and **Confirm all**. Your test creates these offers itself, in its setup. Press **Next**. |
-    | **Summary & Launch** | Check the list of tests. Press **Run**. |
+    | **Summary & Launch** | Check the list of tests. Press **Run** at the bottom right. |
+
+    You type nothing from box **D**. The partner side is set up by the administrators.
 
 2. Watch the **Console** at the bottom. Each step turns green or red as it finishes.
 3. Wait for the result.
 4. Now break it on purpose. Open your negative test, change the expected value of one
-   check, for example `404` to `200`, and run again.
+   check, for example `0` to `1` or `404` to `200`, and run again.
 5. See it turn red **at that check**. Change it back and run once more.
 
 A test that has never failed has proven nothing yet. Step 4 is the difference between a test
@@ -45,6 +47,8 @@ The second step, **Infrastructure**, looks like this when your components are re
 > [!TIP]
 > **Stuck?**
 >
+> - **The run fails at once with "requires infrastructure that is not fully bound:
+>   engine.connector":** the partner side is not set up for your team. Go to the Desk.
 > - **The run waits:** give it a minute, then ask at the Desk whether your connectors are up.
 > - **A value is refused as "not a public host name":** use the address from box **C**
 >   exactly as printed.

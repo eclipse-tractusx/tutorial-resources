@@ -68,6 +68,9 @@ jobs:
       - name: The template archive matches the template
         run: python tools/build_template_zip.py --check
 
+      - name: The agent kit carries the current template and example
+        run: python tools/build_agent_kit.py --check
+
       - name: The sample handouts build
         run: python admin/handouts/build_handouts.py --inventory admin/handouts/inventory.sample.json --no-pdf --out "${RUNNER_TEMP}/handouts"
 

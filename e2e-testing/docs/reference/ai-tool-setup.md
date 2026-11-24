@@ -143,7 +143,7 @@ a new chat, or use the `AGENTS.md` line above.
 | Tool | Status |
 | --- | --- |
 | The install script, all four targets | Run. It copies to the folders named above. |
-| The skill, followed by an assistant with no other knowledge | Run. See the pull request description for the result. |
+| The skill, followed by an assistant with no other knowledge | Run. It built a two-test project for the BPN-DID Resolution Service that validates and compiles. That project was not run against connectors. |
 | Claude Code loading the skill and the agent from those folders | **Not tried.** The folders are the ones its documentation names. |
 | GitHub Copilot in VS Code, Cursor, Codex | **Not tried.** The folders and the commands are the ones each tool's documentation names. Menu names may differ in your version. |
 | A chat app without file access | **Not tried.** |

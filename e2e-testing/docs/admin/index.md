@@ -1,7 +1,7 @@
 # For administrators
 
 Everything the people running the session need: what to deploy, what to configure, who
-gets which product, what to print, and the hour itself.
+gets which product, what to print, and the session itself.
 
 [Home](../index.md)
 
@@ -13,7 +13,7 @@ gets which product, what to print, and the hour itself.
 | [Configure](configure.md) | Create organizations, users and one connector pair per team |
 | [Assign products](assign.md) | Decide which team works on which product |
 | [Handouts](handouts.md) | Print one page per team from the catalog, the assignments and your connector list |
-| [Run of show](run-of-show.md) | Run the hour, minute by minute |
+| [Run of show](run-of-show.md) | Run the session, minute by minute |
 | [Presentation prompt](presentation-prompt.md) | Generate the ten-minute opening |
 
 ## What a team needs in the room

@@ -58,8 +58,8 @@ compiler that what you wrote is well-formed.
    `OK — index.yaml is valid (no issues)`.
 5. **Check every input by hand.** The validator catches an unknown step, an unknown
    output and a broken reference. It does **not** catch an unknown input under `with:`:
-   a misspelt or invented input is silently ignored. Compare each `with:` key with the
-   step's page:
+   with a misspelt or invented input, validate and compile still pass. Compare each
+   `with:` key with the step's page:
 
    ```bash
    testlab docs -s <the step's uses value> -o -

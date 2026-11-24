@@ -1,11 +1,11 @@
-<span class="route">The 60 minutes · chapter 8 of 8 · ● ● ● ● ● ● ● ●</span>
+<span class="route">The tutorial · chapter 8 of 8 · ● ● ● ● ● ● ● ●</span>
 
 # 8 · What comes next
 
 > **Goal:** you know what you built, and what your second test will be.
 > **Time:** 5 minutes
 
-## What you built in an hour
+## What you built today
 
 | You have | It means |
 | --- | --- |

@@ -150,7 +150,7 @@
       "scenario": "A registered BPN Discovery endpoint is returned for its identifier type, and an unknown type returns an empty list.",
       "difficulty": "starter",
       "fitsWorkshop": false,
-      "workshopNote": "Small REST API with an OpenAPI document: build and compile in the hour, run where the service and its identity provider are deployed.",
+      "workshopNote": "Small REST API with an OpenAPI document: build and compile in the workshop, run where the service and its identity provider are deployed.",
       "existingTests": [
         "e2e-tests/",
         "discoveryfinder-e2e-test.yml"
@@ -170,7 +170,7 @@
       "scenario": "An identifier registered for a BPN is found again by a search, and it is gone after it was deleted.",
       "difficulty": "starter",
       "fitsWorkshop": false,
-      "workshopNote": "Small REST API with an OpenAPI document: build and compile in the hour, run where the service and its identity provider are deployed.",
+      "workshopNote": "Small REST API with an OpenAPI document: build and compile in the workshop, run where the service and its identity provider are deployed.",
       "existingTests": [
         "e2e-tests/",
         "bpndiscovery-e2e-test.yml"
@@ -190,7 +190,7 @@
       "scenario": "A published aspect model is listed, its JSON schema can be generated, and an invalid model is rejected.",
       "difficulty": "starter",
       "fitsWorkshop": false,
-      "workshopNote": "Small REST API with an OpenAPI document: build and compile in the hour, run where the service and its identity provider are deployed.",
+      "workshopNote": "Small REST API with an OpenAPI document: build and compile in the workshop, run where the service and its identity provider are deployed.",
       "existingTests": [
         "e2e-tests/",
         "semantic-hub-e2e-test.yml"
@@ -211,7 +211,7 @@
       "scenario": "A business partner a member uploads to the Gate arrives in the Pool as a golden record with a BPN.",
       "difficulty": "intermediate",
       "fitsWorkshop": false,
-      "workshopNote": "Needs BPDM and its identity provider deployed. Build from the Gate and Pool OpenAPI documents in the hour.",
+      "workshopNote": "Needs BPDM and its identity provider deployed. Build from the Gate and Pool OpenAPI documents in the workshop.",
       "existingTests": [
         "bpdm-system-tester/",
         "app-test-charts.yaml"
@@ -232,7 +232,7 @@
       "scenario": "An invited company completes its registration, is approved by the operator and can create a technical user.",
       "difficulty": "advanced",
       "fitsWorkshop": false,
-      "workshopNote": "Needs the Portal backend and both identity providers deployed. A long flow: plan more than one hour.",
+      "workshopNote": "Needs the Portal backend and both identity providers deployed. A long flow: plan more than one session.",
       "relatedRepositories": [
         "https://github.com/eclipse-tractusx/portal-backend",
         "https://github.com/eclipse-tractusx/portal-frontend",
@@ -405,7 +405,7 @@
       "scenario": "A part published through the hub is found by a partner in the Digital Twin Registry, and its submodel is pulled through the connector.",
       "difficulty": "intermediate",
       "fitsWorkshop": false,
-      "workshopNote": "Needs the hub deployed next to the provider's connector and registry. Build from its OpenAPI document in the hour.",
+      "workshopNote": "Needs the hub deployed next to the provider's connector and registry. Build from its OpenAPI document in the workshop.",
       "existingTests": [
         "deployment-tests.yaml",
         "helm-test.yaml"

@@ -1,4 +1,4 @@
-<span class="route">The 60 minutes · chapter 7 of 8 · ● ● ● ● ● ● ● ○</span>
+<span class="route">The tutorial · chapter 7 of 8 · ● ● ● ● ● ● ● ○</span>
 
 # 7 · Link it and open the pull request
 

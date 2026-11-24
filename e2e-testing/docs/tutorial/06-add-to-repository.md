@@ -1,4 +1,4 @@
-<span class="route">The 60 minutes · chapter 6 of 8 · ● ● ● ● ● ● ○ ○</span>
+<span class="route">The tutorial · chapter 6 of 8 · ● ● ● ● ● ● ○ ○</span>
 
 # 6 · Add it to your repository
 
@@ -8,7 +8,8 @@
 ## Steps
 
 1. In the IDE, click the **☰** menu at the top right, then **File**, then **Export**.
-   In the dialog, press **Export ZIP**. The file lands in your downloads folder.
+   In the dialog, press **Export ZIP**. The file lands in your downloads folder, named
+   after your project.
 2. Open a terminal and clone the [fork](../reference/glossary.md#fork-and-pull-request)
    you made in chapter 2:
 
@@ -32,8 +33,8 @@
     curl -fsSL "$BASE/examples/digital-twin-registry/.github/workflows/e2e-test.yml" -o .github/workflows/e2e-test.yml
     ```
 
-5. Add the licence header to your test files. Eclipse projects need it on every file, and
-   the IDE's export does not write it:
+5. In the **same terminal**, add the licence header to your test files. Eclipse projects
+   need it on every file, and the IDE's export does not write it:
 
     ```bash
     curl -fsSL "$BASE/template/license-header.txt" -o /tmp/license-header.txt
@@ -60,7 +61,7 @@ git show --stat HEAD
 
     Signed-off-by: Your Name <you@example.org>
 
- .github/workflows/e2e-test.yml               |  42 ++++
+ .github/workflows/e2e-test.yml               |  44 ++++
  tck/e2e/index.yaml                           | ...
  tck/e2e/tests/<your-first-test>.yaml         | ...
  tck/e2e/tests/<your-second-test>.yaml        | ...
@@ -74,6 +75,8 @@ And this is all the workflow is: a few lines that call a
 > [!TIP]
 > **Stuck?**
 >
+> - **`curl` answers 404:** the tutorial is not published at that address yet. Ask a
+>   facilitator for the address to use, also for the `uses:` line of the workflow file.
 > - **No `unzip` on your machine:** unpack the ZIP with your file manager and move
 >   `index.yaml` and `tests` into `tck/e2e`.
 > - **Your repository already has a folder `tck/e2e`:** choose another folder, and change

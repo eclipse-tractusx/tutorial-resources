@@ -84,7 +84,7 @@ operators' runbook. For this session it must have:
 | Requirement | Why |
 | --- | --- |
 | A public `https://` address with a valid certificate | Browsers refuse the assistant's calls from an insecure page |
-| The IDE switched on for the workshop organizations | It is the tool of the hour |
+| The IDE switched on for the workshop organizations | It is the tool of the session |
 | The assistant's **Local / self-hosted** option included | For participants who bring their own model server |
 | The engine can reach every team's connectors by the host names on the handout | The engine runs the tests |
 | Each provider connector can reach the address in **box C, "as the connector reaches it"** | Tests offer the product through the connector's data plane |

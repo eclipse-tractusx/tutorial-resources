@@ -28,6 +28,7 @@ Find the symptom, try the fix, raise your hand if it does not help.
 
 | Symptom | Try |
 | --- | --- |
+| The run fails at once: "requires infrastructure that is not fully bound: engine.connector" | The connector the tests run from is not set up for your organization. That is the administrators' part: go to the Desk. |
 | The run waits and nothing happens | Give it a minute. Then ask at the Desk whether your connectors are up. |
 | The first step fails with a connection error | A value from the handout is mistyped. Compare box **C** and box **D** character by character. |
 | The negotiation is refused | The usage policy of your test asks for something the partner cannot prove. Use the policies of the template unchanged first. |

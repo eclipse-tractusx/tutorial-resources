@@ -43,7 +43,7 @@ It does not care how the product is built. It cares whether the promise holds.
 When every product has one, the three weeks before a release get a lot quieter:
 a broken hand-over shows up as a red check on the pull request that caused it.
 
-## Why one hour is enough
+## Why one session is enough
 
 Writing a test like this used to mean days of reading API documents.
 Three things changed:

@@ -26,7 +26,7 @@
 #   mkdocs build --strict # what the workflow runs
 
 site_name: E2E tests for Tractus-X products
-site_description: Build an end-to-end test for an Eclipse Tractus-X product in one hour, with an AI assistant, and take it to a pull request.
+site_description: Build an end-to-end test for an Eclipse Tractus-X product in about an hour, with an AI assistant, and take it to a pull request.
 site_url: https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/
 repo_url: https://github.com/eclipse-tractusx/tutorial-resources
 repo_name: eclipse-tractusx/tutorial-resources
@@ -106,7 +106,7 @@ nav:
       - A dataspace in five minutes: story/dataspace.md
       - What a test is made of: story/test-anatomy.md
       - Where the AI helps: story/ai.md
-  - The 60 minutes:
+  - The tutorial:
       - 1 · Start here: tutorial/01-start-here.md
       - 2 · Your product and your connectors: tutorial/02-your-product.md
       - 3 · Open the IDE and connect your LLM: tutorial/03-open-the-ide.md

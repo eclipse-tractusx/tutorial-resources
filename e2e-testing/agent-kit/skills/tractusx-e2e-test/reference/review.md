@@ -41,7 +41,7 @@ Answer every item with yes, no or not applicable, and name the file and step for
 | Mistake | How to find it |
 | --- | --- |
 | An invented step or output | `testlab validate` reports it. Look the step up in the catalog. |
-| An invented or misspelt input | **Nothing reports it.** It is ignored, and the step runs with its default. Compare every `with:` key with `testlab docs -s <step> -o -`. |
+| An invented or misspelt input | **Validate and compile do not report it.** Compare every `with:` key with `testlab docs -s <step> -o -`. |
 | A check that cannot fail | Read each check and ask what would turn it red. |
 | An environment written into a test | Search `tests/` for `BPNL`, `did:` and `http`. |
 
