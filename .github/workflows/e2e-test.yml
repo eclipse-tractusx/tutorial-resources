@@ -88,7 +88,15 @@ jobs:
     name: Validate and compile
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    outputs:
+      slug: ${{ steps.slug.outputs.slug }}
     steps:
+      # One workflow may call this one several times (one call per test
+      # project). The folder name keeps their artifacts apart.
+      - name: Name this project's artifacts
+        id: slug
+        run: echo "slug=$(printf '%s' "${TCK_DIR}" | tr -c 'A-Za-z0-9._-' '-')" >> "${GITHUB_OUTPUT}"
+
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
@@ -121,7 +129,7 @@ jobs:
       - name: Upload the compiled package
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: e2e-test-package
+          name: e2e-test-package-${{ steps.slug.outputs.slug }}
           path: ${{ env.TCK_OUT }}
           retention-days: 14
 
@@ -198,7 +206,7 @@ jobs:
       - name: Download the compiled package
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
-          name: e2e-test-package
+          name: e2e-test-package-${{ needs.validate.outputs.slug }}
           path: dist
 
       # ------------------------------------------------------------------
@@ -1226,7 +1234,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: e2e-test-run-${{ github.run_id }}
+          name: e2e-test-run-${{ needs.validate.outputs.slug }}
           path: |
             logs
             /data
@@ -1237,7 +1245,7 @@ jobs:
         if: ${{ failure() || cancelled() }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: umbrella-diagnostics-${{ github.run_id }}
+          name: umbrella-diagnostics-${{ needs.validate.outputs.slug }}
           path: ci-logs/
           retention-days: 14
 
