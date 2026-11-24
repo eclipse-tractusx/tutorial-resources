@@ -66,7 +66,9 @@ env:
       name: Product API, as its own connector reaches it
       description: >
         Address of your product's API as the data plane of the connector in
-        front of it can reach it, e.g. http://my-product.my-namespace:8080.
+        front of it can reach it, e.g. https://my-product.example.org. In the
+        workflow it defaults to a small echo service, so the template passes
+        before you have changed anything.
       with:
         source: input
         scope: sut

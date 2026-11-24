@@ -2,3 +2,4 @@
 mkdocs-material==9.8.2
 markdown-callouts==0.4.0
 jsonschema==4.26.0
+segno==1.6.6

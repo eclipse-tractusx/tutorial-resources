@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/admin/handouts/inventory.schema.json",
+  "title": "Connector inventory for the handouts",
+  "description": "What each team gets. The real file holds addresses and keys: keep it out of Git.",
+  "type": "object",
+  "required": ["ideUrl", "tutorialUrl", "help", "teams"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "ideUrl": { "description": "Address of the Test Suite with the IDE.", "type": "string", "format": "uri" },
+    "tutorialUrl": { "description": "Address of this tutorial. Printed as a QR code.", "type": "string", "format": "uri" },
+    "help": { "description": "Where a team gets help, in one line.", "type": "string" },
+    "teams": {
+      "description": "One entry per team, keyed by the team id from assignments.json.",
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/team" }
+    }
+  },
+  "$defs": {
+    "team": {
+      "type": "object",
+      "required": ["account", "sut", "engine"],
+      "additionalProperties": false,
+      "properties": {
+        "account": {
+          "type": "object",
+          "required": ["username"],
+          "additionalProperties": false,
+          "properties": {
+            "username": { "type": "string" },
+            "password": { "description": "Leave out to print 'handed out at the desk'.", "type": "string" }
+          }
+        },
+        "sut": { "$ref": "#/$defs/side" },
+        "engine": { "$ref": "#/$defs/side" }
+      }
+    },
+    "side": {
+      "type": "object",
+      "required": ["managementUrl", "apiKey", "dspUrl", "participantId", "bpn"],
+      "additionalProperties": false,
+      "properties": {
+        "managementUrl": { "description": "Management API of the connector.", "type": "string", "format": "uri" },
+        "apiKey": { "description": "API key of the Management API.", "type": "string" },
+        "dspUrl": { "description": "Address at which a partner reaches the connector (DSP).", "type": "string", "format": "uri" },
+        "participantId": { "description": "The connector's participant id, a DID for current connectors.", "type": "string" },
+        "bpn": { "type": "string", "pattern": "^BPNL[0-9A-Z]{12}$" },
+        "dtrUrl": { "description": "Digital Twin Registry of this side.", "type": "string", "format": "uri" },
+        "dtrInternalUrl": { "description": "The registry's API as this side's connector reaches it.", "type": "string", "format": "uri" },
+        "productInternalUrl": { "description": "The product's API as this side's connector reaches it.", "type": "string", "format": "uri" }
+      }
+    }
+  }
+}

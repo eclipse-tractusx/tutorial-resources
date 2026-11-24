@@ -1143,6 +1143,10 @@ jobs:
                   "dtr_internal_url": os.environ["DTR_INTERNAL_URL"],
                   "mock_server_external_url": os.environ["MOCK_SERVER_EXTERNAL_URL"],
                   "stub_caller_url": os.environ["STUB_CALLER_URL"],
+                  # A stand-in for "a product behind the provider's connector":
+                  # the echo service deployed above. A project that tests a real
+                  # product overrides it in its own config file.
+                  "product_internal_url": f"http://tck-echo.{os.environ['UMBRELLA_NAMESPACE']}.svc.cluster.local",
               }
           )
           caller = os.environ.get("CALLER_CONFIG", "")

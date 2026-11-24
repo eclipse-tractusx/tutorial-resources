@@ -17,13 +17,28 @@
 # SPDX-License-Identifier: Apache-2.0
 #################################################################################
 
-# Values for a run in the Tractus-X Umbrella the workflow creates. The
-# connector addresses and identities are filled in by the workflow itself;
-# this file only adds what is specific to your product.
-#
-# The template points at the small echo service the workflow deploys, so it
-# passes before you have changed anything. TODO: put the in-cluster address of
-# your product here, e.g. http://my-product.umbrella.svc.cluster.local:8080.
+# Copy this file to .github/workflows/e2e-test.yml in your repository.
+# It validates and compiles the E2E test project on every pull request and
+# runs it against a Tractus-X Umbrella that is created inside the runner.
 
-variables:
-  product_internal_url: "http://tck-echo.umbrella.svc.cluster.local"
+name: E2E test
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-test-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    name: E2E test
+    uses: eclipse-tractusx/tutorial-resources/.github/workflows/e2e-test.yml@main
+    with:
+      tck-directory: tck/e2e

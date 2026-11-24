@@ -58,4 +58,3 @@ jobs:
     uses: ./.github/workflows/e2e-test.yml
     with:
       tck-directory: e2e-testing/template/tck/e2e
-      config: e2e-testing/template/tck/e2e/ci/umbrella.yaml
