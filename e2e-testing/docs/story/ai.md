@@ -41,8 +41,8 @@ OpenAI, Anthropic, Catena-X AI, or a server of your own (Ollama, LM Studio or an
 server with an OpenAI-compatible API).
 
 - No key is shared in the workshop, and none is stored on the IDE's server.
-- Larger models follow the step catalog more reliably. A small local model works, and
-  needs more of the reminder *"use only steps from the block catalog"*.
+- Larger models follow the step catalog more reliably. A local model needs a fast machine:
+  the IDE sends about 26,000 tokens of instructions before your first question.
 - What you paste into the assistant goes to the provider you chose. Do not paste secrets.
 
 ---

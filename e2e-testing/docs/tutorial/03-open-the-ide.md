@@ -34,6 +34,10 @@ The template project on the left, with its two tests, and the assistant panel on
 
 After step 7, the assistant answers with a short description of the two tests.
 
+For your own server, the panel looks like this:
+
+![The assistant panel with Local / self-hosted LLM selected: Server, Server URL, API key and Connect](../assets/screenshots/03b-local-model.png)
+
 > [!NOTE]
 > Your key goes from your browser straight to the provider you chose. The Test Suite has no
 > server for the assistant. Without **Keep this key on this computer**, the key is forgotten
