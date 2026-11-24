@@ -16,8 +16,8 @@
         "participantId": "did:web:provider.team-01.example.org:identityhub:BPNL000000000101",
         "bpn": "BPNL000000000101",
         "dtrUrl": "https://provider-dtr.team-01.example.org/semantics/registry",
-        "dtrInternalUrl": "http://provider-dtr:8080/api/v3",
-        "productInternalUrl": "http://my-product:8080"
+        "dtrInternalUrl": "https://provider-dtr.team-01.example.org/semantics/registry/api/v3",
+        "productInternalUrl": "https://my-product.team-01.example.org"
       },
       "engine": {
         "managementUrl": "https://consumer-management.team-01.example.org/management",
@@ -39,8 +39,8 @@
         "participantId": "did:web:provider.team-02.example.org:identityhub:BPNL000000000102",
         "bpn": "BPNL000000000102",
         "dtrUrl": "https://provider-dtr.team-02.example.org/semantics/registry",
-        "dtrInternalUrl": "http://provider-dtr:8080/api/v3",
-        "productInternalUrl": "http://my-product:8080"
+        "dtrInternalUrl": "https://provider-dtr.team-02.example.org/semantics/registry/api/v3",
+        "productInternalUrl": "https://my-product.team-02.example.org"
       },
       "engine": {
         "managementUrl": "https://consumer-management.team-02.example.org/management",
@@ -62,8 +62,8 @@
         "participantId": "did:web:provider.team-03.example.org:identityhub:BPNL000000000103",
         "bpn": "BPNL000000000103",
         "dtrUrl": "https://provider-dtr.team-03.example.org/semantics/registry",
-        "dtrInternalUrl": "http://provider-dtr:8080/api/v3",
-        "productInternalUrl": "http://my-product:8080"
+        "dtrInternalUrl": "https://provider-dtr.team-03.example.org/semantics/registry/api/v3",
+        "productInternalUrl": "https://my-product.team-03.example.org"
       },
       "engine": {
         "managementUrl": "https://consumer-management.team-03.example.org/management",
@@ -85,8 +85,8 @@
         "participantId": "did:web:provider.team-04.example.org:identityhub:BPNL000000000104",
         "bpn": "BPNL000000000104",
         "dtrUrl": "https://provider-dtr.team-04.example.org/semantics/registry",
-        "dtrInternalUrl": "http://provider-dtr:8080/api/v3",
-        "productInternalUrl": "http://my-product:8080"
+        "dtrInternalUrl": "https://provider-dtr.team-04.example.org/semantics/registry/api/v3",
+        "productInternalUrl": "https://my-product.team-04.example.org"
       },
       "engine": {
         "managementUrl": "https://consumer-management.team-04.example.org/management",
@@ -108,8 +108,8 @@
         "participantId": "did:web:provider.team-05.example.org:identityhub:BPNL000000000105",
         "bpn": "BPNL000000000105",
         "dtrUrl": "https://provider-dtr.team-05.example.org/semantics/registry",
-        "dtrInternalUrl": "http://provider-dtr:8080/api/v3",
-        "productInternalUrl": "http://my-product:8080"
+        "dtrInternalUrl": "https://provider-dtr.team-05.example.org/semantics/registry/api/v3",
+        "productInternalUrl": "https://my-product.team-05.example.org"
       },
       "engine": {
         "managementUrl": "https://consumer-management.team-05.example.org/management",

@@ -72,7 +72,7 @@ FACTS YOU MAY STATE. Use them exactly. Do not add figures of your own.
   Tractus-X Umbrella: two connectors, two wallets, a Digital Twin Registry,
   a BDRS and an IssuerService. It needs no secrets and no external cluster.
 - The worked example (Digital Twin Registry) has 3 tests and 19 steps and
-  runs in GitHub Actions in about six minutes.
+  runs in GitHub Actions in about five and a half minutes.
 - The worked example's first run in CI failed: a twin had been registered
   without a submodel descriptor, and the schema check caught it.
 - A draft Tractus-X Release Guideline proposes that every product hosts an

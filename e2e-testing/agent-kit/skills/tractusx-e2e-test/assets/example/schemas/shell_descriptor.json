@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:testlab:e2e:shell-descriptor",
+  "title": "ShellDescriptor",
+  "description": "An AAS v3 shell descriptor as the Tractus-X Digital Twin Registry answers it, in the registry's own camelCase spelling. Tight to the shape dtr_roundtrip.yaml registers: the descriptor must name at least one specific asset id and one submodel with a reachable endpoint. Anything the registry adds on top is allowed through.",
+  "type": "object",
+  "required": ["id", "idShort", "specificAssetIds", "submodelDescriptors"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+      "description": "The twin id, a UUID URN — the id the run minted, not one the registry assigned."
+    },
+    "idShort": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "specificAssetIds": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/specificAssetId" }
+    },
+    "submodelDescriptors": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/submodelDescriptor" }
+    }
+  },
+  "$defs": {
+    "reference": {
+      "type": "object",
+      "required": ["type", "keys"],
+      "properties": {
+        "type": { "type": "string", "enum": ["ExternalReference", "ModelReference"] },
+        "keys": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["type", "value"],
+            "properties": {
+              "type": { "type": "string", "minLength": 1 },
+              "value": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "specificAssetId": {
+      "type": "object",
+      "required": ["name", "value"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "value": { "type": "string", "minLength": 1 },
+        "externalSubjectId": { "$ref": "#/$defs/reference" }
+      }
+    },
+    "submodelDescriptor": {
+      "type": "object",
+      "required": ["id", "endpoints"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "idShort": { "type": "string", "maxLength": 128 },
+        "semanticId": { "$ref": "#/$defs/reference" },
+        "endpoints": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/endpoint" }
+        }
+      }
+    },
+    "endpoint": {
+      "type": "object",
+      "required": ["interface", "protocolInformation"],
+      "properties": {
+        "interface": { "type": "string", "minLength": 1 },
+        "protocolInformation": {
+          "type": "object",
+          "required": ["href"],
+          "properties": {
+            "href": { "type": "string", "pattern": "^https?://" },
+            "endpointProtocol": { "type": "string" },
+            "endpointProtocolVersion": { "type": "array", "items": { "type": "string" } },
+            "subprotocol": { "type": "string" },
+            "subprotocolBody": { "type": "string" },
+            "subprotocolBodyEncoding": { "type": "string" },
+            "securityAttributes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["type", "key", "value"],
+                "properties": {
+                  "type": { "type": "string" },
+                  "key": { "type": "string" },
+                  "value": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

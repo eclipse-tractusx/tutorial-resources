@@ -20,7 +20,8 @@
 <style>
   @page { size: A4; margin: 12mm; }
   * { box-sizing: border-box; }
-  body { margin: 0; font-family: "Manrope", "Helvetica Neue", Arial, sans-serif; font-size: 9pt; color: #111; }
+  /* One page: long addresses wrap, so the page is drawn a little smaller. */
+  body { zoom: 0.86; margin: 0; font-family: "Manrope", "Helvetica Neue", Arial, sans-serif; font-size: 9pt; color: #111; }
   header { display: flex; justify-content: space-between; align-items: center; gap: 6mm; padding: 3mm 6mm; background: #000; color: #fff; border-bottom: 1.2mm solid #faa023; }
   header h1 { margin: 0; font-size: 18pt; font-weight: 800; }
   header p { margin: 1mm 0 0; font-size: 9pt; color: #ddd; }

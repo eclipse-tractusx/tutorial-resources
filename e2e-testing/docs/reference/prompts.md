@@ -27,8 +27,8 @@ The open project is a template. Plan how to turn it into this test:
 - Addresses, BPNs and keys never go into a test file. Use variables or
   infrastructure references.
 - Everything a test creates is removed again in teardown.
-- Replace every TODO in the template and rename "my-product" to
-  "<product-id>".
+- Rename every "my-product" and "My Product" in the template to
+  "<product-id>" and "<product name>".
 
 Do not write files yet. Ask me what you do not know.
 ```

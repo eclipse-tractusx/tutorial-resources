@@ -44,7 +44,7 @@ That is all a product repository needs. The work happens in the
 flowchart LR
     PR["Pull request"] --> V["Validate and compile<br/>about 30 seconds"]
     V --> P[".tck package"]
-    P --> E["Run in Tractus-X Umbrella<br/>about 6 minutes"]
+    P --> E["Run in Tractus-X Umbrella<br/>about 5 minutes"]
     E --> R["PASS or FAIL<br/>on the pull request"]
 ```
 
@@ -52,6 +52,9 @@ flowchart LR
 | --- | --- | --- |
 | **Validate and compile** | Nothing but Python | The test project is well-formed and still compiles. |
 | **Run in Tractus-X Umbrella** | A dataspace, which the job creates itself | The product still keeps its promise. |
+
+On the fork where it was proven, the first job took 23 seconds and the second 4 minutes
+57 seconds.
 
 The second job creates a Kubernetes cluster inside the runner, deploys two connectors, two
 wallets, a Digital Twin Registry, a BDRS and an IssuerService from the
@@ -83,9 +86,15 @@ The workflow fills in everything about the dataspace it created:
 | `infrastructure.sut.dtr.base_url` | The provider's Digital Twin Registry |
 | `sut_bpnl`, `engine_bpnl` | The two [BPNs](glossary.md#bpn) |
 | `dtr_internal_url` | The registry as the provider's connector reaches it |
+| `product_internal_url` | A small echo service behind the provider's connector: a stand-in for a product |
 
-Anything else your project declares as an input goes into the `config` file.
-The template shows one: [`ci/umbrella.yaml`](https://github.com/eclipse-tractusx/tutorial-resources/blob/main/e2e-testing/template/tck/e2e/ci/umbrella.yaml).
+Anything else your project declares as an input goes into a file of your own, named with
+the `config` input:
+
+```yaml
+variables:
+  my_own_value: "something"
+```
 
 ## Test the image from your pull request
 
@@ -108,9 +117,10 @@ request, build your image in a job of your own and pass its tag as Helm values:
 | Check | Result |
 | --- | --- |
 | `actionlint` | Passes. Four style notes come from the steps taken over from TestLab. |
-| Real run on a fork, worked example | 3 tests passed |
-| Real run on a fork, template | 2 tests passed |
-| Run in a product repository, called across repositories | See the pull request description for the run |
+| Real run on a fork of this repository, worked example | 3 tests passed |
+| Real run on a fork of this repository, template | 2 tests passed |
+| Real run in a fork of `sldt-digital-twin-registry`, called across repositories, with the project exported from the IDE | 3 tests passed, 5 minutes 25 seconds in total |
+| `config` and `umbrella-values` inputs | **Not run** with a file of a calling repository |
 
 ## When it is red
 

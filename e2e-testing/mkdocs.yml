@@ -111,6 +111,7 @@ nav:
       - 2 · Your product and your connectors: tutorial/02-your-product.md
       - 3 · Open the IDE and connect your LLM: tutorial/03-open-the-ide.md
       - 4 · Build the test with the assistant: tutorial/04-build-the-test.md
+      - 3–4 · Alternative, your own AI tool: tutorial/03-alternative-your-own-ai-tool.md
       - 5 · Run it against your connectors: tutorial/05-run-it.md
       - 6 · Add it to your repository: tutorial/06-add-to-repository.md
       - 7 · Link it and open the pull request: tutorial/07-link-and-pull-request.md
@@ -118,6 +119,7 @@ nav:
   - Reference:
       - Glossary: reference/glossary.md
       - Before you come: reference/prepare.md
+      - Set up your AI tool: reference/ai-tool-setup.md
       - Product catalog: reference/catalog.md
       - Starter prompts: reference/prompts.md
       - The worked example: reference/worked-example.md

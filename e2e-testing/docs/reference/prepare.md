@@ -45,8 +45,11 @@ You bring your own. No key is shared in the workshop. One of these is enough:
 | **Catena-X AI** | Your Catena-X AI key and agent ID | For members who have access. |
 | **Local or self-hosted** | A server with an OpenAI-compatible API, for example Ollama or LM Studio, and a model that supports tool calls | Nothing leaves your machine. The server must allow the IDE's address as an origin. |
 
-The key stays in your browser. An hour of building one test costs little: a few hundred
-thousand tokens at most.
+The key stays in your browser.
+
+Only a subscription, such as Claude, ChatGPT or Copilot, and no API key? Then build with
+your own assistant on your laptop: install it before you come, and see
+[Set up your AI tool](ai-tool-setup.md). This route also needs step 5 below.
 
 No model at all? Sit with a team that has one. You can also write the YAML by hand: the
 [template](https://github.com/eclipse-tractusx/tutorial-resources/tree/main/e2e-testing/template)

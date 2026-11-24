@@ -12,8 +12,7 @@ a folder you commit:
 tck/e2e/
 ├── index.yaml      the manifest: what is tested, what a run needs, which tests belong to it
 ├── tests/          one file per test
-├── schemas/        JSON schemas an answer is checked against (optional)
-└── ci/             values for a run in CI (optional)
+└── schemas/        JSON schemas an answer is checked against (optional)
 ```
 
 ## Two sides: the system under test, and the engine

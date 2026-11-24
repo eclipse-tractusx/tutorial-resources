@@ -52,6 +52,7 @@ It ends with "the clock starts now". Start a visible 60-minute timer.
 
 | Behind at | Do |
 | --- | --- |
+| Minute 10, no API key but an AI coding assistant on the laptop | Send them down the [alternative route](../tutorial/03-alternative-your-own-ai-tool.md). It needs Python and a `git clone`, so decide early. |
 | Minute 20, no assistant | Give them the [worked example](../reference/worked-example.md) to read and adapt by hand, or seat them with another team. |
 | Minute 35, compile still red | Have them open the template again and change only the names. A small green test beats a large red one. |
 | Minute 45, no green run | Skip the run. Go to chapter 6: the workflow will run the test in CI. |

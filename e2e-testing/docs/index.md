@@ -38,6 +38,7 @@ flowchart LR
 | 1 | [Start here](tutorial/01-start-here.md) | 5 | Your handout, and the mission |
 | 2 | [Your product and your connectors](tutorial/02-your-product.md) | 5 | One sentence that says what you will prove |
 | 3 | [Open the IDE and connect your LLM](tutorial/03-open-the-ide.md) | 5 | An assistant that answers |
+| | *No API key? [Build with your own AI tool](tutorial/03-alternative-your-own-ai-tool.md) instead of 3 and 4* | *20* | |
 | 4 | [Build the test with the assistant](tutorial/04-build-the-test.md) | 15 | A test project that compiles |
 | 5 | [Run it against your connectors](tutorial/05-run-it.md) | 10 | A green run, for the right reasons |
 | 6 | [Add it to your repository](tutorial/06-add-to-repository.md) | 10 | The test and its workflow, committed |
@@ -45,7 +46,7 @@ flowchart LR
 | 8 | [What comes next](tutorial/08-what-comes-next.md) | 5 | A plan for the second test |
 | | | **60** | |
 
-## Three ways to use this site
+## Where to start
 
 | You are | Go to |
 | --- | --- |

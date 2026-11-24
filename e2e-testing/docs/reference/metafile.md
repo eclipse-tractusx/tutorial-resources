@@ -45,7 +45,8 @@ e2eTests:
 > [!IMPORTANT]
 > `e2eTests` is a **proposed** field. It is defined in the draft
 > [TRG](glossary.md#trg) for E2E tests, and the name is an open decision there.
-> Tools that read `.tractusx` today ignore fields they do not know, so adding it is safe.
+> Metafiles already carry fields the release checks do not read, such as `openApiSpecs`,
+> so an extra field does not break them.
 
 ---
 

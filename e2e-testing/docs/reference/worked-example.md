@@ -2,7 +2,7 @@
 
 A complete E2E test project for the **Digital Twin Registry**
 ([`sldt-digital-twin-registry`](https://github.com/eclipse-tractusx/sldt-digital-twin-registry)).
-It validates, compiles and passes in GitHub Actions, in about six minutes.
+It validates, compiles and passes in GitHub Actions, in about five and a half minutes.
 
 [Home](../index.md) · Files: [`examples/digital-twin-registry`](https://github.com/eclipse-tractusx/tutorial-resources/tree/main/e2e-testing/examples/digital-twin-registry)
 
