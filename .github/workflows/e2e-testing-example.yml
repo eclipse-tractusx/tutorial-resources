@@ -52,3 +52,10 @@ jobs:
     uses: ./.github/workflows/e2e-test.yml
     with:
       tck-directory: e2e-testing/examples/digital-twin-registry/tck/e2e
+
+  template:
+    name: Template
+    uses: ./.github/workflows/e2e-test.yml
+    with:
+      tck-directory: e2e-testing/template/tck/e2e
+      config: e2e-testing/template/tck/e2e/ci/umbrella.yaml

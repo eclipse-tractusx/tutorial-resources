@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/catalog/assignments.schema.json",
+  "title": "Which team works on which product",
+  "type": "object",
+  "required": ["event", "sample", "assignments"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "event": { "type": "string" },
+    "sample": {
+      "description": "True while the file holds invented teams. Set it to false once the real list is in.",
+      "type": "boolean"
+    },
+    "assignments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["team", "teamName", "productId"],
+        "additionalProperties": false,
+        "properties": {
+          "team": {
+            "description": "Short identifier, used for the handout file name and the connector inventory.",
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "teamName": { "type": "string" },
+          "productId": { "description": "An id from products.json.", "type": "string" },
+          "scenario": {
+            "description": "Optional: the scenario this team takes, when it is not the product's first one.",
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

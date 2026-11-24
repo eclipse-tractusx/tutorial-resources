@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/catalog/products.schema.json",
+  "title": "Tractus-X products that should get an E2E test",
+  "type": "object",
+  "required": ["generatedFrom", "workshopEnvironment", "products"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "generatedFrom": {
+      "description": "Where the list comes from, so that it can be rebuilt.",
+      "type": "object",
+      "required": ["organization", "collectedOn", "sources"],
+      "additionalProperties": false,
+      "properties": {
+        "organization": { "type": "string" },
+        "collectedOn": { "type": "string", "format": "date" },
+        "sources": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+      }
+    },
+    "workshopEnvironment": {
+      "description": "What every team gets in the workshop. A product fits the workshop when it needs nothing else.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/need" },
+      "uniqueItems": true
+    },
+    "products": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/product" }
+    },
+    "excluded": {
+      "description": "Repositories that are deliberately not in the list, and why.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["repository", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "repository": { "$ref": "#/$defs/repositoryUrl" },
+          "reason": { "type": "string" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "repositoryUrl": {
+      "type": "string",
+      "pattern": "^https://github\\.com/eclipse-tractusx/[A-Za-z0-9._-]+$"
+    },
+    "need": {
+      "description": "A building block a run of the E2E test needs.",
+      "enum": [
+        "connector",
+        "dtr",
+        "wallet",
+        "bdrs",
+        "iam",
+        "portal",
+        "bpdm",
+        "discovery-finder",
+        "bpn-discovery",
+        "semantic-hub",
+        "submodel-server",
+        "irs",
+        "kafka",
+        "database",
+        "kubernetes",
+        "browser"
+      ]
+    },
+    "product": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "repository",
+        "description",
+        "needs",
+        "runsInUmbrella",
+        "scenario",
+        "difficulty",
+        "fitsWorkshop",
+        "workshopNote"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Stable identifier, used by assignments.json.",
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        },
+        "name": { "type": "string", "minLength": 2 },
+        "repository": {
+          "description": "The leading repository: the E2E test project and the pull request go here.",
+          "$ref": "#/$defs/repositoryUrl"
+        },
+        "description": { "description": "One line.", "type": "string", "maxLength": 200 },
+        "needs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/need" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "runsInUmbrella": {
+          "description": "True when the Tractus-X Umbrella chart deploys the product.",
+          "type": "boolean"
+        },
+        "umbrellaChart": {
+          "description": "Name of the chart that carries the product in the Umbrella.",
+          "type": "string"
+        },
+        "scenario": { "description": "Suggested E2E scenario, one sentence.", "type": "string", "maxLength": 220 },
+        "moreScenarios": {
+          "description": "Further scenarios, for a second team on the same product or a later pull request.",
+          "type": "array",
+          "items": { "type": "string", "maxLength": 220 }
+        },
+        "difficulty": { "enum": ["starter", "intermediate", "advanced"] },
+        "fitsWorkshop": {
+          "description": "True when a team can build AND run the test in the one-hour workshop with what every team gets.",
+          "type": "boolean"
+        },
+        "workshopNote": { "description": "Why it fits, or what is missing.", "type": "string", "maxLength": 220 },
+        "relatedRepositories": {
+          "description": "Other repositories of the same product. They link to the leading repository in their own metafile.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/repositoryUrl" }
+        },
+        "existingTests": {
+          "description": "Test folders and workflows the repository already has: read them before you write a scenario.",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "example": {
+          "description": "Path, in this tutorial, of a worked example for the product.",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

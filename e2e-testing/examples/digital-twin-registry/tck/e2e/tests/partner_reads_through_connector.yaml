@@ -108,6 +108,36 @@ setup:
       id:
         type: string
 
+  - id: create_submodel
+    uses: digital-twin-registry/provider/create_submodel_descriptor
+    name: Attach a submodel descriptor to the twin
+    with:
+      aas_identifier: "${{ setup.create_shell.id }}"
+      submodel_descriptor:
+        id: "urn:uuid:7e2d5a81-0000-4000-8000-000000000002"
+        idShort: e2ePartnerSubmodel
+        semanticId:
+          type: ExternalReference
+          keys:
+            - type: GlobalReference
+              value: "urn:samm:io.catenax.part_type_information:1.0.0#PartTypeInformation"
+        endpoints:
+          - interface: "SUBMODEL-3.0"
+            protocolInformation:
+              href: "${{ infrastructure.sut.connector.dsp_url }}"
+              endpointProtocol: "HTTP"
+              endpointProtocolVersion: ["1.1"]
+              subprotocol: "DSP"
+              subprotocolBody: "id=dtr-e2e-asset;dspEndpoint=${{ infrastructure.sut.connector.dsp_url }}"
+              subprotocolBodyEncoding: "plain"
+              securityAttributes:
+                - type: "NONE"
+                  key: "NONE"
+                  value: "NONE"
+    returns:
+      id:
+        type: string
+
 execution:
   - id: registry_auth
     uses: connector/discover/digital-twin-registry/auth
