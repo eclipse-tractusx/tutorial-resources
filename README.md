@@ -5,6 +5,8 @@ connector policies, build a product passport, give your product an end-to-end te
 
 **Website:** <https://eclipse-tractusx.github.io/tutorial-resources/>. The home page lists every
 tutorial. The ones with their own site open there; the others open here in the repository.
+Tutorials marked deprecated are kept for reference and may not match the current
+Tractus-X release.
 
 ## Tutorials
 
@@ -12,8 +14,8 @@ tutorial. The ones with their own site open there; the others open here in the r
 | --- | --- | --- |
 | **E2E tests for Tractus-X products** | Build an end-to-end test for a Tractus-X product in about an hour, with an AI assistant, and run it on every pull request | [Site](https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/) · [Source](e2e-testing/README.md) |
 | **EDC Policy Playground** | Put together Tractus-X connector policies in the browser and see the policy JSON they become | [Web app](https://eclipse-tractusx.github.io/tutorial-resources/policy-playground/) · [Source](edc-policy-playground/README.md) |
-| **Minimum Tractus-X Dataspace (MXD)** | Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster. Follow-up guides cover access policies, file transfers and EDR transfers | [Guide](mxd/README.md) · [More guides](mxd/docs/) |
-| **Digital Product Passport** | Create a passport for your part and read it over the dataspace (Tractus-X Community Days workstream) | [Guide](dpp-tutorial/README.md) |
+| **Minimum Tractus-X Dataspace (MXD)** · ⚠️ deprecated | Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster. Follow-up guides cover access policies, file transfers and EDR transfers | [Guide](mxd/README.md) · [More guides](mxd/docs/) |
+| **Digital Product Passport** · ⚠️ deprecated | Create a passport for your part and read it over the dataspace (Tractus-X Community Days workstream) | [Guide](dpp-tutorial/README.md) |
 | **IRS frontend challenge with GenAI** | Build a frontend for the Item Relationship Service with an AI assistant, in three phases | [Guide](icc-irs-challenges/README.md) |
 | **Migration guides** | Move the PostgreSQL and Keycloak of a deployment from the Bitnami Helm charts to the CloudPirates charts | [PostgreSQL](migration-guides/GENERIC_POSTGRESQL_MIGRATION_GUIDE.md) · [Keycloak](migration-guides/GENERIC_BITNAMI_TO_CLOUDPIRATES_KEYCLOAK_MIGRATION_GUIDE.md) |
 

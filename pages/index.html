@@ -39,6 +39,10 @@
       --fg: #111111;
       --muted: #5c5c5c;
       --line: #e3e3e3;
+      --line-strong: #c9c9c9;
+      --chip: #f1f1f1;
+      --warn-bg: #fff1d6;
+      --warn-fg: #8a4b00;
       --card: #ffffff;
       --soft: #fff6e8;
       --orange: #faa023;
@@ -53,6 +57,10 @@
         --fg: #f2f2f2;
         --muted: #a8a8a8;
         --line: #2a2a2a;
+        --line-strong: #444444;
+        --chip: #1f1f1f;
+        --warn-bg: #3a2600;
+        --warn-fg: #ffc266;
         --card: #141414;
         --soft: #2a1f0d;
         --orange-dark: #fbb24d;
@@ -98,6 +106,12 @@
     }
 
     .top__inner a:hover { opacity: 1; color: var(--orange); }
+
+    .top__inner span { white-space: nowrap; }
+
+    @media (max-width: 40rem) {
+      .top__inner .wide { display: none; }
+    }
 
     main {
       max-width: 72rem;
@@ -257,6 +271,195 @@
     .go svg { width: 1.1rem; height: 1.1rem; fill: currentcolor; transition: transform 0.2s; }
     .card:hover .go svg { transform: translateX(3px); }
 
+    /* Search and filters. Shown only with JavaScript; without it every card shows. */
+    .controls {
+      display: grid;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .search {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .search svg {
+      position: absolute;
+      left: 0.9rem;
+      width: 1.2rem;
+      height: 1.2rem;
+      fill: var(--muted);
+      pointer-events: none;
+    }
+
+    .search input {
+      width: 100%;
+      padding: 0.8rem 2.8rem 0.8rem 2.8rem;
+      border: 1px solid var(--line-strong);
+      border-radius: 0.7rem;
+      background: var(--card);
+      color: var(--fg);
+      font: inherit;
+      font-size: 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search input::placeholder { color: var(--muted); }
+
+    .search input:focus {
+      outline: none;
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgb(250 160 35 / 25%);
+    }
+
+    .search kbd {
+      position: absolute;
+      right: 0.8rem;
+      padding: 0.05rem 0.45rem;
+      border: 1px solid var(--line-strong);
+      border-radius: 0.35rem;
+      color: var(--muted);
+      font: inherit;
+      font-size: 0.75rem;
+    }
+
+    .search input:focus ~ kbd,
+    .search input:not(:placeholder-shown) ~ kbd { display: none; }
+
+    .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+    .filter {
+      padding: 0.45rem 0.95rem;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--fg);
+      font: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .filter:hover { border-color: var(--orange); }
+    .filter:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+    .filter[aria-pressed="true"] {
+      border-color: var(--orange);
+      background: var(--orange);
+      color: #000000;
+    }
+
+    .count { margin: 0; color: var(--muted); font-size: 0.88rem; }
+
+    .controls + .grid { margin-top: 1.5rem; }
+
+    .grid > li[hidden] { display: none; }
+
+    .empty {
+      display: grid;
+      justify-items: start;
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+      padding: 2rem;
+      border: 1px dashed var(--line-strong);
+      border-radius: 0.9rem;
+      color: var(--muted);
+    }
+
+    .empty[hidden] { display: none; }
+    .empty p { margin: 0; }
+
+    /* Who a tutorial is for, on each card. */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin: 0.2rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .chips li {
+      padding: 0.1rem 0.55rem;
+      border-radius: 0.35rem;
+      background: var(--chip);
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+    }
+
+    .toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--line-strong);
+      border-radius: 0.5rem;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .toggle::before {
+      content: "";
+      width: 0.8rem;
+      height: 0.8rem;
+      border: 1.5px solid currentcolor;
+      border-radius: 0.2rem;
+    }
+
+    .toggle[aria-pressed="true"] { border-color: var(--orange); color: var(--fg); }
+    .toggle[aria-pressed="true"]::before { border-color: var(--orange); background: var(--orange); box-shadow: inset 0 0 0 2px var(--card); }
+    .toggle:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+    /* Deprecated tutorials: a badge on the picture, the picture in grey. */
+    .card__media { position: relative; }
+
+    .badge {
+      position: absolute;
+      top: 0.7rem;
+      left: 0.7rem;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.6rem 0.25rem 0.5rem;
+      border-radius: 999px;
+      background: var(--warn-bg);
+      color: var(--warn-fg);
+      font-size: 0.75rem;
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 20%);
+    }
+
+    .badge svg { width: 0.95rem; height: 0.95rem; fill: currentcolor; }
+
+    .card--deprecated .card__media img { filter: grayscale(0.85); opacity: 0.75; }
+    .card--deprecated:hover .card__media img { filter: none; opacity: 1; }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
     footer {
       max-width: 72rem;
       margin: 0 auto;
@@ -274,7 +477,7 @@
     <div class="top__inner">
       <img src="e2e-testing/assets/logo_tractus-x.svg" alt="">
       <span>Eclipse Tractus-X Tutorials</span>
-      <a href="https://github.com/eclipse-tractusx/tutorial-resources">Repository on GitHub</a>
+      <a href="https://github.com/eclipse-tractusx/tutorial-resources"><span class="wide">Repository on </span>GitHub</a>
     </div>
   </header>
 
@@ -285,8 +488,29 @@
       <p>Hands-on tutorials from the Eclipse Tractus-X community. Pick one: each opens on its own page, or in the repository when it is a set of Markdown guides.</p>
     </div>
 
-    <ul class="grid">
-      <li>
+    <div class="controls" id="controls" hidden>
+      <label class="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"/></svg>
+        <span class="visually-hidden">Search the tutorials</span>
+        <input type="search" id="q" placeholder="Search tutorials: connector, Kubernetes, AI…" autocomplete="off">
+        <kbd aria-hidden="true">/</kbd>
+      </label>
+      <div class="filters" role="group" aria-label="Show tutorials for">
+        <button type="button" class="filter" data-filter="" aria-pressed="true">All</button>
+        <button type="button" class="filter" data-filter="community-days" aria-pressed="false">Community Days</button>
+        <button type="button" class="filter" data-filter="developers" aria-pressed="false">Developers</button>
+        <button type="button" class="filter" data-filter="operators" aria-pressed="false">Operators</button>
+        <button type="button" class="filter" data-filter="ai" aria-pressed="false">With AI</button>
+        <button type="button" class="filter" data-filter="start" aria-pressed="false">Getting started</button>
+      </div>
+      <div class="meta">
+        <p class="count" id="count" aria-live="polite"></p>
+        <button type="button" class="toggle" id="hide-deprecated" aria-pressed="false">Hide deprecated</button>
+      </div>
+    </div>
+
+    <ul class="grid" id="grid">
+      <li data-filters="community-days developers ai" data-keywords="tck testlab test suite ide github actions pull request e2e end-to-end trg conformance">
         <article class="card card--featured">
           <div class="card__media card__media--logo">
             <picture>
@@ -298,66 +522,81 @@
             <span class="tag tag--site">Tutorial site</span>
             <h2><a href="e2e-testing/">E2E tests for Tractus-X products</a></h2>
             <p>Give your product an end-to-end test that runs on every pull request. Build it in about an hour with an AI assistant in the Test Suite IDE.</p>
+            <ul class="chips" aria-label="For"><li>Community Days 2026</li><li>Developers</li><li>With AI</li></ul>
             <span class="go">Open the tutorial <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
           </div>
         </article>
       </li>
-      <li>
+      <li data-filters="developers start" data-keywords="edc connector policy policies odrl access usage contract">
         <article class="card">
           <div class="card__media"><img src="media/policy-playground.png" alt="The Policy Playground: a policy form next to its JSON" loading="lazy"></div>
           <div class="card__body">
             <span class="tag tag--site">Web app</span>
             <h2><a href="policy-playground/">EDC Policy Playground</a></h2>
             <p>Put together Tractus-X connector policies in the browser and see the policy JSON they become.</p>
+            <ul class="chips" aria-label="For"><li>Developers</li><li>Getting started</li></ul>
             <span class="go">Open the playground <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
           </div>
         </article>
       </li>
-      <li>
-        <article class="card">
-          <div class="card__media"><img src="media/mxd.png" alt="The MXD connectors and services running, seen in k9s" loading="lazy"></div>
-          <div class="card__body">
-            <span class="tag">On GitHub</span>
-            <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/mxd">Minimum Tractus-X Dataspace (MXD)</a></h2>
-            <p>Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster.</p>
-            <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
-          </div>
-        </article>
-      </li>
-      <li>
-        <article class="card">
-          <div class="card__media"><img src="media/digital-product-passport.png" alt="A battery passport in the Digital Product Pass application" loading="lazy"></div>
-          <div class="card__body">
-            <span class="tag">On GitHub</span>
-            <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/dpp-tutorial">Digital Product Passport</a></h2>
-            <p>The Digital Product Passport workstream from the Tractus-X Community Days: create a passport for your part and read it over the dataspace.</p>
-            <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
-          </div>
-        </article>
-      </li>
-      <li>
+      <li data-filters="community-days developers ai" data-keywords="irs item relationship service industry core genai frontend digital twins">
         <article class="card">
           <div class="card__media card__media--icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"/></svg></div>
           <div class="card__body">
             <span class="tag">On GitHub</span>
             <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/icc-irs-challenges">IRS frontend challenge with GenAI</a></h2>
             <p>Build a frontend for the Item Relationship Service with an AI assistant, in three phases: the API, the part chain, the semantic data.</p>
+            <ul class="chips" aria-label="For"><li>Community Days</li><li>Developers</li><li>With AI</li></ul>
             <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
           </div>
         </article>
       </li>
-      <li>
+      <li data-filters="operators" data-keywords="helm chart postgresql keycloak bitnami cloudpirates database upgrade">
         <article class="card">
           <div class="card__media card__media--icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.99 11 3 15l3.99 4v-3H14v-2H6.99zM21 9l-3.99-4v3H10v2h7.01v3z"/></svg></div>
           <div class="card__body">
             <span class="tag">On GitHub</span>
             <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/migration-guides">Migration guides</a></h2>
             <p>Move the PostgreSQL and Keycloak of a deployment from the Bitnami Helm charts to the CloudPirates charts.</p>
+            <ul class="chips" aria-label="For"><li>Operators</li></ul>
             <span class="go">Read the guides <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
           </div>
         </article>
       </li>
+      <li data-status="deprecated" data-filters="developers operators start" data-keywords="kubernetes kind terraform connector edc dataspace identityhub bdrs file transfer s3 azure edr">
+        <article class="card card--deprecated">
+          <div class="card__media">
+            <span class="badge" title="Kept for reference: it may not match the current Tractus-X release."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"/></svg>Deprecated</span>
+            <img src="media/mxd.png" alt="The MXD connectors and services running, seen in k9s" loading="lazy"></div>
+          <div class="card__body">
+            <span class="tag">On GitHub</span>
+            <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/mxd">Minimum Tractus-X Dataspace (MXD)</a></h2>
+            <p>Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster.</p>
+            <ul class="chips" aria-label="For"><li>Developers</li><li>Operators</li><li>Getting started</li></ul>
+            <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+          </div>
+        </article>
+      </li>
+      <li data-status="deprecated" data-filters="community-days developers" data-keywords="digital product pass passport battery pcf qr code irs">
+        <article class="card card--deprecated">
+          <div class="card__media">
+            <span class="badge" title="Kept for reference: it may not match the current Tractus-X release."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"/></svg>Deprecated</span>
+            <img src="media/digital-product-passport.png" alt="A battery passport in the Digital Product Pass application" loading="lazy"></div>
+          <div class="card__body">
+            <span class="tag">On GitHub</span>
+            <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/dpp-tutorial">Digital Product Passport</a></h2>
+            <p>The Digital Product Passport workstream from the Tractus-X Community Days: create a passport for your part and read it over the dataspace.</p>
+            <ul class="chips" aria-label="For"><li>Community Days 2024</li><li>Developers</li></ul>
+            <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+          </div>
+        </article>
+      </li>
     </ul>
+
+    <div class="empty" id="empty" hidden>
+      <p>No tutorial matches. Try another word, or show them all.</p>
+      <button type="button" class="filter" id="reset">Show all tutorials</button>
+    </div>
   </main>
 
   <footer>
@@ -367,5 +606,101 @@
     <a href="https://github.com/eclipse-tractusx/tutorial-resources/blob/main/NOTICE.md">Notice</a> ·
     <a href="https://eclipse-tractusx.github.io/">Eclipse Tractus-X</a>
   </footer>
+  <script>
+    // Search and filters for the cards. The filter and the search words go
+    // into the address (?for=community-days&q=ai), so a filtered view can be
+    // shared, for example as the Community Days link.
+    (function () {
+      var controls = document.getElementById("controls");
+      var input = document.getElementById("q");
+      var count = document.getElementById("count");
+      var empty = document.getElementById("empty");
+      var buttons = Array.prototype.slice.call(document.querySelectorAll(".filters .filter"));
+      var cards = Array.prototype.slice.call(document.querySelectorAll("#grid > li"));
+      var params = new URLSearchParams(location.search);
+      var active = params.get("for") || "";
+      if (!buttons.some(function (b) { return b.dataset.filter === active; })) {
+        active = "";
+      }
+      input.value = params.get("q") || "";
+      var hideToggle = document.getElementById("hide-deprecated");
+      var hideDeprecated = params.get("deprecated") === "hide";
+      controls.hidden = false;
+
+      function words(text) {
+        return text.toLowerCase().replace(/[^\p{L}\p{N}\s.-]+/gu, " ").split(/\s+/).filter(Boolean);
+      }
+
+      function update() {
+        var query = words(input.value);
+        var shown = 0;
+        cards.forEach(function (card) {
+          var inFilter = !active || card.dataset.filters.split(" ").indexOf(active) >= 0;
+          var tokens = words((card.textContent + " " + card.dataset.keywords).replace(/[^\p{L}\p{N}]+/gu, " "));
+          var matches = query.every(function (w) {
+            return tokens.some(function (t) { return t.indexOf(w) === 0; });
+          });
+          var shownByStatus = !hideDeprecated || card.dataset.status !== "deprecated";
+          card.hidden = !(inFilter && matches && shownByStatus);
+          if (!card.hidden) {
+            shown += 1;
+          }
+        });
+        buttons.forEach(function (b) {
+          b.setAttribute("aria-pressed", String(b.dataset.filter === active));
+        });
+        count.textContent = shown === cards.length
+          ? cards.length + " tutorials"
+          : shown + " of " + cards.length + " tutorials";
+        empty.hidden = shown > 0;
+        var next = new URLSearchParams();
+        if (active) {
+          next.set("for", active);
+        }
+        if (input.value.trim()) {
+          next.set("q", input.value.trim());
+        }
+        if (hideDeprecated) {
+          next.set("deprecated", "hide");
+        }
+        hideToggle.setAttribute("aria-pressed", String(hideDeprecated));
+        var search = next.toString();
+        history.replaceState(null, "", location.pathname + (search ? "?" + search : ""));
+      }
+
+      buttons.forEach(function (b) {
+        b.addEventListener("click", function () {
+          active = b.dataset.filter;
+          update();
+        });
+      });
+      input.addEventListener("input", update);
+      hideToggle.addEventListener("click", function () {
+        hideDeprecated = !hideDeprecated;
+        update();
+      });
+      document.getElementById("reset").addEventListener("click", function () {
+        active = "";
+        input.value = "";
+        hideDeprecated = false;
+        update();
+        input.focus();
+      });
+      // "/" jumps to the search, as on GitHub; Escape clears it.
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "/" && document.activeElement !== input) {
+          event.preventDefault();
+          input.focus();
+        }
+      });
+      input.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          input.value = "";
+          update();
+        }
+      });
+      update();
+    })();
+  </script>
 </body>
 </html>
