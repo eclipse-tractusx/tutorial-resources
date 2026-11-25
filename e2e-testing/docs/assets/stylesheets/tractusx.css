@@ -38,8 +38,8 @@
   --tx-soft: #2a1f0d;
 }
 
-.md-header,
-.md-tabs {
+/* One orange line, under the header; the tabs below it have none. */
+.md-header {
   border-bottom: 1px solid var(--tx-orange);
 }
 
@@ -529,4 +529,140 @@
     border-color: var(--tx-orange);
     border-radius: 0.5rem 0.5rem 0 0;
   }
+}
+
+/* "About this tutorial": the info button in the header, left of the theme
+   switch, and the panel it opens (hooks/about.py). */
+.tx-about-button {
+  order: 1;
+}
+
+.tx-about {
+  position: fixed;
+  inset: 3.2rem 0.8rem auto auto;
+  width: min(22rem, calc(100vw - 1.6rem));
+  max-height: calc(100vh - 4.4rem);
+  margin: 0;
+  padding: 1rem 1.2rem 1.1rem;
+  overflow: auto;
+  border: 1px solid var(--tx-line-strong);
+  border-radius: 0.8rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  box-shadow: 0 0.8rem 2rem rgb(0 0 0 / 25%);
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.tx-about::backdrop {
+  background: transparent;
+}
+
+.tx-about__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.tx-about h2 {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.tx-about__close {
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  color: var(--md-default-fg-color--light);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.tx-about__close:hover,
+.tx-about__close:focus-visible {
+  background: var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color);
+}
+
+.tx-about__facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin: 0.9rem 0 0;
+}
+
+.tx-about dt,
+.tx-about h3 {
+  margin: 0;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tx-about h3 {
+  margin: 1rem 0 0.45rem;
+}
+
+.tx-about dd {
+  margin: 0.1rem 0 0;
+  font-weight: 600;
+}
+
+.tx-about__authors,
+.tx-about__history {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tx-about__authors {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem 0.8rem;
+}
+
+.tx-about__authors a {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  overflow: hidden;
+  color: inherit;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tx-about__authors a:hover {
+  color: var(--md-accent-fg-color);
+}
+
+.tx-about__authors img {
+  flex: none;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  background: var(--md-default-fg-color--lightest);
+}
+
+.tx-about__more {
+  color: var(--md-default-fg-color--light);
+}
+
+.tx-about__history li + li {
+  margin-top: 0.3rem;
+}
+
+.tx-about__history span {
+  color: var(--md-default-fg-color--light);
+}
+
+.tx-about__links {
+  margin: 1rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--tx-line);
+  color: var(--md-default-fg-color--light);
 }
