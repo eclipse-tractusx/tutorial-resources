@@ -120,7 +120,7 @@ IDE to compile, run and inspect it.
 4. In the IDE: open the folder or upload the ZIP of `tck/e2e`, then press **Compile**
    and **Run**.
 
-The full route is chapter [3C · Your own AI tool](../tutorial/03-alternative-your-own-ai-tool.md).
+The full route is chapter [4C · Your own AI tool](../tutorial/04c-your-own-ai-tool.md).
 
 ## No AI at all?
 

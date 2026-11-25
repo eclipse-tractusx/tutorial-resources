@@ -1,6 +1,6 @@
-<span class="route">Getting Started · chapter 8 of 8 · ● ● ● ● ● ● ● ●</span>
+<span class="route">Getting Started · chapter 9 of 9 · ● ● ● ● ● ● ● ● ●</span>
 
-# 8 · What comes next
+# 9 · What comes next
 
 > **Goal:** you know what you built, and what your second test will be.
 > **Time:** 5 minutes
@@ -53,12 +53,12 @@ Twenty-nine products are in the catalog. Count how many have a pull request toni
 
 > [!TIP]
 > **Stuck?** Nothing to be stuck on here. If your pull request is not open yet, go back to
-> [chapter 7](07-link-and-pull-request.md): a draft with a red check still counts, and a
+> [chapter 8](08-link-and-pull-request.md): a draft with a red check still counts, and a
 > facilitator will help you turn it green.
 
 ---
 
-[← 7 · Link it and open the pull request](07-link-and-pull-request.md) · [Home](../index.md)
+[← 8 · Link it and open the pull request](08-link-and-pull-request.md) · [Home](../index.md)
 
 ## NOTICE
 

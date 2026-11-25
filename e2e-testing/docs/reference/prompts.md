@@ -7,7 +7,7 @@ Each prompt says which mode to use: **Ask**, **Plan** or **Agent**.
 
 ## 1 · Plan the test
 
-Mode: **Plan**. Use it in [chapter 4](../tutorial/04-build-the-test.md).
+Mode: **Plan**. Use it in [chapter 5](../tutorial/05-build-the-test.md).
 
 ```text
 I am building the first E2E test for the Eclipse Tractus-X product

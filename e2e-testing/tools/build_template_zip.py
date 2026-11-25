@@ -17,13 +17,16 @@
 # SPDX-License-Identifier: Apache-2.0
 #################################################################################
 
-"""Builds docs/downloads/e2e-test-template.zip from template/tck/e2e.
+"""Builds the archives the IDE opens with "Open File":
+
+- docs/downloads/e2e-test-template.zip from template/tck/e2e (chapter 4)
+- docs/downloads/hello-start.zip from examples/hello/start (chapter 3)
+
 
     python tools/build_template_zip.py            # write the archive
     python tools/build_template_zip.py --check    # fail if it is out of date
 
-The IDE opens the archive with "Open File". File times are fixed, so the same
-template always gives the same bytes.
+File times are fixed, so the same files always give the same bytes.
 """
 
 from __future__ import annotations
@@ -34,15 +37,17 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCE = ROOT / "template" / "tck" / "e2e"
-TARGET = ROOT / "docs" / "downloads" / "e2e-test-template.zip"
+ARCHIVES = {
+    ROOT / "docs" / "downloads" / "e2e-test-template.zip": ROOT / "template" / "tck" / "e2e",
+    ROOT / "docs" / "downloads" / "hello-start.zip": ROOT / "examples" / "hello" / "start",
+}
 
 
-def build() -> bytes:
+def build(source: Path) -> bytes:
     buffer = io.BytesIO()
     with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as archive:
-        for path in sorted(p for p in SOURCE.rglob("*") if p.is_file()):
-            info = zipfile.ZipInfo(path.relative_to(SOURCE).as_posix(), date_time=(2026, 1, 1, 0, 0, 0))
+        for path in sorted(p for p in source.rglob("*") if p.is_file()):
+            info = zipfile.ZipInfo(path.relative_to(source).as_posix(), date_time=(2026, 1, 1, 0, 0, 0))
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = 0o644 << 16
             archive.writestr(info, path.read_bytes())
@@ -50,16 +55,21 @@ def build() -> bytes:
 
 
 def main() -> None:
-    data = build()
+    stale = False
+    for target, source in ARCHIVES.items():
+        data = build(source)
+        if "--check" in sys.argv:
+            if not target.exists() or target.read_bytes() != data:
+                print(f"{target.relative_to(ROOT)} is out of date: run python tools/build_template_zip.py", file=sys.stderr)
+                stale = True
+            continue
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(data)
+        print(f"wrote {target.relative_to(ROOT)}")
+    if stale:
+        raise SystemExit(1)
     if "--check" in sys.argv:
-        if not TARGET.exists() or TARGET.read_bytes() != data:
-            print(f"{TARGET.relative_to(ROOT)} is out of date: run python tools/build_template_zip.py", file=sys.stderr)
-            raise SystemExit(1)
-        print("template archive is up to date")
-        return
-    TARGET.parent.mkdir(parents=True, exist_ok=True)
-    TARGET.write_bytes(data)
-    print(f"wrote {TARGET.relative_to(ROOT)}")
+        print("archives are up to date")
 
 
 if __name__ == "__main__":

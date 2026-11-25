@@ -88,7 +88,7 @@ To **run** it you need two connectors and a registry. The
 
 ---
 
-[Home](../index.md) · [The workflow →](workflow.md)
+[Home](../index.md) · [Syntax cheat sheet →](syntax.md)
 
 ## NOTICE
 

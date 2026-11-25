@@ -50,7 +50,7 @@ e2eTests:
 
 ---
 
-[← The workflow](workflow.md) · [Home](../index.md) · [Troubleshooting →](troubleshooting.md)
+[← The developer toolbox](toolbox.md) · [Home](../index.md) · [Troubleshooting →](troubleshooting.md)
 
 ## NOTICE
 

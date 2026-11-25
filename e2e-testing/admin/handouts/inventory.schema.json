@@ -9,6 +9,7 @@
   "properties": {
     "$schema": { "type": "string" },
     "ideUrl": { "description": "Address of the Test Suite with the IDE.", "type": "string", "format": "uri" },
+    "helloUrl": { "description": "Address of the hello service every team writes its first test against (chapter 3), without a slash at the end.", "type": "string", "format": "uri" },
     "tutorialUrl": { "description": "Address of this tutorial. Printed as a QR code.", "type": "string", "format": "uri" },
     "help": { "description": "Where a team gets help, in one line.", "type": "string" },
     "teams": {

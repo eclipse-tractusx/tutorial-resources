@@ -1,12 +1,12 @@
-<span class="route">Getting Started · chapter 3 of 8 · ● ● ● ○ ○ ○ ○ ○</span>
+<span class="route">Getting Started · chapter 4 of 9 · ● ● ● ● ○ ○ ○ ○ ○</span>
 
-# 3 · Choose your AI
+# 4 · Choose your AI
 
 > **Goal:** pick the AI help that fits your laptop and what you brought.
 > **Time:** 1 minute
 
 There are three routes. They all end in the same place: a test project that compiles,
-ready for chapter 5. Not sure? Take **A** if you have a key, otherwise **C** if you have
+ready for chapter 6. Not sure? Take **A** if you have a key, otherwise **C** if you have
 an AI coding tool, otherwise **B**.
 
 <div class="grid cards" markdown>
@@ -20,7 +20,7 @@ an AI coding tool, otherwise **B**.
 
     *You need:* the key. *Time:* 5 + 15 minutes.
 
-    [Take route A →](03-open-the-ide.md)
+    [Take route A →](04a-api-key.md)
 
 -   **B · A local model in the IDE**
 
@@ -31,7 +31,7 @@ an AI coding tool, otherwise **B**.
 
     *You need:* Ollama and 8 GB of RAM or more. *Time:* 10 + 20 minutes.
 
-    [Take route B →](03b-local-model.md)
+    [Take route B →](04b-local-model.md)
 
 -   **C · Your own AI tool, then upload**
 
@@ -42,13 +42,13 @@ an AI coding tool, otherwise **B**.
 
     *You need:* your tool and Python. *Time:* 20 minutes.
 
-    [Take route C →](03-alternative-your-own-ai-tool.md)
+    [Take route C →](04c-your-own-ai-tool.md)
 
 </div>
 
 ```mermaid
 flowchart LR
-    S["3 · Choose"] --> A["A · API key"] --> B4["4 · Build in the IDE"] --> R["5 · Run"]
+    S["4 · Choose"] --> A["A · API key"] --> B4["5 · Build in the IDE"] --> R["6 · Run"]
     S --> L["B · Local model"] --> B4
     S --> C["C · Your own tool"] --> R
 ```
@@ -63,7 +63,7 @@ The details, sizes and limits of each route: [Choose your AI option](../referenc
 
 ---
 
-[← 2 · Your product and your connectors](02-your-product.md) · [Home](../index.md)
+[← 3 · Hello, TestLab](03-hello-testlab.md) · [Home](../index.md)
 
 ## NOTICE
 

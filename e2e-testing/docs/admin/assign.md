@@ -23,7 +23,7 @@ catalog stays stable.
     | Option | Cost |
     | --- | --- |
     | Give a second team the same product with another scenario from **More scenarios** | None. Two pull requests to one repository: tell its committers. |
-    | Give a team a product from the second table | The team builds and compiles, and skips the run in chapter 5. |
+    | Give a team a product from the second table | The team builds and compiles, and skips the run in chapter 6. |
     | Deploy more of the Umbrella for the event | Your time. See [Deploy](deploy.md). |
 
 4. Edit `catalog/assignments.json`. One entry per team:

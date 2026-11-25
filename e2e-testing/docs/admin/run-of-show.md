@@ -27,21 +27,22 @@ It ends with "the clock starts now". Start a visible timer.
 
 ## The session
 
-The table assumes about 60 minutes of work. A dry run with a first-time reader came to
-about 90, most of the difference in chapters 4 and 5. With a longer slot, give the extra time to
-chapters 4 and 5, and keep the two checkpoints.
+The table assumes about 75 minutes of work. A dry run with a first-time reader came to
+about 90, most of the difference in chapters 5 and 6. With a longer slot, give the extra time to
+chapters 5 and 6, and keep the two checkpoints.
 
 | Minute | Teams are in | Host says | Floor looks for |
 | --- | --- | --- | --- |
 | 0 | [1 · Start here](../tutorial/01-start-here.md) | "Read box A. Pick Driver, Navigator, Skeptic." | Teams with an empty box on the handout |
 | 5 | [2 · Your product](../tutorial/02-your-product.md) | "Read your scenario. Press Fork now." | Teams that cannot find a refusal: suggest "what was never offered is not found" |
-| 10 | [3 · Choose your AI](../tutorial/03-choose-your-ai.md) | "Hands up when your assistant has answered." | Teams without a model: seat them with a team that has one |
-| 15 | [4 · Build](../tutorial/04-build-the-test.md) | "Plan first. Do not let it write before you agree with the plan." | Teams whose compile stays red after three rounds |
-| 30 | [5 · Run](../tutorial/05-run-it.md) | **Checkpoint:** "Who has a green compile?" | Runs that wait: check the connectors at the Desk |
-| 40 | [6 · Repository](../tutorial/06-add-to-repository.md) | **Checkpoint:** "Who has seen a green run? Who has seen a red one and knows why?" | Git push problems, missing sign-off |
-| 50 | [7 · Pull request](../tutorial/07-link-and-pull-request.md) | "Open it as a draft. Then come and ring the bell." | ECA check red: the commit email is wrong |
-| 55 | [8 · Next](../tutorial/08-what-comes-next.md) | "Two teams: what did the assistant get wrong?" | Collect the answers |
-| 60 | Done | "Count the pull requests on the wall." | |
+| 10 | [3 · Hello, TestLab](../tutorial/03-hello-testlab.md) | "Write the first test yourself. No AI yet." | Teams stuck on indentation: point them to the finished files in the chapter |
+| 25 | [4 · Choose your AI](../tutorial/04-choose-your-ai.md) | "Hands up when your assistant has answered." | Teams without a model: seat them with a team that has one |
+| 30 | [5 · Build](../tutorial/05-build-the-test.md) | "Plan first. Do not let it write before you agree with the plan." | Teams whose compile stays red after three rounds |
+| 45 | [6 · Run](../tutorial/06-run-it.md) | **Checkpoint:** "Who has a green compile?" | Runs that wait: check the connectors at the Desk |
+| 55 | [7 · Repository](../tutorial/07-add-to-repository.md) | **Checkpoint:** "Who has seen a green run? Who has seen a red one and knows why?" | Git push problems, missing sign-off |
+| 65 | [8 · Pull request](../tutorial/08-link-and-pull-request.md) | "Open it as a draft. Then come and ring the bell." | ECA check red: the commit email is wrong |
+| 70 | [9 · Next](../tutorial/09-what-comes-next.md) | "Two teams: what did the assistant get wrong?" | Collect the answers |
+| 75 | Done | "Count the pull requests on the wall." | |
 
 ## Keep it fun
 
@@ -56,11 +57,11 @@ chapters 4 and 5, and keep the two checkpoints.
 
 | Behind at | Do |
 | --- | --- |
-| Minute 10, no API key but an AI coding assistant on the laptop | Send them down the [route C](../tutorial/03-alternative-your-own-ai-tool.md). It needs Python and a `git clone`, so decide early. |
-| Minute 20, no assistant | Give them the [worked example](../reference/worked-example.md) to read and adapt by hand, or seat them with another team. |
-| Minute 35, compile still red | Have them open the template again and change only the names. A small green test beats a large red one. |
-| Minute 45, no green run | Skip the run. Go to chapter 6: the workflow will run the test in CI. |
-| Minute 55, no push | A pull request to their own fork still counts on the wall. |
+| Minute 25, no API key but an AI coding assistant on the laptop | Send them down the [route C](../tutorial/04c-your-own-ai-tool.md). It needs Python and a `git clone`, so decide early. |
+| Minute 35, no assistant | Give them the [worked example](../reference/worked-example.md) to read and adapt by hand, or seat them with another team. |
+| Minute 50, compile still red | Have them open the template again and change only the names. A small green test beats a large red one. |
+| Minute 60, no green run | Skip the run. Go to chapter 7: the workflow will run the test in CI. |
+| Minute 70, no push | A pull request to their own fork still counts on the wall. |
 
 ## After the session
 

@@ -35,7 +35,7 @@ The model is the team's own. Nothing about it is deployed or paid for by the eve
 
 - [ ] The tutorial pull request is **merged**, so that the reusable workflow exists at
   `eclipse-tractusx/tutorial-resources/.github/workflows/e2e-test.yml@main`. Until then the
-  workflow call in chapter 6 has nothing to call.
+  workflow call in chapter 7 has nothing to call.
 - [ ] The team list is final. See [Assign products](assign.md).
 - [ ] The committers of every assigned product know that a pull request is coming, and
   agree to approve workflow runs of first-time contributors on the day.
@@ -63,6 +63,7 @@ From a laptop on the **venue's guest network**:
 
 - [ ] The IDE opens and a workshop account can sign in.
 - [ ] `api.openai.com` and `api.anthropic.com` are reachable from the browser.
+- [ ] `<hello service>/hello` answers in a guest laptop's browser.
 - [ ] **Compile** on the template project is green.
 - [ ] **Run** on the template project passes against one team's connector pair.
 - [ ] `github.com` is reachable, and a `git push` works.

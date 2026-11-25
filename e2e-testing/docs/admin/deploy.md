@@ -19,6 +19,7 @@ What has to run at the venue, in which order, and how to know it works.
 | **Identity provider** | Sign-in for the Test Suite, one organization per team | Participants' browsers |
 | **Database** | Drafts, runs and their traces | The engine |
 | **Connector pairs** | Per team: two connectors with wallets, a Digital Twin Registry and a BDRS | The engine, and each other |
+| **Hello service** | One small API for everyone, the target of the first test in chapter 3 | Participants' browsers and laptops, and the engine |
 
 Placeholders used in this kit: `https://ide.example.org` for the Test Suite and
 `*.team-01.example.org` for a team's connectors. Replace them in your own inventory only,
@@ -27,7 +28,7 @@ never in this repository.
 ## Order
 
 1. **Connector pairs first.** They take the longest and everything else points at them.
-2. **Test Suite, engine, identity provider, database.**
+2. **Test Suite, engine, identity provider, database**, and the hello service.
 3. **Configure**: organizations, users, environments. See [Configure](configure.md).
 4. **Smoke test** from a guest laptop.
 
@@ -90,11 +91,29 @@ operators' runbook. For this session it must have:
 | Each provider connector can reach the address in **box C, "as the connector reaches it"** | Tests offer the product through the connector's data plane |
 | Enough parallel runs for all teams | Twenty teams press **Run** within the same ten minutes |
 
+### The hello service
+
+Chapter 3 starts with a test of a tiny API, before any connector. One instance serves every
+team. It is a stock unprivileged nginx serving a few JSON files, so it needs no build:
+
+```bash
+# Set your host name in hello-service/kustomization.yaml first.
+kubectl create namespace hello-service
+kubectl apply -k e2e-testing/hello-service -n hello-service
+```
+
+Give it a certificate under the secret `hello-service-tls`, or remove the `tls` block of the
+Ingress if your ingress controller terminates TLS for you. Put its address in the inventory
+as `helloUrl`: it is printed on the handouts. The
+[service's README](https://github.com/eclipse-tractusx/tutorial-resources/tree/main/e2e-testing/hello-service)
+lists what it answers.
+
 ## 3 · What browsers must reach
 
 | From the participant's browser | For |
 | --- | --- |
 | The Test Suite and its identity provider | The IDE |
+| The hello service | Chapter 3, from the IDE and from TestLab on the laptop |
 | `api.openai.com`, `api.anthropic.com`, the Catena-X AI endpoint | The assistant. The call goes from the browser, not from the Test Suite. |
 | `localhost`, for a model on the participant's own laptop | The assistant, local option |
 | `github.com` | Fork, push, pull request |
@@ -104,11 +123,12 @@ who uses it. Test it on the guest network, not on yours.
 
 ## 4 · Smoke test
 
-Do the tutorial's chapters 3 to 5 once, from a guest laptop, with the template unchanged:
+Do the tutorial's chapters 3 to 6 once, from a guest laptop, with the template unchanged:
 
-1. Sign in, open the IDE, connect a model, get an answer.
-2. Open the [template](https://github.com/eclipse-tractusx/tutorial-resources/tree/main/e2e-testing/template), press **Compile**: it must pass.
-3. Press **Run** with the values of one team's handout: both tests must pass.
+1. Sign in, open the IDE, do chapter 3 against the hello service: green.
+2. Connect a model, get an answer.
+3. Open the [template](https://github.com/eclipse-tractusx/tutorial-resources/tree/main/e2e-testing/template), press **Compile**: it must pass.
+4. Press **Run** with the values of one team's handout: both tests must pass.
 
 The template's first test needs something behind the provider's connector to call.
 The workflow uses a small echo service for that; deploy one per pair, or point

@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/eclipse-tractusx/tractusx-testlab/v1-alpha24/src/tractusx_testlab/compiler/schemas/tck_index.schema.json
+#################################################################################
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License, Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+#################################################################################
+
+kind: tck
+syntax: v1-alpha
+
+id: hello-e2e
+
+metadata:
+  name: "Hello, TestLab"
+  version: "v0.1.0"
+  description: >
+    My first test project, written by hand: the hello service says hello.
+  authors:
+    - name: Eclipse Tractus-X contributors
+      company: Eclipse Tractus-X
+  license: Apache-2.0
+  tags:
+    - hello
+
+env:
+  variables:
+    - id: service_url
+      uses: variable/type/string
+      name: Address of the hello service
+      description: >
+        Where the hello service answers, without a slash at the end. At the
+        workshop it is on your handout; on your laptop it is
+        http://localhost:8080.
+      with:
+        source: value
+        value: "http://localhost:8080"
+      returns:
+        value:
+          type: string
+
+# Add one line per test file in tests/ here.
+tests: []

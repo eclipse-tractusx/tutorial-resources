@@ -60,7 +60,7 @@ The second job starts the [Eclipse Tractus-X developer toolbox](glossary.md#ecli
 cluster inside the runner with two connectors, two wallets, a Digital Twin Registry, a BDRS
 and an IssuerService, deployed from the Tractus-X Umbrella chart. It issues the
 participants' credentials, runs the package and throws everything away. No secrets, no
-external cluster.
+external cluster. [The developer toolbox](toolbox.md) shows what is in it and how it comes up.
 
 It does the same job as TestLab's own
 [E2E workflow](https://github.com/eclipse-tractusx/tractusx-testlab/blob/main/.github/workflows/e2e-umbrella.yml):
@@ -132,7 +132,7 @@ request, build your image in a job of your own and pass its tag as Helm values:
 
 ---
 
-[← The worked example](worked-example.md) · [Home](../index.md) · [The .tractusx link →](metafile.md)
+[← The Test Suite IDE](ide.md) · [Home](../index.md) · [The developer toolbox →](toolbox.md)
 
 ## NOTICE
 

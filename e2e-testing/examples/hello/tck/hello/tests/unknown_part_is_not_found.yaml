@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/eclipse-tractusx/tractusx-testlab/v1-alpha24/src/tractusx_testlab/compiler/schemas/tck_test.schema.json
+#################################################################################
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License, Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+#################################################################################
+
+kind: test
+syntax: v1-alpha
+
+namespace: hello-e2e
+id: unknown-part-is-not-found
+
+metadata:
+  name: "An unknown part is not found"
+  version: "v0.1.0"
+  description: Negative test. Asks for a part the service does not know.
+
+execution:
+  - id: read_unknown_part
+    uses: http/http_request
+    name: Ask for a part that does not exist
+    with:
+      url: "${{ env.service_url }}/parts/P-9999"
+    returns:
+      status_code:
+        type: integer
+    validate:
+      - uses: validate/assert
+        with: { input: status_code, operator: equals, value: 404 }

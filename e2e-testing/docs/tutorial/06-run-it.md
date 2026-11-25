@@ -1,6 +1,6 @@
-<span class="route">Getting Started · chapter 5 of 8 · ● ● ● ● ● ○ ○ ○</span>
+<span class="route">Getting Started · chapter 6 of 9 · ● ● ● ● ● ● ○ ○ ○</span>
 
-# 5 · Run it against your connectors
+# 6 · Run it against your connectors
 
 > **Goal:** a green run, and one red run that you caused on purpose.
 > **Time:** 10 minutes
@@ -56,12 +56,12 @@ The second step, **Infrastructure**, looks like this when your components are re
 >     - **The environment.** Nothing answered, or a value is wrong. Fix the value or ask.
 >     - **A finding.** The product answered, and not as your check expects. Either your
 >       reading of the promise is wrong, or the product is. Both are worth knowing.
-> - **Minute 40 and no green run:** go on to chapter 6. The workflow runs your test again
+> - **Minute 40 and no green run:** go on to chapter 7. The workflow runs your test again
 >   in CI, in a dataspace of its own.
 
 ---
 
-[← 4 · Build the test with the assistant](04-build-the-test.md) · [Home](../index.md) · [Next: 6 · Add it to your repository →](06-add-to-repository.md)
+[← 5 · Build the test with the assistant](05-build-the-test.md) · [Home](../index.md) · [Next: 7 · Add it to your repository →](07-add-to-repository.md)
 
 ## NOTICE
 

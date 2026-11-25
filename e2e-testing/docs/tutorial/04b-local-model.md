@@ -1,6 +1,6 @@
-<span class="route">Getting Started · chapter 3, route B · ● ● ● ○ ○ ○ ○ ○</span>
+<span class="route">Getting Started · chapter 4, route B · ● ● ● ● ○ ○ ○ ○ ○</span>
 
-# 3B · Connect a local model
+# 4B · Connect a local model
 
 > **Goal:** a model on your own laptop answers you in the IDE.
 > **Time:** 10 minutes, plus the download
@@ -37,9 +37,9 @@ laptop without a GPU, expect a minute per step: route A or C is the better choic
     OLLAMA_ORIGINS="https://ide.example.org" OLLAMA_CONTEXT_LENGTH=8192 ollama serve
     ```
 
-4. Open the address in box **B** and sign in. Click the **Test Suite IDE** icon on the left.
-5. Download the template, [`e2e-test-template.zip`](../downloads/e2e-test-template.zip),
-   and open it with **Open File** on the welcome screen.
+4. Download the template, [`e2e-test-template.zip`](../downloads/e2e-test-template.zip).
+5. In the IDE you used in [chapter 3](03-hello-testlab.md), click **☰**, then **File**, then
+   **File or package**, and choose the ZIP.
 6. At the top right, click **Ask AI**. Under **Model**, choose **Local / self-hosted LLM**.
    Keep **Server** at **Ollama** and click **Connect**.
 7. Choose your model in the list. Leave **Small model mode** switched on.
@@ -54,7 +54,7 @@ half a minute.
 
 ## How to talk to a small model
 
-You will use these in chapter 4:
+You will use these in chapter 5:
 
 - **One change per message.** "Rename the step", then "add a check". Not "write the test".
 - **Name the file every time:** `In tests/partner_uses_my_product.yaml …`. Each message
@@ -74,11 +74,11 @@ You will use these in chapter 4:
 > - **It answers but never changes a file:** you are in **Ask** or **Plan**. Switch to
 >   **Agent**.
 > - **It keeps getting it wrong:** ask for a smaller change, or switch to route
->   [A](03-open-the-ide.md) or [C](03-alternative-your-own-ai-tool.md).
+>   [A](04a-api-key.md) or [C](04c-your-own-ai-tool.md).
 
 ---
 
-[← 3 · Choose your AI](03-choose-your-ai.md) · [Home](../index.md) · [Next: 4 · Build the test with the assistant →](04-build-the-test.md)
+[← 4 · Choose your AI](04-choose-your-ai.md) · [Home](../index.md) · [Next: 5 · Build the test with the assistant →](05-build-the-test.md)
 
 ## NOTICE
 

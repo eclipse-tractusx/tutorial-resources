@@ -1,6 +1,6 @@
-<span class="route">Getting Started · chapter 6 of 8 · ● ● ● ● ● ● ○ ○</span>
+<span class="route">Getting Started · chapter 7 of 9 · ● ● ● ● ● ● ● ○ ○</span>
 
-# 6 · Add it to your repository
+# 7 · Add it to your repository
 
 > **Goal:** your test and the workflow that runs it are committed on a branch of your fork.
 > **Time:** 10 minutes
@@ -88,7 +88,7 @@ And this is all the workflow is: a few lines that call a
 
 ---
 
-[← 5 · Run it against your connectors](05-run-it.md) · [Home](../index.md) · [Next: 7 · Link it and open the pull request →](07-link-and-pull-request.md)
+[← 6 · Run it against your connectors](06-run-it.md) · [Home](../index.md) · [Next: 8 · Link it and open the pull request →](08-link-and-pull-request.md)
 
 ## NOTICE
 
