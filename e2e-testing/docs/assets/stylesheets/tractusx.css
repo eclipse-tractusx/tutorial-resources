@@ -106,3 +106,322 @@
 .md-footer-meta {
   border-top: 1px solid var(--tx-orange);
 }
+
+/* ── Diagrams ────────────────────────────────────────────────────────────
+   assets/javascripts/diagrams.js wraps each Mermaid diagram and large image
+   in a card with a zoom bar; the card scrolls when zoomed in. Taken from the
+   Eclipse Tractus-X EDC documentation. */
+
+/* Set where Material sets the scheme colours, so they follow light and dark. */
+[data-md-color-scheme] {
+  --tx-line: var(--md-default-fg-color--lightest);
+  --tx-line-strong: var(--md-default-fg-color--lighter);
+  --tx-card: var(--md-default-bg-color);
+}
+
+[data-md-color-scheme="slate"] {
+  --tx-line: #2e2e2e;
+  --tx-line-strong: #4a4a4a;
+  --tx-card: #141414;
+}
+
+.md-typeset .tx-diagram {
+  display: flex;
+  flex-direction: column;
+  margin: 1.2em 0;
+  overflow: hidden;
+  border: 1px solid var(--tx-line);
+  border-radius: 0.6rem;
+  background-color: var(--md-default-bg-color);
+}
+
+.tx-diagram__bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.25rem;
+  padding: 0.4rem 0.45rem 0;
+  /* Controls, not text: quick clicks on + or − must not select the zoom level. */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.tx-diagram__button {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.8rem;
+  height: 1.8rem;
+  margin: 0;
+  padding: 0 0.4rem;
+  border: 1px solid var(--tx-line-strong);
+  border-radius: 0.4rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color--light);
+  font-family: var(--md-text-font-family);
+  font-size: 0.62rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  /* Repeated taps zoom the diagram, not the page. */
+  touch-action: manipulation;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.tx-diagram__button svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentcolor;
+}
+
+.tx-diagram__level {
+  min-width: 3rem;
+}
+
+.tx-diagram__button:hover:not(:disabled),
+.tx-diagram__button:focus-visible {
+  border-color: var(--tx-orange);
+  background: var(--tx-orange);
+  color: #000000;
+}
+
+.tx-diagram__button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.tx-diagram__viewport {
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0.6rem 0.8rem 0.8rem;
+  text-align: center;
+  cursor: default;
+}
+
+.md-typeset .tx-diagram__viewport > .mermaid {
+  margin: 0;
+  overflow: visible;
+}
+
+.md-typeset .tx-diagram__viewport > img {
+  vertical-align: top;
+  border: 0;
+}
+
+.tx-diagram--zoomed .tx-diagram__viewport {
+  max-height: 80vh;
+  cursor: grab;
+}
+
+.tx-diagram__viewport--dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+/* Full screen: the figure covers the page, the bar stays on top. */
+.md-typeset .tx-diagram--full {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.tx-diagram--full .tx-diagram__bar {
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--tx-line);
+}
+
+.tx-diagram--full .tx-diagram__viewport {
+  display: flex;
+  flex: 1;
+  max-height: none;
+}
+
+/* Full width and centred vertically; auto margins still let a zoomed diagram
+   scroll to every edge (the script sets an inline width while zoomed). */
+.md-typeset .tx-diagram--full .tx-diagram__viewport > * {
+  flex: none;
+  width: 100%;
+  margin: auto;
+}
+
+.tx-diagram-open,
+.tx-diagram-open body {
+  overflow: hidden;
+}
+
+/* ── Page navigation ─────────────────────────────────────────────────────
+   hooks/page_nav.py turns the "← previous · Home · next →" line at the end
+   of each page into Previous on the left, Home in the middle, Next on the
+   right. */
+
+.md-typeset .tx-pager {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: stretch;
+  gap: 0.8rem;
+  margin: 2.5rem 0 2rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--tx-line);
+}
+
+.md-typeset .tx-pager__link {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-width: 0;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--tx-line);
+  border-radius: 0.75rem;
+  background: var(--tx-card);
+  color: var(--md-default-fg-color);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 6%);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.md-typeset .tx-pager__link--prev {
+  justify-self: start;
+}
+
+.md-typeset .tx-pager__link--next {
+  grid-column: 3;
+  justify-self: end;
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.md-typeset .tx-pager__link:hover,
+.md-typeset .tx-pager__link:focus-visible {
+  border-color: var(--tx-orange);
+  color: var(--md-default-fg-color);
+  box-shadow: 0 6px 18px rgb(250 160 35 / 18%);
+  transform: translateY(-1px);
+}
+
+.tx-pager__arrow {
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  padding: 0.4rem;
+  border-radius: 50%;
+  background: var(--tx-soft);
+  fill: var(--tx-orange-dark);
+  transition: background-color 0.2s, fill 0.2s, transform 0.2s;
+}
+
+[data-md-color-scheme="slate"] .tx-pager__arrow {
+  fill: var(--tx-orange);
+}
+
+.md-typeset .tx-pager__link:hover .tx-pager__arrow {
+  background: var(--tx-orange);
+  fill: #000000;
+}
+
+.md-typeset .tx-pager__link--prev:hover .tx-pager__arrow {
+  transform: translateX(-3px);
+}
+
+.md-typeset .tx-pager__link--next:hover .tx-pager__arrow {
+  transform: translateX(3px);
+}
+
+.tx-pager__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.tx-pager__dir {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--md-default-fg-color--light);
+}
+
+.tx-pager__title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.tx-pager__middle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.md-typeset .tx-pager__home {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--tx-line);
+  border-radius: 999px;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.68rem;
+  font-weight: 700;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.tx-pager__home svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  fill: currentcolor;
+}
+
+.md-typeset .tx-pager__home:hover,
+.md-typeset .tx-pager__home:focus-visible {
+  border-color: var(--tx-orange);
+  color: var(--md-default-fg-color);
+}
+
+/* Phones: Previous and Next share the row, Home goes below them. */
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .tx-pager {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .md-typeset .tx-pager__link--next {
+    grid-column: 2;
+  }
+
+  .tx-pager__middle {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: center;
+  }
+
+  .md-typeset .tx-pager__link {
+    padding: 0.6rem 0.7rem;
+    gap: 0.5rem;
+  }
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────
+   Material draws the plain button in the primary colour, which is black here:
+   invisible on the dark scheme. Outline it in the text colour instead. */
+
+.md-typeset .md-button {
+  border-radius: 0.6rem;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.md-typeset .md-button:not(.md-button--primary) {
+  border-color: var(--tx-line-strong);
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset .md-button:not(.md-button--primary):hover,
+.md-typeset .md-button:not(.md-button--primary):focus-visible {
+  border-color: var(--tx-orange);
+  background: transparent;
+  color: var(--md-typeset-a-color);
+}
+
+.md-typeset .md-button:hover {
+  transform: translateY(-1px);
+}

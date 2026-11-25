@@ -58,7 +58,6 @@ theme:
   features:
     - navigation.tabs
     - navigation.sections
-    - navigation.footer
     - navigation.top
     - navigation.indexes
     - content.code.copy
@@ -67,6 +66,14 @@ theme:
 
 extra_css:
   - assets/stylesheets/tractusx.css
+
+# Zoom, pan and full screen for diagrams (Mermaid and large images).
+extra_javascript:
+  - assets/javascripts/diagrams.js
+
+# The "← previous · Home · next →" line at the end of each page becomes buttons.
+hooks:
+  - hooks/page_nav.py
 
 markdown_extensions:
   - attr_list
