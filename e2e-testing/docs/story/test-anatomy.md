@@ -4,7 +4,7 @@
 
 ## A TCK is a folder of YAML
 
-[TCK](../reference/glossary.md#tck) stands for Technology Compatibility Kit: a package of
+[TCK](../reference/glossary.md#tck) stands for Test Compatibility Kit: a package of
 tests that proves a system does what it promises. A **TCK project** is the editable form,
 a folder you commit:
 

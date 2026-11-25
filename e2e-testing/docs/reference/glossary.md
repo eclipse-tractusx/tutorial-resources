@@ -9,7 +9,7 @@ Every term the tutorial links to, in one or two lines. Simple, but not wrong.
 | Term | What it means |
 | --- | --- |
 | <span id="e2e-test"></span>**E2E test** | End-to-end test. It uses a product the way a partner would, through the same doors, and checks that the promise holds. It does not look inside the product. |
-| <span id="tck"></span>**TCK** | Technology Compatibility Kit. A package of tests that proves a system does what a standard or an API promises. In this tutorial the E2E test of a product *is* a TCK. |
+| <span id="tck"></span>**TCK** | Test Compatibility Kit. A package of tests that proves a system does what a standard or an API promises. In this tutorial the E2E test of a product *is* a TCK. |
 | <span id="tck-project"></span>**TCK project** | The editable form of a TCK: a folder with `index.yaml`, a `tests/` folder and optional `schemas/` and `testdata/`. This is what you commit. |
 | <span id="manifest"></span>**Manifest** | The file `index.yaml`. It names the TCK, lists its tests, declares its variables and says what a run needs on each side. |
 | <span id="step"></span>**Step** | One action in a test, such as "create an asset" or "negotiate a contract". A step takes values in (`with`), gives values back (`returns`) and checks them (`validate`). |
@@ -42,7 +42,7 @@ Every term the tutorial links to, in one or two lines. Simple, but not wrong.
 | <span id="verifiable-credential"></span>**Verifiable credential** | A digitally signed proof, for example "this company is a member of the dataspace". Connectors check them during a negotiation. |
 | <span id="digital-twin"></span>**Digital twin** | The digital description of a real thing, such as a part or a vehicle. It says which data exists about the thing and where to get it. |
 | <span id="digital-twin-registry"></span>**Digital Twin Registry** | The service in which a provider lists its digital twins so that partners can find them. Also called DTR. An entry is a **shell descriptor**; the pointers to the actual data are **submodel descriptors**. |
-| <span id="eclipse-tractus-x-developer-toolbox"></span>**Eclipse Tractus-X developer toolbox** | The small dataspace the E2E workflow creates in memory inside the GitHub runner: two connectors, two wallets, a Digital Twin Registry, a BDRS and an IssuerService in a Kubernetes cluster in Docker. It is built from the [Umbrella](#umbrella) chart with a fixed dataspace configuration, and it is thrown away when the job ends. [More](toolbox.md). |
+| <span id="eclipse-tractus-x-developer-toolbox"></span>**Eclipse Tractus-X developer toolbox** | The small dataspace the E2E workflow creates in memory inside the GitHub runner: two connectors, two wallets, a Digital Twin Registry, a BDRS and an IssuerService in a Kubernetes cluster in Docker. It is built from the [Umbrella](#umbrella) chart with a fixed dataspace configuration, and it is thrown away when the job ends. It is part of the [Tractus-X Starter Kit](https://github.com/eclipse-tractusx/tractusx-starter-kit#developer-toolbox). [More](toolbox.md). |
 | <span id="umbrella"></span>**Umbrella** | The Tractus-X Umbrella is a Helm chart that deploys the Tractus-X products together as one small dataspace. The [developer toolbox](#eclipse-tractus-x-developer-toolbox) is built from it. |
 
 ## The repository

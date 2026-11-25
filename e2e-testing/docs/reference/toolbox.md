@@ -1,8 +1,10 @@
 # The developer toolbox
 
 An E2E test needs a small dataspace: two companies, each with a connector and a wallet. The
-**Eclipse Tractus-X developer toolbox** is that dataspace. The [workflow](workflow.md)
-builds it inside the GitHub runner for every run and deletes it afterwards.
+**Eclipse Tractus-X developer toolbox** is that dataspace. It is part of the
+[Tractus-X Starter Kit](https://github.com/eclipse-tractusx/tractusx-starter-kit#developer-toolbox).
+The [workflow](workflow.md) builds it inside the GitHub runner for every run and deletes it
+afterwards.
 
 [Home](../index.md) · [The workflow](workflow.md)
 
