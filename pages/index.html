@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<!--
+  Copyright (c) 2026 Contributors to the Eclipse Foundation
+
+  See the NOTICE file(s) distributed with this work for additional
+  information regarding copyright ownership.
+
+  This program and the accompanying materials are made available under the
+  terms of the Apache License, Version 2.0 which is available at
+  https://www.apache.org/licenses/LICENSE-2.0.
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations
+  under the License.
+
+  SPDX-License-Identifier: Apache-2.0
+-->
+<!--
+  The home page of https://eclipse-tractusx.github.io/tutorial-resources/.
+  .github/workflows/pages.yml publishes it at the root, next to the tutorial
+  sites it links to (e2e-testing/, policy-playground/). To add a tutorial,
+  add a card below.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eclipse Tractus-X tutorials</title>
+  <meta name="description" content="Hands-on tutorials for Eclipse Tractus-X: run a dataspace, write connector policies, give your product an end-to-end test.">
+  <link rel="icon" href="e2e-testing/assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #5c5c5c;
+      --line: #e3e3e3;
+      --card: #ffffff;
+      --soft: #fff6e8;
+      --orange: #faa023;
+      --orange-dark: #c37304;
+      --green: #b3cb2d;
+      color-scheme: light;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0b0b;
+        --fg: #f2f2f2;
+        --muted: #a8a8a8;
+        --line: #2a2a2a;
+        --card: #141414;
+        --soft: #2a1f0d;
+        --orange-dark: #fbb24d;
+        color-scheme: dark;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: Manrope, system-ui, -apple-system, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    header.top {
+      background: #000000;
+      border-bottom: 1px solid var(--orange);
+    }
+
+    .top__inner {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 0.9rem 1.5rem;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .top__inner img { height: 1.9rem; width: auto; }
+
+    .top__inner a {
+      margin-left: auto;
+      color: #ffffff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      opacity: 0.8;
+    }
+
+    .top__inner a:hover { opacity: 1; color: var(--orange); }
+
+    main {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 4rem;
+    }
+
+    .intro { max-width: 44rem; }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.01em;
+    }
+
+    h1::after {
+      content: "";
+      display: block;
+      width: 4.5rem;
+      height: 0.3rem;
+      margin-top: 1rem;
+      border-radius: 0.2rem;
+      background: linear-gradient(90deg, var(--orange), var(--green));
+    }
+
+    .intro p {
+      margin: 1.2rem 0 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+      gap: 1.2rem;
+      margin-top: 3rem;
+      padding: 0;
+      list-style: none;
+    }
+
+    .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      height: 100%;
+      padding: 1.4rem 1.4rem 1.2rem;
+      border: 1px solid var(--line);
+      border-radius: 0.9rem;
+      background: var(--card);
+      box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+
+    .card:hover,
+    .card:focus-within {
+      border-color: var(--orange);
+      box-shadow: 0 10px 28px rgb(250 160 35 / 16%);
+      transform: translateY(-2px);
+    }
+
+    .card--featured { background: linear-gradient(180deg, var(--soft), var(--card) 70%); }
+
+    .tag {
+      align-self: flex-start;
+      padding: 0.15rem 0.6rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .tag--site { border-color: var(--orange); color: var(--orange-dark); }
+
+    .card h2 {
+      margin: 0.2rem 0 0;
+      font-size: 1.2rem;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    /* The whole card is the link; the title carries it. */
+    .card h2 a { color: inherit; text-decoration: none; }
+    .card h2 a::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+    .card h2 a:focus-visible { outline: none; }
+    .card:has(a:focus-visible) { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+    .card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+
+    .go {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: auto;
+      padding-top: 0.6rem;
+      color: var(--orange-dark);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .go svg { width: 1.1rem; height: 1.1rem; fill: currentcolor; transition: transform 0.2s; }
+    .card:hover .go svg { transform: translateX(3px); }
+
+    footer {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 1.5rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    footer a { color: inherit; }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="top__inner">
+      <img src="e2e-testing/assets/logo_tractus-x.svg" alt="">
+      <span>Eclipse Tractus-X tutorials</span>
+      <a href="https://github.com/eclipse-tractusx/tutorial-resources">Repository on GitHub</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="intro">
+      <h1>Learn Tractus-X by doing</h1>
+      <p>Hands-on tutorials from the Eclipse Tractus-X community. Pick one: each opens on its own page, or in the repository when it is a set of Markdown guides.</p>
+    </div>
+
+    <ul class="grid">
+      <li>
+        <article class="card card--featured">
+          <span class="tag tag--site">Tutorial site</span>
+          <h2><a href="e2e-testing/">E2E tests for Tractus-X products</a></h2>
+          <p>Give your product an end-to-end test that runs on every pull request. Build it in about an hour with an AI assistant in the Test Suite IDE.</p>
+          <span class="go">Open the tutorial <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+        </article>
+      </li>
+      <li>
+        <article class="card">
+          <span class="tag tag--site">Web app</span>
+          <h2><a href="policy-playground/">EDC Policy Playground</a></h2>
+          <p>Put together Tractus-X connector policies in the browser and see the policy JSON they become.</p>
+          <span class="go">Open the playground <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+        </article>
+      </li>
+      <li>
+        <article class="card">
+          <span class="tag">On GitHub</span>
+          <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/mxd">Minimum Tractus-X Dataspace (MXD)</a></h2>
+          <p>Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster.</p>
+          <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+        </article>
+      </li>
+      <li>
+        <article class="card">
+          <span class="tag">On GitHub</span>
+          <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/dpp-tutorial">Digital Product Passport</a></h2>
+          <p>The Digital Product Passport workstream from the Tractus-X Community Days: create a passport for your part and read it over the dataspace.</p>
+          <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+        </article>
+      </li>
+      <li>
+        <article class="card">
+          <span class="tag">On GitHub</span>
+          <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/icc-irs-challenges">IRS frontend challenge with GenAI</a></h2>
+          <p>Build a frontend for the Item Relationship Service with an AI assistant, in three phases: the API, the part chain, the semantic data.</p>
+          <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+        </article>
+      </li>
+      <li>
+        <article class="card">
+          <span class="tag">On GitHub</span>
+          <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/migration-guides">Migration guides</a></h2>
+          <p>Move the PostgreSQL and Keycloak of a deployment from the Bitnami Helm charts to the CloudPirates charts.</p>
+          <span class="go">Read the guides <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+        </article>
+      </li>
+    </ul>
+  </main>
+
+  <footer>
+    Copyright &copy; 2026 Contributors to the Eclipse Foundation ·
+    <a href="https://github.com/eclipse-tractusx/tutorial-resources/blob/main/LICENSE">Apache-2.0</a> (code) and
+    <a href="https://github.com/eclipse-tractusx/tutorial-resources/blob/main/LICENSE_non-code">CC-BY-4.0</a> (content) ·
+    <a href="https://github.com/eclipse-tractusx/tutorial-resources/blob/main/NOTICE.md">Notice</a> ·
+    <a href="https://eclipse-tractusx.github.io/">Eclipse Tractus-X</a>
+  </footer>
+</body>
+</html>

@@ -17,9 +17,9 @@
 # SPDX-License-Identifier: Apache-2.0
 #################################################################################
 
-# Checks the E2E testing tutorial on every pull request that touches it, and
-# publishes it as a site when it changes on main. The site goes into its own
-# folder of the gh-pages branch, next to what other workflows publish there.
+# Checks the E2E testing tutorial on every pull request that touches it: the
+# generated files are current and the site builds. The built site is kept as an
+# artifact to look at; pages.yml publishes it at /e2e-testing/.
 
 name: E2E testing tutorial - site
 
@@ -83,26 +83,3 @@ jobs:
           name: e2e-testing-site
           path: ${{ runner.temp }}/site
           retention-days: 7
-
-  publish:
-    name: Publish
-    needs: build
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'eclipse-tractusx/tutorial-resources'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: write
-    steps:
-      - name: Download the site
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
-        with:
-          name: e2e-testing-site
-          path: site
-
-      - name: Publish to gh-pages, folder e2e-testing
-        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site
-          destination_dir: e2e-testing
-          keep_files: true

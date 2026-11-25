@@ -1,0 +1,122 @@
+#################################################################################
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License, Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+#################################################################################
+
+# Publishes https://eclipse-tractusx.github.io/tutorial-resources/ with GitHub
+# Pages, source "GitHub Actions" (Settings → Pages). One deployment carries the
+# whole site:
+#
+#   /                     the home page that lists the tutorials (pages/)
+#   /e2e-testing/         the E2E testing tutorial (MkDocs, e2e-testing/)
+#   /policy-playground/   the EDC Policy Playground (Angular, edc-policy-playground/)
+#
+# To publish another tutorial site, build it into its own folder of _site and
+# add a card for it to pages/index.html. Pull requests that change the home
+# page or this workflow build the site without publishing it.
+
+name: GitHub Pages
+
+on:
+  pull_request:
+    paths:
+      - "pages/**"
+      - ".github/workflows/pages.yml"
+  push:
+    branches: [main]
+    paths:
+      - "pages/**"
+      - "e2e-testing/**"
+      - "edc-policy-playground/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deployment at a time; a newer push waits instead of cancelling a deploy.
+concurrency:
+  group: pages-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build the site
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node.js 18
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 18
+
+      - name: Home page
+        run: |
+          mkdir -p _site
+          cp -R pages/. _site/
+
+      - name: E2E testing tutorial, at /e2e-testing/
+        working-directory: e2e-testing
+        run: |
+          pip install -r requirements.txt
+          mkdocs build --strict --site-dir "${GITHUB_WORKSPACE}/_site/e2e-testing"
+
+      - name: EDC Policy Playground, at /policy-playground/
+        working-directory: edc-policy-playground
+        run: |
+          npm ci
+          npm run build -- --base-href=/tutorial-resources/policy-playground/
+          cp -R dist/policy-playground "${GITHUB_WORKSPACE}/_site/policy-playground"
+
+      - name: Every page the home page links to is there
+        run: |
+          for path in e2e-testing/index.html policy-playground/index.html; do
+            test -f "_site/${path}" || { echo "::error::_site/${path} is missing"; exit 1; }
+          done
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: _site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'eclipse-tractusx/tutorial-resources'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
