@@ -64,7 +64,7 @@ run needed closer to 90: if your session is longer, spend the extra time on chap
 
 | You are | Go to |
 | --- | --- |
-| A participant, ten minutes before the workshop | [Before you come](reference/prepare.md) |
+| A participant, ten minutes before the workshop | [Prerequisites](reference/prepare.md) |
 | A participant, and the clock is running | [1 · Start here](tutorial/01-start-here.md) |
 | Curious about the words on the slides | [Glossary](reference/glossary.md) and [the introduction](story/why.md) |
 | An administrator of the session | [For administrators](admin/index.md) |
