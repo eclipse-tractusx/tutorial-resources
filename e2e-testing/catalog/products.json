@@ -592,7 +592,7 @@
       "scenario": "A setup generated with the default answers starts, and its first data exchange succeeds.",
       "difficulty": "advanced",
       "fitsWorkshop": false,
-      "workshopNote": "Runs in Docker Compose, not in the Umbrella: the workflow needs its own bring-up step."
+      "workshopNote": "Runs in Docker Compose, not in the developer toolbox: the workflow needs its own bring-up step."
     },
     {
       "id": "tractusx-testlab",

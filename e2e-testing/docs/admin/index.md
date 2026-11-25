@@ -25,7 +25,7 @@ flowchart LR
     IDE --> ENG["Engine"]
     ENG --> PAIR["The team's connector pair<br/>+ registry, wallets, BDRS"]
     B --> GH["GitHub<br/>fork and pull request"]
-    GH --> RUN["Runner<br/>its own Umbrella"]
+    GH --> RUN["Runner<br/>its own developer toolbox"]
 ```
 
 The model is the team's own. Nothing about it is deployed or paid for by the event.

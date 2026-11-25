@@ -1,4 +1,4 @@
-<span class="route">The tutorial · chapter 7 of 8 · ● ● ● ● ● ● ● ○</span>
+<span class="route">Getting Started · chapter 7 of 8 · ● ● ● ● ● ● ● ○</span>
 
 # 7 · Link it and open the pull request
 
@@ -35,7 +35,7 @@
 ## You should now see
 
 Your pull request, with the checks starting at the bottom: **Validate and compile** finishes
-in under a minute, **Run in Tractus-X Umbrella** in about five.
+in under a minute, **Run in Eclipse Tractus-X developer toolbox** in about five.
 
 ![The two jobs of the E2E test workflow in GitHub Actions, both green](../assets/screenshots/07-workflow-result.png)
 

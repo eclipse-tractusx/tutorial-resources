@@ -58,7 +58,6 @@ theme:
   features:
     - navigation.tabs
     - navigation.sections
-    - navigation.footer
     - navigation.top
     - navigation.indexes
     - content.code.copy
@@ -67,6 +66,27 @@ theme:
 
 extra_css:
   - assets/stylesheets/tractusx.css
+
+# Zoom, pan and full screen for diagrams (Mermaid and large images).
+extra_javascript:
+  - assets/javascripts/diagrams.js
+
+# The "← previous · Home · next →" line at the end of each page becomes buttons,
+# and the header gets an "About this tutorial" button.
+hooks:
+  - hooks/page_nav.py
+  - hooks/about.py
+
+# The tutorial's own version, separate from the software it uses: 1.0 when
+# published, a minor step when the steps change, a major step when it is
+# rebuilt. The About button shows it with this history.
+extra:
+  tutorial:
+    version: "1.0"
+    history:
+      - version: "1.0"
+        date: Nov 2026
+        note: First published, for the Tractus-X Community Days 2026.
 
 markdown_extensions:
   - attr_list
@@ -101,12 +121,12 @@ validation:
 
 nav:
   - Home: index.md
-  - The story:
+  - Introduction:
       - Why we are here: story/why.md
       - A dataspace in five minutes: story/dataspace.md
       - What a test is made of: story/test-anatomy.md
       - Where the AI helps: story/ai.md
-  - The tutorial:
+  - Getting Started:
       - 1 · Start here: tutorial/01-start-here.md
       - 2 · Your product and your connectors: tutorial/02-your-product.md
       - 3 · Choose your AI:

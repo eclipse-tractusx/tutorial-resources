@@ -52,8 +52,8 @@ Find the symptom, try the fix, raise your hand if it does not help.
 | Where | Meaning |
 | --- | --- |
 | **Validate and compile** | The project in the repository is not the one that compiled in the IDE. Did all files arrive? Check `tck/e2e/index.yaml` and `tck/e2e/tests/`. |
-| A deploy step of **Run in Tractus-X Umbrella** | The environment, not your test. Run the job again. |
-| **testlab run** | A finding, or a value your test expects that the Umbrella does not provide. Read **E2E test result** on the run page. |
+| A deploy step of **Run in Eclipse Tractus-X developer toolbox** | The environment, not your test. Run the job again. |
+| **testlab run** | A finding, or a value your test expects that the developer toolbox does not provide. Read **E2E test result** on the run page. |
 
 ---
 

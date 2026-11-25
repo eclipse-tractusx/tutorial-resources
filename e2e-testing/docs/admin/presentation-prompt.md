@@ -68,8 +68,8 @@ FACTS YOU MAY STATE. Use them exactly. Do not add figures of your own.
 - Eclipse Tractus-X TestLab is the open-source engine that validates,
   compiles and runs TCKs.
 - A test has three phases: setup, execution, teardown.
-- The workflow creates a small dataspace inside the GitHub runner from the
-  Tractus-X Umbrella: two connectors, two wallets, a Digital Twin Registry,
+- The workflow creates a small dataspace inside the GitHub runner, the
+  Eclipse Tractus-X developer toolbox: two connectors, two wallets, a Digital Twin Registry,
   a BDRS and an IssuerService. It needs no secrets and no external cluster.
 - The worked example (Digital Twin Registry) has 3 tests and 19 steps and
   runs in GitHub Actions in about five and a half minutes.

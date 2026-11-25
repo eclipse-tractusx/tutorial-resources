@@ -2,14 +2,24 @@
 
 **7th Eclipse Tractus-X Community Days · 3–4 December 2026 · ARENA2036, Stuttgart**
 
+<div class="tx-hero" markdown>
+<div class="tx-hero__text" markdown>
+
 In about an hour your team builds an end-to-end test for one Eclipse Tractus-X product,
 with an AI assistant doing the typing and you doing the thinking. You leave with a
 pull request in that product's repository and a test that runs on every change.
 
 No test framework to learn. No code to write. A laptop and curiosity are enough.
 
-[Start the tutorial](tutorial/01-start-here.md){ .md-button .md-button--primary }
-[New here? Read the story first](story/why.md){ .md-button }
+</div>
+
+![Eclipse Tractus-X SDK TestLab](assets/testlab/testlab-logo-light.png#only-light){ .tx-hero__logo width="200" }
+![Eclipse Tractus-X SDK TestLab](assets/testlab/testlab-logo-dark.png#only-dark){ .tx-hero__logo width="200" }
+
+</div>
+
+[Get started](tutorial/01-start-here.md){ .md-button .md-button--primary }
+[New here? Read the introduction first](story/why.md){ .md-button }
 
 ## The problem we solve together
 
@@ -55,7 +65,7 @@ run needed closer to 90: if your session is longer, spend the extra time on chap
 | --- | --- |
 | A participant, ten minutes before the workshop | [Before you come](reference/prepare.md) |
 | A participant, and the clock is running | [1 · Start here](tutorial/01-start-here.md) |
-| Curious about the words on the slides | [Glossary](reference/glossary.md) and [the story](story/why.md) |
+| Curious about the words on the slides | [Glossary](reference/glossary.md) and [the introduction](story/why.md) |
 | An administrator of the session | [For administrators](admin/index.md) |
 
 ## What you work with

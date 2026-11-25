@@ -1,4 +1,4 @@
-<span class="route">The tutorial · chapter 4 of 8 · ● ● ● ● ○ ○ ○ ○</span>
+<span class="route">Getting Started · chapter 4 of 8 · ● ● ● ● ○ ○ ○ ○</span>
 
 # 4 · Build the test with the assistant
 

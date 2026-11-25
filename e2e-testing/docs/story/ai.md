@@ -1,6 +1,6 @@
 # Where the AI helps
 
-<span class="route">The story · 4 of 4 · optional reading, 3 minutes</span>
+<span class="route">Introduction · 4 of 4 · optional reading, 3 minutes</span>
 
 ## You decide what. It writes how.
 
@@ -48,7 +48,7 @@ server with an OpenAI-compatible API).
 
 ---
 
-[← What a test is made of](test-anatomy.md) · [Home](../index.md) · [Start the tutorial →](../tutorial/01-start-here.md)
+[← What a test is made of](test-anatomy.md) · [Home](../index.md) · [Get started →](../tutorial/01-start-here.md)
 
 ## NOTICE
 

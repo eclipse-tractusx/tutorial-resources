@@ -1,6 +1,6 @@
 # Why we are here
 
-<span class="route">The story · 1 of 4 · optional reading, 3 minutes</span>
+<span class="route">Introduction · 1 of 4 · optional reading, 3 minutes</span>
 
 ## A release, three weeks, many people
 

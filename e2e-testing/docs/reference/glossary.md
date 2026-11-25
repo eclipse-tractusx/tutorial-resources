@@ -151,10 +151,18 @@ The service in which a provider lists its digital twins so that partners can fin
 Also called DTR. An entry is a **shell descriptor**; the pointers to the actual data are
 **submodel descriptors**.
 
+### Eclipse Tractus-X developer toolbox
+
+The small dataspace the E2E workflow creates in memory inside the GitHub runner: two
+connectors, two wallets, a Digital Twin Registry, a BDRS and an IssuerService in a
+Kubernetes cluster in Docker. It is built from the [Umbrella](#umbrella) chart with a fixed
+dataspace configuration, and it is thrown away when the job ends.
+
 ### Umbrella
 
 The Tractus-X Umbrella is a Helm chart that deploys the Tractus-X products together as one
-small dataspace. The workflow uses it to create a test environment inside the runner.
+small dataspace. The [developer toolbox](#eclipse-tractus-x-developer-toolbox) is built
+from it.
 
 ## The repository
 

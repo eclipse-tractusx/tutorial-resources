@@ -18,7 +18,7 @@
 #################################################################################
 
 # Keeps the worked example of the E2E testing tutorial honest: it is validated,
-# compiled and run against a Tractus-X Umbrella whenever it, the template or
+# compiled and run in the Eclipse Tractus-X developer toolbox whenever it, the template or
 # the reusable workflow changes.
 
 name: E2E testing tutorial - worked example

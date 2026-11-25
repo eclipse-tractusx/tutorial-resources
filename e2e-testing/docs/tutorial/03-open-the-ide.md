@@ -1,4 +1,4 @@
-<span class="route">The tutorial · chapter 3, route A · ● ● ● ○ ○ ○ ○ ○</span>
+<span class="route">Getting Started · chapter 3, route A · ● ● ● ○ ○ ○ ○ ○</span>
 
 # 3A · Open the IDE and connect your API key
 

@@ -53,6 +53,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          # The whole history: the About panel shows when the tutorial was added.
+          fetch-depth: 0
 
       - name: Set up Python 3.12
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
@@ -75,6 +78,9 @@ jobs:
         run: python admin/handouts/build_handouts.py --inventory admin/handouts/inventory.sample.json --no-pdf --out "${RUNNER_TEMP}/handouts"
 
       - name: Build the site
+        env:
+          # Read-only: the authors in the About panel come from the GitHub API.
+          GITHUB_TOKEN: ${{ github.token }}
         run: mkdocs build --strict --site-dir "${RUNNER_TEMP}/site"
 
       - name: Upload the site

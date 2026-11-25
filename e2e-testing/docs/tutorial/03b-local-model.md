@@ -1,4 +1,4 @@
-<span class="route">The tutorial · chapter 3, route B · ● ● ● ○ ○ ○ ○ ○</span>
+<span class="route">Getting Started · chapter 3, route B · ● ● ● ○ ○ ○ ○ ○</span>
 
 # 3B · Connect a local model
 

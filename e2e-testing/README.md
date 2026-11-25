@@ -17,7 +17,7 @@ Made for the "AI and Test Management" session of the 7th Eclipse Tractus-X Commu
 | Looking up a word | [Glossary](docs/reference/glossary.md) |
 | Running the session | [For administrators](docs/admin/index.md) |
 
-## The tutorial
+## Getting Started
 
 | | Chapter | Minutes |
 | --- | --- | --- |

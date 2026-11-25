@@ -1,4 +1,4 @@
-<span class="route">The tutorial · chapter 6 of 8 · ● ● ● ● ● ● ○ ○</span>
+<span class="route">Getting Started · chapter 6 of 8 · ● ● ● ● ● ● ○ ○</span>
 
 # 6 · Add it to your repository
 
@@ -81,8 +81,8 @@ And this is all the workflow is: a few lines that call a
 >   `index.yaml` and `tests` into `tck/e2e`.
 > - **Your repository already has a folder `tck/e2e`:** choose another folder, and change
 >   `tck-directory` in the workflow file to match.
-> - **Your product does not run in the Umbrella:** open `.github/workflows/e2e-test.yml`
->   and add `run-in-umbrella: false` under `tck-directory`. The workflow then validates and
+> - **Your product does not run in the developer toolbox:** open
+>   `.github/workflows/e2e-test.yml` and add `run-in-toolbox: false` under `tck-directory`. The workflow then validates and
 >   compiles only. See [The workflow](../reference/workflow.md).
 > - **`Signed-off-by` is missing:** you forgot `-s`. Run `git commit --amend -s --no-edit`.
 
