@@ -19,7 +19,8 @@
 
 # Copy this file to .github/workflows/e2e-test.yml in your repository.
 # It validates and compiles the E2E test project on every pull request and
-# runs it against a Tractus-X Umbrella that is created inside the runner.
+# runs it in the Eclipse Tractus-X developer toolbox, a dataspace created
+# inside the runner.
 
 name: E2E test
 

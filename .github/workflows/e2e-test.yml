@@ -28,10 +28,12 @@
 #       with:
 #         tck-directory: tck/e2e
 #
-# Job "validate" needs nothing but Python. Job "e2e" creates a kind cluster,
-# deploys two connectors, two wallets (IdentityHub), a Digital Twin Registry,
-# a BDRS and an IssuerService from the Tractus-X Umbrella chart, issues the
-# participants' credentials, and then runs the compiled package against it.
+# Job "validate" needs nothing but Python. Job "e2e" starts the Eclipse
+# Tractus-X developer toolbox: a kind cluster in the runner with two
+# connectors, two wallets (IdentityHub), a Digital Twin Registry, a BDRS and an
+# IssuerService, deployed from the Tractus-X Umbrella chart with a small
+# dataspace configuration. It issues the participants' credentials, and then
+# runs the compiled package against it.
 # No secrets and no external cluster are used.
 #
 # The dataspace bring-up (every step between "Reclaim runner disk space" and
@@ -54,16 +56,16 @@ on:
         description: Version of tractusx-testlab on PyPI that validates, compiles and runs the project.
         type: string
         default: "1.0.0a24"
-      run-in-umbrella:
-        description: Run the tests against a Tractus-X Umbrella created in the runner. Set to false to only validate and compile.
+      run-in-toolbox:
+        description: Run the tests in the Eclipse Tractus-X developer toolbox, a dataspace created in the runner. Set to false to only validate and compile.
         type: boolean
         default: true
       config:
-        description: Optional run configuration (a YAML file with "variables:") in the calling repository. It is merged over the Umbrella's values.
+        description: Optional run configuration (a YAML file with "variables:") in the calling repository. It is merged over the developer toolbox's values.
         type: string
         default: ""
-      umbrella-values:
-        description: Optional extra Helm values file in the calling repository, applied last. Use it to deploy the image built from this pull request.
+      toolbox-values:
+        description: Optional extra Helm values file for the developer toolbox in the calling repository, applied last. Use it to deploy the image built from this pull request.
         type: string
         default: ""
       testlab-ci-ref:
@@ -134,9 +136,9 @@ jobs:
           retention-days: 14
 
   e2e:
-    name: Run in Tractus-X Umbrella
+    name: Run in Eclipse Tractus-X developer toolbox
     needs: validate
-    if: ${{ inputs.run-in-umbrella }}
+    if: ${{ inputs.run-in-toolbox }}
     runs-on: ubuntu-latest
     timeout-minutes: 75
     env:
@@ -160,7 +162,7 @@ jobs:
       SUBMODEL_SERVER_URL: http://tck-submodel.local
       PROBE_SCRIPT: .testlab-ci/tests/e2e/connector-dtr-smoke/ci/probe_from_pod.sh
       WEDGE_SCRIPT: .testlab-ci/tests/e2e/connector-dtr-smoke/ci/restart_wedged_runtimes.py
-      UMBRELLA_EXTRA_VALUES: ${{ inputs.umbrella-values }}
+      UMBRELLA_EXTRA_VALUES: ${{ inputs.toolbox-values }}
       CALLER_CONFIG: ${{ inputs.config }}
       # Single source of truth for the dataspace hostnames, used for both the
       # runner's /etc/hosts and the cluster's CoreDNS.
@@ -431,7 +433,7 @@ jobs:
           PY
           echo "UMBRELLA_VAULT_SECRETS=${secrets}" >> "${GITHUB_ENV}"
 
-      - name: Prepare and validate pinned Umbrella chart
+      - name: Prepare and validate the developer toolbox (pinned Umbrella chart)
         run: |
           set -euo pipefail
           chart_dir="${RUNNER_TEMP}/umbrella"
@@ -567,7 +569,7 @@ jobs:
           }
           missing = sorted(expected_deployments - deployments)
           if missing:
-              raise SystemExit(f"Umbrella manifest is missing deployments: {', '.join(missing)}")
+              raise SystemExit(f"Developer toolbox manifest is missing deployments: {', '.join(missing)}")
 
           hooks = {
               document["metadata"]["name"]
@@ -577,7 +579,7 @@ jobs:
           missing_hooks = sorted(expected_hooks - hooks)
           if missing_hooks:
               raise SystemExit(
-                  f"Umbrella manifest is missing install hooks: {', '.join(missing_hooks)}"
+                  f"Developer toolbox manifest is missing install hooks: {', '.join(missing_hooks)}"
               )
 
           install_resources = [
@@ -593,7 +595,7 @@ jobs:
           ]
           duplicates = sorted(key for key, count in Counter(install_resources).items() if count > 1)
           if duplicates:
-              raise SystemExit(f"Umbrella manifest has duplicate resources: {duplicates}")
+              raise SystemExit(f"Developer toolbox manifest has duplicate resources: {duplicates}")
 
           expected_routes = {
               "provider-dsp.local": {"/api/v1/dsp"},
@@ -615,7 +617,7 @@ jobs:
               if ingress_routes.get(host) != paths
           }
           if wrong_routes:
-              raise SystemExit(f"Umbrella manifest has incorrect connector routes: {wrong_routes}")
+              raise SystemExit(f"Developer toolbox manifest has incorrect connector routes: {wrong_routes}")
           # Public EDR endpoint lives on <participant>.local via the control
           # plane's metrics slot. DSP must NOT share that host — the chart
           # still derives the callback from ingresses[0], but peers must only
@@ -633,7 +635,7 @@ jobs:
               if path.startswith("/connector")
           )
           if prefixed_routes:
-              raise SystemExit(f"Umbrella manifest still has /connector routes: {prefixed_routes}")
+              raise SystemExit(f"Developer toolbox manifest still has /connector routes: {prefixed_routes}")
 
           # The tractusx-connector chart derives EDC_DSP_CALLBACK_ADDRESS from
           # controlplane.ingresses[0] unless the env is pinned. A wrong host
@@ -662,11 +664,11 @@ jobs:
           }
           if wrong_callbacks:
               raise SystemExit(
-                  "Umbrella control planes advertise the wrong DSP callback "
+                  "Developer toolbox control planes advertise the wrong DSP callback "
                   f"address: {wrong_callbacks}"
               )
 
-          print("Umbrella manifest contains both connectors, the shared DTR, the issuer,")
+          print("Developer toolbox manifest contains both connectors, the shared DTR, the issuer,")
           print("the vault-setup hooks, isolated connector routes, and DSP callbacks.")
           print("Ingress hosts:", ", ".join(sorted(h for h in ingress_routes if h)))
           PY
@@ -721,7 +723,7 @@ jobs:
           df -h /
           docker exec tck-e2e-control-plane df -h /
 
-      - name: Deploy Tractus-X Umbrella (decentralized IdentityHub profile)
+      - name: Deploy the Eclipse Tractus-X developer toolbox (decentralized IdentityHub profile)
         run: |
           set -uo pipefail
           # `--wait` is load-bearing, not just convenience: Helm waits for
@@ -1249,7 +1251,7 @@ jobs:
         if: ${{ failure() || cancelled() }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: umbrella-diagnostics-${{ needs.validate.outputs.slug }}
+          name: toolbox-diagnostics-${{ needs.validate.outputs.slug }}
           path: ci-logs/
           retention-days: 14
 

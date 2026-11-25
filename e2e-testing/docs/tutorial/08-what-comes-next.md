@@ -41,7 +41,7 @@ One product has a green check that it did not have this morning.
 | The format, every key | [TCK syntax reference](https://eclipse-tractusx.github.io/tractusx-testlab/tck-syntax/) |
 | The engine | [`tractusx-testlab`](https://github.com/eclipse-tractusx/tractusx-testlab) |
 | A large real project | [TestLab's own E2E test](https://github.com/eclipse-tractusx/tractusx-testlab/tree/main/tests/e2e/connector-dtr-smoke) |
-| The dataspace in a box | [Tractus-X Umbrella](https://github.com/eclipse-tractusx/tractus-x-umbrella) |
+| The chart behind the developer toolbox | [Tractus-X Umbrella](https://github.com/eclipse-tractusx/tractus-x-umbrella) |
 
 ## You should now see
 

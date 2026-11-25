@@ -74,8 +74,8 @@ Registry and a BDRS. One side plays **your company with your product**. The othe
 **the partner**, and that is where your test runs from.
 
 The same small dataspace is created inside GitHub Actions when your test runs in CI.
-It comes from the [Tractus-X Umbrella](../reference/glossary.md#umbrella), a Helm chart
-that deploys the products together.
+It is the [Eclipse Tractus-X developer toolbox](../reference/glossary.md#eclipse-tractus-x-developer-toolbox): the
+Tractus-X Umbrella Helm chart with a small dataspace configuration, in memory in the runner.
 
 ---
 

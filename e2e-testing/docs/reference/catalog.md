@@ -12,7 +12,7 @@ Collected on 2026-11-24 from the `eclipse-tractusx` organization: the repository
 
 These need only what every team gets: connector, Digital Twin Registry, wallet, BDRS.
 
-| Product | Suggested E2E scenario | Needs | In the Umbrella | Difficulty |
+| Product | Suggested E2E scenario | Needs | In the developer toolbox | Difficulty |
 | --- | --- | --- | --- | --- |
 | **Tractus-X EDC (connector)**<br/>[`tractusx-edc`](https://github.com/eclipse-tractusx/tractusx-edc) | A provider offers an asset under a policy, and a partner finds it in the catalog, negotiates a contract and pulls the data. | connector, wallet, BDRS | Yes | Starter |
 | **Digital Twin Registry**<br/>[`sldt-digital-twin-registry`](https://github.com/eclipse-tractusx/sldt-digital-twin-registry) | A twin its owner registers can be read back, and a partner finds and reads it through the owner's connector. | connector, Digital Twin Registry, wallet, BDRS | Yes | Starter |
@@ -24,7 +24,7 @@ These need only what every team gets: connector, Digital Twin Registry, wallet, 
 
 Build, validate and compile the test in the workshop. Run it where the product is deployed, or in CI once the workflow can bring the product up.
 
-| Product | Suggested E2E scenario | Needs | In the Umbrella | Difficulty |
+| Product | Suggested E2E scenario | Needs | In the developer toolbox | Difficulty |
 | --- | --- | --- | --- | --- |
 | **Discovery Finder**<br/>[`sldt-discovery-finder`](https://github.com/eclipse-tractusx/sldt-discovery-finder) | A registered BPN Discovery endpoint is returned for its identifier type, and an unknown type returns an empty list. | Discovery Finder, identity provider | Yes | Starter |
 | **BPN Discovery**<br/>[`sldt-bpn-discovery`](https://github.com/eclipse-tractusx/sldt-bpn-discovery) | An identifier registered for a BPN is found again by a search, and it is gone after it was deleted. | BPN Discovery, identity provider | Yes | Starter |
@@ -77,7 +77,7 @@ Build, validate and compile the test in the workshop. Run it where the product i
 | E2E Data Exchange Test Service | Needs the service deployed with a Portal and its identity provider. |
 | Dataspace Management | Needs the service and its identity provider deployed. Its metafile names a leading repository that does not exist yet. |
 | Tractus-X SDK Services | Needs both services deployed next to a connector. |
-| Tractus-X Starter Kit | Runs in Docker Compose, not in the Umbrella: the workflow needs its own bring-up step. |
+| Tractus-X Starter Kit | Runs in Docker Compose, not in the developer toolbox: the workflow needs its own bring-up step. |
 | Tractus-X TestLab | Already has its E2E test as a TCK project. Read it as the reference. |
 
 ## More scenarios

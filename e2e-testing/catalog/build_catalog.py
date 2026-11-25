@@ -109,7 +109,7 @@ def row(product: dict) -> str:
 
 def table(products: list[dict]) -> list[str]:
     return [
-        "| Product | Suggested E2E scenario | Needs | In the Umbrella | Difficulty |",
+        "| Product | Suggested E2E scenario | Needs | In the developer toolbox | Difficulty |",
         "| --- | --- | --- | --- | --- |",
         *[row(product) for product in products],
     ]

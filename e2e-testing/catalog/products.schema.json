@@ -103,7 +103,7 @@
           "uniqueItems": true
         },
         "runsInUmbrella": {
-          "description": "True when the Tractus-X Umbrella chart deploys the product.",
+          "description": "True when the Tractus-X Umbrella chart, and so the Eclipse Tractus-X developer toolbox, deploys the product.",
           "type": "boolean"
         },
         "umbrellaChart": {
