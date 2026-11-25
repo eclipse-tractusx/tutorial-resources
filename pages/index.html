@@ -96,21 +96,48 @@
 
     .top__inner img { height: 1.9rem; width: auto; }
 
-    .top__inner a {
+    .top__inner > span { white-space: nowrap; }
+
+    /* The repository, as the tutorial sites show it: icon, name, stars and forks. */
+    .source {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
       margin-left: auto;
       color: #ffffff;
-      font-size: 0.85rem;
+      font-size: 0.72rem;
       font-weight: 600;
+      line-height: 1.3;
       text-decoration: none;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    .source:hover { opacity: 1; }
+    .source:focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; border-radius: 0.3rem; }
+
+    .source__icon svg { display: block; width: 1.5rem; height: 1.5rem; fill: currentcolor; }
+
+    .source__name { display: block; font-size: 0.8rem; white-space: nowrap; }
+
+    .source__facts {
+      display: flex;
+      gap: 0.6rem;
+      margin: 0.1rem 0 0;
+      padding: 0;
+      list-style: none;
+      font-weight: 500;
       opacity: 0.8;
     }
 
-    .top__inner a:hover { opacity: 1; color: var(--orange); }
+    .source__facts[hidden] { display: none; }
+    .source__facts li { display: inline-flex; align-items: center; gap: 0.2rem; }
+    .source__facts svg { width: 0.75rem; height: 0.75rem; fill: currentcolor; }
 
-    .top__inner span { white-space: nowrap; }
-
+    /* On a phone the title needs the room: the icon and the counts stay. */
     @media (max-width: 40rem) {
-      .top__inner .wide { display: none; }
+      .source__name { display: none; }
+      .source__facts { margin: 0; }
     }
 
     main {
@@ -399,6 +426,49 @@
       gap: 0.6rem;
     }
 
+
+    /* When a tutorial was added and last changed, and its version. */
+    .facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem 1rem;
+      margin: auto 0 0;
+      padding-top: 0.8rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .facts div { display: flex; gap: 0.3rem; }
+    .facts dt { font-weight: 700; color: var(--fg); }
+    .facts dd { margin: 0; }
+    .facts + .go { margin-top: 0; }
+
+    .sort {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .sort select {
+      padding: 0.3rem 1.8rem 0.3rem 0.6rem;
+      border: 1px solid var(--line-strong);
+      border-radius: 0.5rem;
+      background: var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23999' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 0.4rem center / 1.1rem;
+      color: var(--fg);
+      font: inherit;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .sort select:hover { border-color: var(--orange); }
+    .sort select:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+    .meta__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
+
     .toggle {
       display: inline-flex;
       align-items: center;
@@ -477,7 +547,16 @@
     <div class="top__inner">
       <img src="e2e-testing/assets/logo_tractus-x.svg" alt="">
       <span>Eclipse Tractus-X Tutorials</span>
-      <a href="https://github.com/eclipse-tractusx/tutorial-resources"><span class="wide">Repository on </span>GitHub</a>
+      <a class="source" href="https://github.com/eclipse-tractusx/tutorial-resources" title="Go to repository" aria-label="eclipse-tractusx/tutorial-resources on GitHub">
+        <span class="source__icon"><svg viewBox="0 0 448 512" aria-hidden="true"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg></span>
+        <span>
+          <span class="source__name">eclipse-tractusx/tutorial-resources</span>
+          <ul class="source__facts" id="repo-facts" hidden>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><span id="repo-stars"></span><span class="visually-hidden"> stars</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3a3 3 0 0 1 1 5.83v.67a2.5 2.5 0 0 0 2.5 2.5h5A2.5 2.5 0 0 0 17 9.5v-.67a3 3 0 1 1 2 0v.67a4.5 4.5 0 0 1-4.5 4.5H13v1.17a3 3 0 1 1-2 0V14H9.5A4.5 4.5 0 0 1 5 9.5v-.67A3 3 0 0 1 6 3"/></svg><span id="repo-forks"></span><span class="visually-hidden"> forks</span></li>
+          </ul>
+        </span>
+      </a>
     </div>
   </header>
 
@@ -505,12 +584,23 @@
       </div>
       <div class="meta">
         <p class="count" id="count" aria-live="polite"></p>
-        <button type="button" class="toggle" id="hide-deprecated" aria-pressed="false">Hide deprecated</button>
+        <div class="meta__actions">
+          <label class="sort">Sort by
+            <select id="sort">
+              <option value="">Recommended</option>
+              <option value="newest">Newest first</option>
+              <option value="updated">Recently updated</option>
+              <option value="oldest">Oldest first</option>
+              <option value="name">Name (A–Z)</option>
+            </select>
+          </label>
+          <button type="button" class="toggle" id="hide-deprecated" aria-pressed="false">Hide deprecated</button>
+        </div>
       </div>
     </div>
 
     <ul class="grid" id="grid">
-      <li data-filters="community-days developers ai" data-keywords="tck testlab test suite ide github actions pull request e2e end-to-end trg conformance">
+      <li data-path="e2e-testing" data-order="1" data-filters="community-days developers ai" data-keywords="tck testlab test suite ide github actions pull request e2e end-to-end trg conformance">
         <article class="card card--featured">
           <div class="card__media card__media--logo">
             <picture>
@@ -521,13 +611,18 @@
           <div class="card__body">
             <span class="tag tag--site">Tutorial site</span>
             <h2><a href="e2e-testing/">E2E tests for Tractus-X products</a></h2>
-            <p>Give your product an end-to-end test that runs on every pull request. Build it in about an hour with an AI assistant in the Test Suite IDE.</p>
+            <p>Create automated tests for Eclipse Tractus-X products using AI, with the Eclipse Tractus-X TestLab testing framework. Build an end-to-end test in about an hour in the Test Suite IDE, and run it on every pull request.</p>
             <ul class="chips" aria-label="For"><li>Community Days 2026</li><li>Developers</li><li>With AI</li></ul>
+            <dl class="facts">
+              <div><dt>Added</dt><dd><time class="added" datetime="2026-11-24">Nov 2026</time></dd></div>
+              <div><dt>Updated</dt><dd><time class="updated" datetime="2026-11-25">Nov 2026</time></dd></div>
+              <div><dt>Version</dt><dd title="The Tractus-X Umbrella chart version the tests run against">Umbrella 26.03.00</dd></div>
+            </dl>
             <span class="go">Open the tutorial <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
           </div>
         </article>
       </li>
-      <li data-filters="developers start" data-keywords="edc connector policy policies odrl access usage contract">
+      <li data-path="edc-policy-playground" data-order="2" data-filters="developers start" data-keywords="edc connector policy policies odrl access usage contract">
         <article class="card">
           <div class="card__media"><img src="media/policy-playground.png" alt="The Policy Playground: a policy form next to its JSON" loading="lazy"></div>
           <div class="card__body">
@@ -535,11 +630,16 @@
             <h2><a href="policy-playground/">EDC Policy Playground</a></h2>
             <p>Put together Tractus-X connector policies in the browser and see the policy JSON they become.</p>
             <ul class="chips" aria-label="For"><li>Developers</li><li>Getting started</li></ul>
+            <dl class="facts">
+              <div><dt>Added</dt><dd><time class="added" datetime="2023-08-08">Aug 2023</time></dd></div>
+              <div><dt>Updated</dt><dd><time class="updated" datetime="2025-09-29">Sep 2025</time></dd></div>
+              <div><dt>Version</dt><dd title="The version in the app's package.json">v0.0.1</dd></div>
+            </dl>
             <span class="go">Open the playground <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
           </div>
         </article>
       </li>
-      <li data-filters="community-days developers ai" data-keywords="irs item relationship service industry core genai frontend digital twins">
+      <li data-path="icc-irs-challenges" data-order="3" data-filters="community-days developers ai" data-keywords="irs item relationship service industry core genai frontend digital twins">
         <article class="card">
           <div class="card__media card__media--icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"/></svg></div>
           <div class="card__body">
@@ -547,11 +647,16 @@
             <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/icc-irs-challenges">IRS frontend challenge with GenAI</a></h2>
             <p>Build a frontend for the Item Relationship Service with an AI assistant, in three phases: the API, the part chain, the semantic data.</p>
             <ul class="chips" aria-label="For"><li>Community Days</li><li>Developers</li><li>With AI</li></ul>
+            <dl class="facts">
+              <div><dt>Added</dt><dd><time class="added" datetime="2024-11-19">Nov 2024</time></dd></div>
+              <div><dt>Updated</dt><dd><time class="updated" datetime="2025-01-07">Jan 2025</time></dd></div>
+              <div><dt>Version</dt><dd title="The version in the challenge's package.json">v1.0.0</dd></div>
+            </dl>
             <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
           </div>
         </article>
       </li>
-      <li data-filters="operators" data-keywords="helm chart postgresql keycloak bitnami cloudpirates database upgrade">
+      <li data-path="migration-guides" data-order="4" data-filters="operators" data-keywords="helm chart postgresql keycloak bitnami cloudpirates database upgrade">
         <article class="card">
           <div class="card__media card__media--icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.99 11 3 15l3.99 4v-3H14v-2H6.99zM21 9l-3.99-4v3H10v2h7.01v3z"/></svg></div>
           <div class="card__body">
@@ -559,11 +664,16 @@
             <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/migration-guides">Migration guides</a></h2>
             <p>Move the PostgreSQL and Keycloak of a deployment from the Bitnami Helm charts to the CloudPirates charts.</p>
             <ul class="chips" aria-label="For"><li>Operators</li></ul>
+            <dl class="facts">
+              <div><dt>Added</dt><dd><time class="added" datetime="2026-01-21">Jan 2026</time></dd></div>
+              <div><dt>Updated</dt><dd><time class="updated" datetime="2026-04-10">Apr 2026</time></dd></div>
+              <div><dt>Version</dt><dd title="PostgreSQL guide version 1.2; the Keycloak guide moves to Keycloak 26">v1.2 · Keycloak 26</dd></div>
+            </dl>
             <span class="go">Read the guides <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
           </div>
         </article>
       </li>
-      <li data-status="deprecated" data-filters="developers operators start" data-keywords="kubernetes kind terraform connector edc dataspace identityhub bdrs file transfer s3 azure edr">
+      <li data-status="deprecated" data-path="mxd" data-order="5" data-filters="developers operators start" data-keywords="kubernetes kind terraform connector edc dataspace identityhub bdrs file transfer s3 azure edr">
         <article class="card card--deprecated">
           <div class="card__media">
             <span class="badge" title="Kept for reference: it may not match the current Tractus-X release."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"/></svg>Deprecated</span>
@@ -573,11 +683,16 @@
             <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/mxd">Minimum Tractus-X Dataspace (MXD)</a></h2>
             <p>Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster.</p>
             <ul class="chips" aria-label="For"><li>Developers</li><li>Operators</li><li>Getting started</li></ul>
+            <dl class="facts">
+              <div><dt>Added</dt><dd><time class="added" datetime="2023-08-07">Aug 2023</time></dd></div>
+              <div><dt>Updated</dt><dd><time class="updated" datetime="2025-03-21">Mar 2025</time></dd></div>
+              <div><dt>Version</dt><dd title="The tractusx-connector Helm chart version it deploys">Connector 0.9.0</dd></div>
+            </dl>
             <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
           </div>
         </article>
       </li>
-      <li data-status="deprecated" data-filters="community-days developers" data-keywords="digital product pass passport battery pcf qr code irs">
+      <li data-status="deprecated" data-path="dpp-tutorial" data-order="6" data-filters="community-days developers" data-keywords="digital product pass passport battery pcf qr code irs">
         <article class="card card--deprecated">
           <div class="card__media">
             <span class="badge" title="Kept for reference: it may not match the current Tractus-X release."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"/></svg>Deprecated</span>
@@ -587,6 +702,10 @@
             <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/dpp-tutorial">Digital Product Passport</a></h2>
             <p>The Digital Product Passport workstream from the Tractus-X Community Days: create a passport for your part and read it over the dataspace.</p>
             <ul class="chips" aria-label="For"><li>Community Days 2024</li><li>Developers</li></ul>
+            <dl class="facts">
+              <div><dt>Added</dt><dd><time class="added" datetime="2025-09-18">Sep 2025</time></dd></div>
+              <div><dt>Updated</dt><dd><time class="updated" datetime="2025-09-18">Sep 2025</time></dd></div>
+            </dl>
             <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
           </div>
         </article>
@@ -624,14 +743,36 @@
       }
       input.value = params.get("q") || "";
       var hideToggle = document.getElementById("hide-deprecated");
+      var grid = document.getElementById("grid");
+      var sortSelect = document.getElementById("sort");
+      var sorts = {
+        newest: function (a, b) { return date(b, "added").localeCompare(date(a, "added")); },
+        updated: function (a, b) { return date(b, "updated").localeCompare(date(a, "updated")); },
+        oldest: function (a, b) { return date(a, "added").localeCompare(date(b, "added")); },
+        name: function (a, b) { return title(a).localeCompare(title(b)); }
+      };
+      sortSelect.value = sorts[params.get("sort")] ? params.get("sort") : "";
       var hideDeprecated = params.get("deprecated") === "hide";
       controls.hidden = false;
+
+      function date(card, kind) {
+        var time = card.querySelector("time." + kind);
+        return time ? time.getAttribute("datetime") : "";
+      }
+
+      function title(card) {
+        return card.querySelector("h2").textContent.trim();
+      }
 
       function words(text) {
         return text.toLowerCase().replace(/[^\p{L}\p{N}\s.-]+/gu, " ").split(/\s+/).filter(Boolean);
       }
 
       function update() {
+        var byOrder = function (a, b) { return a.dataset.order - b.dataset.order; };
+        var compare = sorts[sortSelect.value] || byOrder;
+        cards.slice().sort(function (a, b) { return compare(a, b) || byOrder(a, b); })
+          .forEach(function (card) { grid.appendChild(card); });
         var query = words(input.value);
         var shown = 0;
         cards.forEach(function (card) {
@@ -663,6 +804,9 @@
         if (hideDeprecated) {
           next.set("deprecated", "hide");
         }
+        if (sortSelect.value) {
+          next.set("sort", sortSelect.value);
+        }
         hideToggle.setAttribute("aria-pressed", String(hideDeprecated));
         var search = next.toString();
         history.replaceState(null, "", location.pathname + (search ? "?" + search : ""));
@@ -675,6 +819,7 @@
         });
       });
       input.addEventListener("input", update);
+      sortSelect.addEventListener("change", update);
       hideToggle.addEventListener("click", function () {
         hideDeprecated = !hideDeprecated;
         update();
@@ -683,6 +828,7 @@
         active = "";
         input.value = "";
         hideDeprecated = false;
+        sortSelect.value = "";
         update();
         input.focus();
       });
@@ -700,6 +846,33 @@
         }
       });
       update();
+    })();
+
+    // Stars and forks of the repository, from the GitHub API, kept for the
+    // browser session like the tutorial sites do. Without them the name shows alone.
+    (function () {
+      var facts = document.getElementById("repo-facts");
+      function show(repo) {
+        var format = new Intl.NumberFormat("en", { notation: "compact" });
+        document.getElementById("repo-stars").textContent = format.format(repo.stars);
+        document.getElementById("repo-forks").textContent = format.format(repo.forks);
+        facts.hidden = false;
+      }
+      try {
+        var cached = JSON.parse(sessionStorage.getItem("tutorial-resources-repo"));
+        if (cached) {
+          show(cached);
+          return;
+        }
+      } catch (e) { /* no storage: ask GitHub */ }
+      fetch("https://api.github.com/repos/eclipse-tractusx/tutorial-resources")
+        .then(function (response) { return response.ok ? response.json() : Promise.reject(response.status); })
+        .then(function (data) {
+          var repo = { stars: data.stargazers_count, forks: data.forks_count };
+          try { sessionStorage.setItem("tutorial-resources-repo", JSON.stringify(repo)); } catch (e) { /* ignore */ }
+          show(repo);
+        })
+        .catch(function () { /* offline or rate limited: the name is enough */ });
     })();
   </script>
 </body>

@@ -12,7 +12,7 @@ Tractus-X release.
 
 | Tutorial | What you do | Open |
 | --- | --- | --- |
-| **E2E tests for Tractus-X products** | Build an end-to-end test for a Tractus-X product in about an hour, with an AI assistant, and run it on every pull request | [Site](https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/) · [Source](e2e-testing/README.md) |
+| **E2E tests for Tractus-X products** | Create automated tests for Eclipse Tractus-X products using AI, with the Eclipse Tractus-X TestLab testing framework: build an end-to-end test in about an hour and run it on every pull request | [Site](https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/) · [Source](e2e-testing/README.md) |
 | **EDC Policy Playground** | Put together Tractus-X connector policies in the browser and see the policy JSON they become | [Web app](https://eclipse-tractusx.github.io/tutorial-resources/policy-playground/) · [Source](edc-policy-playground/README.md) |
 | **Minimum Tractus-X Dataspace (MXD)** · ⚠️ deprecated | Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster. Follow-up guides cover access policies, file transfers and EDR transfers | [Guide](mxd/README.md) · [More guides](mxd/docs/) |
 | **Digital Product Passport** · ⚠️ deprecated | Create a passport for your part and read it over the dataspace (Tractus-X Community Days workstream) | [Guide](dpp-tutorial/README.md) |
@@ -58,7 +58,10 @@ cd edc-policy-playground && npm ci && npm start
    long it takes.
 2. Add a row to the [Tutorials](#tutorials) table above.
 3. Add a card to [`pages/index.html`](pages/index.html), so it shows on the website. Put its
-   picture in [`pages/media/`](pages/media/), with a `.license` file next to it.
+   picture in [`pages/media/`](pages/media/), with a `.license` file next to it. Set
+   `data-path` to its folder: when the site is built, the card's Added and Updated dates are
+   filled in from the git history of that folder. Give the version the tutorial declares, or
+   leave it out.
 4. If it has a site of its own, build it into its own folder of `_site` in
    [`pages.yml`](.github/workflows/pages.yml) and point the card there.
 
