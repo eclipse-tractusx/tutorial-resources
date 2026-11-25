@@ -336,8 +336,9 @@
       box-shadow: 0 6px 16px rgb(250 160 35 / 30%);
     }
 
-    .card:hover .go svg,
-    .card:focus-within .go svg { transform: translateX(4px); }
+    /* Only the card's own button moves its arrow; a second button's icon stays put. */
+    .card:hover .go:not(.go--secondary) svg,
+    .card:focus-within .go:not(.go--secondary) svg { transform: translateX(4px); }
 
     .card--featured .go:not(.go--secondary) { background: var(--orange); color: #000000; }
     .card--featured:hover .go:not(.go--secondary) { background: var(--orange-dark); color: #000000; }
