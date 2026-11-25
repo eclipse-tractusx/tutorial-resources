@@ -59,11 +59,28 @@ cd edc-policy-playground && npm ci && npm start
 2. Add a row to the [Tutorials](#tutorials) table above.
 3. Add a card to [`pages/index.html`](pages/index.html), so it shows on the website. Put its
    picture in [`pages/media/`](pages/media/), with a `.license` file next to it. Set
-   `data-path` to its folder: when the site is built, the card's Added and Updated dates are
-   filled in from the git history of that folder. Give the version the tutorial declares, or
-   leave it out.
+   `data-path` to its folder: when the site is built, the card's Added and Updated dates and
+   its authors (the GitHub accounts with commits in that folder) are filled in from the
+   history. Give it version 1.0 and add it to [Versions](#versions).
 4. If it has a site of its own, build it into its own folder of `_site` in
    [`pages.yml`](.github/workflows/pages.yml) and point the card there.
+
+## Versions
+
+Every tutorial has its own version, separate from the versions of the software it uses. It
+starts at 1.0 when it is published. The minor number goes up when the steps change, for
+example a new chapter or an update for a new Tractus-X release. The major number goes up when
+the tutorial is rebuilt. Change it on the tutorial's card in
+[`pages/index.html`](pages/index.html) and add a line below.
+
+| Tutorial | Version | History |
+| --- | --- | --- |
+| E2E tests for Tractus-X products | 1.0 | 1.0 (Nov 2026): first published |
+| EDC Policy Playground | 1.1 | 1.0 (Aug 2023): first published · 1.1 (May 2024): policies for Tractus-X EDC 0.7 |
+| IRS frontend challenge with GenAI | 1.0 | 1.0 (Dec 2024): the Community Days challenge, with fixes since |
+| Migration guides | 1.2 | 1.0 (Jan 2026): PostgreSQL guide · 1.1 (Feb 2026): Keycloak guide · 1.2 (Apr 2026): PostgreSQL guide reworked |
+| Minimum Tractus-X Dataspace (MXD) | 2.2 | 1.0 (Aug 2023): first published · 2.0 (Nov 2024): IdentityHub and STS replace MIW and Keycloak · 2.1 (Jan 2025): IdentityHub upgrade · 2.2 (Mar 2025): DCP issuance, Tractus-X EDC 0.9 |
+| Digital Product Passport | 1.0 | 1.0 (Dec 2024): the Community Days workstream |
 
 ## Contributing
 

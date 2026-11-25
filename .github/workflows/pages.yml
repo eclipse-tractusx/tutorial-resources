@@ -35,7 +35,7 @@ on:
   pull_request:
     paths:
       - "pages/**"
-      - ".github/scripts/stamp_tutorial_dates.py"
+      - ".github/scripts/stamp_tutorials.py"
       - ".github/workflows/pages.yml"
   push:
     branches: [main]
@@ -77,10 +77,13 @@ jobs:
           node-version: 18
 
       - name: Home page
+        env:
+          # Read-only: the authors of each tutorial come from the GitHub API.
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           mkdir -p _site
           cp -R pages/. _site/
-          python .github/scripts/stamp_tutorial_dates.py _site/index.html
+          python .github/scripts/stamp_tutorials.py _site/index.html
 
       - name: E2E testing tutorial, at /e2e-testing/
         working-directory: e2e-testing
