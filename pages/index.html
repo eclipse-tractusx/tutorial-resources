@@ -270,6 +270,30 @@
 
     .tag--site { border-color: var(--orange); color: var(--orange-dark); }
 
+    /* The tag and the difficulty, on one line: one to three stars. */
+    .card__kicker {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem 0.8rem;
+    }
+
+    .card__kicker .tag { align-self: auto; }
+
+    .level {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .level__stars { display: inline-flex; gap: 0.05rem; }
+    .level svg { width: 1rem; height: 1rem; fill: var(--line-strong); }
+    .level svg.on { fill: var(--orange); }
+
     .card h2 {
       margin: 0.2rem 0 0;
       font-size: 1.2rem;
@@ -671,9 +695,18 @@
       <div class="meta">
         <p class="count" id="count" aria-live="polite"></p>
         <div class="meta__actions">
+          <label class="sort">Difficulty
+            <select id="level">
+              <option value="">Any</option>
+              <option value="beginner">★ Beginner</option>
+              <option value="intermediate">★★ Intermediate</option>
+              <option value="advanced">★★★ Advanced</option>
+            </select>
+          </label>
           <label class="sort">Sort by
             <select id="sort">
               <option value="">Recommended</option>
+              <option value="easiest">Easiest first</option>
               <option value="newest">Newest first</option>
               <option value="updated">Recently updated</option>
               <option value="oldest">Oldest first</option>
@@ -686,7 +719,7 @@
     </div>
 
     <ul class="grid" id="grid">
-      <li data-path="e2e-testing" data-order="1" data-filters="community-days developers ai" data-keywords="tck testlab test suite ide github actions pull request e2e end-to-end trg conformance">
+      <li data-path="e2e-testing" data-level="1" data-order="1" data-filters="community-days developers ai" data-keywords="tck testlab test suite ide github actions pull request e2e end-to-end trg conformance">
         <article class="card card--featured">
           <div class="card__media card__media--logo">
             <picture>
@@ -695,7 +728,7 @@
             </picture>
           </div>
           <div class="card__body">
-            <span class="tag tag--site">Tutorial site</span>
+            <div class="card__kicker"><span class="tag tag--site">Tutorial site</span><span class="level" role="img" aria-label="Difficulty: Beginner, 1 of 3" title="Difficulty: Beginner"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Beginner</span></span></div>
             <h2><a href="e2e-testing/">E2E tests for Tractus-X products</a></h2>
             <p>Create automated tests for Eclipse Tractus-X products using AI, with the Eclipse Tractus-X TestLab testing framework. Build an end-to-end test in about an hour in the Test Suite IDE, and run it on every pull request.</p>
             <ul class="chips" aria-label="For"><li>Community Days 2026</li><li>Developers</li><li>With AI</li></ul>
@@ -709,11 +742,11 @@
           </div>
         </article>
       </li>
-      <li data-path="edc-policy-playground" data-order="2" data-filters="developers start" data-keywords="edc connector policy policies odrl access usage contract">
+      <li data-path="edc-policy-playground" data-level="1" data-order="2" data-filters="developers start" data-keywords="edc connector policy policies odrl access usage contract">
         <article class="card">
           <div class="card__media"><img src="media/policy-playground.png" alt="The Policy Playground: a policy form next to its JSON" loading="lazy"></div>
           <div class="card__body">
-            <span class="tag tag--site">Web app</span>
+            <div class="card__kicker"><span class="tag tag--site">Web app</span><span class="level" role="img" aria-label="Difficulty: Beginner, 1 of 3" title="Difficulty: Beginner"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Beginner</span></span></div>
             <h2><a href="edc-policy-playground/">EDC Policy Playground</a></h2>
             <p>Put together Tractus-X connector policies in the browser and see the policy JSON they become.</p>
             <ul class="chips" aria-label="For"><li>Developers</li><li>Getting started</li></ul>
@@ -730,11 +763,11 @@
           </div>
         </article>
       </li>
-      <li data-path="icc-irs-challenges" data-order="3" data-filters="community-days developers ai" data-keywords="irs item relationship service industry core genai frontend digital twins">
+      <li data-path="icc-irs-challenges" data-level="2" data-order="3" data-filters="community-days developers ai" data-keywords="irs item relationship service industry core genai frontend digital twins">
         <article class="card">
           <div class="card__media card__media--icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"/></svg></div>
           <div class="card__body">
-            <span class="tag tag--site">Guide</span>
+            <div class="card__kicker"><span class="tag tag--site">Guide</span><span class="level" role="img" aria-label="Difficulty: Intermediate, 2 of 3" title="Difficulty: Intermediate"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Intermediate</span></span></div>
             <h2><a href="icc-irs-challenges/">IRS frontend challenge with GenAI</a></h2>
             <p>Build a frontend for the Item Relationship Service with an AI assistant, in three phases: the API, the part chain, the semantic data.</p>
             <ul class="chips" aria-label="For"><li>Community Days</li><li>Developers</li><li>With AI</li></ul>
@@ -748,11 +781,11 @@
           </div>
         </article>
       </li>
-      <li data-path="migration-guides" data-order="4" data-filters="operators" data-keywords="helm chart postgresql keycloak bitnami cloudpirates database upgrade">
+      <li data-path="migration-guides" data-level="3" data-order="4" data-filters="operators" data-keywords="helm chart postgresql keycloak bitnami cloudpirates database upgrade">
         <article class="card">
           <div class="card__media card__media--icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.99 11 3 15l3.99 4v-3H14v-2H6.99zM21 9l-3.99-4v3H10v2h7.01v3z"/></svg></div>
           <div class="card__body">
-            <span class="tag tag--site">Guide</span>
+            <div class="card__kicker"><span class="tag tag--site">Guide</span><span class="level" role="img" aria-label="Difficulty: Advanced, 3 of 3" title="Difficulty: Advanced"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Advanced</span></span></div>
             <h2><a href="migration-guides/">Migration guides</a></h2>
             <p>Move the PostgreSQL and Keycloak of a deployment from the Bitnami Helm charts to the CloudPirates charts.</p>
             <ul class="chips" aria-label="For"><li>Operators</li></ul>
@@ -766,13 +799,13 @@
           </div>
         </article>
       </li>
-      <li data-status="deprecated" data-path="mxd" data-order="5" data-filters="developers operators start" data-keywords="kubernetes kind terraform connector edc dataspace identityhub bdrs file transfer s3 azure edr">
+      <li data-status="deprecated" data-path="mxd" data-level="2" data-order="5" data-filters="developers operators start" data-keywords="kubernetes kind terraform connector edc dataspace identityhub bdrs file transfer s3 azure edr">
         <article class="card card--deprecated">
           <div class="card__media">
             <span class="badge" title="Kept for reference: it may not match the current Tractus-X release."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"/></svg>Deprecated</span>
             <img src="media/mxd.png" alt="The MXD connectors and services running, seen in k9s" loading="lazy"></div>
           <div class="card__body">
-            <span class="tag tag--site">Guide</span>
+            <div class="card__kicker"><span class="tag tag--site">Guide</span><span class="level" role="img" aria-label="Difficulty: Intermediate, 2 of 3" title="Difficulty: Intermediate"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Intermediate</span></span></div>
             <h2><a href="mxd/">Minimum Tractus-X Dataspace (MXD)</a></h2>
             <p>Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster.</p>
             <ul class="chips" aria-label="For"><li>Developers</li><li>Operators</li><li>Getting started</li></ul>
@@ -786,13 +819,13 @@
           </div>
         </article>
       </li>
-      <li data-status="deprecated" data-path="dpp-tutorial" data-authors-from="eclipse-tractusx/digital-product-pass:dpp-tutorial" data-order="6" data-filters="community-days developers" data-keywords="digital product pass passport battery pcf qr code irs">
+      <li data-status="deprecated" data-path="dpp-tutorial" data-level="2" data-authors-from="eclipse-tractusx/digital-product-pass:dpp-tutorial" data-order="6" data-filters="community-days developers" data-keywords="digital product pass passport battery pcf qr code irs">
         <article class="card card--deprecated">
           <div class="card__media">
             <span class="badge" title="Kept for reference: it may not match the current Tractus-X release."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"/></svg>Deprecated</span>
             <img src="media/digital-product-passport.png" alt="A battery passport in the Digital Product Pass application" loading="lazy"></div>
           <div class="card__body">
-            <span class="tag tag--site">Guide</span>
+            <div class="card__kicker"><span class="tag tag--site">Guide</span><span class="level" role="img" aria-label="Difficulty: Intermediate, 2 of 3" title="Difficulty: Intermediate"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Intermediate</span></span></div>
             <h2><a href="dpp-tutorial/">Digital Product Passport</a></h2>
             <p>The Digital Product Passport workstream from the Tractus-X Community Days: create a passport for your part and read it over the dataspace.</p>
             <ul class="chips" aria-label="For"><li>Community Days 2024</li><li>Developers</li></ul>
@@ -823,7 +856,7 @@
   </footer>
   <script>
     // Search and filters for the cards. The filter and the search words go
-    // into the address (?for=community-days&q=ai), so a filtered view can be
+    // into the address (?for=community-days&q=ai&level=beginner), so a filtered view can be
     // shared, for example as the Community Days link.
     (function () {
       var controls = document.getElementById("controls");
@@ -845,8 +878,12 @@
         newest: function (a, b) { return date(b, "added").localeCompare(date(a, "added")); },
         updated: function (a, b) { return date(b, "updated").localeCompare(date(a, "updated")); },
         oldest: function (a, b) { return date(a, "added").localeCompare(date(b, "added")); },
-        name: function (a, b) { return title(a).localeCompare(title(b)); }
+        name: function (a, b) { return title(a).localeCompare(title(b)); },
+        easiest: function (a, b) { return a.dataset.level - b.dataset.level; }
       };
+      var levelSelect = document.getElementById("level");
+      var levels = { beginner: "1", intermediate: "2", advanced: "3" };
+      levelSelect.value = levels[params.get("level")] ? params.get("level") : "";
       sortSelect.value = sorts[params.get("sort")] ? params.get("sort") : "";
       var hideDeprecated = params.get("deprecated") === "hide";
       controls.hidden = false;
@@ -878,7 +915,8 @@
             return tokens.some(function (t) { return t.indexOf(w) === 0; });
           });
           var shownByStatus = !hideDeprecated || card.dataset.status !== "deprecated";
-          card.hidden = !(inFilter && matches && shownByStatus);
+          var atLevel = !levelSelect.value || card.dataset.level === levels[levelSelect.value];
+          card.hidden = !(inFilter && matches && shownByStatus && atLevel);
           if (!card.hidden) {
             shown += 1;
           }
@@ -900,6 +938,9 @@
         if (hideDeprecated) {
           next.set("deprecated", "hide");
         }
+        if (levelSelect.value) {
+          next.set("level", levelSelect.value);
+        }
         if (sortSelect.value) {
           next.set("sort", sortSelect.value);
         }
@@ -916,6 +957,7 @@
       });
       input.addEventListener("input", update);
       sortSelect.addEventListener("change", update);
+      levelSelect.addEventListener("change", update);
       hideToggle.addEventListener("click", function () {
         hideDeprecated = !hideDeprecated;
         update();
@@ -925,6 +967,7 @@
         input.value = "";
         hideDeprecated = false;
         sortSelect.value = "";
+        levelSelect.value = "";
         update();
         input.focus();
       });

@@ -10,14 +10,14 @@ Tractus-X release.
 
 ## Tutorials
 
-| Tutorial | What you do | Open |
-| --- | --- | --- |
-| **E2E tests for Tractus-X products** | Create automated tests for Eclipse Tractus-X products using AI, with the Eclipse Tractus-X TestLab testing framework: build an end-to-end test in about an hour and run it on every pull request | [Site](https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/) · [Source](e2e-testing/README.md) |
-| **EDC Policy Playground** | Put together Tractus-X connector policies in the browser and see the policy JSON they become | [Site](https://eclipse-tractusx.github.io/tutorial-resources/edc-policy-playground/) · [Try the app](https://eclipse-tractusx.github.io/tutorial-resources/policy-playground/) · [Source](edc-policy-playground/README.md) |
-| **Minimum Tractus-X Dataspace (MXD)** · ⚠️ deprecated | Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster. Follow-up guides cover access policies, file transfers and EDR transfers | [Site](https://eclipse-tractusx.github.io/tutorial-resources/mxd/) · [Source](mxd/README.md) |
-| **Digital Product Passport** · ⚠️ deprecated | Create a passport for your part and read it over the dataspace (Tractus-X Community Days workstream) | [Site](https://eclipse-tractusx.github.io/tutorial-resources/dpp-tutorial/) · [Source](dpp-tutorial/README.md) |
-| **IRS frontend challenge with GenAI** | Build a frontend for the Item Relationship Service with an AI assistant, in three phases | [Site](https://eclipse-tractusx.github.io/tutorial-resources/icc-irs-challenges/) · [Source](icc-irs-challenges/README.md) |
-| **Migration guides** | Move the PostgreSQL and Keycloak of a deployment from the Bitnami Helm charts to the CloudPirates charts | [Site](https://eclipse-tractusx.github.io/tutorial-resources/migration-guides/) · [PostgreSQL](migration-guides/GENERIC_POSTGRESQL_MIGRATION_GUIDE.md) · [Keycloak](migration-guides/GENERIC_BITNAMI_TO_CLOUDPIRATES_KEYCLOAK_MIGRATION_GUIDE.md) |
+| Tutorial | Level | What you do | Open |
+| --- | --- | --- | --- |
+| **E2E tests for Tractus-X products** | ★☆☆ Beginner | Create automated tests for Eclipse Tractus-X products using AI, with the Eclipse Tractus-X TestLab testing framework: build an end-to-end test in about an hour and run it on every pull request | [Site](https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/) · [Source](e2e-testing/README.md) |
+| **EDC Policy Playground** | ★☆☆ Beginner | Put together Tractus-X connector policies in the browser and see the policy JSON they become | [Site](https://eclipse-tractusx.github.io/tutorial-resources/edc-policy-playground/) · [Try the app](https://eclipse-tractusx.github.io/tutorial-resources/policy-playground/) · [Source](edc-policy-playground/README.md) |
+| **Minimum Tractus-X Dataspace (MXD)** · ⚠️ deprecated | ★★☆ Intermediate | Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster. Follow-up guides cover access policies, file transfers and EDR transfers | [Site](https://eclipse-tractusx.github.io/tutorial-resources/mxd/) · [Source](mxd/README.md) |
+| **Digital Product Passport** · ⚠️ deprecated | ★★☆ Intermediate | Create a passport for your part and read it over the dataspace (Tractus-X Community Days workstream) | [Site](https://eclipse-tractusx.github.io/tutorial-resources/dpp-tutorial/) · [Source](dpp-tutorial/README.md) |
+| **IRS frontend challenge with GenAI** | ★★☆ Intermediate | Build a frontend for the Item Relationship Service with an AI assistant, in three phases | [Site](https://eclipse-tractusx.github.io/tutorial-resources/icc-irs-challenges/) · [Source](icc-irs-challenges/README.md) |
+| **Migration guides** | ★★★ Advanced | Move the PostgreSQL and Keycloak of a deployment from the Bitnami Helm charts to the CloudPirates charts | [Site](https://eclipse-tractusx.github.io/tutorial-resources/migration-guides/) · [PostgreSQL](migration-guides/GENERIC_POSTGRESQL_MIGRATION_GUIDE.md) · [Keycloak](migration-guides/GENERIC_BITNAMI_TO_CLOUDPIRATES_KEYCLOAK_MIGRATION_GUIDE.md) |
 
 ## What is in this repository
 
@@ -74,11 +74,23 @@ python .github/scripts/build_markdown_sites.py --out _site
    picture in [`pages/media/`](pages/media/), with a `.license` file next to it. Set
    `data-path` to its folder: when the site is built, the card's Added and Updated dates and
    its authors (the GitHub accounts with commits in that folder) are filled in from the
-   history. Give it version 1.0 and add it to [Versions](#versions).
+   history. Give it version 1.0 and add it to [Versions](#versions). Set its
+   [level](#levels) in `data-level` and on the card.
 4. If it is only Markdown, add its folder to
    [`pages/markdown-sites.yml`](pages/markdown-sites.yml) and point the card to `<folder>/`. If it
    has a site or a web app of its own, build it into its own folder of `_site` in
    [`pages.yml`](.github/workflows/pages.yml) and point the card there.
+
+## Levels
+
+Every card shows how hard the tutorial is, in one to three stars, and the home page can show
+one level only (`?level=beginner`).
+
+| Level | Stars | For whom |
+| --- | --- | --- |
+| Beginner | ★☆☆ | New to Tractus-X: a browser or the steps on the page are enough, nothing to install or deploy |
+| Intermediate | ★★☆ | Knows a dataspace and its connectors; runs tools or deploys on a laptop |
+| Advanced | ★★★ | Operates a Tractus-X deployment: Kubernetes, Helm, databases, upgrades |
 
 ## Versions
 
