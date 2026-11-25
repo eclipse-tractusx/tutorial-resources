@@ -35,7 +35,7 @@ on:
   pull_request:
     paths:
       - "pages/**"
-      - ".github/scripts/stamp_tutorials.py"
+      - ".github/scripts/**"
       - ".github/workflows/pages.yml"
   push:
     branches: [main]
@@ -43,6 +43,11 @@ on:
       - "pages/**"
       - "e2e-testing/**"
       - "edc-policy-playground/**"
+      - "mxd/**"
+      - "dpp-tutorial/**"
+      - "icc-irs-challenges/**"
+      - "migration-guides/**"
+      - ".github/scripts/**"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -94,6 +99,11 @@ jobs:
           pip install -r requirements.txt
           mkdocs build --strict --site-dir "${GITHUB_WORKSPACE}/_site/e2e-testing"
 
+      - name: Markdown tutorials, one site each (pages/markdown-sites.yml)
+        run: python .github/scripts/build_markdown_sites.py --out _site
+        env:
+          NO_MKDOCS_2_WARNING: "1"
+
       - name: EDC Policy Playground, at /policy-playground/
         working-directory: edc-policy-playground
         run: |
@@ -103,7 +113,8 @@ jobs:
 
       - name: Every page the home page links to is there
         run: |
-          for path in e2e-testing/index.html policy-playground/index.html; do
+          for path in e2e-testing/index.html policy-playground/index.html edc-policy-playground/index.html mxd/index.html \
+                      dpp-tutorial/index.html icc-irs-challenges/index.html migration-guides/index.html; do
             test -f "_site/${path}" || { echo "::error::_site/${path} is missing"; exit 1; }
           done
 

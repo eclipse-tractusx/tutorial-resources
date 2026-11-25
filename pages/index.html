@@ -20,8 +20,9 @@
 <!--
   The home page of https://eclipse-tractusx.github.io/tutorial-resources/.
   .github/workflows/pages.yml publishes it at the root, next to the tutorial
-  sites it links to (e2e-testing/, policy-playground/). To add a tutorial,
-  add a card below.
+  sites it links to: e2e-testing/ and policy-playground/, and one site per
+  Markdown tutorial listed in markdown-sites.yml. To add a tutorial, add a
+  card below.
 -->
 <html lang="en">
 <head>
@@ -197,7 +198,7 @@
       flex-direction: column;
       height: 100%;
       border: 1px solid var(--line);
-      border-radius: 0.9rem;
+      border-radius: 0.5rem;
       background: var(--card);
       box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
       transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
@@ -218,7 +219,7 @@
       padding: 1.2rem 1.4rem;
     }
 
-    .card--featured .card__body { background: linear-gradient(180deg, var(--soft), var(--card) 70%); border-radius: 0 0 0.9rem 0.9rem; }
+    .card--featured .card__body { background: linear-gradient(180deg, var(--soft), var(--card) 70%); border-radius: 0 0 0.5rem 0.5rem; }
 
     /* The picture on top of each card: a screenshot, a logo or an icon. */
     .card__media {
@@ -227,7 +228,7 @@
       aspect-ratio: 16 / 9;
       overflow: hidden;
       border-bottom: 1px solid var(--line);
-      border-radius: 0.9rem 0.9rem 0 0;
+      border-radius: 0.5rem 0.5rem 0 0;
       background: radial-gradient(circle at 30% 20%, var(--soft), var(--card) 75%);
     }
 
@@ -259,7 +260,7 @@
       align-self: flex-start;
       padding: 0.15rem 0.6rem;
       border: 1px solid var(--line);
-      border-radius: 999px;
+      border-radius: 0.2rem;
       color: var(--muted);
       font-size: 0.7rem;
       font-weight: 700;
@@ -284,19 +285,38 @@
 
     .card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
 
+    /* The card's button: the full width of the card, at the bottom. The whole
+       card is the link, so it lights up when the card is hovered or focused. */
     .go {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 0.4rem;
+      justify-content: space-between;
+      gap: 0.6rem;
       margin-top: auto;
-      padding-top: 0.6rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--orange);
+      border-radius: 0.25rem;
+      background: transparent;
       color: var(--orange-dark);
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: 700;
+      transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
     }
 
-    .go svg { width: 1.1rem; height: 1.1rem; fill: currentcolor; transition: transform 0.2s; }
-    .card:hover .go svg { transform: translateX(3px); }
+    .go svg { width: 1.15rem; height: 1.15rem; fill: currentcolor; transition: transform 0.2s; }
+
+    .card:hover .go,
+    .card:focus-within .go {
+      background: var(--orange);
+      color: #000000;
+      box-shadow: 0 6px 16px rgb(250 160 35 / 30%);
+    }
+
+    .card:hover .go svg,
+    .card:focus-within .go svg { transform: translateX(4px); }
+
+    .card--featured .go:not(.go--secondary) { background: var(--orange); color: #000000; }
+    .card--featured:hover .go:not(.go--secondary) { background: var(--orange-dark); color: #000000; }
 
     /* Search and filters. Shown only with JavaScript; without it every card shows. */
     .controls {
@@ -325,7 +345,7 @@
       width: 100%;
       padding: 0.8rem 2.8rem 0.8rem 2.8rem;
       border: 1px solid var(--line-strong);
-      border-radius: 0.7rem;
+      border-radius: 0.25rem;
       background: var(--card);
       color: var(--fg);
       font: inherit;
@@ -360,7 +380,7 @@
     .filter {
       padding: 0.45rem 0.95rem;
       border: 1px solid var(--line-strong);
-      border-radius: 999px;
+      border-radius: 0.25rem;
       background: transparent;
       color: var(--fg);
       font: inherit;
@@ -392,7 +412,7 @@
       margin-top: 1.5rem;
       padding: 2rem;
       border: 1px dashed var(--line-strong);
-      border-radius: 0.9rem;
+      border-radius: 0.5rem;
       color: var(--muted);
     }
 
@@ -411,7 +431,7 @@
 
     .chips li {
       padding: 0.1rem 0.55rem;
-      border-radius: 0.35rem;
+      border-radius: 0.2rem;
       background: var(--chip);
       color: var(--muted);
       font-size: 0.75rem;
@@ -449,7 +469,39 @@
     }
 
     .facts dd { margin: 0; font-weight: 600; }
-    .facts + .go { margin-top: 0; }
+    .facts + .go,
+    .facts + .actions { margin-top: 1rem; }
+
+    /* Two buttons: the card's own, and a second one with a link of its own
+       (the story, the app), above the card's link. */
+    .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: auto; }
+    .actions .go { flex: 1 1 auto; margin-top: 0; padding-inline: 0.85rem; font-size: 0.88rem; white-space: nowrap; }
+
+    .go--secondary {
+      position: relative;
+      z-index: 2;
+      justify-content: center;
+      gap: 0.4rem;
+      border-color: var(--line-strong);
+      color: var(--fg);
+      text-decoration: none;
+    }
+
+    .card:hover .go--secondary,
+    .card:focus-within .go--secondary { background: transparent; color: var(--fg); box-shadow: none; }
+
+    .card .go--secondary:hover,
+    .card .go--secondary:focus-visible {
+      border-color: var(--orange);
+      background: var(--soft);
+      color: var(--fg);
+      outline: none;
+    }
+
+    /* Over the second button, only it lights up. */
+    .card:has(.go--secondary:hover) .go:not(.go--secondary) { background: transparent; color: var(--orange-dark); box-shadow: none; }
+    .card--featured:has(.go--secondary:hover) .go:not(.go--secondary) { background: var(--orange); color: #000000; }
+    .card:has(.go--secondary:hover) .go svg { transform: none; }
 
     /* Authors: GitHub avatars, overlapping a little, most commits first. */
     .facts__authors { grid-column: 1 / -1; }
@@ -490,7 +542,7 @@
     .sort select {
       padding: 0.3rem 1.8rem 0.3rem 0.6rem;
       border: 1px solid var(--line-strong);
-      border-radius: 0.5rem;
+      border-radius: 0.25rem;
       background: var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23999' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 0.4rem center / 1.1rem;
       color: var(--fg);
       font: inherit;
@@ -509,7 +561,7 @@
       gap: 0.4rem;
       padding: 0.3rem 0.7rem;
       border: 1px solid var(--line-strong);
-      border-radius: 0.5rem;
+      border-radius: 0.25rem;
       background: transparent;
       color: var(--muted);
       font: inherit;
@@ -542,7 +594,7 @@
       align-items: center;
       gap: 0.35rem;
       padding: 0.25rem 0.6rem 0.25rem 0.5rem;
-      border-radius: 999px;
+      border-radius: 0.25rem;
       background: var(--warn-bg);
       color: var(--warn-fg);
       font-size: 0.75rem;
@@ -598,7 +650,7 @@
     <div class="intro">
       <span class="eyebrow">Learn Tractus-X by doing</span>
       <h1>Eclipse Tractus-X Tutorials</h1>
-      <p>Hands-on tutorials from the Eclipse Tractus-X community. Pick one: each opens on its own page, or in the repository when it is a set of Markdown guides.</p>
+      <p>Hands-on tutorials from the Eclipse Tractus-X community. Pick one: each opens on its own site, and a web app has a button to try it right away.</p>
     </div>
 
     <div class="controls" id="controls" hidden>
@@ -653,7 +705,10 @@
               <div><dt>Version</dt><dd title="1.0 (Nov 2026): first published">v1.0</dd></div>
               <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/matbmoser" title="matbmoser"><img src="https://avatars.githubusercontent.com/u/71728767?v=4&amp;s=56" alt="matbmoser" width="28" height="28" loading="lazy"></a></li></ul></dd></div>
             </dl>
-            <span class="go">Open the tutorial <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+            <div class="actions">
+              <span class="go">Open the tutorial <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+              <a class="go go--secondary" href="e2e-testing/story/why/">The story</a>
+            </div>
           </div>
         </article>
       </li>
@@ -662,7 +717,7 @@
           <div class="card__media"><img src="media/policy-playground.png" alt="The Policy Playground: a policy form next to its JSON" loading="lazy"></div>
           <div class="card__body">
             <span class="tag tag--site">Web app</span>
-            <h2><a href="policy-playground/">EDC Policy Playground</a></h2>
+            <h2><a href="edc-policy-playground/">EDC Policy Playground</a></h2>
             <p>Put together Tractus-X connector policies in the browser and see the policy JSON they become.</p>
             <ul class="chips" aria-label="For"><li>Developers</li><li>Getting started</li></ul>
             <dl class="facts">
@@ -671,7 +726,10 @@
               <div><dt>Version</dt><dd title="1.0 (Aug 2023): first published · 1.1 (May 2024): policies for Tractus-X EDC 0.7">v1.1</dd></div>
               <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/wolf4ood" title="wolf4ood"><img src="https://avatars.githubusercontent.com/u/98812?v=4&amp;s=56" alt="wolf4ood" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/paullatzelsperger" title="paullatzelsperger"><img src="https://avatars.githubusercontent.com/u/43503240?v=4&amp;s=56" alt="paullatzelsperger" width="28" height="28" loading="lazy"></a></li></ul></dd></div>
             </dl>
-            <span class="go">Open the playground <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+            <div class="actions">
+              <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+              <a class="go go--secondary" href="policy-playground/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.14v14l11-7z"/></svg>Try the app</a>
+            </div>
           </div>
         </article>
       </li>
@@ -679,8 +737,8 @@
         <article class="card">
           <div class="card__media card__media--icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"/></svg></div>
           <div class="card__body">
-            <span class="tag">On GitHub</span>
-            <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/icc-irs-challenges">IRS frontend challenge with GenAI</a></h2>
+            <span class="tag tag--site">Guide</span>
+            <h2><a href="icc-irs-challenges/">IRS frontend challenge with GenAI</a></h2>
             <p>Build a frontend for the Item Relationship Service with an AI assistant, in three phases: the API, the part chain, the semantic data.</p>
             <ul class="chips" aria-label="For"><li>Community Days</li><li>Developers</li><li>With AI</li></ul>
             <dl class="facts">
@@ -697,8 +755,8 @@
         <article class="card">
           <div class="card__media card__media--icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.99 11 3 15l3.99 4v-3H14v-2H6.99zM21 9l-3.99-4v3H10v2h7.01v3z"/></svg></div>
           <div class="card__body">
-            <span class="tag">On GitHub</span>
-            <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/migration-guides">Migration guides</a></h2>
+            <span class="tag tag--site">Guide</span>
+            <h2><a href="migration-guides/">Migration guides</a></h2>
             <p>Move the PostgreSQL and Keycloak of a deployment from the Bitnami Helm charts to the CloudPirates charts.</p>
             <ul class="chips" aria-label="For"><li>Operators</li></ul>
             <dl class="facts">
@@ -717,8 +775,8 @@
             <span class="badge" title="Kept for reference: it may not match the current Tractus-X release."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"/></svg>Deprecated</span>
             <img src="media/mxd.png" alt="The MXD connectors and services running, seen in k9s" loading="lazy"></div>
           <div class="card__body">
-            <span class="tag">On GitHub</span>
-            <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/mxd">Minimum Tractus-X Dataspace (MXD)</a></h2>
+            <span class="tag tag--site">Guide</span>
+            <h2><a href="mxd/">Minimum Tractus-X Dataspace (MXD)</a></h2>
             <p>Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster.</p>
             <ul class="chips" aria-label="For"><li>Developers</li><li>Operators</li><li>Getting started</li></ul>
             <dl class="facts">
@@ -737,8 +795,8 @@
             <span class="badge" title="Kept for reference: it may not match the current Tractus-X release."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"/></svg>Deprecated</span>
             <img src="media/digital-product-passport.png" alt="A battery passport in the Digital Product Pass application" loading="lazy"></div>
           <div class="card__body">
-            <span class="tag">On GitHub</span>
-            <h2><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/dpp-tutorial">Digital Product Passport</a></h2>
+            <span class="tag tag--site">Guide</span>
+            <h2><a href="dpp-tutorial/">Digital Product Passport</a></h2>
             <p>The Digital Product Passport workstream from the Tractus-X Community Days: create a passport for your part and read it over the dataspace.</p>
             <ul class="chips" aria-label="For"><li>Community Days 2024</li><li>Developers</li></ul>
             <dl class="facts">
