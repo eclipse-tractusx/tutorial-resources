@@ -1,4 +1,4 @@
-# E2E tests for Tractus-X products
+# E2E Tests in Eclipse Tractus-X
 
 **One green check for every product.** In about an hour a team builds an end-to-end test for
 one Eclipse Tractus-X product, with an AI assistant, commits it to the product's

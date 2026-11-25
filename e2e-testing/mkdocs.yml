@@ -25,36 +25,16 @@
 #   mkdocs serve          # preview on http://localhost:8000
 #   mkdocs build --strict # what the workflow runs
 
-site_name: E2E tests for Tractus-X products
+INHERIT: ../pages/theme/mkdocs-base.yml
+
+site_name: E2E Tests in Eclipse Tractus-X
 site_description: Build an end-to-end test for an Eclipse Tractus-X product in about an hour, with an AI assistant, and take it to a pull request.
 site_url: https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/
-repo_url: https://github.com/eclipse-tractusx/tutorial-resources
-repo_name: eclipse-tractusx/tutorial-resources
 edit_uri: edit/main/e2e-testing/docs/
-copyright: Copyright &copy; 2026 Contributors to the Eclipse Foundation · CC-BY-4.0
 
+# The header, footer and colours come from pages/theme/mkdocs-base.yml, the
+# same for every tutorial on the website. This site adds tabs.
 theme:
-  name: material
-  logo: assets/logo_tractus-x.svg
-  favicon: assets/favicon.ico
-  font:
-    text: Manrope
-    code: JetBrains Mono
-  palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: custom
-      accent: custom
-      toggle:
-        icon: material/weather-night
-        name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: custom
-      accent: custom
-      toggle:
-        icon: material/weather-sunny
-        name: Switch to light mode
   features:
     - navigation.tabs
     - navigation.sections
@@ -64,18 +44,15 @@ theme:
     - search.highlight
     - toc.follow
 
-extra_css:
-  - assets/stylesheets/tractusx.css
-
 # Zoom, pan and full screen for diagrams (Mermaid and large images).
 extra_javascript:
   - assets/javascripts/diagrams.js
 
-# The "← previous · Home · next →" line at the end of each page becomes buttons,
-# and the header gets an "About this tutorial" button.
+# The "← previous · Home · next →" line at the end of each page becomes
+# buttons; the About button in the header comes from the shared theme.
 hooks:
   - hooks/page_nav.py
-  - hooks/about.py
+  - ../pages/theme/hooks/about.py
 
 # The tutorial's own version, separate from the software it uses: 1.0 when
 # published, a minor step when the steps change, a major step when it is
@@ -87,28 +64,6 @@ extra:
       - version: "1.0"
         date: Nov 2026
         note: First published, for the Tractus-X Community Days 2026.
-
-markdown_extensions:
-  - attr_list
-  - md_in_html
-  - tables
-  - github-callouts
-  - pymdownx.details
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - pymdownx.inlinehilite
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.tasklist:
-      custom_checkbox: true
-  - toc:
-      permalink: true
-
-plugins:
-  - search
 
 validation:
   nav:

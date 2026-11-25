@@ -23,10 +23,12 @@
 #
 #   /                     the home page that lists the tutorials (pages/)
 #   /e2e-testing/         the E2E testing tutorial (MkDocs, e2e-testing/)
+#   /<folder>/            each Markdown tutorial in pages/markdown-sites.yml
 #   /policy-playground/   the EDC Policy Playground (Angular, edc-policy-playground/)
 #
-# To publish another tutorial site, build it into its own folder of _site and
-# add a card for it to pages/index.html. Pull requests that change the home
+# The MkDocs sites share one theme (pages/theme): the same header, footer and
+# About panel everywhere. To publish another tutorial site, build it into its
+# own folder of _site and add a card for it to pages/index.html. Pull requests that change the home
 # page or this workflow build the site without publishing it.
 
 name: GitHub Pages
@@ -81,27 +83,34 @@ jobs:
         with:
           node-version: 18
 
-      - name: Home page
+      - name: Install MkDocs
+        run: pip install -r e2e-testing/requirements.txt
+
+      # Every site below is built with the shared theme in pages/theme: one
+      # header and footer for the whole website. The home page first, since
+      # building it clears _site.
+      - name: Home page, at /
+        working-directory: pages
         env:
           # Read-only: the authors of each tutorial come from the GitHub API.
           GITHUB_TOKEN: ${{ github.token }}
+          NO_MKDOCS_2_WARNING: "1"
         run: |
-          mkdir -p _site
-          cp -R pages/. _site/
-          python .github/scripts/stamp_tutorials.py _site/index.html
+          mkdocs build --strict --site-dir "${GITHUB_WORKSPACE}/_site"
+          python "${GITHUB_WORKSPACE}/.github/scripts/stamp_tutorials.py" "${GITHUB_WORKSPACE}/_site/index.html"
 
       - name: E2E testing tutorial, at /e2e-testing/
         working-directory: e2e-testing
         env:
           # Read-only: authors for the tutorial's About panel, from the GitHub API.
           GITHUB_TOKEN: ${{ github.token }}
-        run: |
-          pip install -r requirements.txt
-          mkdocs build --strict --site-dir "${GITHUB_WORKSPACE}/_site/e2e-testing"
+          NO_MKDOCS_2_WARNING: "1"
+        run: mkdocs build --strict --site-dir "${GITHUB_WORKSPACE}/_site/e2e-testing"
 
       - name: Markdown tutorials, one site each (pages/markdown-sites.yml)
         run: python .github/scripts/build_markdown_sites.py --out _site
         env:
+          GITHUB_TOKEN: ${{ github.token }}
           NO_MKDOCS_2_WARNING: "1"
 
       - name: EDC Policy Playground, at /policy-playground/

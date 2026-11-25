@@ -27,11 +27,13 @@ on:
   pull_request:
     paths:
       - "e2e-testing/**"
+      - "pages/theme/**"
       - ".github/workflows/e2e-testing-site.yml"
   push:
     branches: [main]
     paths:
       - "e2e-testing/**"
+      - "pages/theme/**"
       - ".github/workflows/e2e-testing-site.yml"
   workflow_dispatch:
 

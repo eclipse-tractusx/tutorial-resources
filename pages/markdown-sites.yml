@@ -34,30 +34,53 @@
 #   app          the address of a web app built from this tutorial, relative
 #                to the website root (policy-playground/): the home page
 #                gets a "Try the app" button
-#   app_image    a screenshot of that app (pages/media/policy-playground.png):
+#   app_image    a screenshot of that app (pages/home/media/policy-playground.png):
 #                the button then floats over it, out of focus
+#   version      the tutorial's own version, as on its card (see Versions in
+#   history      the README); the About panel in the header shows both
 
 sites:
   - folder: edc-policy-playground
     title: EDC Policy Playground
     description: Put together Tractus-X connector policies in the browser and see the policy JSON they become.
     app: policy-playground/
-    app_image: pages/media/policy-playground.png
+    app_image: pages/home/media/policy-playground.png
+    version: "1.1"
+    history:
+      - {version: "1.0", date: Aug 2023, note: First published.}
+      - {version: "1.1", date: May 2024, note: Policies for Tractus-X EDC 0.7.}
 
   - folder: mxd
     title: Minimum Tractus-X Dataspace (MXD)
     description: Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster.
     deprecated: true
+    version: "2.2"
+    history:
+      - {version: "1.0", date: Aug 2023, note: First published.}
+      - {version: "2.0", date: Nov 2024, note: IdentityHub and STS replace MIW and Keycloak.}
+      - {version: "2.1", date: Jan 2025, note: IdentityHub upgrade.}
+      - {version: "2.2", date: Mar 2025, note: "DCP issuance, Tractus-X EDC 0.9."}
 
   - folder: dpp-tutorial
     title: Digital Product Passport
     description: The Digital Product Passport workstream from the Tractus-X Community Days.
     deprecated: true
+    version: "1.0"
+    history:
+      - {version: "1.0", date: Dec 2024, note: The Community Days workstream.}
 
   - folder: icc-irs-challenges
     title: IRS frontend challenge with GenAI
     description: Build a frontend for the Item Relationship Service with an AI assistant, in three phases.
+    version: "1.0"
+    history:
+      - {version: "1.0", date: Dec 2024, note: "The Community Days challenge, with fixes since."}
 
   - folder: migration-guides
     title: Migration guides
     description: Move the PostgreSQL and Keycloak of a deployment from the Bitnami Helm charts to the CloudPirates charts.
+    version: "1.2"
+    history:
+      - {version: "1.0", date: Jan 2026, note: PostgreSQL guide.}
+      - {version: "1.1", date: Feb 2026, note: Keycloak guide.}
+      - {version: "1.2", date: Apr 2026, note: PostgreSQL guide reworked.}

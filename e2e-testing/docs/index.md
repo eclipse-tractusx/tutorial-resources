@@ -38,7 +38,8 @@ Today you write the first one for your product.
 ## Your route
 
 ```mermaid
-flowchart LR
+%%{init: {"flowchart": {"rankSpacing": 22, "nodeSpacing": 20}}}%%
+flowchart TD
     A["1 Start"] --> B["2 Your product"] --> C["3 Choose your AI"] --> D["4 Build"]
     D --> E["5 Run"] --> F["6 Repository"] --> G["7 Pull request"] --> H["8 Next"]
 ```

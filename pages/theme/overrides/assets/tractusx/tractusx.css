@@ -38,9 +38,13 @@
   --tx-soft: #2a1f0d;
 }
 
-/* One orange line, under the header; the tabs below it have none. */
+/* One orange line, under the header; a thin light one under the tabs. */
 .md-header {
   border-bottom: 1px solid var(--tx-orange);
+}
+
+.md-tabs {
+  border-bottom: 1px solid rgb(255 255 255 / 14%);
 }
 
 .md-tabs__link--active,
@@ -570,7 +574,7 @@
 }
 
 /* "About this tutorial": the info button in the header, left of the theme
-   switch, and the panel it opens (hooks/about.py). */
+   switch, and the panel it opens (pages/theme/hooks/about.py). */
 .tx-about {
   position: fixed;
   inset: 3.2rem 0.8rem auto auto;
@@ -736,6 +740,15 @@
   .md-header__title {
     margin-left: 0.3rem;
     font-size: 0.8rem;
+  }
+
+  /* The site name may take two lines rather than end in "…". */
+  .md-header__topic .md-ellipsis {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-height: 1.15;
+    white-space: normal;
   }
 
   .md-header__option[data-md-component="palette"] {

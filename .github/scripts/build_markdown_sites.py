@@ -21,8 +21,9 @@
 """Builds the Markdown tutorials listed in pages/markdown-sites.yml as sites.
 
 For each entry: copy the folder's Markdown files and pictures into a staging
-folder, write a mkdocs.yml with the Tractus-X look (taken from the E2E testing
-site), and build it into <out>/<folder>/. markdown_site_hook.py then fixes the
+folder, write a mkdocs.yml that inherits the website's shared theme
+(pages/theme/mkdocs-base.yml: the same header, footer and colours as every
+other page), and build it into <out>/<folder>/. markdown_site_hook.py then fixes the
 links that pointed to files the site does not carry. Not strict: these pages
 were written for GitHub, so a broken anchor is reported, not fatal.
 
@@ -30,7 +31,7 @@ were written for GitHub, so a broken anchor is reported, not fatal.
 """
 
 import argparse
-import re
+import json
 import shutil
 import subprocess
 import sys
@@ -42,56 +43,30 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 PICTURES = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"}
 SKIP = {"node_modules", ".git", ".terraform", "target", "dist"}
-THEME = ROOT / "e2e-testing" / "docs" / "assets"
+THEME = ROOT / "pages" / "theme"
 SITE_URL = "https://eclipse-tractusx.github.io/tutorial-resources/"
 
+# Everything else (header, footer, colours, Markdown features) comes from the
+# shared theme. Its paths are written for a config one folder below the
+# repository root, so this one, built in a temporary folder, names its own.
 CONFIG = """\
+INHERIT: {base}
+
 site_name: {title}
 site_description: {description}
 site_url: {site_url}{folder}/
-repo_url: https://github.com/eclipse-tractusx/tutorial-resources
-repo_name: eclipse-tractusx/tutorial-resources
 edit_uri: edit/main/{folder}/
 docs_dir: docs
-copyright: Copyright &copy; Contributors to the Eclipse Foundation · CC-BY-4.0
 
 theme:
-  name: material
-  logo: site-assets/logo_tractus-x.svg
-  favicon: site-assets/favicon.ico
-  font:
-    text: Manrope
-    code: JetBrains Mono
-  palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: custom
-      accent: custom
-      toggle:
-        icon: material/weather-night
-        name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: custom
-      accent: custom
-      toggle:
-        icon: material/weather-sunny
-        name: Switch to light mode
-  features:
-    - navigation.sections
-    - navigation.indexes
-    - navigation.top
-    - content.code.copy
-    - search.highlight
-    - toc.follow
+  custom_dir: {custom_dir}
 
 extra_css:
-  - site-assets/tractusx.css
-  - site-assets/markdown-site.css
+  - assets/tractusx/tractusx.css
+  - assets/tractusx/markdown-site.css
 
 extra:
-  # The logo leads back to the list of all tutorials.
-  homepage: {site_url}
+  tutorial: {tutorial}
   tutorial_site:
     folder: {folder}
     root: {root}
@@ -100,29 +75,8 @@ extra:
     deprecated: {deprecated}
 
 hooks:
+  - {about}
   - {hook}
-
-markdown_extensions:
-  - admonition
-  - attr_list
-  - md_in_html
-  - tables
-  - github-callouts
-  - pymdownx.details
-  - pymdownx.highlight
-  - pymdownx.inlinehilite
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.tasklist:
-      custom_checkbox: true
-  - toc:
-      permalink: true
-
-plugins:
-  - search
 
 validation:
   nav:
@@ -178,16 +132,22 @@ def build(site: dict, out: Path, work: Path) -> None:
         sys.exit(f"{site['folder']}: no Markdown files")
     if not (docs / "README.md").exists() and not (docs / "index.md").exists():
         contents_page(docs, pages, site)
-    assets = docs / "site-assets"
-    assets.mkdir()
-    for name in ("logo_tractus-x.svg", "favicon.ico", "stylesheets/tractusx.css"):
-        shutil.copy2(THEME / name, assets / Path(name).name)
-    shutil.copy2(Path(__file__).with_name("markdown-site.css"), assets / "markdown-site.css")
     if site.get("app_image"):
         image = ROOT / site["app_image"]
+        assets = docs / "site-assets"
+        assets.mkdir()
         shutil.copy2(image, assets / ("app-preview" + image.suffix))
+    # The About panel: this folder's history and authors, and its version.
+    tutorial = {"folder": site["folder"]}
+    for key in ("version", "history"):
+        if site.get(key):
+            tutorial[key] = site[key]
     (base / "mkdocs.yml").write_text(
         CONFIG.format(
+            base=json_string(str(THEME / "mkdocs-base.yml")),
+            custom_dir=json_string(str(THEME / "overrides")),
+            about=json_string(str(THEME / "hooks" / "about.py")),
+            tutorial=json_string_any(tutorial),
             title=json_string(site["title"]),
             description=json_string(site.get("description", "")),
             site_url=SITE_URL,
@@ -212,7 +172,11 @@ def build(site: dict, out: Path, work: Path) -> None:
 
 def json_string(value: str) -> str:
     # YAML accepts JSON strings, which keeps quotes and colons safe.
-    import json
+    return json.dumps(value)
+
+
+def json_string_any(value) -> str:
+    # A mapping or a list as YAML flow style, which JSON is.
     return json.dumps(value)
 
 

@@ -17,13 +17,22 @@
 # SPDX-License-Identifier: Apache-2.0
 #################################################################################
 
-"""An "About this tutorial" button in the header of every page.
+"""An "About" button in the header of every page, on every site of the website.
 
-It opens a panel with the tutorial's version and its history (extra.tutorial
-in mkdocs.yml), when it was added and last updated (the git history of this
-folder), and its authors (the GitHub accounts with commits in this folder,
-from the GitHub API; set GITHUB_TOKEN to avoid its rate limit). What cannot
-be found is left out: a shallow clone has no dates, no network no avatars.
+It opens a panel with the tutorial's version and its history, when it was
+added and last updated (the git history of its folder), and its authors (the
+GitHub accounts with commits in that folder, from the GitHub API; set
+GITHUB_TOKEN to avoid its rate limit). What cannot be found is left out: a
+shallow clone has no dates, no network no avatars.
+
+A site describes itself in extra.tutorial of its mkdocs.yml:
+
+    extra:
+      tutorial:
+        folder: mxd                 # default: the folder of mkdocs.yml; "" = the whole repository
+        heading: About this tutorial
+        version: "2.2"
+        history: [{version: "2.2", date: Mar 2025, note: ...}]
 """
 
 import html
@@ -38,8 +47,11 @@ from urllib.request import Request, urlopen
 
 PALETTE = '<form class="md-header__option" data-md-component="palette">'
 SHOWN_AUTHORS = 8
+MAX_PAGES = 10
+ROOT = Path(__file__).resolve().parents[3]
 
 _panel = None
+_label = "About this tutorial"
 
 
 def _git(folder: Path, *args: str) -> str:
@@ -67,7 +79,8 @@ def _authors(repository: str, path: str) -> list[tuple[str, str]]:
     counts, avatars, page = Counter(), {}, 1
     try:
         while True:
-            url = f"https://api.github.com/repos/{repository}/commits?path={path}&per_page=100&page={page}"
+            where = f"path={path}&" if path else ""
+            url = f"https://api.github.com/repos/{repository}/commits?{where}per_page=100&page={page}"
             with urlopen(Request(url, headers=headers), timeout=20) as response:
                 commits = json.load(response)
             for commit in commits:
@@ -76,7 +89,7 @@ def _authors(repository: str, path: str) -> list[tuple[str, str]]:
                 if login and author.get("type") != "Bot" and not login.endswith("[bot]"):
                     counts[login] += 1
                     avatars[login] = author["avatar_url"]
-            if len(commits) < 100:
+            if len(commits) < 100 or page >= MAX_PAGES:
                 break
             page += 1
     except (URLError, OSError, ValueError):
@@ -84,11 +97,15 @@ def _authors(repository: str, path: str) -> list[tuple[str, str]]:
     return [(login, avatars[login]) for login, _ in counts.most_common()]
 
 
+def _heading(config) -> str:
+    return (config.extra or {}).get("tutorial", {}).get("heading", "About this tutorial")
+
+
 def _build_panel(config) -> str:
-    folder = Path(config.config_file_path).parent
     info = (config.extra or {}).get("tutorial", {})
+    path = info["folder"] if "folder" in info else Path(config.config_file_path).parent.name
+    folder = ROOT / path if path else ROOT
     repository = config.repo_url.rstrip("/").split("github.com/")[-1]
-    path = folder.name
     esc = html.escape
 
     facts = []
@@ -119,24 +136,25 @@ def _build_panel(config) -> str:
         )
         history = f'<h3>Versions</h3><ol class="tx-about__history" reversed>{items}</ol>'
 
-    source = f"{config.repo_url.rstrip('/')}/tree/main/{path}"
-    home = config.site_url.rstrip("/").rsplit("/", 1)[0] + "/"
+    source = config.repo_url.rstrip("/") + (f"/tree/main/{path}" if path else "")
+    home = (config.extra or {}).get("homepage") or config.site_url.rstrip("/").rsplit("/", 1)[0] + "/"
+    all_tutorials = "" if home.rstrip("/") == (config.site_url or "").rstrip("/") else f'<a href="{esc(home)}">All tutorials</a> · '
     return (
         '<div id="tx-about" class="tx-about" popover>'
-        '<div class="tx-about__head"><h2>About this tutorial</h2>'
+        f'<div class="tx-about__head"><h2>{esc(_heading(config))}</h2>'
         '<button type="button" class="tx-about__close" popovertarget="tx-about" popovertargetaction="hide" '
         'aria-label="Close">&times;</button></div>'
         f'<dl class="tx-about__facts">{rows}</dl>{people}{history}'
-        f'<p class="tx-about__links"><a href="{esc(source)}">Source on GitHub</a> · '
-        f'<a href="{esc(home)}">All tutorials</a> · '
+        f'<p class="tx-about__links"><a href="{esc(source)}">Source on GitHub</a> · {all_tutorials}'
         '<a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a></p>'
         "</div>"
     )
 
 
 def on_config(config):
-    global _panel
+    global _panel, _label
     _panel = _build_panel(config)
+    _label = html.escape(_heading(config))
     return config
 
 
@@ -145,7 +163,7 @@ def on_post_page(output: str, page, config) -> str:
         return output
     button = (
         '<button type="button" class="md-header__button md-icon tx-about-button" popovertarget="tx-about" '
-        f'title="About this tutorial" aria-label="About this tutorial">About</button>'
+        f'title="{_label}" aria-label="{_label}">About</button>'
     )
     # Inside the light/dark switch's form: one control group, laid out and
     # spaced by the same flex box, whatever Material does around it.
