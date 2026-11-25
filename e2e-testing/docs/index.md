@@ -18,8 +18,8 @@ No test framework to learn. No code to write. A laptop and curiosity are enough.
 
 </div>
 
-[Start the tutorial](tutorial/01-start-here.md){ .md-button .md-button--primary }
-[New here? Read the story first](story/why.md){ .md-button }
+[Get started](tutorial/01-start-here.md){ .md-button .md-button--primary }
+[New here? Read the introduction first](story/why.md){ .md-button }
 
 ## The problem we solve together
 
@@ -65,7 +65,7 @@ run needed closer to 90: if your session is longer, spend the extra time on chap
 | --- | --- |
 | A participant, ten minutes before the workshop | [Before you come](reference/prepare.md) |
 | A participant, and the clock is running | [1 · Start here](tutorial/01-start-here.md) |
-| Curious about the words on the slides | [Glossary](reference/glossary.md) and [the story](story/why.md) |
+| Curious about the words on the slides | [Glossary](reference/glossary.md) and [the introduction](story/why.md) |
 | An administrator of the session | [For administrators](admin/index.md) |
 
 ## What you work with

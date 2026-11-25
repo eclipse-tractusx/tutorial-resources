@@ -121,12 +121,12 @@ validation:
 
 nav:
   - Home: index.md
-  - The story:
+  - Introduction:
       - Why we are here: story/why.md
       - A dataspace in five minutes: story/dataspace.md
       - What a test is made of: story/test-anatomy.md
       - Where the AI helps: story/ai.md
-  - The tutorial:
+  - Getting Started:
       - 1 · Start here: tutorial/01-start-here.md
       - 2 · Your product and your connectors: tutorial/02-your-product.md
       - 3 · Choose your AI:

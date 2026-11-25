@@ -1,6 +1,6 @@
 # A dataspace in five minutes
 
-<span class="route">The story · 2 of 4 · optional reading, 5 minutes</span>
+<span class="route">Introduction · 2 of 4 · optional reading, 5 minutes</span>
 
 You can follow the tutorial without this page. Read it if words like *connector* or
 *BPN* are new, or if you want to know what your test is actually doing.

@@ -1,6 +1,6 @@
 # What a test is made of
 
-<span class="route">The story · 3 of 4 · optional reading, 5 minutes</span>
+<span class="route">Introduction · 3 of 4 · optional reading, 5 minutes</span>
 
 ## A TCK is a folder of YAML
 

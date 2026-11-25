@@ -1,4 +1,4 @@
-<span class="route">The tutorial · chapter 5 of 8 · ● ● ● ● ● ○ ○ ○</span>
+<span class="route">Getting Started · chapter 5 of 8 · ● ● ● ● ● ○ ○ ○</span>
 
 # 5 · Run it against your connectors
 

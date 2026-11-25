@@ -1,4 +1,4 @@
-<span class="route">The tutorial · chapter 3, route C · ● ● ● ● ○ ○ ○ ○</span>
+<span class="route">Getting Started · chapter 3, route C · ● ● ● ● ○ ○ ○ ○</span>
 
 # 3C · Build with your own AI tool
 

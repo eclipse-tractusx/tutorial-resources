@@ -1,4 +1,4 @@
-<span class="route">The tutorial · chapter 6 of 8 · ● ● ● ● ● ● ○ ○</span>
+<span class="route">Getting Started · chapter 6 of 8 · ● ● ● ● ● ● ○ ○</span>
 
 # 6 · Add it to your repository
 

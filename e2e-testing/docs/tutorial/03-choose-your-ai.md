@@ -1,4 +1,4 @@
-<span class="route">The tutorial · chapter 3 of 8 · ● ● ● ○ ○ ○ ○ ○</span>
+<span class="route">Getting Started · chapter 3 of 8 · ● ● ● ○ ○ ○ ○ ○</span>
 
 # 3 · Choose your AI
 

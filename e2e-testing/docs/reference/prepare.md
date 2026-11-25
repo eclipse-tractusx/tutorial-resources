@@ -76,7 +76,7 @@ You should see the commands `validate`, `compile`, `inspect` and `run`.
 
 ---
 
-[Home](../index.md) · [Start the tutorial →](../tutorial/01-start-here.md)
+[Home](../index.md) · [Get started →](../tutorial/01-start-here.md)
 
 ## NOTICE
 

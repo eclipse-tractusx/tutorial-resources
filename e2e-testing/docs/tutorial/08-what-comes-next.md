@@ -1,4 +1,4 @@
-<span class="route">The tutorial · chapter 8 of 8 · ● ● ● ● ● ● ● ●</span>
+<span class="route">Getting Started · chapter 8 of 8 · ● ● ● ● ● ● ● ●</span>
 
 # 8 · What comes next
 
