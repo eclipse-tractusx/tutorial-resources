@@ -55,7 +55,8 @@ cd edc-policy-playground && npm ci && npm start
 1. Put it in its own folder with a `README.md` that says what you build, what you need and how
    long it takes.
 2. Add a row to the [Tutorials](#tutorials) table above.
-3. Add a card to [`pages/index.html`](pages/index.html), so it shows on the website.
+3. Add a card to [`pages/index.html`](pages/index.html), so it shows on the website. Put its
+   picture in [`pages/media/`](pages/media/), with a `.license` file next to it.
 4. If it has a site of its own, build it into its own folder of `_site` in
    [`pages.yml`](.github/workflows/pages.yml) and point the card there.
 
