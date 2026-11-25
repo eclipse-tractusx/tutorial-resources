@@ -25,7 +25,7 @@
 #   mkdocs serve          # preview on http://localhost:8000
 #   mkdocs build --strict # what the workflow runs
 
-site_name: E2E tests for Tractus-X products
+site_name: E2E Tests in Eclipse Tractus-X
 site_description: Build an end-to-end test for an Eclipse Tractus-X product in about an hour, with an AI assistant, and take it to a pull request.
 site_url: https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/
 repo_url: https://github.com/eclipse-tractusx/tutorial-resources

@@ -12,7 +12,7 @@ Tractus-X release.
 
 | Tutorial | Level | What you do | Open |
 | --- | --- | --- | --- |
-| **E2E tests for Tractus-X products** | ★☆☆ Beginner | Create automated tests for Eclipse Tractus-X products using AI, with the Eclipse Tractus-X TestLab testing framework: build an end-to-end test in about an hour and run it on every pull request | [Site](https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/) · [Source](e2e-testing/README.md) |
+| **E2E Tests in Eclipse Tractus-X** | ★☆☆ Beginner | Create automated tests for Eclipse Tractus-X products using AI, with the Eclipse Tractus-X TestLab testing framework: build an end-to-end test in about an hour and run it on every pull request | [Site](https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/) · [Source](e2e-testing/README.md) |
 | **EDC Policy Playground** | ★☆☆ Beginner | Put together Tractus-X connector policies in the browser and see the policy JSON they become | [Site](https://eclipse-tractusx.github.io/tutorial-resources/edc-policy-playground/) · [Try the app](https://eclipse-tractusx.github.io/tutorial-resources/policy-playground/) · [Source](edc-policy-playground/README.md) |
 | **Minimum Tractus-X Dataspace (MXD)** · ⚠️ deprecated | ★★☆ Intermediate | Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster. Follow-up guides cover access policies, file transfers and EDR transfers | [Site](https://eclipse-tractusx.github.io/tutorial-resources/mxd/) · [Source](mxd/README.md) |
 | **Digital Product Passport** · ⚠️ deprecated | ★★☆ Intermediate | Create a passport for your part and read it over the dataspace (Tractus-X Community Days workstream) | [Site](https://eclipse-tractusx.github.io/tutorial-resources/dpp-tutorial/) · [Source](dpp-tutorial/README.md) |
@@ -102,7 +102,7 @@ the tutorial is rebuilt. Change it on the tutorial's card in
 
 | Tutorial | Version | History |
 | --- | --- | --- |
-| E2E tests for Tractus-X products | 1.0 | 1.0 (Nov 2026): first published |
+| E2E Tests in Eclipse Tractus-X | 1.0 | 1.0 (Nov 2026): first published |
 | EDC Policy Playground | 1.1 | 1.0 (Aug 2023): first published · 1.1 (May 2024): policies for Tractus-X EDC 0.7 |
 | IRS frontend challenge with GenAI | 1.0 | 1.0 (Dec 2024): the Community Days challenge, with fixes since |
 | Migration guides | 1.2 | 1.0 (Jan 2026): PostgreSQL guide · 1.1 (Feb 2026): Keycloak guide · 1.2 (Apr 2026): PostgreSQL guide reworked |
