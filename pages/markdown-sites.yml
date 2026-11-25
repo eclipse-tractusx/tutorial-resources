@@ -1,0 +1,63 @@
+#################################################################################
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License, Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+#################################################################################
+
+
+# Tutorials written as plain Markdown, published as small sites on
+# https://eclipse-tractusx.github.io/tutorial-resources/<folder>/.
+#
+# .github/scripts/build_markdown_sites.py builds one site per entry with the
+# Tractus-X look: the folder's README.md is its home page (a contents page is
+# made when there is none), the other Markdown files and their pictures become
+# its pages, and links to anything else (Postman collections, Terraform,
+# test data) open the file on GitHub. Nothing has to change in the tutorial.
+#
+#   folder       the tutorial's folder in this repository, and its address
+#   title        the site's name
+#   description  one line, for search engines and the generated contents page
+#   deprecated   true: every page starts with a "Deprecated" note
+#   app          the address of a web app built from this tutorial, relative
+#                to the website root (policy-playground/): the home page
+#                gets a "Try the app" button
+#   app_image    a screenshot of that app (pages/media/policy-playground.png):
+#                the button then floats over it, out of focus
+
+sites:
+  - folder: edc-policy-playground
+    title: EDC Policy Playground
+    description: Put together Tractus-X connector policies in the browser and see the policy JSON they become.
+    app: policy-playground/
+    app_image: pages/media/policy-playground.png
+
+  - folder: mxd
+    title: Minimum Tractus-X Dataspace (MXD)
+    description: Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster.
+    deprecated: true
+
+  - folder: dpp-tutorial
+    title: Digital Product Passport
+    description: The Digital Product Passport workstream from the Tractus-X Community Days.
+    deprecated: true
+
+  - folder: icc-irs-challenges
+    title: IRS frontend challenge with GenAI
+    description: Build a frontend for the Item Relationship Service with an AI assistant, in three phases.
+
+  - folder: migration-guides
+    title: Migration guides
+    description: Move the PostgreSQL and Keycloak of a deployment from the Bitnami Helm charts to the CloudPirates charts.

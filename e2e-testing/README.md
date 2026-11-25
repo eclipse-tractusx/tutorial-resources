@@ -66,7 +66,10 @@ Then open <http://localhost:8000>.
 | A page under `docs/` | `mkdocs build --strict` |
 
 The workflow [`e2e-testing-site.yml`](../.github/workflows/e2e-testing-site.yml) runs the
-same checks on every pull request.
+same checks on every pull request. Once a change is on `main`,
+[`pages.yml`](../.github/workflows/pages.yml) publishes the site at
+<https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/>, next to the home page that
+lists all the tutorials.
 
 ## NOTICE
 
