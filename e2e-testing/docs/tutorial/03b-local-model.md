@@ -17,9 +17,9 @@ a small model answers in seconds.
 | 16 GB of RAM | `qwen2.5:3b` or `qwen2.5:7b` | 2 or 5 GB |
 | 32 GB or more, Apple Silicon or a large GPU | A larger model, for example `qwen2.5:14b` or `qwen3:30b` | 9 to 18 GB |
 
-Bigger is not automatically better: in our trial `qwen2.5:3b` made the tutorial's changes
-more reliably than `qwen2.5:7b`. The larger ones we have not tried. On a laptop without a
-GPU, expect a minute per step: route A or C is the better choice there.
+In our trial, `qwen2.5:3b` and `qwen2.5:7b` both made every change the tutorial needs.
+Take the 3B unless your laptop has room to spare. The larger ones we have not tried. On a
+laptop without a GPU, expect a minute per step: route A or C is the better choice there.
 
 ## Steps
 
@@ -62,9 +62,9 @@ You will use these in chapter 4:
 - **Read every change.** Each one is listed above the message box with **Review** and **Undo**.
 
 > [!NOTE]
-> **Small model mode** is new. Until it is in the IDE you use, a local model needs
-> `OLLAMA_CONTEXT_LENGTH=65536` and a fast machine, and the first answer takes minutes.
-> Then take route A or C.
+> **Small model mode** is new. If your IDE does not show the switch yet, a local model
+> needs `OLLAMA_CONTEXT_LENGTH=65536` and a fast machine, and the first answer takes
+> minutes. Then take route A or C.
 
 > [!TIP]
 > **Stuck?**

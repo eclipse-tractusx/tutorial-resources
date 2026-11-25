@@ -37,14 +37,15 @@ gives it a short version and lets it look things up when it needs them:
 | --- | --- | --- |
 | Instructions sent before your question | about 29,000 tokens | about 3,000 tokens |
 | First answer, 3B model, our test laptop | 7 minutes | 17 seconds |
-| How it changes a file | Rewrites the whole file | Changes one value by its address, for example `metadata.name` |
+| How it changes a file | Rewrites the whole file | Uses one IDE action per change, such as **add step**, **add check** or **set value**. The IDE writes the YAML and compiles. |
+| How it answers a question | Reads the files you have open | The IDE reads the project first and gives the model the overview |
 
 ### Which size fits your laptop?
 
 | Model size | Example | Download | Memory it needs | Laptop | What to expect |
 | --- | --- | --- | --- | --- | --- |
-| **3B** | `qwen2.5:3b` | 2 GB | about 3 GB | 8 GB RAM or more | Answers questions. Makes small, clear changes: rename, set a value, add a check. |
-| **7B** | `qwen2.5:7b` | 5 GB | about 6 GB | 16 GB RAM | Explains better. In our trials **not** more reliable at changes than 3B. |
+| **3B** | `qwen2.5:3b` | 2 GB | about 3 GB | 8 GB RAM or more | Answers questions. Makes one clear change per message: rename, add or remove a step or a check, add a variable. |
+| **7B** | `qwen2.5:7b` | 5 GB | about 6 GB | 16 GB RAM | The same changes, and longer explanations. |
 | **14B** | `qwen2.5:14b` | 9 GB | about 11 GB | 32 GB RAM, or a GPU with 12 GB | Not tested by us. |
 | **30B and more** | `qwen3:30b` | 18 GB or more | 20 GB or more | 32–64 GB RAM on Apple Silicon, or a GPU with 24 GB | Not tested by us. Closer to option A, if your machine can run it. |
 
@@ -58,8 +59,18 @@ Rules of thumb:
 ### What we aim for, and the limits
 
 We aim for this: with a 3B model on an ordinary laptop, you can ask, plan, and make the
-small changes the tutorial needs. In our trial, a 3B model did all three of these in
-about 20 seconds each: rename a test, rename a step, add a check.
+small changes the tutorial needs. In our last trial, on an Apple M3 laptop, `qwen2.5:3b`
+and `qwen2.5:7b` each did all nine of these, in 5 to 20 seconds each:
+
+- rename the test, and rename a step
+- add a check, add a step, remove a step, and copy a step
+- add a variable
+- answer "Which tests and steps does this project have?" and "Which values can a new
+  step use?"
+
+That was one run per model. Earlier runs, before the IDE took over more of the work,
+got about one change in ten wrong. Every change is checked and can be undone, so a wrong
+one costs you a click.
 
 The limits:
 
@@ -89,8 +100,9 @@ The limits:
 3. In the IDE: **Ask AI** › **Local / self-hosted LLM** › **Connect**. Pick your model.
 
 > [!NOTE]
-> Small model mode is new. Until it is in the deployed IDE, a local model needs
-> 64,000 tokens of context and a fast machine, and the first answer takes minutes.
+> Small model mode is new. If the IDE you use does not show the **Small model mode**
+> switch yet, a local model needs 64,000 tokens of context and a fast machine, and the
+> first answer takes minutes. Then take option A or C.
 
 ## C · Your own AI tool, then upload to the IDE
 

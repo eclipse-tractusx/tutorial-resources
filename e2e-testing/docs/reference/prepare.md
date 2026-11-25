@@ -43,7 +43,7 @@ You bring your own. No key is shared in the workshop. One of these is enough. No
 | **OpenAI** | An API key from the OpenAI developer platform | A ChatGPT subscription is not an API key. |
 | **Anthropic** | An API key from the Anthropic console | A Claude subscription is not an API key. |
 | **Catena-X AI** | Your Catena-X AI key and agent ID | For members who have access. |
-| **Local or self-hosted** | A server with an OpenAI-compatible API, for example Ollama or LM Studio, and a model that supports tool calls | Nothing leaves your machine. The server must allow the IDE's address as an origin. It needs a fast machine and 64,000 tokens of context: try it at home first. |
+| **Local or self-hosted** | A server with an OpenAI-compatible API, for example Ollama or LM Studio, and a model that supports tool calls | Nothing leaves your machine. The server must allow the IDE's address as an origin. With **Small model mode**, `qwen2.5:3b` runs on a laptop with 8 GB of RAM: see [AI options](ai-options.md#b--a-local-model-in-the-ide). Download it at home first. |
 
 The key stays in your browser.
 
