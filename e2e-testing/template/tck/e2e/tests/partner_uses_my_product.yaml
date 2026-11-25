@@ -1,0 +1,138 @@
+#################################################################################
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License, Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+#################################################################################
+
+kind: test
+syntax: v1-alpha
+
+namespace: my-product-e2e # TODO: the id from index.yaml
+id: partner-uses-my-product
+
+metadata:
+  name: "A partner uses my product"
+  version: "v0.1.0"
+  description: >
+    Positive test. Setup offers the product in its connector. The test then
+    acts as a partner: it finds the offer, negotiates a contract and calls
+    the product through the connector's data plane.
+
+setup:
+  - id: create_access_policy
+    uses: connector/provider/create_policy
+    name: Create the access policy
+    with:
+      policy: "${{ env.access_policy }}"
+    returns:
+      policy_id:
+        type: string
+
+  - id: create_usage_policy
+    uses: connector/provider/create_policy
+    name: Create the usage policy
+    with:
+      policy: "${{ env.usage_policy }}"
+    returns:
+      policy_id:
+        type: string
+
+  - id: create_asset
+    uses: connector/provider/create_asset
+    name: Offer the product as an asset
+    with:
+      asset: "${{ env.product_asset }}"
+    returns:
+      asset_id:
+        type: string
+
+  - id: create_contract
+    uses: connector/provider/create_contract_definition
+    name: Publish the offer under both policies
+    with:
+      contract_definition_id: my-product-e2e-contract # TODO
+      access_policy_id: "${{ setup.create_access_policy.policy_id }}"
+      contract_policy_id: "${{ setup.create_usage_policy.policy_id }}"
+      asset_id: "${{ setup.create_asset.asset_id }}"
+    returns:
+      contract_definition_id:
+        type: string
+
+execution:
+  - id: negotiate
+    uses: connector/consumer/pull_data_filtered
+    name: Find the offer and negotiate a contract
+    with:
+      counter_party_address: "${{ infrastructure.sut.connector.dsp_url }}"
+      counter_party_id: "${{ infrastructure.sut.connector.participant_id }}"
+      filters:
+        - operand_left: "https://w3id.org/edc/v0.0.1/ns/id"
+          operator: "="
+          operand_right: "${{ setup.create_asset.asset_id }}"
+      expected_policies: "${{ env.usage_policy }}"
+    returns:
+      asset_id:
+        type: string
+      dataplane_url:
+        type: string
+      edr_token:
+        type: string
+    validate:
+      - uses: validate/assert
+        with: { input: asset_id, operator: equals, value: "${{ setup.create_asset.asset_id }}" }
+      - uses: validate/assert
+        with: { input: edr_token, operator: not_null }
+
+  - id: call_product
+    uses: connector/dataplane/http_request
+    name: Call the product through the connector
+    with:
+      dataplane_url: "${{ execution.negotiate.dataplane_url }}"
+      edr_token: "${{ execution.negotiate.edr_token }}"
+      method: GET
+      path: "/" # TODO: an operation of your product's API
+    validate:
+      - uses: validate/assert
+        with: { input: status_code, operator: equals, value: 200 }
+      # TODO: check what your product promises, not only that it answers.
+      # For example a field of the answer:
+      #   - uses: validate/field
+      #     with: { input: body, path: "items[0].id", operator: not_null }
+
+teardown:
+  - id: delete_contract
+    uses: connector/provider/delete_contract_definition
+    name: Withdraw the offer
+    with:
+      contract_definition_id: "${{ setup.create_contract.contract_definition_id }}"
+
+  - id: delete_asset
+    uses: connector/provider/delete_asset
+    name: Remove the asset
+    with:
+      asset_id: "${{ setup.create_asset.asset_id }}"
+
+  - id: delete_usage_policy
+    uses: connector/provider/delete_policy
+    name: Remove the usage policy
+    with:
+      policy_id: "${{ setup.create_usage_policy.policy_id }}"
+
+  - id: delete_access_policy
+    uses: connector/provider/delete_policy
+    name: Remove the access policy
+    with:
+      policy_id: "${{ setup.create_access_policy.policy_id }}"

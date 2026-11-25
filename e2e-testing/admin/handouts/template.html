@@ -1,0 +1,106 @@
+<!--
+  Copyright (c) 2026 Contributors to the Eclipse Foundation
+  See the NOTICE file(s) distributed with this work for additional
+  information regarding copyright ownership.
+  This program and the accompanying materials are made available under the
+  terms of the Apache License, Version 2.0 which is available at
+  https://www.apache.org/licenses/LICENSE-2.0.
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations
+  under the License.
+  SPDX-License-Identifier: Apache-2.0
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>$team_name · E2E test handout</title>
+<style>
+  @page { size: A4; margin: 12mm; }
+  * { box-sizing: border-box; }
+  /* One page: long addresses wrap, so the page is drawn a little smaller. */
+  body { zoom: 0.86; margin: 0; font-family: "Manrope", "Helvetica Neue", Arial, sans-serif; font-size: 9pt; color: #111; }
+  header { display: flex; justify-content: space-between; align-items: center; gap: 6mm; padding: 3mm 6mm; background: #000; color: #fff; border-bottom: 1.2mm solid #faa023; }
+  header h1 { margin: 0; font-size: 18pt; font-weight: 800; }
+  header p { margin: 1mm 0 0; font-size: 9pt; color: #ddd; }
+  header .qr { background: #fff; padding: 1.5mm; line-height: 0; }
+  header .qr svg { width: 20mm; height: 20mm; }
+  .mission { margin: 3mm 0; padding: 2.5mm 4mm; background: #fff6e8; border-left: 1.2mm solid #faa023; font-size: 10pt; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
+  section { border: 0.3mm solid #bbb; border-radius: 1.5mm; padding: 2.5mm 3.5mm; }
+  section.wide { grid-column: 1 / -1; }
+  h2 { margin: 0 0 2mm; font-size: 11pt; }
+  h2 span { display: inline-block; width: 6.5mm; height: 6.5mm; margin-right: 1.5mm; border-radius: 50%; background: #faa023; color: #000; text-align: center; line-height: 6.5mm; font-weight: 800; }
+  h2 small { font-weight: 400; color: #555; font-size: 8.5pt; }
+  dl { margin: 0; display: grid; grid-template-columns: 31mm 1fr; row-gap: 1mm; column-gap: 2mm; }
+  dt { color: #555; }
+  dd { margin: 0; font-family: "JetBrains Mono", Menlo, Consolas, monospace; font-size: 8pt; overflow-wrap: anywhere; }
+  dl.two { grid-template-columns: 31mm 1fr 31mm 1fr; }
+  dd.text { font-family: inherit; font-size: 9pt; }
+  .sentence { margin-top: 2.5mm; padding: 2.5mm 3mm; border: 0.3mm dashed #999; border-radius: 1.5mm; min-height: 13mm; color: #555; }
+  footer { margin-top: 4mm; font-size: 7.5pt; color: #666; display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>$team_name</h1>
+    <p>One green check for every product · AI and Test Management · $event</p>
+  </div>
+  <div class="qr">$qr_svg</div>
+</header>
+
+<p class="mission"><strong>Your mission:</strong> in this session, build an E2E test for <strong>$product_name</strong>,
+commit it to the product's repository and open a pull request. The QR code opens the tutorial.</p>
+
+<div class="grid">
+  <section class="wide">
+    <h2><span>A</span>Your team and your product</h2>
+    <dl>
+      <dt>Product</dt><dd class="text"><strong>$product_name</strong>: $product_description</dd>
+      <dt>Repository</dt><dd>$product_repository</dd>
+      <dt>Suggested scenario</dt><dd class="text">$scenario</dd>
+      <dt>A run needs</dt><dd class="text">$needs</dd>
+    </dl>
+    <div class="sentence">Your sentence (chapter 2): <em>A partner can ________________________________ , and ________________________________ is refused.</em></div>
+  </section>
+
+  <section class="wide">
+    <h2><span>B</span>The IDE</h2>
+    <dl class="two">
+      <dt>Address</dt><dd>$ide_url</dd>
+      <dt>Sign in as</dt><dd>$username</dd>
+      <dt>Password</dt><dd>$password</dd>
+      <dt>Assistant</dt><dd class="text">Your own model. No key is on this handout.</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2><span>C</span>Your side <small>· system under test</small></h2>
+    <dl>$sut_rows</dl>
+  </section>
+
+  <section>
+    <h2><span>D</span>Partner side <small>· where the test runs from</small></h2>
+    <dl>$engine_rows</dl>
+  </section>
+
+  <section class="wide">
+    <h2><span>E</span>Help</h2>
+    <dl class="two">
+      <dt>Tutorial</dt><dd>$tutorial_url</dd>
+      <dt>In the room</dt><dd class="text">$help</dd>
+      <dt>Stuck on a step</dt><dd class="text">The "Stuck?" box at the end of each chapter</dd>
+      <dt>A new word</dt><dd class="text">The glossary, under Reference</dd>
+    </dl>
+  </section>
+</div>
+
+<footer>
+  <span>Workshop values. They stop working after the event. Do not commit them to a repository.</span>
+  <span>$team_id</span>
+</footer>
+</body>
+</html>

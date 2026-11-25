@@ -1,0 +1,657 @@
+{
+  "$schema": "./products.schema.json",
+  "generatedFrom": {
+    "organization": "eclipse-tractusx",
+    "collectedOn": "2026-11-24",
+    "sources": [
+      "GitHub repository list of the organization (archived repositories skipped)",
+      "The .tractusx metafile of each repository",
+      "charts/umbrella/Chart.yaml of tractus-x-umbrella, chart version 26.06.01, and its local subcharts"
+    ]
+  },
+  "workshopEnvironment": [
+    "connector",
+    "dtr",
+    "wallet",
+    "bdrs"
+  ],
+  "products": [
+    {
+      "id": "tractusx-edc",
+      "name": "Tractus-X EDC (connector)",
+      "repository": "https://github.com/eclipse-tractusx/tractusx-edc",
+      "description": "Control plane and data plane images of the Eclipse Dataspace Components, the connector every participant uses to offer and consume data.",
+      "needs": [
+        "connector",
+        "wallet",
+        "bdrs"
+      ],
+      "runsInUmbrella": true,
+      "umbrellaChart": "tractusx-connector",
+      "scenario": "A provider offers an asset under a policy, and a partner finds it in the catalog, negotiates a contract and pulls the data.",
+      "difficulty": "starter",
+      "fitsWorkshop": true,
+      "workshopNote": "Runs in the workshop environment: two connectors, their wallets, a Digital Twin Registry and a BDRS.",
+      "moreScenarios": [
+        "A partner without the required credential is refused the contract.",
+        "Data is served with a valid EDR token and refused without one.",
+        "A push transfer delivers the data to the partner's endpoint."
+      ],
+      "existingTests": [
+        "edc-tests/",
+        "run-all-tests.yml",
+        "deployment-test.yaml"
+      ]
+    },
+    {
+      "id": "sldt-digital-twin-registry",
+      "name": "Digital Twin Registry",
+      "repository": "https://github.com/eclipse-tractusx/sldt-digital-twin-registry",
+      "description": "Registry in which a data provider lists its digital twins (AAS shell descriptors) so that partners can find them.",
+      "needs": [
+        "connector",
+        "dtr",
+        "wallet",
+        "bdrs"
+      ],
+      "runsInUmbrella": true,
+      "umbrellaChart": "digital-twin-registry",
+      "scenario": "A twin its owner registers can be read back, and a partner finds and reads it through the owner's connector.",
+      "difficulty": "starter",
+      "fitsWorkshop": true,
+      "workshopNote": "Runs in the workshop environment: two connectors, their wallets, a Digital Twin Registry and a BDRS. This is the worked example.",
+      "moreScenarios": [
+        "A partner only sees the twins and identifiers it is allowed to see.",
+        "A twin that does not exist is answered with 404."
+      ],
+      "existingTests": [
+        "e2e-tests/",
+        "aas-registry-e2e-test.yml"
+      ],
+      "example": "examples/digital-twin-registry"
+    },
+    {
+      "id": "tractusx-identityhub",
+      "name": "Tractus-X IdentityHub (wallet and IssuerService)",
+      "repository": "https://github.com/eclipse-tractusx/tractusx-identityhub",
+      "description": "DCP wallet that holds a participant's verifiable credentials, and the IssuerService that issues them.",
+      "needs": [
+        "connector",
+        "wallet",
+        "bdrs"
+      ],
+      "runsInUmbrella": true,
+      "umbrellaChart": "tractusx-identityhub, tractusx-issuerservice",
+      "scenario": "A participant presents its membership credential in a contract negotiation and is accepted, and a policy asking for a credential it does not hold is refused.",
+      "difficulty": "intermediate",
+      "fitsWorkshop": true,
+      "workshopNote": "Runs in the workshop environment: two connectors, their wallets, a Digital Twin Registry and a BDRS.",
+      "existingTests": [
+        "tests/deployment/",
+        "postman-e2e-test.yaml"
+      ]
+    },
+    {
+      "id": "bpn-did-resolution-service",
+      "name": "BPN-DID Resolution Service (BDRS)",
+      "repository": "https://github.com/eclipse-tractusx/bpn-did-resolution-service",
+      "description": "Directory that resolves a Business Partner Number (BPN) to the DID of that participant.",
+      "needs": [
+        "connector",
+        "wallet",
+        "bdrs"
+      ],
+      "runsInUmbrella": true,
+      "umbrellaChart": "bdrs-server-memory",
+      "scenario": "A partner's BPN is resolved to its DID, and the partner's catalog is reached with nothing but that BPN.",
+      "difficulty": "intermediate",
+      "fitsWorkshop": true,
+      "workshopNote": "Runs in the workshop environment: two connectors, their wallets, a Digital Twin Registry and a BDRS.",
+      "existingTests": [
+        "system-tests/",
+        "run-all-tests.yml"
+      ]
+    },
+    {
+      "id": "tractusx-sdk",
+      "name": "Tractus-X SDK",
+      "repository": "https://github.com/eclipse-tractusx/tractusx-sdk",
+      "description": "Python libraries for building applications that provide and consume data through the connector, the Digital Twin Registry and the discovery services.",
+      "needs": [
+        "connector",
+        "dtr",
+        "wallet",
+        "bdrs"
+      ],
+      "runsInUmbrella": false,
+      "scenario": "The SDK's connector and registry services complete a provide-and-consume journey against two real connectors.",
+      "difficulty": "intermediate",
+      "fitsWorkshop": true,
+      "workshopNote": "Runs in the workshop environment. TestLab's steps are built on the SDK, so a run exercises it. The repository already has a first TCK under tck/connector.",
+      "relatedRepositories": [
+        "https://github.com/eclipse-tractusx/tractusx-sdk-services"
+      ],
+      "existingTests": [
+        "tck/connector/",
+        "compatibility-test.yaml"
+      ]
+    },
+    {
+      "id": "sldt-discovery-finder",
+      "name": "Discovery Finder",
+      "repository": "https://github.com/eclipse-tractusx/sldt-discovery-finder",
+      "description": "Service that tells a participant which BPN Discovery endpoints exist for a given identifier type.",
+      "needs": [
+        "discovery-finder",
+        "iam"
+      ],
+      "runsInUmbrella": true,
+      "umbrellaChart": "discoveryfinder",
+      "scenario": "A registered BPN Discovery endpoint is returned for its identifier type, and an unknown type returns an empty list.",
+      "difficulty": "starter",
+      "fitsWorkshop": false,
+      "workshopNote": "Small REST API with an OpenAPI document: build and compile in the workshop, run where the service and its identity provider are deployed.",
+      "existingTests": [
+        "e2e-tests/",
+        "discoveryfinder-e2e-test.yml"
+      ]
+    },
+    {
+      "id": "sldt-bpn-discovery",
+      "name": "BPN Discovery",
+      "repository": "https://github.com/eclipse-tractusx/sldt-bpn-discovery",
+      "description": "Service that looks up which Business Partner Numbers (BPN) own a given identifier, for example a manufacturer part ID.",
+      "needs": [
+        "bpn-discovery",
+        "iam"
+      ],
+      "runsInUmbrella": true,
+      "umbrellaChart": "bpndiscovery",
+      "scenario": "An identifier registered for a BPN is found again by a search, and it is gone after it was deleted.",
+      "difficulty": "starter",
+      "fitsWorkshop": false,
+      "workshopNote": "Small REST API with an OpenAPI document: build and compile in the workshop, run where the service and its identity provider are deployed.",
+      "existingTests": [
+        "e2e-tests/",
+        "bpndiscovery-e2e-test.yml"
+      ]
+    },
+    {
+      "id": "sldt-semantic-hub",
+      "name": "Semantic Hub",
+      "repository": "https://github.com/eclipse-tractusx/sldt-semantic-hub",
+      "description": "Catalogue of semantic models (SAMM aspect models) and the artifacts generated from them, such as JSON schemas.",
+      "needs": [
+        "semantic-hub",
+        "iam"
+      ],
+      "runsInUmbrella": true,
+      "umbrellaChart": "semantic-hub",
+      "scenario": "A published aspect model is listed, its JSON schema can be generated, and an invalid model is rejected.",
+      "difficulty": "starter",
+      "fitsWorkshop": false,
+      "workshopNote": "Small REST API with an OpenAPI document: build and compile in the workshop, run where the service and its identity provider are deployed.",
+      "existingTests": [
+        "e2e-tests/",
+        "semantic-hub-e2e-test.yml"
+      ]
+    },
+    {
+      "id": "bpdm",
+      "name": "Business Partner Data Management (BPDM)",
+      "repository": "https://github.com/eclipse-tractusx/bpdm",
+      "description": "Services that keep the golden record of business partners: the Gate for sharing members, the Pool, and the Orchestrator between them.",
+      "needs": [
+        "bpdm",
+        "iam",
+        "database"
+      ],
+      "runsInUmbrella": true,
+      "umbrellaChart": "bpdm",
+      "scenario": "A business partner a member uploads to the Gate arrives in the Pool as a golden record with a BPN.",
+      "difficulty": "intermediate",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs BPDM and its identity provider deployed. Build from the Gate and Pool OpenAPI documents in the workshop.",
+      "existingTests": [
+        "bpdm-system-tester/",
+        "app-test-charts.yaml"
+      ]
+    },
+    {
+      "id": "portal",
+      "name": "Portal",
+      "repository": "https://github.com/eclipse-tractusx/portal",
+      "description": "Entry point of a dataspace operator: company registration and onboarding, user and technical user management, app and service marketplace.",
+      "needs": [
+        "portal",
+        "iam",
+        "database"
+      ],
+      "runsInUmbrella": true,
+      "umbrellaChart": "portal",
+      "scenario": "An invited company completes its registration, is approved by the operator and can create a technical user.",
+      "difficulty": "advanced",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs the Portal backend and both identity providers deployed. A long flow: plan more than one session.",
+      "relatedRepositories": [
+        "https://github.com/eclipse-tractusx/portal-backend",
+        "https://github.com/eclipse-tractusx/portal-frontend",
+        "https://github.com/eclipse-tractusx/portal-frontend-registration",
+        "https://github.com/eclipse-tractusx/portal-assets"
+      ],
+      "existingTests": [
+        "portal-chart-test.yaml",
+        "portal-backend: postman/",
+        "portal-frontend: cypress/"
+      ]
+    },
+    {
+      "id": "portal-iam",
+      "name": "Portal IAM (Keycloak instances)",
+      "repository": "https://github.com/eclipse-tractusx/portal-iam",
+      "description": "Reference configuration of the central and the shared Keycloak identity providers that Portal and the core services log in against.",
+      "needs": [
+        "iam",
+        "database"
+      ],
+      "runsInUmbrella": true,
+      "umbrellaChart": "centralidp, sharedidp",
+      "scenario": "A technical user gets a token from the central identity provider and a protected service accepts it, and an unknown client is refused.",
+      "difficulty": "intermediate",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs both Keycloak instances deployed. The token request needs client credentials supplied at run time.",
+      "existingTests": [
+        "centralidp-chart-test.yaml",
+        "sharedidp-chart-test.yaml"
+      ]
+    },
+    {
+      "id": "sd-factory",
+      "name": "Self-Description Factory",
+      "repository": "https://github.com/eclipse-tractusx/sd-factory",
+      "description": "Service that creates the self-description document of a participant or a connector and has it signed.",
+      "needs": [
+        "iam",
+        "wallet"
+      ],
+      "runsInUmbrella": true,
+      "umbrellaChart": "sdfactory",
+      "scenario": "A self-description requested for a participant is created, and a request with missing mandatory data is rejected.",
+      "difficulty": "intermediate",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs the service, its identity provider and a signing service deployed.",
+      "existingTests": [
+        "sdfactorypipeline.yml"
+      ]
+    },
+    {
+      "id": "ssi-credential-issuer",
+      "name": "SSI Credential Issuer",
+      "repository": "https://github.com/eclipse-tractusx/ssi-credential-issuer",
+      "description": "Service through which the operator issues verifiable credentials, such as membership and framework agreements, to participants.",
+      "needs": [
+        "portal",
+        "iam",
+        "wallet",
+        "database"
+      ],
+      "runsInUmbrella": true,
+      "umbrellaChart": "ssi-credential-issuer",
+      "scenario": "A credential requested for a participant is approved by the operator and arrives in the participant's wallet.",
+      "difficulty": "advanced",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs the issuer, the Portal backend, an identity provider and a wallet deployed.",
+      "existingTests": [
+        "chart-test.yml"
+      ]
+    },
+    {
+      "id": "ssi-dim-wallet-stub",
+      "name": "SSI DIM Wallet Stub",
+      "repository": "https://github.com/eclipse-tractusx/ssi-dim-wallet-stub",
+      "description": "Stand-in for a managed wallet service, used so that a dataspace can be run without a commercial wallet.",
+      "needs": [
+        "wallet",
+        "portal"
+      ],
+      "runsInUmbrella": true,
+      "umbrellaChart": "ssi-dim-wallet-stub",
+      "scenario": "A wallet is set up for a new participant, and a token it issues is accepted by a connector.",
+      "difficulty": "intermediate",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs the stub and the Portal backend deployed."
+    },
+    {
+      "id": "item-relationship-service",
+      "name": "Item Relationship Service (IRS)",
+      "repository": "https://github.com/eclipse-tractusx/item-relationship-service",
+      "description": "Builds the tree of related digital twins across companies, for example every part built into a vehicle.",
+      "needs": [
+        "connector",
+        "dtr",
+        "submodel-server",
+        "discovery-finder",
+        "bpn-discovery",
+        "iam"
+      ],
+      "runsInUmbrella": false,
+      "scenario": "A job started for a twin returns the item tree with the twin's child parts, fetched from the partner through the connector.",
+      "difficulty": "advanced",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs the IRS, a Digital Twin Registry with linked test twins, a submodel server and the discovery services.",
+      "existingTests": [
+        "irs-cucumber-tests/",
+        "cucumber-integration-test-UMBRELLA.yaml",
+        "tavern-UMBRELLA.yml"
+      ]
+    },
+    {
+      "id": "traceability-foss",
+      "name": "Trace-X (Traceability FOSS)",
+      "repository": "https://github.com/eclipse-tractusx/traceability-foss",
+      "description": "Application for tracking parts along the supply chain and for sending quality notifications to partners.",
+      "needs": [
+        "connector",
+        "dtr",
+        "submodel-server",
+        "irs",
+        "iam",
+        "database"
+      ],
+      "runsInUmbrella": false,
+      "scenario": "A quality notification sent for a part arrives at the partner, and the partner's reply closes it.",
+      "difficulty": "advanced",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs Trace-X, the IRS and a full data provider stack deployed on two sides.",
+      "existingTests": [
+        "tx-cucumber-tests/",
+        "xray-cucumber.yaml",
+        "e2e-tests-xray_frontend.yml"
+      ]
+    },
+    {
+      "id": "puris",
+      "name": "PURIS",
+      "repository": "https://github.com/eclipse-tractusx/puris",
+      "description": "Predictive Unit Real-Time Information Service: partners exchange stock, demand and production data for short-term demand and capacity management.",
+      "needs": [
+        "connector",
+        "dtr",
+        "iam",
+        "database"
+      ],
+      "runsInUmbrella": false,
+      "scenario": "Stock information a supplier provides for a material is received and shown on the customer side.",
+      "difficulty": "advanced",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs two PURIS instances, each with a connector and a Digital Twin Registry.",
+      "existingTests": [
+        "helm-test.yml",
+        "local/testing/e2e/"
+      ]
+    },
+    {
+      "id": "industry-core-hub",
+      "name": "Industry Core Hub",
+      "repository": "https://github.com/eclipse-tractusx/industry-core-hub",
+      "description": "Data provision and consumption orchestrator: publishes parts as digital twins and consumes partner data through the connector.",
+      "needs": [
+        "connector",
+        "dtr",
+        "submodel-server",
+        "database"
+      ],
+      "runsInUmbrella": false,
+      "scenario": "A part published through the hub is found by a partner in the Digital Twin Registry, and its submodel is pulled through the connector.",
+      "difficulty": "intermediate",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs the hub deployed next to the provider's connector and registry. Build from its OpenAPI document in the workshop.",
+      "existingTests": [
+        "deployment-tests.yaml",
+        "helm-test.yaml"
+      ]
+    },
+    {
+      "id": "aas-suite",
+      "name": "AAS Suite",
+      "repository": "https://github.com/eclipse-tractusx/aas-suite",
+      "description": "Asset Administration Shell tooling that connects Eclipse BaSyx with the Tractus-X SDK.",
+      "needs": [
+        "connector",
+        "dtr",
+        "submodel-server"
+      ],
+      "runsInUmbrella": false,
+      "scenario": "A shell and submodel created through the suite are readable by a partner through the connector.",
+      "difficulty": "intermediate",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs the suite deployed next to a connector."
+    },
+    {
+      "id": "knowledge-agents",
+      "name": "Knowledge Agents",
+      "repository": "https://github.com/eclipse-tractusx/knowledge-agents",
+      "description": "Reference implementation of federated queries in dataspaces (CX-0084): agents, the connector extensions and the AAS bridge.",
+      "needs": [
+        "connector",
+        "wallet",
+        "bdrs"
+      ],
+      "runsInUmbrella": false,
+      "scenario": "A federated query sent by one participant is answered with data bound from a partner's agent, through both connectors.",
+      "difficulty": "advanced",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs connectors built with the agent extensions and a provisioning agent on the provider side.",
+      "relatedRepositories": [
+        "https://github.com/eclipse-tractusx/knowledge-agents-edc",
+        "https://github.com/eclipse-tractusx/knowledge-agents-aas-bridge"
+      ]
+    },
+    {
+      "id": "tractusx-edc-kafka-extension",
+      "name": "Tractus-X EDC Kafka Extension",
+      "repository": "https://github.com/eclipse-tractusx/tractusx-edc-kafka-extension",
+      "description": "Connector extension for continuous, event-driven data exchange between companies over Apache Kafka.",
+      "needs": [
+        "connector",
+        "kafka",
+        "wallet",
+        "bdrs"
+      ],
+      "runsInUmbrella": false,
+      "scenario": "A partner negotiates a Kafka asset, receives short-lived broker credentials and reads the messages of the stream.",
+      "difficulty": "advanced",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs connectors built with the extension and a Kafka broker.",
+      "existingTests": [
+        "deployment-test.yaml"
+      ]
+    },
+    {
+      "id": "tractusx-edc-dashboard",
+      "name": "EDC Dashboard and Policy Builder",
+      "repository": "https://github.com/eclipse-tractusx/tractusx-edc-dashboard",
+      "description": "Web interface for a connector's Management API, with a builder for Catena-X policies.",
+      "needs": [
+        "connector",
+        "browser"
+      ],
+      "runsInUmbrella": false,
+      "scenario": "A policy built with the dashboard is created on the connector and is the policy a partner sees in the catalog.",
+      "difficulty": "advanced",
+      "fitsWorkshop": false,
+      "workshopNote": "A user interface: the test covers the Management API calls behind it, not the clicks."
+    },
+    {
+      "id": "managed-simple-data-exchanger",
+      "name": "Managed Simple Data Exchanger (SDE)",
+      "repository": "https://github.com/eclipse-tractusx/managed-simple-data-exchanger",
+      "description": "Convenience layer for data providers and consumers: upload data as CSV or JSON, and the service creates twins, assets and contract offers.",
+      "needs": [
+        "connector",
+        "dtr",
+        "portal",
+        "iam",
+        "database"
+      ],
+      "runsInUmbrella": false,
+      "scenario": "Data uploaded through the exchanger appears as a twin and as a contract offer a partner can negotiate.",
+      "difficulty": "advanced",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs the exchanger, a Portal with its identity provider, a connector and a registry.",
+      "relatedRepositories": [
+        "https://github.com/eclipse-tractusx/managed-simple-data-exchanger-backend",
+        "https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend"
+      ]
+    },
+    {
+      "id": "managed-service-orchestrator",
+      "name": "Managed Service Orchestrator",
+      "repository": "https://github.com/eclipse-tractusx/managed-service-orchestrator",
+      "description": "Automates the setup of a connector and a Digital Twin Registry for a company that subscribes to them as a managed service.",
+      "needs": [
+        "portal",
+        "iam",
+        "kubernetes",
+        "database"
+      ],
+      "runsInUmbrella": false,
+      "scenario": "A subscription triggers the setup, and the connector it deploys answers a catalog request.",
+      "difficulty": "advanced",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs the orchestrator, a Portal and a cluster it may deploy into."
+    },
+    {
+      "id": "data-exchange-test-service",
+      "name": "E2E Data Exchange Test Service",
+      "repository": "https://github.com/eclipse-tractusx/data-exchange-test-service",
+      "description": "Service a participant uses to check that its own connector can exchange data with a partner's.",
+      "needs": [
+        "connector",
+        "portal",
+        "iam"
+      ],
+      "runsInUmbrella": false,
+      "scenario": "A test started for a connector reports success for a working connector and a clear failure for an unreachable one.",
+      "difficulty": "intermediate",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs the service deployed with a Portal and its identity provider.",
+      "existingTests": [
+        "dataexchange-pipeline.yml",
+        "helm-test.yaml"
+      ]
+    },
+    {
+      "id": "dataspace-mgm",
+      "name": "Dataspace Management",
+      "repository": "https://github.com/eclipse-tractusx/dataspace-mgm-services",
+      "description": "The modernised portal: a service and a user interface with which an onboarding service provider manages the companies it brings into a dataspace.",
+      "needs": [
+        "iam",
+        "database"
+      ],
+      "runsInUmbrella": false,
+      "scenario": "A company created by an onboarding service provider can be read back, and a user of another provider cannot see it.",
+      "difficulty": "intermediate",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs the service and its identity provider deployed. Its metafile names a leading repository that does not exist yet.",
+      "relatedRepositories": [
+        "https://github.com/eclipse-tractusx/dataspace-mgm-ui"
+      ],
+      "existingTests": [
+        "helm-test.yml"
+      ]
+    },
+    {
+      "id": "tractusx-sdk-services",
+      "name": "Tractus-X SDK Services",
+      "repository": "https://github.com/eclipse-tractusx/tractusx-sdk-services",
+      "description": "Test orchestrator and digital twin pull service that help a new partner check its setup during onboarding.",
+      "needs": [
+        "connector",
+        "dtr",
+        "wallet"
+      ],
+      "runsInUmbrella": false,
+      "scenario": "The pull service fetches a twin's submodel from a partner through the connector and reports each step it took.",
+      "difficulty": "intermediate",
+      "fitsWorkshop": false,
+      "workshopNote": "Needs both services deployed next to a connector."
+    },
+    {
+      "id": "tractusx-starter-kit",
+      "name": "Tractus-X Starter Kit",
+      "repository": "https://github.com/eclipse-tractusx/tractusx-starter-kit",
+      "description": "Configuration wizard that generates a ready-to-run Docker Compose dataspace for newcomers.",
+      "needs": [
+        "connector",
+        "wallet",
+        "bdrs"
+      ],
+      "runsInUmbrella": false,
+      "scenario": "A setup generated with the default answers starts, and its first data exchange succeeds.",
+      "difficulty": "advanced",
+      "fitsWorkshop": false,
+      "workshopNote": "Runs in Docker Compose, not in the Umbrella: the workflow needs its own bring-up step."
+    },
+    {
+      "id": "tractusx-testlab",
+      "name": "Tractus-X TestLab",
+      "repository": "https://github.com/eclipse-tractusx/tractusx-testlab",
+      "description": "The test authoring and execution engine this tutorial uses: declarative YAML tests, compiled into a package and run against real systems.",
+      "needs": [
+        "connector",
+        "dtr",
+        "wallet",
+        "bdrs"
+      ],
+      "runsInUmbrella": false,
+      "scenario": "The compile, validate and run pipeline passes against a live dataspace.",
+      "difficulty": "advanced",
+      "fitsWorkshop": false,
+      "workshopNote": "Already has its E2E test as a TCK project. Read it as the reference.",
+      "existingTests": [
+        "tests/e2e/connector-dtr-smoke/",
+        "e2e-umbrella.yml"
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "repository": "https://github.com/eclipse-tractusx/portal-shared-components",
+      "reason": "User interface library without a running service."
+    },
+    {
+      "repository": "https://github.com/eclipse-tractusx/tractusx-virtual-connector",
+      "reason": "Placeholder: the repository holds only a README."
+    },
+    {
+      "repository": "https://github.com/eclipse-tractusx/tractus-x-umbrella",
+      "reason": "The integration chart is the test environment, not a product under test."
+    },
+    {
+      "repository": "https://github.com/eclipse-tractusx/sldt-semantic-models",
+      "reason": "Specification content (aspect models), not a running product."
+    },
+    {
+      "repository": "https://github.com/eclipse-tractusx/tractusx-profiles",
+      "reason": "Specification content (credential and policy profiles)."
+    },
+    {
+      "repository": "https://github.com/eclipse-tractusx/sldt-ontology-model",
+      "reason": "Specification content (ontology files)."
+    },
+    {
+      "repository": "https://github.com/eclipse-tractusx/tutorial-resources",
+      "reason": "Tutorials."
+    },
+    {
+      "repository": "https://github.com/eclipse-tractusx/engineering-use-case-demonstrator",
+      "reason": "Demonstrator and proposal document."
+    },
+    {
+      "repository": "https://github.com/eclipse-tractusx/testdata-provider",
+      "reason": "Test data helper scripts."
+    }
+  ]
+}

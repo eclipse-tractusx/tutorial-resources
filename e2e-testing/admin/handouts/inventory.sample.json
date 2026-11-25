@@ -1,0 +1,123 @@
+{
+  "$schema": "./inventory.schema.json",
+  "ideUrl": "https://ide.example.org",
+  "tutorialUrl": "https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/",
+  "help": "Raise your hand, or go to the Desk at the front of the room.",
+  "teams": {
+    "team-01": {
+      "account": {
+        "username": "team-01",
+        "password": "change-me-01"
+      },
+      "sut": {
+        "managementUrl": "https://provider-management.team-01.example.org/management",
+        "apiKey": "sample-key-provider-01",
+        "dspUrl": "https://provider-dsp.team-01.example.org/api/v1/dsp/2025-1",
+        "participantId": "did:web:provider.team-01.example.org:identityhub:BPNL000000000101",
+        "bpn": "BPNL000000000101",
+        "dtrUrl": "https://provider-dtr.team-01.example.org/semantics/registry",
+        "dtrInternalUrl": "https://provider-dtr.team-01.example.org/semantics/registry/api/v3",
+        "productInternalUrl": "https://my-product.team-01.example.org"
+      },
+      "engine": {
+        "managementUrl": "https://consumer-management.team-01.example.org/management",
+        "apiKey": "sample-key-consumer-01",
+        "dspUrl": "https://consumer-dsp.team-01.example.org/api/v1/dsp/2025-1",
+        "participantId": "did:web:consumer.team-01.example.org:identityhub:BPNL000000000201",
+        "bpn": "BPNL000000000201"
+      }
+    },
+    "team-02": {
+      "account": {
+        "username": "team-02",
+        "password": "change-me-02"
+      },
+      "sut": {
+        "managementUrl": "https://provider-management.team-02.example.org/management",
+        "apiKey": "sample-key-provider-02",
+        "dspUrl": "https://provider-dsp.team-02.example.org/api/v1/dsp/2025-1",
+        "participantId": "did:web:provider.team-02.example.org:identityhub:BPNL000000000102",
+        "bpn": "BPNL000000000102",
+        "dtrUrl": "https://provider-dtr.team-02.example.org/semantics/registry",
+        "dtrInternalUrl": "https://provider-dtr.team-02.example.org/semantics/registry/api/v3",
+        "productInternalUrl": "https://my-product.team-02.example.org"
+      },
+      "engine": {
+        "managementUrl": "https://consumer-management.team-02.example.org/management",
+        "apiKey": "sample-key-consumer-02",
+        "dspUrl": "https://consumer-dsp.team-02.example.org/api/v1/dsp/2025-1",
+        "participantId": "did:web:consumer.team-02.example.org:identityhub:BPNL000000000202",
+        "bpn": "BPNL000000000202"
+      }
+    },
+    "team-03": {
+      "account": {
+        "username": "team-03",
+        "password": "change-me-03"
+      },
+      "sut": {
+        "managementUrl": "https://provider-management.team-03.example.org/management",
+        "apiKey": "sample-key-provider-03",
+        "dspUrl": "https://provider-dsp.team-03.example.org/api/v1/dsp/2025-1",
+        "participantId": "did:web:provider.team-03.example.org:identityhub:BPNL000000000103",
+        "bpn": "BPNL000000000103",
+        "dtrUrl": "https://provider-dtr.team-03.example.org/semantics/registry",
+        "dtrInternalUrl": "https://provider-dtr.team-03.example.org/semantics/registry/api/v3",
+        "productInternalUrl": "https://my-product.team-03.example.org"
+      },
+      "engine": {
+        "managementUrl": "https://consumer-management.team-03.example.org/management",
+        "apiKey": "sample-key-consumer-03",
+        "dspUrl": "https://consumer-dsp.team-03.example.org/api/v1/dsp/2025-1",
+        "participantId": "did:web:consumer.team-03.example.org:identityhub:BPNL000000000203",
+        "bpn": "BPNL000000000203"
+      }
+    },
+    "team-04": {
+      "account": {
+        "username": "team-04",
+        "password": "change-me-04"
+      },
+      "sut": {
+        "managementUrl": "https://provider-management.team-04.example.org/management",
+        "apiKey": "sample-key-provider-04",
+        "dspUrl": "https://provider-dsp.team-04.example.org/api/v1/dsp/2025-1",
+        "participantId": "did:web:provider.team-04.example.org:identityhub:BPNL000000000104",
+        "bpn": "BPNL000000000104",
+        "dtrUrl": "https://provider-dtr.team-04.example.org/semantics/registry",
+        "dtrInternalUrl": "https://provider-dtr.team-04.example.org/semantics/registry/api/v3",
+        "productInternalUrl": "https://my-product.team-04.example.org"
+      },
+      "engine": {
+        "managementUrl": "https://consumer-management.team-04.example.org/management",
+        "apiKey": "sample-key-consumer-04",
+        "dspUrl": "https://consumer-dsp.team-04.example.org/api/v1/dsp/2025-1",
+        "participantId": "did:web:consumer.team-04.example.org:identityhub:BPNL000000000204",
+        "bpn": "BPNL000000000204"
+      }
+    },
+    "team-05": {
+      "account": {
+        "username": "team-05",
+        "password": "change-me-05"
+      },
+      "sut": {
+        "managementUrl": "https://provider-management.team-05.example.org/management",
+        "apiKey": "sample-key-provider-05",
+        "dspUrl": "https://provider-dsp.team-05.example.org/api/v1/dsp/2025-1",
+        "participantId": "did:web:provider.team-05.example.org:identityhub:BPNL000000000105",
+        "bpn": "BPNL000000000105",
+        "dtrUrl": "https://provider-dtr.team-05.example.org/semantics/registry",
+        "dtrInternalUrl": "https://provider-dtr.team-05.example.org/semantics/registry/api/v3",
+        "productInternalUrl": "https://my-product.team-05.example.org"
+      },
+      "engine": {
+        "managementUrl": "https://consumer-management.team-05.example.org/management",
+        "apiKey": "sample-key-consumer-05",
+        "dspUrl": "https://consumer-dsp.team-05.example.org/api/v1/dsp/2025-1",
+        "participantId": "did:web:consumer.team-05.example.org:identityhub:BPNL000000000205",
+        "bpn": "BPNL000000000205"
+      }
+    }
+  }
+}

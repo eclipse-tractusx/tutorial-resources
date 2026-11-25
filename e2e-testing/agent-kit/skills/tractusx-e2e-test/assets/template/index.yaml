@@ -1,0 +1,142 @@
+#################################################################################
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License, Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+#################################################################################
+
+# E2E test project template. Copy the folder to tck/e2e in your repository
+# and replace every line marked TODO.
+#
+# The shape: your product sits behind a connector (the "sut" side). The tests
+# run from a second connector (the "engine" side) and use your product the way
+# a partner would: find the offer, negotiate a contract, call the API.
+
+kind: tck
+syntax: v1-alpha
+
+id: my-product-e2e # TODO: <your-product>-e2e
+
+metadata:
+  name: "My Product — E2E test" # TODO
+  version: "v0.1.0"
+  description: > # TODO: what does a green run prove? One or two sentences.
+    Proves that a partner can find, negotiate and use My Product through
+    the connector, and that something that is not offered is not found.
+  authors:
+    - name: Eclipse Tractus-X contributors # TODO: your team
+      company: Eclipse Tractus-X
+  copyright_holders:
+    - "2026 Contributors to the Eclipse Foundation"
+  license: Apache-2.0
+  standards: [] # TODO: the standards your product implements, e.g. { id: CX-0002, version: v2.3.0 }
+  tags:
+    - e2e
+
+dataspace:
+  ecosystem: Catena-X
+  version: saturn
+
+# What a run needs. Add `dtr: { required: true }` under sut if your tests use
+# the Digital Twin Registry.
+infrastructure:
+  engine:
+    connector:
+      required: true
+  sut:
+    connector:
+      required: true
+
+env:
+  variables:
+    - id: product_internal_url
+      uses: variable/type/string
+      name: Product API, as its own connector reaches it
+      description: >
+        Address of your product's API as the data plane of the connector in
+        front of it can reach it, e.g. https://my-product.example.org. In the
+        workflow it defaults to a small echo service, so the template passes
+        before you have changed anything.
+      with:
+        source: input
+        scope: sut
+      returns:
+        value:
+          type: string
+
+    - id: product_asset
+      uses: config/connector/asset
+      name: Your product, offered as an asset
+      with:
+        source: value
+        value:
+          asset_id: my-product-e2e-asset # TODO
+          base_url: "${{ env.product_internal_url }}"
+          dct_type: "https://w3id.org/catenax/taxonomy#TestData" # TODO: the type your product is offered as
+          version: "1.0"
+      returns:
+        value:
+          type: object
+          class: Asset
+
+    - id: access_policy
+      uses: config/connector/policy
+      name: Who may see the offer
+      with:
+        source: value
+        value:
+          policy_id: my-product-e2e-access-policy # TODO
+          permissions:
+            - action: access
+              constraints:
+                - left_operand: Membership
+                  operator: eq
+                  right_operand: active
+      returns:
+        value:
+          type: object
+          class: Policy
+
+    - id: usage_policy
+      uses: config/connector/policy
+      name: What a partner may use the data for
+      with:
+        source: value
+        value:
+          policy_id: my-product-e2e-usage-policy # TODO
+          permissions:
+            - action: use
+              constraints:
+                - and:
+                    - left_operand: Membership
+                      operator: eq
+                      right_operand: active
+                    - left_operand: FrameworkAgreement
+                      operator: eq
+                      right_operand: "DataExchangeGovernance:1.0"
+                    - left_operand: UsagePurpose
+                      operator: isAnyOf
+                      right_operand:
+                        - "cx.core.industrycore:1" # TODO: the purpose that fits your product
+      returns:
+        value:
+          type: object
+          class: Policy
+
+tests:
+  - id: partner_uses_my_product.yaml
+    name: A partner finds the offer, negotiates a contract and gets an answer
+  - id: unknown_offer_is_not_found.yaml
+    name: An offer that was never published is not in the catalog

@@ -1,0 +1,221 @@
+#################################################################################
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License, Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+#################################################################################
+
+kind: test
+syntax: v1-alpha
+
+namespace: digital-twin-registry-e2e
+id: partner-reads-through-connector
+
+metadata:
+  name: "A partner reads through the connector"
+  version: "v0.1.0"
+  description: >
+    The end-to-end journey. Setup offers the registry in the owner's
+    connector and registers a twin the partner may see. The test then acts
+    as that partner: it negotiates access, finds the twin by its part number
+    and reads it, all through the owner's connector.
+
+setup:
+  - id: create_access_policy
+    uses: connector/provider/create_policy
+    name: Create the access policy
+    with:
+      policy: "${{ env.access_policy }}"
+    returns:
+      policy_id:
+        type: string
+
+  - id: create_usage_policy
+    uses: connector/provider/create_policy
+    name: Create the usage policy
+    with:
+      policy: "${{ env.usage_policy }}"
+    returns:
+      policy_id:
+        type: string
+
+  - id: create_dtr_asset
+    uses: connector/provider/create_asset
+    name: Offer the registry as an asset
+    with:
+      asset:
+        asset_id: dtr-e2e-asset
+        base_url: "${{ env.dtr_internal_url }}"
+        dct_type: "https://w3id.org/catenax/taxonomy#DigitalTwinRegistry"
+        version: "3.0"
+        proxy_params:
+          proxyPath: "true"
+          proxyMethod: "true"
+          proxyBody: "true"
+          proxyQueryParams: "true"
+    returns:
+      asset_id:
+        type: string
+
+  - id: create_contract
+    uses: connector/provider/create_contract_definition
+    name: Publish the offer under both policies
+    with:
+      contract_definition_id: dtr-e2e-contract
+      access_policy_id: "${{ setup.create_access_policy.policy_id }}"
+      contract_policy_id: "${{ setup.create_usage_policy.policy_id }}"
+      asset_id: "${{ setup.create_dtr_asset.asset_id }}"
+    returns:
+      contract_definition_id:
+        type: string
+
+  - id: create_shell
+    uses: digital-twin-registry/provider/wizard/create_shell_descriptor
+    name: Register a twin the partner may see
+    with:
+      id_short: e2ePartnerTwin
+      global_asset_id: "urn:uuid:7e2d5a81-0000-4000-8000-000000000001"
+      specific_asset_ids:
+        - name: manufacturerPartId
+          value: e2e-partner-part-4711
+          externalSubjectId:
+            type: ExternalReference
+            keys:
+              - type: GlobalReference
+                value: PUBLIC_READABLE
+        - name: customerPartId
+          value: e2e-partner-customer-part
+          externalSubjectId:
+            type: ExternalReference
+            keys:
+              - type: GlobalReference
+                value: "${{ infrastructure.engine.connector.participant_id }}"
+              - type: GlobalReference
+                value: "${{ env.engine_bpnl }}"
+    returns:
+      id:
+        type: string
+
+  - id: create_submodel
+    uses: digital-twin-registry/provider/create_submodel_descriptor
+    name: Attach a submodel descriptor to the twin
+    with:
+      aas_identifier: "${{ setup.create_shell.id }}"
+      submodel_descriptor:
+        id: "urn:uuid:7e2d5a81-0000-4000-8000-000000000002"
+        idShort: e2ePartnerSubmodel
+        semanticId:
+          type: ExternalReference
+          keys:
+            - type: GlobalReference
+              value: "urn:samm:io.catenax.part_type_information:1.0.0#PartTypeInformation"
+        endpoints:
+          - interface: "SUBMODEL-3.0"
+            protocolInformation:
+              href: "${{ infrastructure.sut.connector.dsp_url }}"
+              endpointProtocol: "HTTP"
+              endpointProtocolVersion: ["1.1"]
+              subprotocol: "DSP"
+              subprotocolBody: "id=dtr-e2e-asset;dspEndpoint=${{ infrastructure.sut.connector.dsp_url }}"
+              subprotocolBodyEncoding: "plain"
+              securityAttributes:
+                - type: "NONE"
+                  key: "NONE"
+                  value: "NONE"
+    returns:
+      id:
+        type: string
+
+execution:
+  - id: registry_auth
+    uses: connector/discover/digital-twin-registry/auth
+    name: Negotiate access to the registry
+    with:
+      counter_party_address: "${{ infrastructure.sut.connector.dsp_url }}"
+      counter_party_id: "${{ infrastructure.sut.connector.participant_id }}"
+      expected_policies: "${{ env.usage_policy }}"
+    returns:
+      dataplane_url:
+        type: string
+      edr_token:
+        type: string
+    validate:
+      - uses: validate/assert
+        with: { input: dataplane_url, operator: not_null }
+      - uses: validate/assert
+        with: { input: edr_token, operator: not_null }
+
+  - id: lookup_by_part
+    uses: digital-twin-registry/consumer/dataplane/lookup_shell
+    name: Find the twin by its part number
+    with:
+      dataplane_url: "${{ execution.registry_auth.dataplane_url }}"
+      edr_token: "${{ execution.registry_auth.edr_token }}"
+      specific_asset_ids:
+        - name: manufacturerPartId
+          value: e2e-partner-part-4711
+    returns:
+      shell_ids:
+        type: array
+    validate:
+      - uses: validate/assert
+        with: { input: shell_ids, operator: contains, value: "${{ setup.create_shell.id }}" }
+
+  - id: read_twin
+    uses: digital-twin-registry/consumer/dataplane/get_shell_descriptor
+    name: Read the twin as the partner
+    with:
+      dataplane_url: "${{ execution.registry_auth.dataplane_url }}"
+      edr_token: "${{ execution.registry_auth.edr_token }}"
+      aas_identifier: "${{ setup.create_shell.id }}"
+    returns:
+      id:
+        type: string
+    validate:
+      - uses: validate/assert
+        with: { input: id, operator: equals, value: "${{ setup.create_shell.id }}" }
+      - uses: validate/schema
+        with: { input: body, schema: "${{ env.schemas.shell_descriptor }}" }
+
+teardown:
+  - id: delete_shell
+    uses: digital-twin-registry/provider/delete_shell_descriptor
+    name: Remove the twin
+    with:
+      aas_identifier: "${{ setup.create_shell.id }}"
+
+  - id: delete_contract
+    uses: connector/provider/delete_contract_definition
+    name: Withdraw the offer
+    with:
+      contract_definition_id: "${{ setup.create_contract.contract_definition_id }}"
+
+  - id: delete_dtr_asset
+    uses: connector/provider/delete_asset
+    name: Remove the registry asset
+    with:
+      asset_id: "${{ setup.create_dtr_asset.asset_id }}"
+
+  - id: delete_usage_policy
+    uses: connector/provider/delete_policy
+    name: Remove the usage policy
+    with:
+      policy_id: "${{ setup.create_usage_policy.policy_id }}"
+
+  - id: delete_access_policy
+    uses: connector/provider/delete_policy
+    name: Remove the access policy
+    with:
+      policy_id: "${{ setup.create_access_policy.policy_id }}"

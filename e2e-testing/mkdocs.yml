@@ -1,0 +1,140 @@
+#################################################################################
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License, Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+#################################################################################
+
+# Site configuration for the E2E testing tutorial. The pages under docs/ are
+# plain Markdown and read fine on GitHub; this turns them into a site with
+# navigation and search:
+#
+#   pip install -r requirements.txt
+#   mkdocs serve          # preview on http://localhost:8000
+#   mkdocs build --strict # what the workflow runs
+
+site_name: E2E tests for Tractus-X products
+site_description: Build an end-to-end test for an Eclipse Tractus-X product in about an hour, with an AI assistant, and take it to a pull request.
+site_url: https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/
+repo_url: https://github.com/eclipse-tractusx/tutorial-resources
+repo_name: eclipse-tractusx/tutorial-resources
+edit_uri: edit/main/e2e-testing/docs/
+copyright: Copyright &copy; 2026 Contributors to the Eclipse Foundation · CC-BY-4.0
+
+theme:
+  name: material
+  logo: assets/logo_tractus-x.svg
+  favicon: assets/favicon.ico
+  font:
+    text: Manrope
+    code: JetBrains Mono
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.footer
+    - navigation.top
+    - navigation.indexes
+    - content.code.copy
+    - search.highlight
+    - toc.follow
+
+extra_css:
+  - assets/stylesheets/tractusx.css
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - tables
+  - github-callouts
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+
+validation:
+  nav:
+    omitted_files: warn
+    not_found: warn
+  links:
+    not_found: warn
+    anchors: warn
+    unrecognized_links: warn
+
+nav:
+  - Home: index.md
+  - The story:
+      - Why we are here: story/why.md
+      - A dataspace in five minutes: story/dataspace.md
+      - What a test is made of: story/test-anatomy.md
+      - Where the AI helps: story/ai.md
+  - The tutorial:
+      - 1 · Start here: tutorial/01-start-here.md
+      - 2 · Your product and your connectors: tutorial/02-your-product.md
+      - 3 · Choose your AI:
+          - Choose: tutorial/03-choose-your-ai.md
+          - A · API key in the IDE: tutorial/03-open-the-ide.md
+          - B · Local model in the IDE: tutorial/03b-local-model.md
+          - C · Your own AI tool: tutorial/03-alternative-your-own-ai-tool.md
+      - 4 · Build the test with the assistant: tutorial/04-build-the-test.md
+      - 5 · Run it against your connectors: tutorial/05-run-it.md
+      - 6 · Add it to your repository: tutorial/06-add-to-repository.md
+      - 7 · Link it and open the pull request: tutorial/07-link-and-pull-request.md
+      - 8 · What comes next: tutorial/08-what-comes-next.md
+  - Reference:
+      - Glossary: reference/glossary.md
+      - Before you come: reference/prepare.md
+      - Choose your AI option: reference/ai-options.md
+      - Set up your AI tool: reference/ai-tool-setup.md
+      - Product catalog: reference/catalog.md
+      - Starter prompts: reference/prompts.md
+      - The worked example: reference/worked-example.md
+      - The workflow: reference/workflow.md
+      - The .tractusx link: reference/metafile.md
+      - Troubleshooting: reference/troubleshooting.md
+  - For administrators:
+      - Overview and checklist: admin/index.md
+      - Deploy: admin/deploy.md
+      - Configure: admin/configure.md
+      - Assign products: admin/assign.md
+      - Handouts: admin/handouts.md
+      - Run of show: admin/run-of-show.md
+      - Presentation prompt: admin/presentation-prompt.md

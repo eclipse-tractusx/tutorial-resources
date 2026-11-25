@@ -1,0 +1,12 @@
+{
+  "$schema": "./assignments.schema.json",
+  "event": "7th Eclipse Tractus-X Community Days, 3-4 December 2026",
+  "sample": true,
+  "assignments": [
+    { "team": "team-01", "teamName": "Team 01", "productId": "sldt-digital-twin-registry" },
+    { "team": "team-02", "teamName": "Team 02", "productId": "tractusx-edc" },
+    { "team": "team-03", "teamName": "Team 03", "productId": "tractusx-identityhub" },
+    { "team": "team-04", "teamName": "Team 04", "productId": "bpn-did-resolution-service" },
+    { "team": "team-05", "teamName": "Team 05", "productId": "tractusx-sdk" }
+  ]
+}
