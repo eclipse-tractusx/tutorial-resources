@@ -1,0 +1,108 @@
+/*
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation
+ * See the NOTICE file(s) distributed with this work for additional
+ * information regarding copyright ownership.
+ * This program and the accompanying materials are made available under the
+ * terms of the Apache License, Version 2.0 which is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* Eclipse Tractus-X look: black, white and the Tractus-X orange. */
+
+:root,
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #000000;
+  --md-primary-fg-color--light: #1e1e1e;
+  --md-primary-fg-color--dark: #000000;
+  --md-primary-bg-color: #ffffff;
+  --md-accent-fg-color: #faa023;
+  --md-typeset-a-color: #c37304;
+  --tx-orange: #faa023;
+  --tx-orange-dark: #c37304;
+  --tx-green: #b3cb2d;
+  --tx-soft: #fff6e8;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #000000;
+  --md-primary-bg-color: #ffffff;
+  --md-accent-fg-color: #faa023;
+  --md-typeset-a-color: #fbb24d;
+  --md-default-bg-color: #0b0b0b;
+  --tx-soft: #2a1f0d;
+}
+
+.md-header,
+.md-tabs {
+  border-bottom: 1px solid var(--tx-orange);
+}
+
+.md-tabs__link--active,
+.md-nav__link--active {
+  color: var(--tx-orange) !important;
+}
+
+.md-typeset h1 {
+  font-weight: 800;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset h1::after {
+  content: "";
+  display: block;
+  width: 4.5rem;
+  height: 0.3rem;
+  margin-top: 0.6rem;
+  border-radius: 0.2rem;
+  background: linear-gradient(90deg, var(--tx-orange), var(--tx-green));
+}
+
+.md-typeset h2 {
+  font-weight: 700;
+}
+
+/* The "Goal · Time" line under each tutorial title. */
+.md-typeset .mission {
+  padding: 0.7rem 1rem;
+  border-left: 0.3rem solid var(--tx-orange);
+  border-radius: 0.2rem;
+  background: var(--tx-soft);
+}
+
+/* The route at the top of each tutorial page. */
+.md-typeset .route {
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset table:not([class]) th {
+  background: var(--tx-soft);
+}
+
+.md-typeset img {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.3rem;
+}
+
+.md-typeset .md-button--primary {
+  background: var(--tx-orange);
+  border-color: var(--tx-orange);
+  color: #000000;
+}
+
+.md-typeset .md-button--primary:hover {
+  background: var(--tx-orange-dark);
+  border-color: var(--tx-orange-dark);
+  color: #ffffff;
+}
+
+.md-footer-meta {
+  border-top: 1px solid var(--tx-orange);
+}
