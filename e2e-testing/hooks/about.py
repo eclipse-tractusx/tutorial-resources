@@ -37,11 +37,6 @@ from urllib.error import URLError
 from urllib.request import Request, urlopen
 
 PALETTE = '<form class="md-header__option" data-md-component="palette">'
-INFO_ICON = (
-    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 9h2V7h-2m1 13c-4.41 0-8-3.59-8-8s3.59-8 '
-    "8-8 8 3.59 8 8-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 "
-    '12 2m-1 15h2v-6h-2z"/></svg>'
-)
 SHOWN_AUTHORS = 8
 
 _panel = None
@@ -150,7 +145,9 @@ def on_post_page(output: str, page, config) -> str:
         return output
     button = (
         '<button type="button" class="md-header__button md-icon tx-about-button" popovertarget="tx-about" '
-        f'title="About this tutorial" aria-label="About this tutorial">{INFO_ICON}</button>'
+        f'title="About this tutorial" aria-label="About this tutorial">About</button>'
     )
-    output = output.replace(PALETTE, button + PALETTE, 1)
+    # Inside the light/dark switch's form: one control group, laid out and
+    # spaced by the same flex box, whatever Material does around it.
+    output = output.replace(PALETTE, PALETTE + button, 1)
     return output.replace("</body>", _panel + "</body>", 1)

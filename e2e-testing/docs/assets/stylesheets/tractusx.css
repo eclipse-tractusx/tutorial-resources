@@ -131,7 +131,7 @@
   margin: 1.2em 0;
   overflow: hidden;
   border: 1px solid var(--tx-line);
-  border-radius: 0.6rem;
+  border-radius: 0.4rem;
   background-color: var(--md-default-bg-color);
 }
 
@@ -153,7 +153,7 @@
   margin: 0;
   padding: 0 0.4rem;
   border: 1px solid var(--tx-line-strong);
-  border-radius: 0.4rem;
+  border-radius: 0.2rem;
   background: var(--md-default-bg-color);
   color: var(--md-default-fg-color--light);
   font-family: var(--md-text-font-family);
@@ -272,7 +272,7 @@
   min-width: 0;
   padding: 0.75rem 1rem;
   border: 1px solid var(--tx-line);
-  border-radius: 0.75rem;
+  border-radius: 0.25rem;
   background: var(--tx-card);
   color: var(--md-default-fg-color);
   box-shadow: 0 1px 2px rgb(0 0 0 / 6%);
@@ -303,7 +303,7 @@
   width: 2rem;
   height: 2rem;
   padding: 0.4rem;
-  border-radius: 50%;
+  border-radius: 0.2rem;
   background: var(--tx-soft);
   fill: var(--tx-orange-dark);
   transition: background-color 0.2s, fill 0.2s, transform 0.2s;
@@ -360,7 +360,7 @@
   gap: 0.35rem;
   padding: 0.4rem 0.8rem;
   border: 1px solid var(--tx-line);
-  border-radius: 999px;
+  border-radius: 0.25rem;
   color: var(--md-default-fg-color--light);
   font-size: 0.68rem;
   font-weight: 700;
@@ -406,7 +406,7 @@
    invisible on the dark scheme. Outline it in the text colour instead. */
 
 .md-typeset .md-button {
-  border-radius: 0.6rem;
+  border-radius: 0.25rem;
   transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
 }
 
@@ -451,10 +451,42 @@
   margin-left: 0.5rem;
 }
 
-/* The light/dark switch goes last, after the repository. */
+/* The header's controls: "About this tutorial" and the light/dark switch sit
+   together, last in the header, after the repository. Every icon button is
+   the same 1.8rem target, centred, with a soft hover. */
 .md-header__option[data-md-component="palette"] {
   order: 1;
-  margin-left: 0.4rem;
+  align-items: center;
+  align-self: center;
+  gap: 0.4rem;
+  margin: 0 0.2rem 0 0.6rem;
+}
+
+.md-header__option[data-md-component="palette"] .md-header__button {
+  box-sizing: border-box;
+  width: 1.8rem;
+  height: 1.8rem;
+  margin: 0;
+  padding: 0.3rem;
+  border-radius: 0.2rem;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.md-header__option[data-md-component="palette"] .md-header__button svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.md-header__option[data-md-component="palette"] .md-header__button:hover,
+.md-header__option[data-md-component="palette"] .md-header__button:focus-visible {
+  background: rgb(255 255 255 / 12%);
+  color: var(--tx-orange);
+  opacity: 1;
+}
+
+.tx-about-button:popover-open,
+.tx-about-button[aria-expanded="true"] {
+  color: var(--tx-orange);
 }
 
 @media screen and (min-width: 60em) {
@@ -517,7 +549,7 @@
 @media screen and (min-width: 60em) {
   .md-search__form {
     border: 1px solid rgb(255 255 255 / 35%);
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     transition: border-color 0.2s, background-color 0.2s;
   }
 
@@ -527,16 +559,12 @@
 
   [data-md-toggle="search"]:checked ~ .md-header .md-search__form {
     border-color: var(--tx-orange);
-    border-radius: 0.5rem 0.5rem 0 0;
+    border-radius: 0.25rem 0.25rem 0 0;
   }
 }
 
 /* "About this tutorial": the info button in the header, left of the theme
    switch, and the panel it opens (hooks/about.py). */
-.tx-about-button {
-  order: 1;
-}
-
 .tx-about {
   position: fixed;
   inset: 3.2rem 0.8rem auto auto;
@@ -546,7 +574,7 @@
   padding: 1rem 1.2rem 1.1rem;
   overflow: auto;
   border: 1px solid var(--tx-line-strong);
-  border-radius: 0.8rem;
+  border-radius: 0.4rem;
   background: var(--md-default-bg-color);
   color: var(--md-default-fg-color);
   box-shadow: 0 0.8rem 2rem rgb(0 0 0 / 25%);
@@ -574,7 +602,7 @@
 .tx-about__close {
   width: 1.6rem;
   height: 1.6rem;
-  border-radius: 50%;
+  border-radius: 0.2rem;
   color: var(--md-default-fg-color--light);
   font-size: 1.1rem;
   line-height: 1;
@@ -665,4 +693,64 @@
   padding-top: 0.7rem;
   border-top: 1px solid var(--tx-line);
   color: var(--md-default-fg-color--light);
+}
+
+/* The menu and search icons get the same 1.8rem target. */
+.md-header__inner > label.md-header__button.md-icon {
+  box-sizing: border-box;
+  width: 1.8rem;
+  height: 1.8rem;
+  margin: 0.2rem;
+  padding: 0.3rem;
+  border-radius: 0.2rem;
+  transition: background-color 150ms ease;
+}
+
+.md-header__inner > label.md-header__button.md-icon svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.md-header__inner > label.md-header__button.md-icon:hover {
+  background: rgb(255 255 255 / 12%);
+}
+
+/* Phones: a smaller title that fits, and breathing room at the right edge. */
+@media screen and (max-width: 44.9375em) {
+  .md-header {
+    height: 3rem;
+  }
+
+  .md-header__inner {
+    align-items: center;
+    height: 3rem;
+    padding: 0 0.4rem;
+  }
+
+  .md-header__title {
+    margin-left: 0.3rem;
+    font-size: 0.8rem;
+  }
+
+  .md-header__option[data-md-component="palette"] {
+    margin: 0 0.2rem;
+  }
+}
+
+/* The About button is a text label: a thin outline, a low radius, no pill. */
+.md-header__option[data-md-component="palette"] .md-header__button.tx-about-button {
+  width: auto;
+  padding: 0 0.6rem;
+  border: 1px solid rgb(255 255 255 / 45%);
+  border-radius: 0.15rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  height: 1.6rem;
+}
+.md-header__option[data-md-component="palette"] .md-header__button.tx-about-button:hover,
+.md-header__option[data-md-component="palette"] .md-header__button.tx-about-button:focus-visible,
+.tx-about-button:popover-open {
+  border-color: var(--tx-orange);
 }
