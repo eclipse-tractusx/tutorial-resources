@@ -439,6 +439,12 @@
     margin: 0.2rem 0 0.2rem 0.2rem;
     padding: 0.3rem;
   }
+
+  /* The title close to the logo. [dir] outweighs Material's own
+     [dir=ltr] .md-header__title margin of 1rem. */
+  [dir] .md-header__title {
+    margin-left: 0.2rem;
+  }
 }
 
 .md-header__button.md-logo img,
