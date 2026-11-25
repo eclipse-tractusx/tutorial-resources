@@ -41,20 +41,26 @@ import subprocess
 import sys
 from collections import Counter
 from datetime import date
+from pathlib import Path
 from urllib.error import URLError
 from urllib.request import Request, urlopen
 
 REPOSITORY = "eclipse-tractusx/tutorial-resources"
+ROOT = Path(__file__).resolve().parents[2]
 SHOWN_AUTHORS = 5
 
-CARD = re.compile(r'<li [^>]*data-path="(?P<path>[^"]+)"[^>]*>.*?\n      </li>', re.S)
+# A card runs from its <li data-path=...> to the </li> at the same indentation
+# (the lists inside a card, its chips and authors, are indented deeper).
+CARD = re.compile(
+    r'^(?P<indent>[ ]*)<li [^>]*data-path="(?P<path>[^"]+)"[^>]*>.*?\n(?P=indent)</li>', re.S | re.M
+)
 TIME = '<time class="{kind}" datetime="{iso}">{text}</time>'
 
 
 def commit_dates(path: str) -> list[str]:
     out = subprocess.run(
         ["git", "log", "--format=%as", "--", path],
-        check=True, capture_output=True, text=True,
+        cwd=ROOT, check=True, capture_output=True, text=True,
     ).stdout.split()
     return out  # newest first
 

@@ -574,7 +574,7 @@
 }
 
 /* "About this tutorial": the info button in the header, left of the theme
-   switch, and the panel it opens (hooks/about.py). */
+   switch, and the panel it opens (pages/theme/hooks/about.py). */
 .tx-about {
   position: fixed;
   inset: 3.2rem 0.8rem auto auto;

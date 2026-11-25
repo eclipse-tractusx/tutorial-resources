@@ -38,7 +38,7 @@ whenever `main` changes:
 
 | Address | Built from |
 | --- | --- |
-| `/` | [`pages/index.html`](pages/index.html) |
+| `/` | [`pages/index.html`](pages/index.html), with MkDocs ([`pages/mkdocs.yml`](pages/mkdocs.yml)) |
 | `/e2e-testing/` | [`e2e-testing/`](e2e-testing/), with MkDocs |
 | `/policy-playground/` | [`edc-policy-playground/`](edc-policy-playground/), with Angular |
 | `/edc-policy-playground/`, `/mxd/`, `/dpp-tutorial/`, `/icc-irs-challenges/`, `/migration-guides/` | The Markdown in those folders, listed in [`pages/markdown-sites.yml`](pages/markdown-sites.yml) |
@@ -49,19 +49,35 @@ with the Tractus-X look: its `README.md` is the home page (a contents page is ma
 is none), the other Markdown files and pictures become pages, and links to anything else (a
 Postman collection, Terraform, test data) open the file on GitHub. `deprecated: true` puts a
 note on every page; `app:` gives the home page a "Try the app" button for a web app built
-from the tutorial, over a blurred screenshot of the app when `app_image:` names one.
+from the tutorial, over a blurred screenshot of the app when `app_image:` names one;
+`version:` and `history:` fill its About panel.
+
+Every page of the website has the same header and footer: the logo (back to the list of
+tutorials), the site's name, search, the repository, an **About** button and the light/dark
+switch. They come from one theme, [`pages/theme/`](pages/theme/), that the home page, the E2E
+tutorial and the Markdown sites all build with:
+
+| File | What it is |
+| --- | --- |
+| [`mkdocs-base.yml`](pages/theme/mkdocs-base.yml) | The shared settings; a site's `mkdocs.yml` starts with `INHERIT: ../pages/theme/mkdocs-base.yml` |
+| [`overrides/assets/tractusx/`](pages/theme/overrides/assets/tractusx/) | The Tractus-X stylesheet, logo and favicon |
+| [`hooks/about.py`](pages/theme/hooks/about.py) | The About panel: version and history (`extra.tutorial`), dates from git, authors from GitHub |
 
 To preview a site on your machine:
 
 ```shell
+pip install -r e2e-testing/requirements.txt
+
+# The home page, on http://localhost:8000
+cd pages && mkdocs serve
+
 # E2E testing tutorial, on http://localhost:8000
-cd e2e-testing && pip install -r requirements.txt && mkdocs serve
+cd e2e-testing && mkdocs serve
 
 # Policy Playground, on http://localhost:4200
 cd edc-policy-playground && npm ci && npm start
 
 # The Markdown tutorials, into _site/ (open _site/mxd/index.html)
-pip install -r e2e-testing/requirements.txt
 python .github/scripts/build_markdown_sites.py --out _site
 ```
 
@@ -71,7 +87,7 @@ python .github/scripts/build_markdown_sites.py --out _site
    long it takes.
 2. Add a row to the [Tutorials](#tutorials) table above.
 3. Add a card to [`pages/index.html`](pages/index.html), so it shows on the website. Put its
-   picture in [`pages/media/`](pages/media/), with a `.license` file next to it. Set
+   picture in [`pages/home/media/`](pages/home/media/), with a `.license` file next to it. Set
    `data-path` to its folder: when the site is built, the card's Added and Updated dates and
    its authors (the GitHub accounts with commits in that folder) are filled in from the
    history. Give it version 1.0 and add it to [Versions](#versions). Set its
@@ -79,7 +95,8 @@ python .github/scripts/build_markdown_sites.py --out _site
 4. If it is only Markdown, add its folder to
    [`pages/markdown-sites.yml`](pages/markdown-sites.yml) and point the card to `<folder>/`. If it
    has a site or a web app of its own, build it into its own folder of `_site` in
-   [`pages.yml`](.github/workflows/pages.yml) and point the card there.
+   [`pages.yml`](.github/workflows/pages.yml) and point the card there. A MkDocs site starts its
+   `mkdocs.yml` with `INHERIT: ../pages/theme/mkdocs-base.yml`, so it gets the same header.
 
 ## Levels
 
@@ -98,7 +115,9 @@ Every tutorial has its own version, separate from the versions of the software i
 starts at 1.0 when it is published. The minor number goes up when the steps change, for
 example a new chapter or an update for a new Tractus-X release. The major number goes up when
 the tutorial is rebuilt. Change it on the tutorial's card in
-[`pages/index.html`](pages/index.html) and add a line below.
+[`pages/index.html`](pages/index.html), in its About panel (`version` and `history` in
+[`pages/markdown-sites.yml`](pages/markdown-sites.yml), or `extra.tutorial` in its own
+`mkdocs.yml`), and add a line below.
 
 | Tutorial | Version | History |
 | --- | --- | --- |

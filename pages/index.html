@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <!--
   Copyright (c) 2026 Contributors to the Eclipse Foundation
 
@@ -18,1002 +17,315 @@
   SPDX-License-Identifier: Apache-2.0
 -->
 <!--
-  The home page of https://eclipse-tractusx.github.io/tutorial-resources/.
-  .github/workflows/pages.yml publishes it at the root, next to the tutorial
-  sites it links to: e2e-testing/ and policy-playground/, and one site per
-  Markdown tutorial listed in markdown-sites.yml. To add a tutorial, add a
-  card below.
+  The body of the home page of https://eclipse-tractusx.github.io/tutorial-resources/.
+  pages/mkdocs.yml builds it with the website's shared theme (pages/theme), so
+  its header, footer and light/dark switch are those of every tutorial site;
+  pages/hooks/home.py puts this file in as the page, and its styles are in
+  pages/home/stylesheets/home.css. To add a tutorial, add a card below.
 -->
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Eclipse Tractus-X Tutorials</title>
-  <meta name="description" content="Hands-on tutorials for Eclipse Tractus-X: run a dataspace, write connector policies, give your product an end-to-end test.">
-  <link rel="icon" href="e2e-testing/assets/favicon.ico">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap">
-  <style>
-    :root {
-      --bg: #ffffff;
-      --fg: #111111;
-      --muted: #5c5c5c;
-      --line: #e3e3e3;
-      --line-strong: #c9c9c9;
-      --chip: #f1f1f1;
-      --warn-bg: #fff1d6;
-      --warn-fg: #8a4b00;
-      --card: #ffffff;
-      --soft: #fff6e8;
-      --orange: #faa023;
-      --orange-dark: #c37304;
-      --green: #b3cb2d;
-      color-scheme: light;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0b0b0b;
-        --fg: #f2f2f2;
-        --muted: #a8a8a8;
-        --line: #2a2a2a;
-        --line-strong: #444444;
-        --chip: #1f1f1f;
-        --warn-bg: #3a2600;
-        --warn-fg: #ffc266;
-        --card: #141414;
-        --soft: #2a1f0d;
-        --orange-dark: #fbb24d;
-        color-scheme: dark;
-      }
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--fg);
-      font-family: Manrope, system-ui, -apple-system, "Segoe UI", sans-serif;
-      line-height: 1.55;
-    }
-
-    header.top {
-      background: #000000;
-      border-bottom: 1px solid var(--orange);
-    }
-
-    .top__inner {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      max-width: 72rem;
-      margin: 0 auto;
-      padding: 0.9rem 1.5rem;
-      color: #ffffff;
-      font-weight: 700;
-    }
-
-    .top__inner img { height: 1.9rem; width: auto; }
-
-    .top__inner > span { white-space: nowrap; }
-
-    /* The repository, as the tutorial sites show it: icon, name, stars and forks. */
-    .source {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-left: auto;
-      color: #ffffff;
-      font-size: 0.72rem;
-      font-weight: 600;
-      line-height: 1.3;
-      text-decoration: none;
-      opacity: 0.85;
-      transition: opacity 0.2s;
-    }
-
-    .source:hover { opacity: 1; }
-    .source:focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; border-radius: 0.3rem; }
-
-    .source__icon svg { display: block; width: 1.5rem; height: 1.5rem; fill: currentcolor; }
-
-    .source__name { display: block; font-size: 0.8rem; white-space: nowrap; }
-
-    .source__facts {
-      display: flex;
-      gap: 0.6rem;
-      margin: 0.1rem 0 0;
-      padding: 0;
-      list-style: none;
-      font-weight: 500;
-      opacity: 0.8;
-    }
-
-    .source__facts[hidden] { display: none; }
-    .source__facts li { display: inline-flex; align-items: center; gap: 0.2rem; }
-    .source__facts svg { width: 0.75rem; height: 0.75rem; fill: currentcolor; }
-
-    /* On a phone the title needs the room: the icon and the counts stay. */
-    @media (max-width: 40rem) {
-      .source__name { display: none; }
-      .source__facts { margin: 0; }
-    }
-
-    main {
-      max-width: 72rem;
-      margin: 0 auto;
-      padding: 3.5rem 1.5rem 4rem;
-    }
-
-    .intro { max-width: 44rem; }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(2rem, 4.5vw, 3rem);
-      font-weight: 800;
-      line-height: 1.12;
-      letter-spacing: -0.01em;
-    }
-
-    h1::after {
-      content: "";
-      display: block;
-      width: 4.5rem;
-      height: 0.3rem;
-      margin-top: 1rem;
-      border-radius: 0.2rem;
-      background: linear-gradient(90deg, var(--orange), var(--green));
-    }
-
-    .eyebrow {
-      display: block;
-      margin-bottom: 0.6rem;
-      color: var(--orange-dark);
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .intro p {
-      margin: 1.2rem 0 0;
-      color: var(--muted);
-      font-size: 1.08rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
-      gap: 1.2rem;
-      margin-top: 3rem;
-      padding: 0;
-      list-style: none;
-    }
-
-    .card {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      border: 1px solid var(--line);
-      border-radius: 0.5rem;
-      background: var(--card);
-      box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-    }
-
-    .card:hover,
-    .card:focus-within {
-      border-color: var(--orange);
-      box-shadow: 0 10px 28px rgb(250 160 35 / 16%);
-      transform: translateY(-2px);
-    }
-
-    .card__body {
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-      gap: 0.6rem;
-      padding: 1.2rem 1.4rem;
-    }
-
-    .card--featured .card__body { background: linear-gradient(180deg, var(--soft), var(--card) 70%); border-radius: 0 0 0.5rem 0.5rem; }
-
-    /* The picture on top of each card: a screenshot, a logo or an icon. */
-    .card__media {
-      display: grid;
-      place-items: center;
-      aspect-ratio: 16 / 9;
-      overflow: hidden;
-      border-bottom: 1px solid var(--line);
-      border-radius: 0.5rem 0.5rem 0 0;
-      background: radial-gradient(circle at 30% 20%, var(--soft), var(--card) 75%);
-    }
-
-    .card__media img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top left;
-      transition: transform 0.4s;
-    }
-
-    .card:hover .card__media img { transform: scale(1.03); }
-
-    .card__media--logo { position: relative; }
-    .card__media--logo picture { display: contents; }
-    .card__media--logo img { position: absolute; inset: 6%; width: 88%; height: 88%; object-fit: contain; object-position: center; }
-
-    .card__media--icon svg {
-      width: 4.5rem;
-      height: 4.5rem;
-      fill: var(--orange-dark);
-      transition: transform 0.4s;
-    }
-
-    .card:hover .card__media--icon svg { transform: scale(1.06); }
-
-    .tag {
-      align-self: flex-start;
-      padding: 0.15rem 0.6rem;
-      border: 1px solid var(--line);
-      border-radius: 0.2rem;
-      color: var(--muted);
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .tag--site { border-color: var(--orange); color: var(--orange-dark); }
-
-    /* The tag and the difficulty, on one line: one to three stars. */
-    .card__kicker {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.4rem 0.8rem;
-    }
-
-    .card__kicker .tag { align-self: auto; }
-
-    .level {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      color: var(--muted);
-      font-size: 0.78rem;
-      font-weight: 700;
-    }
-
-    .level__stars { display: inline-flex; gap: 0.05rem; }
-    .level svg { width: 1rem; height: 1rem; fill: var(--line-strong); }
-    .level svg.on { fill: var(--orange); }
-
-    .card h2 {
-      margin: 0.2rem 0 0;
-      font-size: 1.2rem;
-      font-weight: 800;
-      line-height: 1.3;
-    }
-
-    /* The whole card is the link; the title carries it. */
-    .card h2 a { color: inherit; text-decoration: none; }
-    .card h2 a::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
-    .card h2 a:focus-visible { outline: none; }
-    .card:has(a:focus-visible) { outline: 2px solid var(--orange); outline-offset: 2px; }
-
-    .card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
-
-    /* The card's button: the full width of the card, at the bottom. The whole
-       card is the link, so it lights up when the card is hovered or focused. */
-    .go {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.6rem;
-      margin-top: auto;
-      padding: 0.75rem 1rem;
-      border: 1px solid var(--orange);
-      border-radius: 0.25rem;
-      background: transparent;
-      color: var(--orange-dark);
-      font-size: 0.92rem;
-      font-weight: 700;
-      transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-    }
-
-    .go svg { width: 1.15rem; height: 1.15rem; fill: currentcolor; transition: transform 0.2s; }
-
-    .card:hover .go,
-    .card:focus-within .go {
-      background: var(--orange);
-      color: #000000;
-      box-shadow: 0 6px 16px rgb(250 160 35 / 30%);
-    }
-
-    /* Only the card's own button moves its arrow; a second button's icon stays put. */
-    .card:hover .go:not(.go--secondary) svg,
-    .card:focus-within .go:not(.go--secondary) svg { transform: translateX(4px); }
-
-    .card--featured .go:not(.go--secondary) { background: var(--orange); color: #000000; }
-    .card--featured:hover .go:not(.go--secondary) { background: var(--orange-dark); color: #000000; }
-
-    /* Search and filters. Shown only with JavaScript; without it every card shows. */
-    .controls {
-      display: grid;
-      gap: 1rem;
-      margin-top: 2.5rem;
-    }
-
-    .search {
-      position: relative;
-      display: flex;
-      align-items: center;
-      width: 100%;
-    }
-
-    .search svg {
-      position: absolute;
-      left: 0.9rem;
-      width: 1.2rem;
-      height: 1.2rem;
-      fill: var(--muted);
-      pointer-events: none;
-    }
-
-    .search input {
-      width: 100%;
-      padding: 0.8rem 2.8rem 0.8rem 2.8rem;
-      border: 1px solid var(--line-strong);
-      border-radius: 0.25rem;
-      background: var(--card);
-      color: var(--fg);
-      font: inherit;
-      font-size: 1rem;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .search input::placeholder { color: var(--muted); }
-
-    .search input:focus {
-      outline: none;
-      border-color: var(--orange);
-      box-shadow: 0 0 0 3px rgb(250 160 35 / 25%);
-    }
-
-    .search kbd {
-      position: absolute;
-      right: 0.8rem;
-      padding: 0.05rem 0.45rem;
-      border: 1px solid var(--line-strong);
-      border-radius: 0.35rem;
-      color: var(--muted);
-      font: inherit;
-      font-size: 0.75rem;
-    }
-
-    .search input:focus ~ kbd,
-    .search input:not(:placeholder-shown) ~ kbd { display: none; }
-
-    .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-
-    .filter {
-      padding: 0.45rem 0.95rem;
-      border: 1px solid var(--line-strong);
-      border-radius: 0.25rem;
-      background: transparent;
-      color: var(--fg);
-      font: inherit;
-      font-size: 0.88rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.2s, border-color 0.2s, color 0.2s;
-    }
-
-    .filter:hover { border-color: var(--orange); }
-    .filter:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
-
-    .filter[aria-pressed="true"] {
-      border-color: var(--orange);
-      background: var(--orange);
-      color: #000000;
-    }
-
-    .count { margin: 0; color: var(--muted); font-size: 0.88rem; }
-
-    .controls + .grid { margin-top: 1.5rem; }
-
-    .grid > li[hidden] { display: none; }
-
-    .empty {
-      display: grid;
-      justify-items: start;
-      gap: 0.8rem;
-      margin-top: 1.5rem;
-      padding: 2rem;
-      border: 1px dashed var(--line-strong);
-      border-radius: 0.5rem;
-      color: var(--muted);
-    }
-
-    .empty[hidden] { display: none; }
-    .empty p { margin: 0; }
-
-    /* Who a tutorial is for, on each card. */
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-      margin: 0.2rem 0 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .chips li {
-      padding: 0.1rem 0.55rem;
-      border-radius: 0.2rem;
-      background: var(--chip);
-      color: var(--muted);
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.6rem;
-    }
-
-
-    /* When a tutorial was added and last changed, and its version. */
-    .facts {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.7rem 1rem;
-      margin: auto 0 0;
-      padding-top: 0.9rem;
-      border-top: 1px solid var(--line);
-      font-size: 0.85rem;
-    }
-
-    .facts div { display: grid; align-content: start; gap: 0.15rem; }
-
-    .facts dt {
-      color: var(--muted);
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .facts dd { margin: 0; font-weight: 600; }
-    .facts + .go,
-    .facts + .actions { margin-top: 1rem; }
-
-    /* Two buttons: the card's own, and a second one with a link of its own
-       (the app), above the card's link. */
-    .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: auto; }
-    .actions .go { flex: 1 1 auto; margin-top: 0; padding-inline: 0.85rem; font-size: 0.88rem; white-space: nowrap; }
-
-    .go--secondary {
-      position: relative;
-      z-index: 2;
-      justify-content: center;
-      gap: 0.4rem;
-      border-color: var(--line-strong);
-      color: var(--fg);
-      text-decoration: none;
-    }
-
-    .card:hover .go--secondary,
-    .card:focus-within .go--secondary { background: transparent; color: var(--fg); box-shadow: none; }
-
-    .card .go--secondary:hover,
-    .card .go--secondary:focus-visible {
-      border-color: var(--orange);
-      background: var(--soft);
-      color: var(--fg);
-      outline: none;
-    }
-
-    /* Over the second button, only it lights up. */
-    .card:has(.go--secondary:hover) .go:not(.go--secondary) { background: transparent; color: var(--orange-dark); box-shadow: none; }
-    .card--featured:has(.go--secondary:hover) .go:not(.go--secondary) { background: var(--orange); color: #000000; }
-    .card:has(.go--secondary:hover) .go svg { transform: none; }
-
-    /* Authors: GitHub avatars, overlapping a little, most commits first. */
-    .facts__authors { grid-column: 1 / -1; }
-    .authors ul { display: flex; margin: 0; padding: 0 0 0 0.3rem; list-style: none; }
-    .authors li { margin-left: -0.3rem; }
-    .authors a { position: relative; z-index: 1; display: block; border-radius: 50%; }
-    .authors a:hover, .authors a:focus-visible { z-index: 2; outline: 2px solid var(--orange); outline-offset: 1px; }
-    .authors img {
-      display: block;
-      width: 1.75rem;
-      height: 1.75rem;
-      border: 2px solid var(--card);
-      border-radius: 50%;
-      background: var(--chip);
-    }
-    .authors .more a {
-      display: grid;
-      place-items: center;
-      width: 1.75rem;
-      height: 1.75rem;
-      border: 2px solid var(--card);
-      background: var(--chip);
-      color: var(--muted);
-      font-size: 0.68rem;
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    .sort {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      color: var(--muted);
-      font-size: 0.82rem;
-      font-weight: 600;
-    }
-
-    .sort select {
-      padding: 0.3rem 1.8rem 0.3rem 0.6rem;
-      border: 1px solid var(--line-strong);
-      border-radius: 0.25rem;
-      background: var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23999' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 0.4rem center / 1.1rem;
-      color: var(--fg);
-      font: inherit;
-      appearance: none;
-      cursor: pointer;
-    }
-
-    .sort select:hover { border-color: var(--orange); }
-    .sort select:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
-
-    .meta__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
-
-    .toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.3rem 0.7rem;
-      border: 1px solid var(--line-strong);
-      border-radius: 0.25rem;
-      background: transparent;
-      color: var(--muted);
-      font: inherit;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .toggle::before {
-      content: "";
-      width: 0.8rem;
-      height: 0.8rem;
-      border: 1.5px solid currentcolor;
-      border-radius: 0.2rem;
-    }
-
-    .toggle[aria-pressed="true"] { border-color: var(--orange); color: var(--fg); }
-    .toggle[aria-pressed="true"]::before { border-color: var(--orange); background: var(--orange); box-shadow: inset 0 0 0 2px var(--card); }
-    .toggle:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
-
-    /* Deprecated tutorials: a badge on the picture, the picture in grey. */
-    .card__media { position: relative; }
-
-    .badge {
-      position: absolute;
-      top: 0.7rem;
-      left: 0.7rem;
-      z-index: 1;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.25rem 0.6rem 0.25rem 0.5rem;
-      border-radius: 0.25rem;
-      background: var(--warn-bg);
-      color: var(--warn-fg);
-      font-size: 0.75rem;
-      font-weight: 700;
-      box-shadow: 0 2px 6px rgb(0 0 0 / 20%);
-    }
-
-    .badge svg { width: 0.95rem; height: 0.95rem; fill: currentcolor; }
-
-    .card--deprecated .card__media img { filter: grayscale(0.85); opacity: 0.75; }
-    .card--deprecated:hover .card__media img { filter: none; opacity: 1; }
-
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
-    }
-
-    footer {
-      max-width: 72rem;
-      margin: 0 auto;
-      padding: 1.5rem;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 0.82rem;
-    }
-
-    footer a { color: inherit; }
-  </style>
-</head>
-<body>
-  <header class="top">
-    <div class="top__inner">
-      <img src="e2e-testing/assets/logo_tractus-x.svg" alt="">
-      <span>Eclipse Tractus-X Tutorials</span>
-      <a class="source" href="https://github.com/eclipse-tractusx/tutorial-resources" title="Go to repository" aria-label="eclipse-tractusx/tutorial-resources on GitHub">
-        <span class="source__icon"><svg viewBox="0 0 448 512" aria-hidden="true"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg></span>
-        <span>
-          <span class="source__name">eclipse-tractusx/tutorial-resources</span>
-          <ul class="source__facts" id="repo-facts" hidden>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><span id="repo-stars"></span><span class="visually-hidden"> stars</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3a3 3 0 0 1 1 5.83v.67a2.5 2.5 0 0 0 2.5 2.5h5A2.5 2.5 0 0 0 17 9.5v-.67a3 3 0 1 1 2 0v.67a4.5 4.5 0 0 1-4.5 4.5H13v1.17a3 3 0 1 1-2 0V14H9.5A4.5 4.5 0 0 1 5 9.5v-.67A3 3 0 0 1 6 3"/></svg><span id="repo-forks"></span><span class="visually-hidden"> forks</span></li>
-          </ul>
-        </span>
-      </a>
+  <div class="intro">
+    <span class="eyebrow">Learn Tractus-X by doing</span>
+    <h1>Eclipse Tractus-X Tutorials</h1>
+    <p>Hands-on tutorials from the Eclipse Tractus-X community. Pick one: each opens on its own site, and a web app has a button to try it right away.</p>
+  </div>
+
+  <div class="controls" id="controls" hidden>
+    <label class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"/></svg>
+      <span class="visually-hidden">Search the tutorials</span>
+      <input type="search" id="q" placeholder="Search tutorials: connector, Kubernetes, AI…" autocomplete="off">
+      <kbd aria-hidden="true">/</kbd>
+    </label>
+    <div class="filters" role="group" aria-label="Show tutorials for">
+      <button type="button" class="filter" data-filter="" aria-pressed="true">All</button>
+      <button type="button" class="filter" data-filter="community-days" aria-pressed="false">Community Days</button>
+      <button type="button" class="filter" data-filter="developers" aria-pressed="false">Developers</button>
+      <button type="button" class="filter" data-filter="operators" aria-pressed="false">Operators</button>
+      <button type="button" class="filter" data-filter="ai" aria-pressed="false">With AI</button>
+      <button type="button" class="filter" data-filter="start" aria-pressed="false">Getting started</button>
     </div>
-  </header>
-
-  <main>
-    <div class="intro">
-      <span class="eyebrow">Learn Tractus-X by doing</span>
-      <h1>Eclipse Tractus-X Tutorials</h1>
-      <p>Hands-on tutorials from the Eclipse Tractus-X community. Pick one: each opens on its own site, and a web app has a button to try it right away.</p>
-    </div>
-
-    <div class="controls" id="controls" hidden>
-      <label class="search">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"/></svg>
-        <span class="visually-hidden">Search the tutorials</span>
-        <input type="search" id="q" placeholder="Search tutorials: connector, Kubernetes, AI…" autocomplete="off">
-        <kbd aria-hidden="true">/</kbd>
-      </label>
-      <div class="filters" role="group" aria-label="Show tutorials for">
-        <button type="button" class="filter" data-filter="" aria-pressed="true">All</button>
-        <button type="button" class="filter" data-filter="community-days" aria-pressed="false">Community Days</button>
-        <button type="button" class="filter" data-filter="developers" aria-pressed="false">Developers</button>
-        <button type="button" class="filter" data-filter="operators" aria-pressed="false">Operators</button>
-        <button type="button" class="filter" data-filter="ai" aria-pressed="false">With AI</button>
-        <button type="button" class="filter" data-filter="start" aria-pressed="false">Getting started</button>
+    <div class="meta">
+      <p class="count" id="count" aria-live="polite"></p>
+      <div class="meta__actions">
+        <label class="sort">Difficulty
+          <select id="level">
+            <option value="">Any</option>
+            <option value="beginner">★ Beginner</option>
+            <option value="intermediate">★★ Intermediate</option>
+            <option value="advanced">★★★ Advanced</option>
+          </select>
+        </label>
+        <label class="sort">Sort by
+          <select id="sort">
+            <option value="">Recommended</option>
+            <option value="easiest">Easiest first</option>
+            <option value="newest">Newest first</option>
+            <option value="updated">Recently updated</option>
+            <option value="oldest">Oldest first</option>
+            <option value="name">Name (A–Z)</option>
+          </select>
+        </label>
+        <button type="button" class="toggle" id="hide-deprecated" aria-pressed="false">Hide deprecated</button>
       </div>
-      <div class="meta">
-        <p class="count" id="count" aria-live="polite"></p>
-        <div class="meta__actions">
-          <label class="sort">Difficulty
-            <select id="level">
-              <option value="">Any</option>
-              <option value="beginner">★ Beginner</option>
-              <option value="intermediate">★★ Intermediate</option>
-              <option value="advanced">★★★ Advanced</option>
-            </select>
-          </label>
-          <label class="sort">Sort by
-            <select id="sort">
-              <option value="">Recommended</option>
-              <option value="easiest">Easiest first</option>
-              <option value="newest">Newest first</option>
-              <option value="updated">Recently updated</option>
-              <option value="oldest">Oldest first</option>
-              <option value="name">Name (A–Z)</option>
-            </select>
-          </label>
-          <button type="button" class="toggle" id="hide-deprecated" aria-pressed="false">Hide deprecated</button>
+    </div>
+  </div>
+
+  <ul class="grid" id="grid">
+    <li data-path="e2e-testing" data-level="1" data-order="1" data-filters="community-days developers ai" data-keywords="tck testlab test suite ide github actions pull request e2e end-to-end trg conformance">
+      <article class="card card--featured">
+        <div class="card__media card__media--logo">
+          <img class="tx-only-light" src="media/testlab-logo-light.png" alt="Eclipse Tractus-X SDK TestLab logo">
+          <img class="tx-only-dark" src="media/testlab-logo-dark.png" alt="Eclipse Tractus-X SDK TestLab logo">
         </div>
-      </div>
-    </div>
-
-    <ul class="grid" id="grid">
-      <li data-path="e2e-testing" data-level="1" data-order="1" data-filters="community-days developers ai" data-keywords="tck testlab test suite ide github actions pull request e2e end-to-end trg conformance">
-        <article class="card card--featured">
-          <div class="card__media card__media--logo">
-            <picture>
-              <source media="(prefers-color-scheme: dark)" srcset="media/testlab-logo-dark.png">
-              <img src="media/testlab-logo-light.png" alt="Eclipse Tractus-X SDK TestLab logo">
-            </picture>
-          </div>
-          <div class="card__body">
-            <div class="card__kicker"><span class="tag tag--site">Tutorial site</span><span class="level" role="img" aria-label="Difficulty: Beginner, 1 of 3" title="Difficulty: Beginner"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Beginner</span></span></div>
-            <h2><a href="e2e-testing/">E2E Tests in Eclipse Tractus-X</a></h2>
-            <p>Create automated tests for Eclipse Tractus-X products using AI, with the Eclipse Tractus-X TestLab testing framework. Build an end-to-end test in about an hour in the Test Suite IDE, and run it on every pull request.</p>
-            <ul class="chips" aria-label="For"><li>Community Days 2026</li><li>Developers</li><li>With AI</li></ul>
-            <dl class="facts">
-              <div><dt>Added</dt><dd><time class="added" datetime="2026-11-24">Nov 2026</time></dd></div>
-              <div><dt>Updated</dt><dd><time class="updated" datetime="2026-11-25">Nov 2026</time></dd></div>
-              <div><dt>Version</dt><dd title="1.0 (Nov 2026): first published">v1.0</dd></div>
-              <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/matbmoser" title="matbmoser"><img src="https://avatars.githubusercontent.com/u/71728767?v=4&amp;s=56" alt="matbmoser" width="28" height="28" loading="lazy"></a></li></ul></dd></div>
-            </dl>
-            <span class="go">Open the tutorial <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
-          </div>
-        </article>
-      </li>
-      <li data-path="edc-policy-playground" data-level="1" data-order="2" data-filters="developers start" data-keywords="edc connector policy policies odrl access usage contract">
-        <article class="card">
-          <div class="card__media"><img src="media/policy-playground.png" alt="The Policy Playground: a policy form next to its JSON" loading="lazy"></div>
-          <div class="card__body">
-            <div class="card__kicker"><span class="tag tag--site">Web app</span><span class="level" role="img" aria-label="Difficulty: Beginner, 1 of 3" title="Difficulty: Beginner"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Beginner</span></span></div>
-            <h2><a href="edc-policy-playground/">EDC Policy Playground</a></h2>
-            <p>Put together Tractus-X connector policies in the browser and see the policy JSON they become.</p>
-            <ul class="chips" aria-label="For"><li>Developers</li><li>Getting started</li></ul>
-            <dl class="facts">
-              <div><dt>Added</dt><dd><time class="added" datetime="2023-08-08">Aug 2023</time></dd></div>
-              <div><dt>Updated</dt><dd><time class="updated" datetime="2025-09-29">Sep 2025</time></dd></div>
-              <div><dt>Version</dt><dd title="1.0 (Aug 2023): first published · 1.1 (May 2024): policies for Tractus-X EDC 0.7">v1.1</dd></div>
-              <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/wolf4ood" title="wolf4ood"><img src="https://avatars.githubusercontent.com/u/98812?v=4&amp;s=56" alt="wolf4ood" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/paullatzelsperger" title="paullatzelsperger"><img src="https://avatars.githubusercontent.com/u/43503240?v=4&amp;s=56" alt="paullatzelsperger" width="28" height="28" loading="lazy"></a></li></ul></dd></div>
-            </dl>
-            <div class="actions">
-              <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
-              <a class="go go--secondary" href="policy-playground/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.14v14l11-7z"/></svg>Try the app</a>
-            </div>
-          </div>
-        </article>
-      </li>
-      <li data-path="icc-irs-challenges" data-level="2" data-order="3" data-filters="community-days developers ai" data-keywords="irs item relationship service industry core genai frontend digital twins">
-        <article class="card">
-          <div class="card__media card__media--icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"/></svg></div>
-          <div class="card__body">
-            <div class="card__kicker"><span class="tag tag--site">Guide</span><span class="level" role="img" aria-label="Difficulty: Intermediate, 2 of 3" title="Difficulty: Intermediate"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Intermediate</span></span></div>
-            <h2><a href="icc-irs-challenges/">IRS frontend challenge with GenAI</a></h2>
-            <p>Build a frontend for the Item Relationship Service with an AI assistant, in three phases: the API, the part chain, the semantic data.</p>
-            <ul class="chips" aria-label="For"><li>Community Days</li><li>Developers</li><li>With AI</li></ul>
-            <dl class="facts">
-              <div><dt>Added</dt><dd><time class="added" datetime="2024-11-19">Nov 2024</time></dd></div>
-              <div><dt>Updated</dt><dd><time class="updated" datetime="2025-01-07">Jan 2025</time></dd></div>
-              <div><dt>Version</dt><dd title="1.0 (Dec 2024): the Community Days challenge, with fixes since">v1.0</dd></div>
-              <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/ds-mwesener" title="ds-mwesener"><img src="https://avatars.githubusercontent.com/u/124587888?v=4&amp;s=56" alt="ds-mwesener" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/mkanal" title="mkanal"><img src="https://avatars.githubusercontent.com/u/100209308?v=4&amp;s=56" alt="mkanal" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/AndrYurk" title="AndrYurk"><img src="https://avatars.githubusercontent.com/u/180180790?v=4&amp;s=56" alt="AndrYurk" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/ds-jhartmann" title="ds-jhartmann"><img src="https://avatars.githubusercontent.com/u/57985712?v=4&amp;s=56" alt="ds-jhartmann" width="28" height="28" loading="lazy"></a></li></ul></dd></div>
-            </dl>
+        <div class="card__body">
+          <div class="card__kicker"><span class="tag tag--site">Tutorial site</span><span class="level" role="img" aria-label="Difficulty: Beginner, 1 of 3" title="Difficulty: Beginner"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Beginner</span></span></div>
+          <h2><a href="e2e-testing/">E2E Tests in Eclipse Tractus-X</a></h2>
+          <p>Create automated tests for Eclipse Tractus-X products using AI, with the Eclipse Tractus-X TestLab testing framework. Build an end-to-end test in about an hour in the Test Suite IDE, and run it on every pull request.</p>
+          <ul class="chips" aria-label="For"><li>Community Days 2026</li><li>Developers</li><li>With AI</li></ul>
+          <dl class="facts">
+            <div><dt>Added</dt><dd><time class="added" datetime="2026-11-24">Nov 2026</time></dd></div>
+            <div><dt>Updated</dt><dd><time class="updated" datetime="2026-11-25">Nov 2026</time></dd></div>
+            <div><dt>Version</dt><dd title="1.0 (Nov 2026): first published">v1.0</dd></div>
+            <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/matbmoser" title="matbmoser"><img src="https://avatars.githubusercontent.com/u/71728767?v=4&amp;s=56" alt="matbmoser" width="28" height="28" loading="lazy"></a></li></ul></dd></div>
+          </dl>
+          <span class="go">Open the tutorial <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+        </div>
+      </article>
+    </li>
+    <li data-path="edc-policy-playground" data-level="1" data-order="2" data-filters="developers start" data-keywords="edc connector policy policies odrl access usage contract">
+      <article class="card">
+        <div class="card__media"><img src="media/policy-playground.png" alt="The Policy Playground: a policy form next to its JSON" loading="lazy"></div>
+        <div class="card__body">
+          <div class="card__kicker"><span class="tag tag--site">Web app</span><span class="level" role="img" aria-label="Difficulty: Beginner, 1 of 3" title="Difficulty: Beginner"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Beginner</span></span></div>
+          <h2><a href="edc-policy-playground/">EDC Policy Playground</a></h2>
+          <p>Put together Tractus-X connector policies in the browser and see the policy JSON they become.</p>
+          <ul class="chips" aria-label="For"><li>Developers</li><li>Getting started</li></ul>
+          <dl class="facts">
+            <div><dt>Added</dt><dd><time class="added" datetime="2023-08-08">Aug 2023</time></dd></div>
+            <div><dt>Updated</dt><dd><time class="updated" datetime="2025-09-29">Sep 2025</time></dd></div>
+            <div><dt>Version</dt><dd title="1.0 (Aug 2023): first published · 1.1 (May 2024): policies for Tractus-X EDC 0.7">v1.1</dd></div>
+            <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/wolf4ood" title="wolf4ood"><img src="https://avatars.githubusercontent.com/u/98812?v=4&amp;s=56" alt="wolf4ood" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/paullatzelsperger" title="paullatzelsperger"><img src="https://avatars.githubusercontent.com/u/43503240?v=4&amp;s=56" alt="paullatzelsperger" width="28" height="28" loading="lazy"></a></li></ul></dd></div>
+          </dl>
+          <div class="actions">
             <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+            <a class="go go--secondary" href="policy-playground/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.14v14l11-7z"/></svg>Try the app</a>
           </div>
-        </article>
-      </li>
-      <li data-path="migration-guides" data-level="3" data-order="4" data-filters="operators" data-keywords="helm chart postgresql keycloak bitnami cloudpirates database upgrade">
-        <article class="card">
-          <div class="card__media card__media--icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.99 11 3 15l3.99 4v-3H14v-2H6.99zM21 9l-3.99-4v3H10v2h7.01v3z"/></svg></div>
-          <div class="card__body">
-            <div class="card__kicker"><span class="tag tag--site">Guide</span><span class="level" role="img" aria-label="Difficulty: Advanced, 3 of 3" title="Difficulty: Advanced"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Advanced</span></span></div>
-            <h2><a href="migration-guides/">Migration guides</a></h2>
-            <p>Move the PostgreSQL and Keycloak of a deployment from the Bitnami Helm charts to the CloudPirates charts.</p>
-            <ul class="chips" aria-label="For"><li>Operators</li></ul>
-            <dl class="facts">
-              <div><dt>Added</dt><dd><time class="added" datetime="2026-01-21">Jan 2026</time></dd></div>
-              <div><dt>Updated</dt><dd><time class="updated" datetime="2026-04-10">Apr 2026</time></dd></div>
-              <div><dt>Version</dt><dd title="1.0 (Jan 2026): PostgreSQL guide · 1.1 (Feb 2026): Keycloak guide · 1.2 (Apr 2026): PostgreSQL guide reworked">v1.2</dd></div>
-              <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/mgarciaLKS" title="mgarciaLKS"><img src="https://avatars.githubusercontent.com/u/122596907?v=4&amp;s=56" alt="mgarciaLKS" width="28" height="28" loading="lazy"></a></li></ul></dd></div>
-            </dl>
-            <span class="go">Read the guides <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
-          </div>
-        </article>
-      </li>
-      <li data-status="deprecated" data-path="mxd" data-level="2" data-order="5" data-filters="developers operators start" data-keywords="kubernetes kind terraform connector edc dataspace identityhub bdrs file transfer s3 azure edr">
-        <article class="card card--deprecated">
-          <div class="card__media">
-            <span class="badge" title="Kept for reference: it may not match the current Tractus-X release."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"/></svg>Deprecated</span>
-            <img src="media/mxd.png" alt="The MXD connectors and services running, seen in k9s" loading="lazy"></div>
-          <div class="card__body">
-            <div class="card__kicker"><span class="tag tag--site">Guide</span><span class="level" role="img" aria-label="Difficulty: Intermediate, 2 of 3" title="Difficulty: Intermediate"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Intermediate</span></span></div>
-            <h2><a href="mxd/">Minimum Tractus-X Dataspace (MXD)</a></h2>
-            <p>Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster.</p>
-            <ul class="chips" aria-label="For"><li>Developers</li><li>Operators</li><li>Getting started</li></ul>
-            <dl class="facts">
-              <div><dt>Added</dt><dd><time class="added" datetime="2023-08-07">Aug 2023</time></dd></div>
-              <div><dt>Updated</dt><dd><time class="updated" datetime="2025-03-21">Mar 2025</time></dd></div>
-              <div><dt>Version</dt><dd title="1.0 (Aug 2023): first published · 2.0 (Nov 2024): IdentityHub and STS replace MIW and Keycloak · 2.1 (Jan 2025): IdentityHub upgrade · 2.2 (Mar 2025): DCP issuance, Tractus-X EDC 0.9">v2.2</dd></div>
-              <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/hemantxpatel" title="hemantxpatel"><img src="https://avatars.githubusercontent.com/u/141825885?v=4&amp;s=56" alt="hemantxpatel" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/paullatzelsperger" title="paullatzelsperger"><img src="https://avatars.githubusercontent.com/u/43503240?v=4&amp;s=56" alt="paullatzelsperger" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/AndrYurk" title="AndrYurk"><img src="https://avatars.githubusercontent.com/u/180180790?v=4&amp;s=56" alt="AndrYurk" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/ieuna" title="ieuna"><img src="https://avatars.githubusercontent.com/u/161810204?v=4&amp;s=56" alt="ieuna" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/wolf4ood" title="wolf4ood"><img src="https://avatars.githubusercontent.com/u/98812?v=4&amp;s=56" alt="wolf4ood" width="28" height="28" loading="lazy"></a></li><li class="more"><a href="https://github.com/eclipse-tractusx/tutorial-resources/commits/main/mxd" title="9 more: see the history">+9</a></li></ul></dd></div>
-            </dl>
-            <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
-          </div>
-        </article>
-      </li>
-      <li data-status="deprecated" data-path="dpp-tutorial" data-level="2" data-authors-from="eclipse-tractusx/digital-product-pass:dpp-tutorial" data-order="6" data-filters="community-days developers" data-keywords="digital product pass passport battery pcf qr code irs">
-        <article class="card card--deprecated">
-          <div class="card__media">
-            <span class="badge" title="Kept for reference: it may not match the current Tractus-X release."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"/></svg>Deprecated</span>
-            <img src="media/digital-product-passport.png" alt="A battery passport in the Digital Product Pass application" loading="lazy"></div>
-          <div class="card__body">
-            <div class="card__kicker"><span class="tag tag--site">Guide</span><span class="level" role="img" aria-label="Difficulty: Intermediate, 2 of 3" title="Difficulty: Intermediate"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Intermediate</span></span></div>
-            <h2><a href="dpp-tutorial/">Digital Product Passport</a></h2>
-            <p>The Digital Product Passport workstream from the Tractus-X Community Days: create a passport for your part and read it over the dataspace.</p>
-            <ul class="chips" aria-label="For"><li>Community Days 2024</li><li>Developers</li></ul>
-            <dl class="facts">
-              <div><dt>Added</dt><dd><time class="added" datetime="2025-09-18">Sep 2025</time></dd></div>
-              <div><dt>Updated</dt><dd><time class="updated" datetime="2025-09-18">Sep 2025</time></dd></div>
-              <div><dt>Version</dt><dd title="1.0 (Dec 2024): the Community Days workstream">v1.0</dd></div>
-              <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/matbmoser" title="matbmoser"><img src="https://avatars.githubusercontent.com/u/71728767?v=4&amp;s=56" alt="matbmoser" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/saudkhan116" title="saudkhan116"><img src="https://avatars.githubusercontent.com/u/98085363?v=4&amp;s=56" alt="saudkhan116" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/Monishamacharla" title="Monishamacharla"><img src="https://avatars.githubusercontent.com/u/42880383?v=4&amp;s=56" alt="Monishamacharla" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/ELebedkin" title="ELebedkin"><img src="https://avatars.githubusercontent.com/u/137703633?v=4&amp;s=56" alt="ELebedkin" width="28" height="28" loading="lazy"></a></li></ul></dd></div>
-            </dl>
-            <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
-          </div>
-        </article>
-      </li>
-    </ul>
+        </div>
+      </article>
+    </li>
+    <li data-path="icc-irs-challenges" data-level="2" data-order="3" data-filters="community-days developers ai" data-keywords="irs item relationship service industry core genai frontend digital twins">
+      <article class="card">
+        <div class="card__media card__media--icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"/></svg></div>
+        <div class="card__body">
+          <div class="card__kicker"><span class="tag tag--site">Guide</span><span class="level" role="img" aria-label="Difficulty: Intermediate, 2 of 3" title="Difficulty: Intermediate"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Intermediate</span></span></div>
+          <h2><a href="icc-irs-challenges/">IRS frontend challenge with GenAI</a></h2>
+          <p>Build a frontend for the Item Relationship Service with an AI assistant, in three phases: the API, the part chain, the semantic data.</p>
+          <ul class="chips" aria-label="For"><li>Community Days</li><li>Developers</li><li>With AI</li></ul>
+          <dl class="facts">
+            <div><dt>Added</dt><dd><time class="added" datetime="2024-11-19">Nov 2024</time></dd></div>
+            <div><dt>Updated</dt><dd><time class="updated" datetime="2025-01-07">Jan 2025</time></dd></div>
+            <div><dt>Version</dt><dd title="1.0 (Dec 2024): the Community Days challenge, with fixes since">v1.0</dd></div>
+            <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/ds-mwesener" title="ds-mwesener"><img src="https://avatars.githubusercontent.com/u/124587888?v=4&amp;s=56" alt="ds-mwesener" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/mkanal" title="mkanal"><img src="https://avatars.githubusercontent.com/u/100209308?v=4&amp;s=56" alt="mkanal" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/AndrYurk" title="AndrYurk"><img src="https://avatars.githubusercontent.com/u/180180790?v=4&amp;s=56" alt="AndrYurk" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/ds-jhartmann" title="ds-jhartmann"><img src="https://avatars.githubusercontent.com/u/57985712?v=4&amp;s=56" alt="ds-jhartmann" width="28" height="28" loading="lazy"></a></li></ul></dd></div>
+          </dl>
+          <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+        </div>
+      </article>
+    </li>
+    <li data-path="migration-guides" data-level="3" data-order="4" data-filters="operators" data-keywords="helm chart postgresql keycloak bitnami cloudpirates database upgrade">
+      <article class="card">
+        <div class="card__media card__media--icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.99 11 3 15l3.99 4v-3H14v-2H6.99zM21 9l-3.99-4v3H10v2h7.01v3z"/></svg></div>
+        <div class="card__body">
+          <div class="card__kicker"><span class="tag tag--site">Guide</span><span class="level" role="img" aria-label="Difficulty: Advanced, 3 of 3" title="Difficulty: Advanced"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Advanced</span></span></div>
+          <h2><a href="migration-guides/">Migration guides</a></h2>
+          <p>Move the PostgreSQL and Keycloak of a deployment from the Bitnami Helm charts to the CloudPirates charts.</p>
+          <ul class="chips" aria-label="For"><li>Operators</li></ul>
+          <dl class="facts">
+            <div><dt>Added</dt><dd><time class="added" datetime="2026-01-21">Jan 2026</time></dd></div>
+            <div><dt>Updated</dt><dd><time class="updated" datetime="2026-04-10">Apr 2026</time></dd></div>
+            <div><dt>Version</dt><dd title="1.0 (Jan 2026): PostgreSQL guide · 1.1 (Feb 2026): Keycloak guide · 1.2 (Apr 2026): PostgreSQL guide reworked">v1.2</dd></div>
+            <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/mgarciaLKS" title="mgarciaLKS"><img src="https://avatars.githubusercontent.com/u/122596907?v=4&amp;s=56" alt="mgarciaLKS" width="28" height="28" loading="lazy"></a></li></ul></dd></div>
+          </dl>
+          <span class="go">Read the guides <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+        </div>
+      </article>
+    </li>
+    <li data-status="deprecated" data-path="mxd" data-level="2" data-order="5" data-filters="developers operators start" data-keywords="kubernetes kind terraform connector edc dataspace identityhub bdrs file transfer s3 azure edr">
+      <article class="card card--deprecated">
+        <div class="card__media">
+          <span class="badge" title="Kept for reference: it may not match the current Tractus-X release."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"/></svg>Deprecated</span>
+          <img src="media/mxd.png" alt="The MXD connectors and services running, seen in k9s" loading="lazy"></div>
+        <div class="card__body">
+          <div class="card__kicker"><span class="tag tag--site">Guide</span><span class="level" role="img" aria-label="Difficulty: Intermediate, 2 of 3" title="Difficulty: Intermediate"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Intermediate</span></span></div>
+          <h2><a href="mxd/">Minimum Tractus-X Dataspace (MXD)</a></h2>
+          <p>Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster.</p>
+          <ul class="chips" aria-label="For"><li>Developers</li><li>Operators</li><li>Getting started</li></ul>
+          <dl class="facts">
+            <div><dt>Added</dt><dd><time class="added" datetime="2023-08-07">Aug 2023</time></dd></div>
+            <div><dt>Updated</dt><dd><time class="updated" datetime="2025-03-21">Mar 2025</time></dd></div>
+            <div><dt>Version</dt><dd title="1.0 (Aug 2023): first published · 2.0 (Nov 2024): IdentityHub and STS replace MIW and Keycloak · 2.1 (Jan 2025): IdentityHub upgrade · 2.2 (Mar 2025): DCP issuance, Tractus-X EDC 0.9">v2.2</dd></div>
+            <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/hemantxpatel" title="hemantxpatel"><img src="https://avatars.githubusercontent.com/u/141825885?v=4&amp;s=56" alt="hemantxpatel" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/paullatzelsperger" title="paullatzelsperger"><img src="https://avatars.githubusercontent.com/u/43503240?v=4&amp;s=56" alt="paullatzelsperger" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/AndrYurk" title="AndrYurk"><img src="https://avatars.githubusercontent.com/u/180180790?v=4&amp;s=56" alt="AndrYurk" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/ieuna" title="ieuna"><img src="https://avatars.githubusercontent.com/u/161810204?v=4&amp;s=56" alt="ieuna" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/wolf4ood" title="wolf4ood"><img src="https://avatars.githubusercontent.com/u/98812?v=4&amp;s=56" alt="wolf4ood" width="28" height="28" loading="lazy"></a></li><li class="more"><a href="https://github.com/eclipse-tractusx/tutorial-resources/commits/main/mxd" title="9 more: see the history">+9</a></li></ul></dd></div>
+          </dl>
+          <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+        </div>
+      </article>
+    </li>
+    <li data-status="deprecated" data-path="dpp-tutorial" data-level="2" data-authors-from="eclipse-tractusx/digital-product-pass:dpp-tutorial" data-order="6" data-filters="community-days developers" data-keywords="digital product pass passport battery pcf qr code irs">
+      <article class="card card--deprecated">
+        <div class="card__media">
+          <span class="badge" title="Kept for reference: it may not match the current Tractus-X release."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"/></svg>Deprecated</span>
+          <img src="media/digital-product-passport.png" alt="A battery passport in the Digital Product Pass application" loading="lazy"></div>
+        <div class="card__body">
+          <div class="card__kicker"><span class="tag tag--site">Guide</span><span class="level" role="img" aria-label="Difficulty: Intermediate, 2 of 3" title="Difficulty: Intermediate"><span class="level__stars" aria-hidden="true"><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" class="on"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span><span aria-hidden="true">Intermediate</span></span></div>
+          <h2><a href="dpp-tutorial/">Digital Product Passport</a></h2>
+          <p>The Digital Product Passport workstream from the Tractus-X Community Days: create a passport for your part and read it over the dataspace.</p>
+          <ul class="chips" aria-label="For"><li>Community Days 2024</li><li>Developers</li></ul>
+          <dl class="facts">
+            <div><dt>Added</dt><dd><time class="added" datetime="2025-09-18">Sep 2025</time></dd></div>
+            <div><dt>Updated</dt><dd><time class="updated" datetime="2025-09-18">Sep 2025</time></dd></div>
+            <div><dt>Version</dt><dd title="1.0 (Dec 2024): the Community Days workstream">v1.0</dd></div>
+            <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/matbmoser" title="matbmoser"><img src="https://avatars.githubusercontent.com/u/71728767?v=4&amp;s=56" alt="matbmoser" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/saudkhan116" title="saudkhan116"><img src="https://avatars.githubusercontent.com/u/98085363?v=4&amp;s=56" alt="saudkhan116" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/Monishamacharla" title="Monishamacharla"><img src="https://avatars.githubusercontent.com/u/42880383?v=4&amp;s=56" alt="Monishamacharla" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/ELebedkin" title="ELebedkin"><img src="https://avatars.githubusercontent.com/u/137703633?v=4&amp;s=56" alt="ELebedkin" width="28" height="28" loading="lazy"></a></li></ul></dd></div>
+          </dl>
+          <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
+        </div>
+      </article>
+    </li>
+  </ul>
 
-    <div class="empty" id="empty" hidden>
-      <p>No tutorial matches. Try another word, or show them all.</p>
-      <button type="button" class="filter" id="reset">Show all tutorials</button>
-    </div>
-  </main>
+  <div class="empty" id="empty" hidden>
+    <p>No tutorial matches. Try another word, or show them all.</p>
+    <button type="button" class="filter" id="reset">Show all tutorials</button>
+  </div>
 
-  <footer>
-    Copyright &copy; 2026 Contributors to the Eclipse Foundation ·
-    <a href="https://github.com/eclipse-tractusx/tutorial-resources/blob/main/LICENSE">Apache-2.0</a> (code) and
-    <a href="https://github.com/eclipse-tractusx/tutorial-resources/blob/main/LICENSE_non-code">CC-BY-4.0</a> (content) ·
-    <a href="https://github.com/eclipse-tractusx/tutorial-resources/blob/main/NOTICE.md">Notice</a> ·
-    <a href="https://eclipse-tractusx.github.io/">Eclipse Tractus-X</a>
-  </footer>
-  <script>
-    // Search and filters for the cards. The filter and the search words go
-    // into the address (?for=community-days&q=ai&level=beginner), so a filtered view can be
-    // shared, for example as the Community Days link.
-    (function () {
-      var controls = document.getElementById("controls");
-      var input = document.getElementById("q");
-      var count = document.getElementById("count");
-      var empty = document.getElementById("empty");
-      var buttons = Array.prototype.slice.call(document.querySelectorAll(".filters .filter"));
-      var cards = Array.prototype.slice.call(document.querySelectorAll("#grid > li"));
-      var params = new URLSearchParams(location.search);
-      var active = params.get("for") || "";
-      if (!buttons.some(function (b) { return b.dataset.filter === active; })) {
-        active = "";
-      }
-      input.value = params.get("q") || "";
-      var hideToggle = document.getElementById("hide-deprecated");
-      var grid = document.getElementById("grid");
-      var sortSelect = document.getElementById("sort");
-      var sorts = {
-        newest: function (a, b) { return date(b, "added").localeCompare(date(a, "added")); },
-        updated: function (a, b) { return date(b, "updated").localeCompare(date(a, "updated")); },
-        oldest: function (a, b) { return date(a, "added").localeCompare(date(b, "added")); },
-        name: function (a, b) { return title(a).localeCompare(title(b)); },
-        easiest: function (a, b) { return a.dataset.level - b.dataset.level; }
-      };
-      var levelSelect = document.getElementById("level");
-      var levels = { beginner: "1", intermediate: "2", advanced: "3" };
-      levelSelect.value = levels[params.get("level")] ? params.get("level") : "";
-      sortSelect.value = sorts[params.get("sort")] ? params.get("sort") : "";
-      var hideDeprecated = params.get("deprecated") === "hide";
-      controls.hidden = false;
+<script>
+  // Search and filters for the cards. The filter and the search words go
+  // into the address (?for=community-days&q=ai&level=beginner), so a filtered view can be
+  // shared, for example as the Community Days link.
+  (function () {
+    var controls = document.getElementById("controls");
+    var input = document.getElementById("q");
+    var count = document.getElementById("count");
+    var empty = document.getElementById("empty");
+    var buttons = Array.prototype.slice.call(document.querySelectorAll(".filters .filter"));
+    var cards = Array.prototype.slice.call(document.querySelectorAll("#grid > li"));
+    var params = new URLSearchParams(location.search);
+    var active = params.get("for") || "";
+    if (!buttons.some(function (b) { return b.dataset.filter === active; })) {
+      active = "";
+    }
+    input.value = params.get("q") || "";
+    var hideToggle = document.getElementById("hide-deprecated");
+    var grid = document.getElementById("grid");
+    var sortSelect = document.getElementById("sort");
+    var sorts = {
+      newest: function (a, b) { return date(b, "added").localeCompare(date(a, "added")); },
+      updated: function (a, b) { return date(b, "updated").localeCompare(date(a, "updated")); },
+      oldest: function (a, b) { return date(a, "added").localeCompare(date(b, "added")); },
+      name: function (a, b) { return title(a).localeCompare(title(b)); },
+      easiest: function (a, b) { return a.dataset.level - b.dataset.level; }
+    };
+    var levelSelect = document.getElementById("level");
+    var levels = { beginner: "1", intermediate: "2", advanced: "3" };
+    levelSelect.value = levels[params.get("level")] ? params.get("level") : "";
+    sortSelect.value = sorts[params.get("sort")] ? params.get("sort") : "";
+    var hideDeprecated = params.get("deprecated") === "hide";
+    controls.hidden = false;
 
-      function date(card, kind) {
-        var time = card.querySelector("time." + kind);
-        return time ? time.getAttribute("datetime") : "";
-      }
+    function date(card, kind) {
+      var time = card.querySelector("time." + kind);
+      return time ? time.getAttribute("datetime") : "";
+    }
 
-      function title(card) {
-        return card.querySelector("h2").textContent.trim();
-      }
+    function title(card) {
+      return card.querySelector("h2").textContent.trim();
+    }
 
-      function words(text) {
-        return text.toLowerCase().replace(/[^\p{L}\p{N}\s.-]+/gu, " ").split(/\s+/).filter(Boolean);
-      }
+    function words(text) {
+      return text.toLowerCase().replace(/[^\p{L}\p{N}\s.-]+/gu, " ").split(/\s+/).filter(Boolean);
+    }
 
-      function update() {
-        var byOrder = function (a, b) { return a.dataset.order - b.dataset.order; };
-        var compare = sorts[sortSelect.value] || byOrder;
-        cards.slice().sort(function (a, b) { return compare(a, b) || byOrder(a, b); })
-          .forEach(function (card) { grid.appendChild(card); });
-        var query = words(input.value);
-        var shown = 0;
-        cards.forEach(function (card) {
-          var inFilter = !active || card.dataset.filters.split(" ").indexOf(active) >= 0;
-          var tokens = words((card.textContent + " " + card.dataset.keywords).replace(/[^\p{L}\p{N}]+/gu, " "));
-          var matches = query.every(function (w) {
-            return tokens.some(function (t) { return t.indexOf(w) === 0; });
-          });
-          var shownByStatus = !hideDeprecated || card.dataset.status !== "deprecated";
-          var atLevel = !levelSelect.value || card.dataset.level === levels[levelSelect.value];
-          card.hidden = !(inFilter && matches && shownByStatus && atLevel);
-          if (!card.hidden) {
-            shown += 1;
-          }
+    function update() {
+      var byOrder = function (a, b) { return a.dataset.order - b.dataset.order; };
+      var compare = sorts[sortSelect.value] || byOrder;
+      cards.slice().sort(function (a, b) { return compare(a, b) || byOrder(a, b); })
+        .forEach(function (card) { grid.appendChild(card); });
+      var query = words(input.value);
+      var shown = 0;
+      cards.forEach(function (card) {
+        var inFilter = !active || card.dataset.filters.split(" ").indexOf(active) >= 0;
+        var tokens = words((card.textContent + " " + card.dataset.keywords).replace(/[^\p{L}\p{N}]+/gu, " "));
+        var matches = query.every(function (w) {
+          return tokens.some(function (t) { return t.indexOf(w) === 0; });
         });
-        buttons.forEach(function (b) {
-          b.setAttribute("aria-pressed", String(b.dataset.filter === active));
-        });
-        count.textContent = shown === cards.length
-          ? cards.length + " tutorials"
-          : shown + " of " + cards.length + " tutorials";
-        empty.hidden = shown > 0;
-        var next = new URLSearchParams();
-        if (active) {
-          next.set("for", active);
+        var shownByStatus = !hideDeprecated || card.dataset.status !== "deprecated";
+        var atLevel = !levelSelect.value || card.dataset.level === levels[levelSelect.value];
+        card.hidden = !(inFilter && matches && shownByStatus && atLevel);
+        if (!card.hidden) {
+          shown += 1;
         }
-        if (input.value.trim()) {
-          next.set("q", input.value.trim());
-        }
-        if (hideDeprecated) {
-          next.set("deprecated", "hide");
-        }
-        if (levelSelect.value) {
-          next.set("level", levelSelect.value);
-        }
-        if (sortSelect.value) {
-          next.set("sort", sortSelect.value);
-        }
-        hideToggle.setAttribute("aria-pressed", String(hideDeprecated));
-        var search = next.toString();
-        history.replaceState(null, "", location.pathname + (search ? "?" + search : ""));
-      }
-
+      });
       buttons.forEach(function (b) {
-        b.addEventListener("click", function () {
-          active = b.dataset.filter;
-          update();
-        });
+        b.setAttribute("aria-pressed", String(b.dataset.filter === active));
       });
-      input.addEventListener("input", update);
-      sortSelect.addEventListener("change", update);
-      levelSelect.addEventListener("change", update);
-      hideToggle.addEventListener("click", function () {
-        hideDeprecated = !hideDeprecated;
-        update();
-      });
-      document.getElementById("reset").addEventListener("click", function () {
-        active = "";
-        input.value = "";
-        hideDeprecated = false;
-        sortSelect.value = "";
-        levelSelect.value = "";
-        update();
-        input.focus();
-      });
-      // "/" jumps to the search, as on GitHub; Escape clears it.
-      document.addEventListener("keydown", function (event) {
-        if (event.key === "/" && document.activeElement !== input) {
-          event.preventDefault();
-          input.focus();
-        }
-      });
-      input.addEventListener("keydown", function (event) {
-        if (event.key === "Escape") {
-          input.value = "";
-          update();
-        }
-      });
-      update();
-    })();
-
-    // Stars and forks of the repository, from the GitHub API, kept for the
-    // browser session like the tutorial sites do. Without them the name shows alone.
-    (function () {
-      var facts = document.getElementById("repo-facts");
-      function show(repo) {
-        var format = new Intl.NumberFormat("en", { notation: "compact" });
-        document.getElementById("repo-stars").textContent = format.format(repo.stars);
-        document.getElementById("repo-forks").textContent = format.format(repo.forks);
-        facts.hidden = false;
+      count.textContent = shown === cards.length
+        ? cards.length + " tutorials"
+        : shown + " of " + cards.length + " tutorials";
+      empty.hidden = shown > 0;
+      var next = new URLSearchParams();
+      if (active) {
+        next.set("for", active);
       }
-      try {
-        var cached = JSON.parse(sessionStorage.getItem("tutorial-resources-repo"));
-        if (cached) {
-          show(cached);
-          return;
-        }
-      } catch (e) { /* no storage: ask GitHub */ }
-      fetch("https://api.github.com/repos/eclipse-tractusx/tutorial-resources")
-        .then(function (response) { return response.ok ? response.json() : Promise.reject(response.status); })
-        .then(function (data) {
-          var repo = { stars: data.stargazers_count, forks: data.forks_count };
-          try { sessionStorage.setItem("tutorial-resources-repo", JSON.stringify(repo)); } catch (e) { /* ignore */ }
-          show(repo);
-        })
-        .catch(function () { /* offline or rate limited: the name is enough */ });
-    })();
-  </script>
-</body>
-</html>
+      if (input.value.trim()) {
+        next.set("q", input.value.trim());
+      }
+      if (hideDeprecated) {
+        next.set("deprecated", "hide");
+      }
+      if (levelSelect.value) {
+        next.set("level", levelSelect.value);
+      }
+      if (sortSelect.value) {
+        next.set("sort", sortSelect.value);
+      }
+      hideToggle.setAttribute("aria-pressed", String(hideDeprecated));
+      var search = next.toString();
+      history.replaceState(null, "", location.pathname + (search ? "?" + search : ""));
+    }
+
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () {
+        active = b.dataset.filter;
+        update();
+      });
+    });
+    input.addEventListener("input", update);
+    sortSelect.addEventListener("change", update);
+    levelSelect.addEventListener("change", update);
+    hideToggle.addEventListener("click", function () {
+      hideDeprecated = !hideDeprecated;
+      update();
+    });
+    document.getElementById("reset").addEventListener("click", function () {
+      active = "";
+      input.value = "";
+      hideDeprecated = false;
+      sortSelect.value = "";
+      levelSelect.value = "";
+      update();
+      input.focus();
+    });
+    // "/" jumps to the search, as on GitHub; Escape clears it.
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "/" && document.activeElement !== input) {
+        event.preventDefault();
+        input.focus();
+      }
+    });
+    input.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        input.value = "";
+        update();
+      }
+    });
+    update();
+  })();
+</script>
