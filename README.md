@@ -1,18 +1,75 @@
-# Tractus-X Tutorial
+# Eclipse Tractus-X Tutorials
 
-All tutorials, with the ones that have their own site: <https://eclipse-tractusx.github.io/tutorial-resources/>
+Hands-on tutorials from the Eclipse Tractus-X community: run a dataspace on your laptop, write
+connector policies, build a product passport, give your product an end-to-end test.
 
-## 1. MXD
+**Website:** <https://eclipse-tractusx.github.io/tutorial-resources/>. The home page lists every
+tutorial. The ones with their own site open there; the others open here in the repository.
 
-Wanna deploy your own Tractus-X Connector? Or even your own dataspace? Go check out
-[this tutorial](mxd/README.md) to learn how!
+## Tutorials
 
-## 2. EDC Policy Playground
+| Tutorial | What you do | Open |
+| --- | --- | --- |
+| **E2E tests for Tractus-X products** | Build an end-to-end test for a Tractus-X product in about an hour, with an AI assistant, and run it on every pull request | [Site](https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/) · [Source](e2e-testing/README.md) |
+| **EDC Policy Playground** | Put together Tractus-X connector policies in the browser and see the policy JSON they become | [Web app](https://eclipse-tractusx.github.io/tutorial-resources/policy-playground/) · [Source](edc-policy-playground/README.md) |
+| **Minimum Tractus-X Dataspace (MXD)** | Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster. Follow-up guides cover access policies, file transfers and EDR transfers | [Guide](mxd/README.md) · [More guides](mxd/docs/) |
+| **Digital Product Passport** | Create a passport for your part and read it over the dataspace (Tractus-X Community Days workstream) | [Guide](dpp-tutorial/README.md) |
+| **IRS frontend challenge with GenAI** | Build a frontend for the Item Relationship Service with an AI assistant, in three phases | [Guide](icc-irs-challenges/README.md) |
+| **Migration guides** | Move the PostgreSQL and Keycloak of a deployment from the Bitnami Helm charts to the CloudPirates charts | [PostgreSQL](migration-guides/GENERIC_POSTGRESQL_MIGRATION_GUIDE.md) · [Keycloak](migration-guides/GENERIC_BITNAMI_TO_CLOUDPIRATES_KEYCLOAK_MIGRATION_GUIDE.md) |
 
-Wanna play with Tractus-X EDC Policies? Run locally the [Playground](edc-policy-playground/README.md) or
-go to the hosted version [here](https://eclipse-tractusx.github.io/tutorial-resources/policy-playground)
+## What is in this repository
 
-## 3. E2E tests for Tractus-X products
+| Folder | Contents |
+| --- | --- |
+| [`e2e-testing/`](e2e-testing/) | The E2E testing tutorial: pages, product catalog, template test project, worked example, administrator kit |
+| [`edc-policy-playground/`](edc-policy-playground/) | The Policy Playground, an Angular app |
+| [`mxd/`](mxd/), [`mxd-runtimes/`](mxd-runtimes/) | The MXD Terraform setup and the runtime images it builds and loads into the cluster |
+| [`dpp-tutorial/`](dpp-tutorial/) | The Digital Product Passport workstream |
+| [`icc-irs-challenges/`](icc-irs-challenges/) | The IRS frontend challenge and its AI assistant |
+| [`migration-guides/`](migration-guides/) | Helm chart migration guides |
+| [`pages/`](pages/) | The home page of the website |
 
-Wanna give your product an end-to-end test that runs on every pull request? Build one in an hour, with an AI
-assistant, in [this tutorial](e2e-testing/README.md).
+## The website
+
+[`pages.yml`](.github/workflows/pages.yml) builds the website and publishes it with GitHub Pages
+whenever `main` changes:
+
+| Address | Built from |
+| --- | --- |
+| `/` | [`pages/index.html`](pages/index.html) |
+| `/e2e-testing/` | [`e2e-testing/`](e2e-testing/), with MkDocs |
+| `/policy-playground/` | [`edc-policy-playground/`](edc-policy-playground/), with Angular |
+
+To preview a site on your machine:
+
+```shell
+# E2E testing tutorial, on http://localhost:8000
+cd e2e-testing && pip install -r requirements.txt && mkdocs serve
+
+# Policy Playground, on http://localhost:4200
+cd edc-policy-playground && npm ci && npm start
+```
+
+## Add a tutorial
+
+1. Put it in its own folder with a `README.md` that says what you build, what you need and how
+   long it takes.
+2. Add a row to the [Tutorials](#tutorials) table above.
+3. Add a card to [`pages/index.html`](pages/index.html), so it shows on the website.
+4. If it has a site of its own, build it into its own folder of `_site` in
+   [`pages.yml`](.github/workflows/pages.yml) and point the card there.
+
+## Contributing
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [pull request etiquette](pr_etiquette.md) before
+you open a pull request. Report security issues as described in [SECURITY.md](SECURITY.md). This
+project follows the [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## NOTICE
+
+This work is licensed under the [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/legalcode).
+Code in this repository is licensed under [Apache-2.0](LICENSE).
+
+- SPDX-License-Identifier: CC-BY-4.0
+- SPDX-FileCopyrightText: 2023, 2026 Contributors to the Eclipse Foundation
+- Source URL: <https://github.com/eclipse-tractusx/tutorial-resources>
