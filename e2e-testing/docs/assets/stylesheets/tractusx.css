@@ -425,3 +425,108 @@
 .md-typeset .md-button:hover {
   transform: translateY(-1px);
 }
+
+/* ── Header ──────────────────────────────────────────────────────────────
+   Logo and title together on the left, search in the middle, the repository
+   and the light/dark switch on the right. */
+
+/* Material shows the logo in the header only on wide screens (in the menu
+   drawer otherwise); keep that, and centre it with the title. */
+@media screen and (min-width: 76.25em) {
+  .md-header__button.md-logo {
+    display: flex;
+    align-items: center;
+    margin: 0.2rem 0 0.2rem 0.2rem;
+    padding: 0.3rem;
+  }
+}
+
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 1.6rem;
+  width: auto;
+}
+
+.md-header__title {
+  margin-left: 0.5rem;
+}
+
+/* The light/dark switch goes last, after the repository. */
+.md-header__option[data-md-component="palette"] {
+  order: 1;
+  margin-left: 0.4rem;
+}
+
+@media screen and (min-width: 60em) {
+  /* Title and repository take equal room on each side, so the search sits
+     in the middle. */
+  .md-header__title {
+    flex: 1 1 0;
+  }
+
+  .md-header__source {
+    display: flex;
+    flex: 1 1 0;
+    justify-content: flex-end;
+    width: auto;
+    max-width: none;
+    margin-left: 1rem;
+  }
+
+  /* The full repository name, not "eclipse-tractusx/tutorial-r…". */
+  .md-source__repository {
+    max-width: none;
+  }
+}
+
+/* ── Home: the intro next to the TestLab logo ──────────────────────────── */
+
+.md-typeset .tx-hero {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.md-typeset .tx-hero__text {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.md-typeset .tx-hero__logo {
+  flex: none;
+  width: 9rem;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+}
+
+/* Phones: the logo above the text, smaller. */
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .tx-hero {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .md-typeset .tx-hero__logo {
+    width: 7rem;
+  }
+}
+
+/* The search field in the header gets a border, orange while it is in use. */
+@media screen and (min-width: 60em) {
+  .md-search__form {
+    border: 1px solid rgb(255 255 255 / 35%);
+    border-radius: 0.5rem;
+    transition: border-color 0.2s, background-color 0.2s;
+  }
+
+  .md-search__form:hover {
+    border-color: rgb(255 255 255 / 60%);
+  }
+
+  [data-md-toggle="search"]:checked ~ .md-header .md-search__form {
+    border-color: var(--tx-orange);
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+}
