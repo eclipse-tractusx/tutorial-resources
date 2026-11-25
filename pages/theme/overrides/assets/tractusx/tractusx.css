@@ -773,3 +773,9 @@
 .tx-about-button:popover-open {
   border-color: var(--tx-orange);
 }
+
+/* Glossary tables: a term opened by a link (#term) is marked, and the term
+   column stays narrow enough for the meaning to get the room. */
+.md-typeset td > span[id]:first-child { scroll-margin-top: 7rem; }
+.md-typeset tr:has(> td > span[id]:target) > td { background: color-mix(in srgb, var(--tx-orange) 14%, transparent); }
+.md-typeset tr:has(> td > span[id]:first-child) > td:first-child { width: 28%; }

@@ -47,7 +47,7 @@ flowchart TD
 | | Chapter | Minutes | At the end you have |
 | --- | --- | --- | --- |
 | 1 | [Start here](tutorial/01-start-here.md) | 5 | Your handout, and the mission |
-| 2 | [Your product and your connectors](tutorial/02-your-product.md) | 5 | One sentence that says what you will prove |
+| 2 | [Your product and your connectors](tutorial/02-your-product.md) | 5 | Your fork, and the scenario your test will prove |
 | 3 | [Choose your AI](tutorial/03-choose-your-ai.md): [A · API key](tutorial/03-open-the-ide.md), [B · local model](tutorial/03b-local-model.md) or [C · your own AI tool](tutorial/03-alternative-your-own-ai-tool.md) | 5–10 | An assistant that answers |
 | | *Route C builds on your laptop and replaces chapter 4* | *20* | |
 | 4 | [Build the test with the assistant](tutorial/04-build-the-test.md) | 15 | A test project that compiles |

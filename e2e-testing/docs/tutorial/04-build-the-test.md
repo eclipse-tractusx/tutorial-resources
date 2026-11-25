@@ -12,7 +12,7 @@ You say **what** must be proven. The assistant writes **how**. The Skeptic reads
 1. Press **Compile** at the top. The template compiles as it is: you start from green.
 2. In the assistant panel, switch the mode to **Plan**. A plan changes nothing.
 3. Paste [starter prompt 1](../reference/prompts.md#1-plan-the-test) and fill in your
-   product, its repository and your sentence from chapter 2. Send it.
+   product, its repository and the scenario from the handout, box **A**. Send it.
 4. Read the plan. The Skeptic asks three questions:
 
     | Question | A good plan says |

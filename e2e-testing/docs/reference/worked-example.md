@@ -6,9 +6,9 @@ It validates, compiles and passes in GitHub Actions, in about five and a half mi
 
 [Home](../index.md) · Files: [`examples/digital-twin-registry`](https://github.com/eclipse-tractusx/tutorial-resources/tree/main/e2e-testing/examples/digital-twin-registry)
 
-## The sentence it proves
+## What it proves
 
-> A partner can find and read a twin through the owner's connector, and a twin that
+> A partner finds and reads a twin through the owner's connector, and a twin that
 > does not exist is refused with "not found".
 
 ## What is in the folder

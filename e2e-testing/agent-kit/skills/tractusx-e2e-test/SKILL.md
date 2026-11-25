@@ -16,7 +16,7 @@ compiler that what you wrote is well-formed.
 
 1. Ask for, or read from the conversation, these three things. Do not guess them.
    - The product and its repository.
-   - One sentence: "A partner can ..., and ... is refused."
+   - The scenario: what a partner can do with the product, and what is refused.
    - Where the project goes. Default: `tck/e2e` in the product's repository.
 2. Check the tools:
 

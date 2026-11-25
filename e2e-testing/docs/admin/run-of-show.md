@@ -34,7 +34,7 @@ chapters 4 and 5, and keep the two checkpoints.
 | Minute | Teams are in | Host says | Floor looks for |
 | --- | --- | --- | --- |
 | 0 | [1 · Start here](../tutorial/01-start-here.md) | "Read box A. Pick Driver, Navigator, Skeptic." | Teams with an empty box on the handout |
-| 5 | [2 · Your product](../tutorial/02-your-product.md) | "Write your sentence. Press Fork now." | Teams that cannot find a refusal: suggest "what was never offered is not found" |
+| 5 | [2 · Your product](../tutorial/02-your-product.md) | "Read your scenario. Press Fork now." | Teams that cannot find a refusal: suggest "what was never offered is not found" |
 | 10 | [3 · Choose your AI](../tutorial/03-choose-your-ai.md) | "Hands up when your assistant has answered." | Teams without a model: seat them with a team that has one |
 | 15 | [4 · Build](../tutorial/04-build-the-test.md) | "Plan first. Do not let it write before you agree with the plan." | Teams whose compile stays red after three rounds |
 | 30 | [5 · Run](../tutorial/05-run-it.md) | **Checkpoint:** "Who has a green compile?" | Runs that wait: check the connectors at the Desk |
