@@ -14,7 +14,6 @@ gets which product, what to print, and the session itself.
 | [Assign products](assign.md) | Decide which team works on which product |
 | [Handouts](handouts.md) | Print one page per team from the catalog, the assignments and your connector list |
 | [Run of show](run-of-show.md) | Run the session, minute by minute |
-| [Presentation prompt](presentation-prompt.md) | Generate the ten-minute opening |
 
 ## What a team needs in the room
 
@@ -49,7 +48,7 @@ The model is the team's own. Nothing about it is deployed or paid for by the eve
 - [ ] Organizations, users and connector pairs exist. See [Configure](configure.md).
 - [ ] One person who did not build the setup does the whole tutorial from a handout, on a
   guest network, with a personal API key. Write down every place they stopped.
-- [ ] The opening deck exists. See [Presentation prompt](presentation-prompt.md).
+- [ ] The ten-minute opening deck exists: the problem, the idea, the mission.
 
 ### Two days before
 

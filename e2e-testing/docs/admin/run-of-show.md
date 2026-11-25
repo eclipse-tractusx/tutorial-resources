@@ -22,7 +22,7 @@ The session, minute by minute, for the people running it.
 
 ## The opening: 10 minutes
 
-Present the deck made with the [presentation prompt](presentation-prompt.md).
+Present the opening deck: the problem, the idea, the mission.
 It ends with "the clock starts now". Start a visible timer.
 
 ## The session
@@ -73,7 +73,7 @@ chapters 4 and 5, and keep the two checkpoints.
 
 ---
 
-[← Handouts](handouts.md) · [Home](../index.md) · [Presentation prompt →](presentation-prompt.md)
+[← Handouts](handouts.md) · [Home](../index.md)
 
 ## NOTICE
 
