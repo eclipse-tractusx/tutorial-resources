@@ -30,6 +30,19 @@ flowchart LR
 It is the [Tractus-X Umbrella](glossary.md#umbrella) chart `26.03.00` on a kind cluster.
 Every version is pinned.
 
+## Where it lives
+
+The toolbox is the
+[`developer-toolbox` action](https://github.com/eclipse-tractusx/tractusx-starter-kit/tree/main/developer-toolbox)
+in the Tractus-X Starter Kit: the bring-up steps, the Helm values and the helper scripts.
+You can use it in any workflow, not only this one:
+
+```yaml
+- uses: eclipse-tractusx/tractusx-starter-kit/developer-toolbox@main
+  id: toolbox
+- run: testlab run my.tck --config "${{ steps.toolbox.outputs.variables-file }}"
+```
+
 ## How a run works
 
 ```mermaid
@@ -41,8 +54,10 @@ flowchart LR
 2. **Build the toolbox**, issue credentials, check every service answers.
 3. **Run** the package and report the result on the pull request.
 
-Your repository holds only the test and 12 lines of workflow. The rest lives in this
-repository, so one change here updates every product.
+Your repository holds only the test and 12 lines of workflow. The workflow lives in this
+repository and the toolbox in the
+[Starter Kit](https://github.com/eclipse-tractusx/tractusx-starter-kit/tree/main/developer-toolbox),
+so one change there updates every product.
 
 If a run fails, download the artifacts: `e2e-test-run-…` has every request and answer,
 `toolbox-diagnostics-…` the logs of every pod.
