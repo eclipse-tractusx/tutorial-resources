@@ -158,7 +158,7 @@ rm -rf ~/.claude/skills/tractusx-e2e-test ~/.claude/agents/e2e-test-author.md
 
 ---
 
-[← Prerequisites](prepare.md) · [Home](../index.md) · [Route C →](../tutorial/03-alternative-your-own-ai-tool.md)
+[← Prerequisites](prepare.md) · [Home](../index.md) · [AI options →](ai-options.md#c-your-own-ai-tool-then-upload-to-the-ide)
 
 ## NOTICE
 
