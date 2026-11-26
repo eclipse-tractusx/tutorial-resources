@@ -81,7 +81,8 @@ jobs:
 
       - name: Build the site
         env:
-          # Read-only: the authors in the About panel come from the GitHub API.
+          # Read-only: the About panel's authors come from the GitHub API when
+          # extra.tutorial.authors lists none.
           GITHUB_TOKEN: ${{ github.token }}
         run: mkdocs build --strict --site-dir "${RUNNER_TEMP}/site"
 

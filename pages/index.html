@@ -22,6 +22,9 @@
   its header, footer and light/dark switch are those of every tutorial site;
   pages/hooks/home.py puts this file in as the page, and its styles are in
   pages/home/stylesheets/home.css. To add a tutorial, add a card below.
+  A card's authors are not written here: pages/hooks/home.py adds them from the
+  tutorial's own settings (authors in pages/markdown-sites.yml, or
+  extra.tutorial.authors in the mkdocs.yml of the folder named in data-path).
 -->
   <div class="intro">
     <span class="eyebrow">Learn Tractus-X by doing</span>
@@ -86,7 +89,6 @@
             <div><dt>Added</dt><dd><time class="added" datetime="2026-11-24">Nov 2026</time></dd></div>
             <div><dt>Updated</dt><dd><time class="updated" datetime="2026-11-25">Nov 2026</time></dd></div>
             <div><dt>Version</dt><dd title="1.0 (Nov 2026): first published">v1.0</dd></div>
-            <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/matbmoser" title="matbmoser"><img src="https://avatars.githubusercontent.com/u/71728767?v=4&amp;s=56" alt="matbmoser" width="28" height="28" loading="lazy"></a></li></ul></dd></div>
           </dl>
           <span class="go">Open the tutorial <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
         </div>
@@ -104,7 +106,6 @@
             <div><dt>Added</dt><dd><time class="added" datetime="2023-08-08">Aug 2023</time></dd></div>
             <div><dt>Updated</dt><dd><time class="updated" datetime="2025-09-29">Sep 2025</time></dd></div>
             <div><dt>Version</dt><dd title="1.0 (Aug 2023): first published · 1.1 (May 2024): policies for Tractus-X EDC 0.7">v1.1</dd></div>
-            <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/wolf4ood" title="wolf4ood"><img src="https://avatars.githubusercontent.com/u/98812?v=4&amp;s=56" alt="wolf4ood" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/paullatzelsperger" title="paullatzelsperger"><img src="https://avatars.githubusercontent.com/u/43503240?v=4&amp;s=56" alt="paullatzelsperger" width="28" height="28" loading="lazy"></a></li></ul></dd></div>
           </dl>
           <div class="actions">
             <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
@@ -125,7 +126,6 @@
             <div><dt>Added</dt><dd><time class="added" datetime="2024-11-19">Nov 2024</time></dd></div>
             <div><dt>Updated</dt><dd><time class="updated" datetime="2025-01-07">Jan 2025</time></dd></div>
             <div><dt>Version</dt><dd title="1.0 (Dec 2024): the Community Days challenge, with fixes since">v1.0</dd></div>
-            <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/ds-mwesener" title="ds-mwesener"><img src="https://avatars.githubusercontent.com/u/124587888?v=4&amp;s=56" alt="ds-mwesener" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/mkanal" title="mkanal"><img src="https://avatars.githubusercontent.com/u/100209308?v=4&amp;s=56" alt="mkanal" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/AndrYurk" title="AndrYurk"><img src="https://avatars.githubusercontent.com/u/180180790?v=4&amp;s=56" alt="AndrYurk" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/ds-jhartmann" title="ds-jhartmann"><img src="https://avatars.githubusercontent.com/u/57985712?v=4&amp;s=56" alt="ds-jhartmann" width="28" height="28" loading="lazy"></a></li></ul></dd></div>
           </dl>
           <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
         </div>
@@ -143,7 +143,6 @@
             <div><dt>Added</dt><dd><time class="added" datetime="2026-01-21">Jan 2026</time></dd></div>
             <div><dt>Updated</dt><dd><time class="updated" datetime="2026-04-10">Apr 2026</time></dd></div>
             <div><dt>Version</dt><dd title="1.0 (Jan 2026): PostgreSQL guide · 1.1 (Feb 2026): Keycloak guide · 1.2 (Apr 2026): PostgreSQL guide reworked">v1.2</dd></div>
-            <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/mgarciaLKS" title="mgarciaLKS"><img src="https://avatars.githubusercontent.com/u/122596907?v=4&amp;s=56" alt="mgarciaLKS" width="28" height="28" loading="lazy"></a></li></ul></dd></div>
           </dl>
           <span class="go">Read the guides <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
         </div>
@@ -163,13 +162,12 @@
             <div><dt>Added</dt><dd><time class="added" datetime="2023-08-07">Aug 2023</time></dd></div>
             <div><dt>Updated</dt><dd><time class="updated" datetime="2025-03-21">Mar 2025</time></dd></div>
             <div><dt>Version</dt><dd title="1.0 (Aug 2023): first published · 2.0 (Nov 2024): IdentityHub and STS replace MIW and Keycloak · 2.1 (Jan 2025): IdentityHub upgrade · 2.2 (Mar 2025): DCP issuance, Tractus-X EDC 0.9">v2.2</dd></div>
-            <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/hemantxpatel" title="hemantxpatel"><img src="https://avatars.githubusercontent.com/u/141825885?v=4&amp;s=56" alt="hemantxpatel" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/paullatzelsperger" title="paullatzelsperger"><img src="https://avatars.githubusercontent.com/u/43503240?v=4&amp;s=56" alt="paullatzelsperger" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/AndrYurk" title="AndrYurk"><img src="https://avatars.githubusercontent.com/u/180180790?v=4&amp;s=56" alt="AndrYurk" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/ieuna" title="ieuna"><img src="https://avatars.githubusercontent.com/u/161810204?v=4&amp;s=56" alt="ieuna" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/wolf4ood" title="wolf4ood"><img src="https://avatars.githubusercontent.com/u/98812?v=4&amp;s=56" alt="wolf4ood" width="28" height="28" loading="lazy"></a></li><li class="more"><a href="https://github.com/eclipse-tractusx/tutorial-resources/commits/main/mxd" title="9 more: see the history">+9</a></li></ul></dd></div>
           </dl>
           <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
         </div>
       </article>
     </li>
-    <li data-status="deprecated" data-path="dpp-tutorial" data-level="2" data-authors-from="eclipse-tractusx/digital-product-pass:dpp-tutorial" data-order="6" data-filters="community-days developers" data-keywords="digital product pass passport battery pcf qr code irs">
+    <li data-status="deprecated" data-path="dpp-tutorial" data-level="2" data-order="6" data-filters="community-days developers" data-keywords="digital product pass passport battery pcf qr code irs">
       <article class="card card--deprecated">
         <div class="card__media">
           <span class="badge" title="Kept for reference: it may not match the current Tractus-X release."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"/></svg>Deprecated</span>
@@ -183,7 +181,6 @@
             <div><dt>Added</dt><dd><time class="added" datetime="2025-09-18">Sep 2025</time></dd></div>
             <div><dt>Updated</dt><dd><time class="updated" datetime="2025-09-18">Sep 2025</time></dd></div>
             <div><dt>Version</dt><dd title="1.0 (Dec 2024): the Community Days workstream">v1.0</dd></div>
-            <div class="facts__authors"><dt>Authors</dt><dd class="authors"><ul><li><a href="https://github.com/matbmoser" title="matbmoser"><img src="https://avatars.githubusercontent.com/u/71728767?v=4&amp;s=56" alt="matbmoser" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/saudkhan116" title="saudkhan116"><img src="https://avatars.githubusercontent.com/u/98085363?v=4&amp;s=56" alt="saudkhan116" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/Monishamacharla" title="Monishamacharla"><img src="https://avatars.githubusercontent.com/u/42880383?v=4&amp;s=56" alt="Monishamacharla" width="28" height="28" loading="lazy"></a></li><li><a href="https://github.com/ELebedkin" title="ELebedkin"><img src="https://avatars.githubusercontent.com/u/137703633?v=4&amp;s=56" alt="ELebedkin" width="28" height="28" loading="lazy"></a></li></ul></dd></div>
           </dl>
           <span class="go">Read the guide <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4z"/></svg></span>
         </div>

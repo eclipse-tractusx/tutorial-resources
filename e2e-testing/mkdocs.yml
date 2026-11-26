@@ -60,6 +60,8 @@ hooks:
 extra:
   tutorial:
     version: "1.0"
+    # GitHub accounts, main authors first: shown on the home page card and in the About panel.
+    authors: [matbmoser]
     history:
       - version: "1.0"
         date: Nov 2026

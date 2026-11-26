@@ -139,7 +139,7 @@ def build(site: dict, out: Path, work: Path) -> None:
         shutil.copy2(image, assets / ("app-preview" + image.suffix))
     # The About panel: this folder's history and authors, and its version.
     tutorial = {"folder": site["folder"]}
-    for key in ("version", "history"):
+    for key in ("version", "history", "authors"):
         if site.get(key):
             tutorial[key] = site[key]
     (base / "mkdocs.yml").write_text(
