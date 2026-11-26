@@ -20,10 +20,11 @@
 """An "About" button in the header of every page, on every site of the website.
 
 It opens a panel with the tutorial's version and its history, when it was
-added and last updated (the git history of its folder), and its authors (the
-GitHub accounts with commits in that folder, from the GitHub API; set
-GITHUB_TOKEN to avoid its rate limit). What cannot be found is left out: a
-shallow clone has no dates, no network no avatars.
+added and last updated (the git history of its folder), and its authors: the
+GitHub accounts listed in extra.tutorial.authors, or else those with commits in
+that folder, from the GitHub API (set GITHUB_TOKEN to avoid its rate limit).
+What cannot be found is left out: a shallow clone has no dates, no network no
+avatars from the API.
 
 A site describes itself in extra.tutorial of its mkdocs.yml:
 
@@ -33,6 +34,7 @@ A site describes itself in extra.tutorial of its mkdocs.yml:
         heading: About this tutorial
         version: "2.2"
         history: [{version: "2.2", date: Mar 2025, note: ...}]
+        authors: [hemantxpatel, paullatzelsperger]   # default: from the commits
 """
 
 import html
@@ -88,7 +90,7 @@ def _authors(repository: str, path: str) -> list[tuple[str, str]]:
                 login = author.get("login")
                 if login and author.get("type") != "Bot" and not login.endswith("[bot]"):
                     counts[login] += 1
-                    avatars[login] = author["avatar_url"]
+                    avatars[login] = author["avatar_url"] + ("&" if "?" in author["avatar_url"] else "?") + "s=56"
             if len(commits) < 100 or page >= MAX_PAGES:
                 break
             page += 1
@@ -116,11 +118,14 @@ def _build_panel(config) -> str:
         facts += [("Added", dates[0]), ("Updated", dates[1])]
     rows = "".join(f"<div><dt>{k}</dt><dd>{v}</dd></div>" for k, v in facts)
 
-    authors = _authors(repository, path)
+    if info.get("authors"):
+        authors = [(str(login), f"https://github.com/{login}.png?size=56") for login in info["authors"]]
+    else:
+        authors = _authors(repository, path)
     people = ""
     if authors:
         items = "".join(
-            f'<li><a href="https://github.com/{esc(login)}"><img src="{esc(avatar)}&amp;s=56" alt="" '
+            f'<li><a href="https://github.com/{esc(login)}"><img src="{esc(avatar)}" alt="" '
             f'width="28" height="28" loading="lazy">{esc(login)}</a></li>'
             for login, avatar in authors[:SHOWN_AUTHORS]
         )

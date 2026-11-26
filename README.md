@@ -50,7 +50,8 @@ is none), the other Markdown files and pictures become pages, and links to anyth
 Postman collection, Terraform, test data) open the file on GitHub. `deprecated: true` puts a
 note on every page; `app:` gives the home page a "Try the app" button for a web app built
 from the tutorial, over a blurred screenshot of the app when `app_image:` names one;
-`version:` and `history:` fill its About panel.
+`version:` and `history:` fill its About panel; `authors:` lists its authors' GitHub accounts
+for its card and its About panel.
 
 Every page of the website has the same header and footer: the logo (back to the list of
 tutorials), the site's name, search, the repository, an **About** button and the light/dark
@@ -61,7 +62,7 @@ tutorial and the Markdown sites all build with:
 | --- | --- |
 | [`mkdocs-base.yml`](pages/theme/mkdocs-base.yml) | The shared settings; a site's `mkdocs.yml` starts with `INHERIT: ../pages/theme/mkdocs-base.yml` |
 | [`overrides/assets/tractusx/`](pages/theme/overrides/assets/tractusx/) | The Tractus-X stylesheet, logo and favicon |
-| [`hooks/about.py`](pages/theme/hooks/about.py) | The About panel: version and history (`extra.tutorial`), dates from git, authors from GitHub |
+| [`hooks/about.py`](pages/theme/hooks/about.py) | The About panel: version, history and authors (`extra.tutorial`), dates from git; without `authors`, the GitHub accounts with commits in the folder |
 
 To preview a site on your machine:
 
@@ -88,10 +89,13 @@ python .github/scripts/build_markdown_sites.py --out _site
 2. Add a row to the [Tutorials](#tutorials) table above.
 3. Add a card to [`pages/index.html`](pages/index.html), so it shows on the website. Put its
    picture in [`pages/home/media/`](pages/home/media/), with a `.license` file next to it. Set
-   `data-path` to its folder: when the site is built, the card's Added and Updated dates and
-   its authors (the GitHub accounts with commits in that folder) are filled in from the
-   history. Give it version 1.0 and add it to [Versions](#versions). Set its
-   [level](#levels) in `data-level` and on the card.
+   `data-path` to its folder: when the site is built, the card's Added and Updated dates are
+   filled in from the history. Do not write its authors on the card: list their GitHub
+   accounts, main authors first, as `authors: [...]` in its entry in
+   [`pages/markdown-sites.yml`](pages/markdown-sites.yml), or in `extra.tutorial.authors` of
+   its own `mkdocs.yml`. The card and the tutorial's About panel both show them. Give it
+   version 1.0 and add it to [Versions](#versions). Set its [level](#levels) in `data-level`
+   and on the card.
 4. If it is only Markdown, add its folder to
    [`pages/markdown-sites.yml`](pages/markdown-sites.yml) and point the card to `<folder>/`. If it
    has a site or a web app of its own, build it into its own folder of `_site` in

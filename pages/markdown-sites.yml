@@ -38,6 +38,8 @@
 #                the button then floats over it, out of focus
 #   version      the tutorial's own version, as on its card (see Versions in
 #   history      the README); the About panel in the header shows both
+#   authors      the GitHub accounts of its authors, main authors first: the
+#                tutorial's card on the home page and its About panel show them
 
 sites:
   - folder: edc-policy-playground
@@ -46,6 +48,7 @@ sites:
     app: policy-playground/
     app_image: pages/home/media/policy-playground.png
     version: "1.1"
+    authors: [wolf4ood, paullatzelsperger]
     history:
       - {version: "1.0", date: Aug 2023, note: First published.}
       - {version: "1.1", date: May 2024, note: Policies for Tractus-X EDC 0.7.}
@@ -55,6 +58,21 @@ sites:
     description: Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster.
     deprecated: true
     version: "2.2"
+    authors:
+      - hemantxpatel
+      - paullatzelsperger
+      - AndrYurk
+      - ieuna
+      - wolf4ood
+      - ravinderkumarsap
+      - jkbquabeck
+      - pratapipatelbcone
+      - wadahiro
+      - ndr-brt
+      - moiarayam
+      - ciprian-nicuta
+      - bmg13
+      - S3bb1
     history:
       - {version: "1.0", date: Aug 2023, note: First published.}
       - {version: "2.0", date: Nov 2024, note: IdentityHub and STS replace MIW and Keycloak.}
@@ -66,6 +84,7 @@ sites:
     description: The Digital Product Passport workstream from the Tractus-X Community Days.
     deprecated: true
     version: "1.0"
+    authors: [matbmoser, saudkhan116, Monishamacharla, ELebedkin]
     history:
       - {version: "1.0", date: Dec 2024, note: The Community Days workstream.}
 
@@ -73,6 +92,7 @@ sites:
     title: IRS frontend challenge with GenAI
     description: Build a frontend for the Item Relationship Service with an AI assistant, in three phases.
     version: "1.0"
+    authors: [ds-mwesener, mkanal, AndrYurk, ds-jhartmann]
     history:
       - {version: "1.0", date: Dec 2024, note: "The Community Days challenge, with fixes since."}
 
@@ -80,6 +100,7 @@ sites:
     title: Migration guides
     description: Move the PostgreSQL and Keycloak of a deployment from the Bitnami Helm charts to the CloudPirates charts.
     version: "1.2"
+    authors: [mgarciaLKS]
     history:
       - {version: "1.0", date: Jan 2026, note: PostgreSQL guide.}
       - {version: "1.1", date: Feb 2026, note: Keycloak guide.}
