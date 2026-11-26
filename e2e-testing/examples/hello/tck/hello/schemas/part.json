@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:testlab:hello:part",
+  "title": "Part",
+  "description": "A part as the hello service answers it: the Part schema of its openapi.yaml.",
+  "type": "object",
+  "required": ["partId", "name", "manufacturerPartId", "weightKg"],
+  "properties": {
+    "partId": { "type": "string" },
+    "name": { "type": "string" },
+    "manufacturerPartId": { "type": "string" },
+    "weightKg": { "type": "number" }
+  }
+}

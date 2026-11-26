@@ -1,10 +1,10 @@
-<span class="route">Getting Started · chapter 3, route C · ● ● ● ● ○ ○ ○ ○</span>
+<span class="route">Getting Started · chapter 4, route C · ● ● ● ● ○ ○ ○ ○ ○</span>
 
-# 3C · Build with your own AI tool
+# 4C · Build with your own AI tool
 
 > **Goal:** a test project for your product that compiles, built on your laptop with the
 > AI coding assistant you already have.
-> **Time:** 20 minutes. It replaces chapters 3 and 4.
+> **Time:** 20 minutes. It replaces chapters 4 and 5.
 
 Take this route when you have **no API key** for the assistant in the IDE, but you do have
 an assistant of your own: Claude Code, GitHub Copilot in VS Code, Cursor, Codex or a chat
@@ -78,7 +78,7 @@ checklist. Expect a little less comfort than in the IDE. It works.
    repository.
 10. Press **Compile**.
 
-Now continue with [chapter 5](05-run-it.md). In [chapter 6](06-add-to-repository.md),
+Now continue with [chapter 6](06-run-it.md). In [chapter 7](07-add-to-repository.md),
 skip steps 1, 2, 3 and 5: your files are already in your repository, with their licence
 headers.
 
@@ -96,8 +96,8 @@ In the IDE, your tests in the explorer on the left and the message **Compilation
 
 > [!NOTE]
 > You changed something in the IDE afterwards? Then the IDE has the newest version, not
-> your folder. Export it as in chapter 6, step 1, and unpack it over `tck/e2e`. The export
-> drops comments, so add the licence headers again as in chapter 6, step 5.
+> your folder. Export it as in chapter 7, step 1, and unpack it over `tck/e2e`. The export
+> drops comments, so add the licence headers again as in chapter 7, step 5.
 
 > [!TIP]
 > **Stuck?**
@@ -114,7 +114,7 @@ In the IDE, your tests in the explorer on the left and the message **Compilation
 
 ---
 
-[← 3 · Choose your AI](03-choose-your-ai.md) · [Home](../index.md) · [Next: 5 · Run it against your connectors →](05-run-it.md)
+[← 4 · Choose your AI](04-choose-your-ai.md) · [Home](../index.md) · [Next: 6 · Run it against your connectors →](06-run-it.md)
 
 ## NOTICE
 

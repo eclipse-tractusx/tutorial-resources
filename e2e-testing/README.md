@@ -23,13 +23,14 @@ Made for the "AI and Test Management" session of the 7th Eclipse Tractus-X Commu
 | --- | --- | --- |
 | 1 | [Start here](docs/tutorial/01-start-here.md) | 5 |
 | 2 | [Your product and your connectors](docs/tutorial/02-your-product.md) | 5 |
-| 3 | [Open the IDE and connect your LLM](docs/tutorial/03-open-the-ide.md) | 5 |
-| 4 | [Build the test with the assistant](docs/tutorial/04-build-the-test.md) | 15 |
-| 5 | [Run it against your connectors](docs/tutorial/05-run-it.md) | 10 |
-| 6 | [Add it to your repository](docs/tutorial/06-add-to-repository.md) | 10 |
-| 7 | [Link it and open the pull request](docs/tutorial/07-link-and-pull-request.md) | 5 |
-| 8 | [What comes next](docs/tutorial/08-what-comes-next.md) | 5 |
-| | | **about 60** |
+| 3 | [Hello, TestLab: your first test, by hand](docs/tutorial/03-hello-testlab.md) | 15 |
+| 4 | [Choose your AI](docs/tutorial/04-choose-your-ai.md) | 5 |
+| 5 | [Build the test with the assistant](docs/tutorial/05-build-the-test.md) | 15 |
+| 6 | [Run it against your connectors](docs/tutorial/06-run-it.md) | 10 |
+| 7 | [Add it to your repository](docs/tutorial/07-add-to-repository.md) | 10 |
+| 8 | [Link it and open the pull request](docs/tutorial/08-link-and-pull-request.md) | 5 |
+| 9 | [What comes next](docs/tutorial/09-what-comes-next.md) | 5 |
+| | | **about 75** |
 
 ## What is in this folder
 

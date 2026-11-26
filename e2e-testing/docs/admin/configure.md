@@ -21,7 +21,7 @@ What must exist in the Test Suite before the first team sits down.
 | **A registry**, if the team's test uses one | Name and **Base URL** of the team's Digital Twin Registry | The run dialog asks for the **Digital Twin Registry** |
 
 A team can register these itself: the run dialog offers **Register an app**,
-**Register a connector** and **Register a registry**. Doing it for them saves two minutes of the ten in chapter 5.
+**Register a connector** and **Register a registry**. Doing it for them saves two minutes of the ten in chapter 6.
 
 ## Three things to settle in the dry run
 
@@ -59,7 +59,7 @@ for registering a connector does accept a management address and a key.
 >   connector yourself, before the session. The **SUT Setup** step of the run dialog lists
 >   exactly what is expected, with **Copy** and **Download** for each definition.
 > - **C.** Skip the run in the IDE, and let every team see its green run in GitHub Actions
->   in chapter 7. This always works.
+>   in chapter 8. This always works.
 
 ### 3 · Addresses must be public host names
 

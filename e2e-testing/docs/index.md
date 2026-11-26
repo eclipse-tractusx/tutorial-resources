@@ -40,25 +40,26 @@ Today you write the first one for your product.
 ```mermaid
 %%{init: {"flowchart": {"rankSpacing": 22, "nodeSpacing": 20}}}%%
 flowchart TD
-    A["1 Start"] --> B["2 Your product"] --> C["3 Choose your AI"] --> D["4 Build"]
-    D --> E["5 Run"] --> F["6 Repository"] --> G["7 Pull request"] --> H["8 Next"]
+    A["1 Start"] --> B["2 Your product"] --> H0["3 Hello, TestLab"] --> C["4 Choose your AI"] --> D["5 Build"]
+    D --> E["6 Run"] --> F["7 Repository"] --> G["8 Pull request"] --> H["9 Next"]
 ```
 
 | | Chapter | Minutes | At the end you have |
 | --- | --- | --- | --- |
 | 1 | [Start here](tutorial/01-start-here.md) | 5 | Your handout, and the mission |
 | 2 | [Your product and your connectors](tutorial/02-your-product.md) | 5 | Your fork, and the scenario your test will prove |
-| 3 | [Choose your AI](tutorial/03-choose-your-ai.md): [A · API key](tutorial/03-open-the-ide.md), [B · local model](tutorial/03b-local-model.md) or [C · your own AI tool](tutorial/03-alternative-your-own-ai-tool.md) | 5–10 | An assistant that answers |
-| | *Route C builds on your laptop and replaces chapter 4* | *20* | |
-| 4 | [Build the test with the assistant](tutorial/04-build-the-test.md) | 15 | A test project that compiles |
-| 5 | [Run it against your connectors](tutorial/05-run-it.md) | 10 | A green run, for the right reasons |
-| 6 | [Add it to your repository](tutorial/06-add-to-repository.md) | 10 | The test and its workflow, committed |
-| 7 | [Link it and open the pull request](tutorial/07-link-and-pull-request.md) | 5 | A pull request with a green check |
-| 8 | [What comes next](tutorial/08-what-comes-next.md) | 5 | A plan for the second test |
-| | | **about 60** | |
+| 3 | [Hello, TestLab: your first test, by hand](tutorial/03-hello-testlab.md) | 15 | A test you wrote yourself, compiled and green |
+| 4 | [Choose your AI](tutorial/04-choose-your-ai.md): [A · API key](tutorial/04a-api-key.md), [B · local model](tutorial/04b-local-model.md) or [C · your own AI tool](tutorial/04c-your-own-ai-tool.md) | 5–10 | An assistant that answers |
+| | *Route C builds on your laptop and replaces chapter 5* | *20* | |
+| 5 | [Build the test with the assistant](tutorial/05-build-the-test.md) | 15 | A test project that compiles |
+| 6 | [Run it against your connectors](tutorial/06-run-it.md) | 10 | A green run, for the right reasons |
+| 7 | [Add it to your repository](tutorial/07-add-to-repository.md) | 10 | The test and its workflow, committed |
+| 8 | [Link it and open the pull request](tutorial/08-link-and-pull-request.md) | 5 | A pull request with a green check |
+| 9 | [What comes next](tutorial/09-what-comes-next.md) | 5 | A plan for the second test |
+| | | **about 75** | | |
 
 The minutes are a guide for a team that has done it before. A first-time reader in our dry
-run needed closer to 90: if your session is longer, spend the extra time on chapters 4 and 5.
+run needed closer to 90: if your session is longer, spend the extra time on chapters 5 and 6.
 
 ## Where to start
 

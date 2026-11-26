@@ -21,7 +21,7 @@
 
 Every page ends with a line such as
 
-    [← 1 · Start here](01-start-here.md) · [Home](../index.md) · [Next: 3 · Choose your AI →](03-choose-your-ai.md)
+    [← 1 · Start here](01-start-here.md) · [Home](../index.md) · [Next: 4 · Choose your AI →](04-choose-your-ai.md)
 
 which reads fine on GitHub. On the site, the link with "←" becomes the
 "Previous" button on the left, the link with "→" the "Next" button on the

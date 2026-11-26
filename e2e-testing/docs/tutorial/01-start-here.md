@@ -1,4 +1,4 @@
-<span class="route">Getting Started · chapter 1 of 8 · ● ○ ○ ○ ○ ○ ○ ○</span>
+<span class="route">Getting Started · chapter 1 of 9 · ● ○ ○ ○ ○ ○ ○ ○ ○</span>
 
 # 1 · Start here
 

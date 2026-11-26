@@ -1,6 +1,6 @@
-<span class="route">Getting Started · chapter 7 of 8 · ● ● ● ● ● ● ● ○</span>
+<span class="route">Getting Started · chapter 8 of 9 · ● ● ● ● ● ● ● ● ○</span>
 
-# 7 · Link it and open the pull request
+# 8 · Link it and open the pull request
 
 > **Goal:** a draft pull request in your product's repository, with the test linked in `.tractusx`.
 > **Time:** 5 minutes
@@ -67,7 +67,7 @@ RESULT: PASS  |  3 passed  0 failed  0 skipped
 
 ---
 
-[← 6 · Add it to your repository](06-add-to-repository.md) · [Home](../index.md) · [Next: 8 · What comes next →](08-what-comes-next.md)
+[← 7 · Add it to your repository](07-add-to-repository.md) · [Home](../index.md) · [Next: 9 · What comes next →](09-what-comes-next.md)
 
 ## NOTICE
 

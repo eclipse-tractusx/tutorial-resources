@@ -1,6 +1,7 @@
 {
   "$schema": "./inventory.schema.json",
   "ideUrl": "https://ide.example.org",
+  "helloUrl": "https://hello.example.org",
   "tutorialUrl": "https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/",
   "help": "Raise your hand, or go to the Desk at the front of the room.",
   "teams": {

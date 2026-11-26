@@ -5,7 +5,7 @@ build the test on your laptop with the assistant you already have, and open the 
 the IDE to run it.
 
 How to use it, step by step: the tutorial page
-[Build with your own AI tool](../docs/tutorial/03-alternative-your-own-ai-tool.md).
+[Build with your own AI tool](../docs/tutorial/04c-your-own-ai-tool.md).
 
 ## What is in it
 

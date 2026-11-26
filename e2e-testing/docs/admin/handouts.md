@@ -13,7 +13,7 @@ address and where to get help.
 | --- | --- |
 | [`catalog/products.json`](https://github.com/eclipse-tractusx/tutorial-resources/blob/main/e2e-testing/catalog/products.json) | Product, repository, scenario, what a run needs |
 | [`catalog/assignments.json`](https://github.com/eclipse-tractusx/tutorial-resources/blob/main/e2e-testing/catalog/assignments.json) | Which team has which product |
-| Your **connector inventory** | The IDE address, the account, both connectors of each team |
+| Your **connector inventory** | The IDE address, the hello service (`helloUrl`), the account, both connectors of each team |
 
 The inventory is a JSON file you write. Start from the sample:
 [`admin/handouts/inventory.sample.json`](https://github.com/eclipse-tractusx/tutorial-resources/blob/main/e2e-testing/admin/handouts/inventory.sample.json).
@@ -50,9 +50,9 @@ and print them yourself.
 | Box | Holds | Used in |
 | --- | --- | --- |
 | **A** | Team, product, repository, scenario, and room for the team's sentence | Chapters 1 and 2 |
-| **B** | IDE address and account | Chapter 3 |
-| **C** | Your side: the provider connector, its registry and the product behind it | Chapter 5 |
-| **D** | Partner side: the connector the test runs from | Chapter 5, for reference |
+| **B** | IDE address, account and the hello service | Chapters 3 and 4 |
+| **C** | Your side: the provider connector, its registry and the product behind it | Chapter 6 |
+| **D** | Partner side: the connector the test runs from | Chapter 6, for reference |
 | **E** | Help | Always |
 
 ## Keep the keys out of Git

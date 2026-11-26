@@ -84,16 +84,17 @@ nav:
   - Getting Started:
       - 1 · Start here: tutorial/01-start-here.md
       - 2 · Your product and your connectors: tutorial/02-your-product.md
-      - 3 · Choose your AI:
-          - Choose: tutorial/03-choose-your-ai.md
-          - A · API key in the IDE: tutorial/03-open-the-ide.md
-          - B · Local model in the IDE: tutorial/03b-local-model.md
-          - C · Your own AI tool: tutorial/03-alternative-your-own-ai-tool.md
-      - 4 · Build the test with the assistant: tutorial/04-build-the-test.md
-      - 5 · Run it against your connectors: tutorial/05-run-it.md
-      - 6 · Add it to your repository: tutorial/06-add-to-repository.md
-      - 7 · Link it and open the pull request: tutorial/07-link-and-pull-request.md
-      - 8 · What comes next: tutorial/08-what-comes-next.md
+      - 3 · Hello, TestLab: tutorial/03-hello-testlab.md
+      - 4 · Choose your AI:
+          - Choose: tutorial/04-choose-your-ai.md
+          - A · API key in the IDE: tutorial/04a-api-key.md
+          - B · Local model in the IDE: tutorial/04b-local-model.md
+          - C · Your own AI tool: tutorial/04c-your-own-ai-tool.md
+      - 5 · Build the test with the assistant: tutorial/05-build-the-test.md
+      - 6 · Run it against your connectors: tutorial/06-run-it.md
+      - 7 · Add it to your repository: tutorial/07-add-to-repository.md
+      - 8 · Link it and open the pull request: tutorial/08-link-and-pull-request.md
+      - 9 · What comes next: tutorial/09-what-comes-next.md
   - Reference:
       - Glossary: reference/glossary.md
       - Prerequisites: reference/prepare.md
@@ -102,7 +103,10 @@ nav:
       - Product catalog: reference/catalog.md
       - Starter prompts: reference/prompts.md
       - The worked example: reference/worked-example.md
+      - Syntax cheat sheet: reference/syntax.md
+      - The Test Suite IDE: reference/ide.md
       - The workflow: reference/workflow.md
+      - The developer toolbox: reference/toolbox.md
       - The .tractusx link: reference/metafile.md
       - Troubleshooting: reference/troubleshooting.md
   - For administrators:

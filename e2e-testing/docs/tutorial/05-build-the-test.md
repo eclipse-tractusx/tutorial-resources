@@ -1,6 +1,6 @@
-<span class="route">Getting Started · chapter 4 of 8 · ● ● ● ● ○ ○ ○ ○</span>
+<span class="route">Getting Started · chapter 5 of 9 · ● ● ● ● ● ○ ○ ○ ○</span>
 
-# 4 · Build the test with the assistant
+# 5 · Build the test with the assistant
 
 > **Goal:** a test project for your product that compiles.
 > **Time:** 15 minutes
@@ -75,7 +75,7 @@ Read them in the [worked example](../reference/worked-example.md).
 
 ---
 
-[← 3 · Choose your AI](03-choose-your-ai.md) · [Home](../index.md) · [Next: 5 · Run it against your connectors →](05-run-it.md)
+[← 4 · Choose your AI](04-choose-your-ai.md) · [Home](../index.md) · [Next: 6 · Run it against your connectors →](06-run-it.md)
 
 ## NOTICE
 

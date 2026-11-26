@@ -11,7 +11,7 @@ Find the symptom, try the fix, raise your hand if it does not help.
 | It says the key is not valid | Copy the key again, without spaces. A ChatGPT or Claude **subscription** is not an API key. |
 | A local model cannot be reached | The server must allow the IDE's address as an origin (CORS), and the address must end in `/v1`. |
 | A local model answers as if it never heard of TCKs | Switch on **Small model mode** in the assistant's settings. Without it, the IDE sends about 29,000 tokens before your first question, and the model needs 64,000 tokens of context. |
-| A local model "thinks" for minutes and never answers | Switch on **Small model mode**: the first answer then takes about 20 seconds instead of 7 minutes. On a laptop without a GPU it can still take a minute or more. Then use a hosted model, or the [own AI tool](../tutorial/03-alternative-your-own-ai-tool.md) route. |
+| A local model "thinks" for minutes and never answers | Switch on **Small model mode**: the first answer then takes about 20 seconds instead of 7 minutes. On a laptop without a GPU it can still take a minute or more. Then use a hosted model, or the [own AI tool](../tutorial/04c-your-own-ai-tool.md) route. |
 | A local model changes the wrong thing | Ask for one change per message, and name the file and the step, for example `In tests/my_test.yaml add a check to the step find_offer: datasets is not null`. Undo the wrong change above the message box. |
 | It invents steps | Say: `Use only steps from the block catalog.` Smaller models need the reminder. |
 | It stops halfway | Say: `Continue.` Or ask for one test at a time. |

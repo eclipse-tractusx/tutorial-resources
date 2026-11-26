@@ -1,4 +1,4 @@
-<span class="route">Getting Started · chapter 2 of 8 · ● ● ○ ○ ○ ○ ○ ○</span>
+<span class="route">Getting Started · chapter 2 of 9 · ● ● ○ ○ ○ ○ ○ ○ ○</span>
 
 # 2 · Your product and your connectors
 
@@ -11,7 +11,7 @@
    what the product does.
 2. Press **Fork** at the top right of the repository page, then **Create fork**.
    Leave the tab open; you need the [fork](../reference/glossary.md#fork-and-pull-request)
-   in chapter 6.
+   in chapter 7.
 3. Find your product in the [product catalog](../reference/catalog.md) and read its
    suggested scenario. It is the same as on the handout, box **A**: what a partner can
    do with your product, and what is refused. Your test proves both.
@@ -46,13 +46,13 @@ Their finished project is the [worked example](../reference/worked-example.md).
 > - **The scenario has no refusal:** "something that was never offered is not found" is
 >   always true and always worth checking. The template starts with exactly that.
 > - **Your product is not behind a connector:** then the partner calls its API directly.
->   The scenario stays the same; say so to the assistant in chapter 4.
+>   The scenario stays the same; say so to the assistant in chapter 5.
 > - **Your product is marked "needs more than the workshop environment" in the catalog:**
->   you build and compile today, and skip the run in chapter 5. Tell a facilitator.
+>   you build and compile today, and skip the run in chapter 6. Tell a facilitator.
 
 ---
 
-[← 1 · Start here](01-start-here.md) · [Home](../index.md) · [Next: 3 · Choose your AI →](03-choose-your-ai.md)
+[← 1 · Start here](01-start-here.md) · [Home](../index.md) · [Next: 3 · Hello, TestLab →](03-hello-testlab.md)
 
 ## NOTICE
 

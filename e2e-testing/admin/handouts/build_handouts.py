@@ -180,6 +180,7 @@ def main() -> None:
                 scenario=html.escape(entry.get("scenario") or product["scenario"]),
                 needs=html.escape(", ".join(NEEDS[need] for need in product["needs"])),
                 ide_url=html.escape(inventory["ideUrl"]),
+                hello_url=html.escape(inventory.get("helloUrl") or "see chapter 3 of the tutorial"),
                 tutorial_url=html.escape(inventory["tutorialUrl"]),
                 username=html.escape(team["account"]["username"]),
                 password=html.escape(team["account"].get("password") or "handed out at the desk"),
