@@ -113,27 +113,24 @@
       ]
     },
     {
-      "id": "tractusx-sdk",
-      "name": "Tractus-X SDK",
-      "repository": "https://github.com/eclipse-tractusx/tractusx-sdk",
-      "description": "Python libraries for building applications that provide and consume data through the connector, the Digital Twin Registry and the discovery services.",
+      "id": "bpdm",
+      "name": "Business Partner Data Management (BPDM)",
+      "repository": "https://github.com/eclipse-tractusx/bpdm",
+      "description": "Services that keep the golden record of business partners: the Gate for sharing members, the Pool, and the Orchestrator between them.",
       "needs": [
-        "connector",
-        "dtr",
-        "wallet",
-        "bdrs"
+        "bpdm",
+        "iam",
+        "database"
       ],
-      "runsInUmbrella": false,
-      "scenario": "The SDK's connector and registry services complete a provide-and-consume journey against two real connectors.",
+      "runsInUmbrella": true,
+      "umbrellaChart": "bpdm",
+      "scenario": "A business partner a member uploads to the Gate arrives in the Pool as a golden record with a BPN.",
       "difficulty": "intermediate",
-      "fitsWorkshop": true,
-      "workshopNote": "Runs in the workshop environment. TestLab's steps are built on the SDK, so a run exercises it. The repository already has a first TCK under tck/connector.",
-      "relatedRepositories": [
-        "https://github.com/eclipse-tractusx/tractusx-sdk-services"
-      ],
+      "fitsWorkshop": false,
+      "workshopNote": "Needs BPDM and its identity provider deployed. Build from the Gate and Pool OpenAPI documents in the workshop.",
       "existingTests": [
-        "tck/connector/",
-        "compatibility-test.yaml"
+        "bpdm-system-tester/",
+        "app-test-charts.yaml"
       ]
     },
     {
@@ -194,27 +191,6 @@
       "existingTests": [
         "e2e-tests/",
         "semantic-hub-e2e-test.yml"
-      ]
-    },
-    {
-      "id": "bpdm",
-      "name": "Business Partner Data Management (BPDM)",
-      "repository": "https://github.com/eclipse-tractusx/bpdm",
-      "description": "Services that keep the golden record of business partners: the Gate for sharing members, the Pool, and the Orchestrator between them.",
-      "needs": [
-        "bpdm",
-        "iam",
-        "database"
-      ],
-      "runsInUmbrella": true,
-      "umbrellaChart": "bpdm",
-      "scenario": "A business partner a member uploads to the Gate arrives in the Pool as a golden record with a BPN.",
-      "difficulty": "intermediate",
-      "fitsWorkshop": false,
-      "workshopNote": "Needs BPDM and its identity provider deployed. Build from the Gate and Pool OpenAPI documents in the workshop.",
-      "existingTests": [
-        "bpdm-system-tester/",
-        "app-test-charts.yaml"
       ]
     },
     {
@@ -412,22 +388,6 @@
       ]
     },
     {
-      "id": "aas-suite",
-      "name": "AAS Suite",
-      "repository": "https://github.com/eclipse-tractusx/aas-suite",
-      "description": "Asset Administration Shell tooling that connects Eclipse BaSyx with the Tractus-X SDK.",
-      "needs": [
-        "connector",
-        "dtr",
-        "submodel-server"
-      ],
-      "runsInUmbrella": false,
-      "scenario": "A shell and submodel created through the suite are readable by a partner through the connector.",
-      "difficulty": "intermediate",
-      "fitsWorkshop": false,
-      "workshopNote": "Needs the suite deployed next to a connector."
-    },
-    {
       "id": "knowledge-agents",
       "name": "Knowledge Agents",
       "repository": "https://github.com/eclipse-tractusx/knowledge-agents",
@@ -446,41 +406,6 @@
         "https://github.com/eclipse-tractusx/knowledge-agents-edc",
         "https://github.com/eclipse-tractusx/knowledge-agents-aas-bridge"
       ]
-    },
-    {
-      "id": "tractusx-edc-kafka-extension",
-      "name": "Tractus-X EDC Kafka Extension",
-      "repository": "https://github.com/eclipse-tractusx/tractusx-edc-kafka-extension",
-      "description": "Connector extension for continuous, event-driven data exchange between companies over Apache Kafka.",
-      "needs": [
-        "connector",
-        "kafka",
-        "wallet",
-        "bdrs"
-      ],
-      "runsInUmbrella": false,
-      "scenario": "A partner negotiates a Kafka asset, receives short-lived broker credentials and reads the messages of the stream.",
-      "difficulty": "advanced",
-      "fitsWorkshop": false,
-      "workshopNote": "Needs connectors built with the extension and a Kafka broker.",
-      "existingTests": [
-        "deployment-test.yaml"
-      ]
-    },
-    {
-      "id": "tractusx-edc-dashboard",
-      "name": "EDC Dashboard and Policy Builder",
-      "repository": "https://github.com/eclipse-tractusx/tractusx-edc-dashboard",
-      "description": "Web interface for a connector's Management API, with a builder for Catena-X policies.",
-      "needs": [
-        "connector",
-        "browser"
-      ],
-      "runsInUmbrella": false,
-      "scenario": "A policy built with the dashboard is created on the connector and is the policy a partner sees in the catalog.",
-      "difficulty": "advanced",
-      "fitsWorkshop": false,
-      "workshopNote": "A user interface: the test covers the Management API calls behind it, not the clicks."
     },
     {
       "id": "managed-simple-data-exchanger",
@@ -560,59 +485,6 @@
       ],
       "existingTests": [
         "helm-test.yml"
-      ]
-    },
-    {
-      "id": "tractusx-sdk-services",
-      "name": "Tractus-X SDK Services",
-      "repository": "https://github.com/eclipse-tractusx/tractusx-sdk-services",
-      "description": "Test orchestrator and digital twin pull service that help a new partner check its setup during onboarding.",
-      "needs": [
-        "connector",
-        "dtr",
-        "wallet"
-      ],
-      "runsInUmbrella": false,
-      "scenario": "The pull service fetches a twin's submodel from a partner through the connector and reports each step it took.",
-      "difficulty": "intermediate",
-      "fitsWorkshop": false,
-      "workshopNote": "Needs both services deployed next to a connector."
-    },
-    {
-      "id": "tractusx-starter-kit",
-      "name": "Tractus-X Starter Kit",
-      "repository": "https://github.com/eclipse-tractusx/tractusx-starter-kit",
-      "description": "Configuration wizard that generates a ready-to-run Docker Compose dataspace for newcomers.",
-      "needs": [
-        "connector",
-        "wallet",
-        "bdrs"
-      ],
-      "runsInUmbrella": false,
-      "scenario": "A setup generated with the default answers starts, and its first data exchange succeeds.",
-      "difficulty": "advanced",
-      "fitsWorkshop": false,
-      "workshopNote": "Runs in Docker Compose, not in the developer toolbox: the workflow needs its own bring-up step."
-    },
-    {
-      "id": "tractusx-testlab",
-      "name": "Tractus-X TestLab",
-      "repository": "https://github.com/eclipse-tractusx/tractusx-testlab",
-      "description": "The test authoring and execution engine this tutorial uses: declarative YAML tests, compiled into a package and run against real systems.",
-      "needs": [
-        "connector",
-        "dtr",
-        "wallet",
-        "bdrs"
-      ],
-      "runsInUmbrella": false,
-      "scenario": "The compile, validate and run pipeline passes against a live dataspace.",
-      "difficulty": "advanced",
-      "fitsWorkshop": false,
-      "workshopNote": "Already has its E2E test as a TCK project. Read it as the reference.",
-      "existingTests": [
-        "tests/e2e/connector-dtr-smoke/",
-        "e2e-umbrella.yml"
       ]
     }
   ],
