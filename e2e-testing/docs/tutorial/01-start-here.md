@@ -40,7 +40,7 @@ A handout like this one, with your team's values in every box.
 >
 > - **No GitHub account, or no signed ECA:** let a teammate who has both be the Driver.
 >   What the [ECA](../reference/glossary.md#eca) is and how to sign it is in
->   [Before you come](../reference/prepare.md).
+>   [Prerequisites](../reference/prepare.md).
 > - **Words on the handout mean nothing to you:** that is fine. The
 >   [glossary](../reference/glossary.md) explains each one in a line, and
 >   [A dataspace in five minutes](../story/dataspace.md) draws the picture.

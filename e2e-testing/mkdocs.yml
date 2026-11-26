@@ -97,7 +97,7 @@ nav:
       - 9 · What comes next: tutorial/09-what-comes-next.md
   - Reference:
       - Glossary: reference/glossary.md
-      - Before you come: reference/prepare.md
+      - Prerequisites: reference/prepare.md
       - Choose your AI option: reference/ai-options.md
       - Set up your AI tool: reference/ai-tool-setup.md
       - Product catalog: reference/catalog.md
