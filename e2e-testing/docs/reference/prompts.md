@@ -13,14 +13,14 @@ Mode: **Plan**. Use it in [chapter 4](../tutorial/04-build-the-test.md).
 I am building the first E2E test for the Eclipse Tractus-X product
 "<product name>" (<repository URL>).
 
-What it must prove, in one sentence:
-"<A partner can ..., and ... is refused.>"
+What it must prove (the scenario from the handout):
+"<the scenario>"
 
 The open project is a template. Plan how to turn it into this test:
 - Keep the two-sided shape: my product is behind the "sut" connector, the
   test runs from the "engine" connector as a partner would.
-- One positive test for the first half of the sentence, one negative test
-  for the second half.
+- One positive test for what a partner can do, one negative test for
+  what is refused.
 - Use only steps from the block catalog. Do not invent step names.
 - Every check must be able to fail: say for each one what the product would
   have to do wrong for it to turn red.

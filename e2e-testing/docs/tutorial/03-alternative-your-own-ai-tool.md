@@ -50,13 +50,13 @@ checklist. Expect a little less comfort than in the IDE. It works.
     ```
 
 5. Open the repository folder in your assistant, start a **new** chat and send this, with
-   your product and your sentence from chapter 2:
+   your product and the scenario from the handout, box **A**:
 
     ```text
     Use the tractusx-e2e-test skill.
 
     My product is "<product name>" (<repository URL>).
-    The test must prove: "<A partner can ..., and ... is refused.>"
+    The test must prove: "<the scenario>"
     The project is in tck/e2e. It is the template: turn it into this test.
     Show me your plan first and wait for my yes.
     ```
