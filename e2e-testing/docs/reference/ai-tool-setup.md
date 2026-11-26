@@ -158,7 +158,7 @@ rm -rf ~/.claude/skills/tractusx-e2e-test ~/.claude/agents/e2e-test-author.md
 
 ---
 
-[← Before you come](prepare.md) · [Home](../index.md) · [Route C →](../tutorial/03-alternative-your-own-ai-tool.md)
+[← Prerequisites](prepare.md) · [Home](../index.md) · [Route C →](../tutorial/03-alternative-your-own-ai-tool.md)
 
 ## NOTICE
 

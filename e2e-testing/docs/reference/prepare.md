@@ -1,4 +1,4 @@
-# Before you come
+# Prerequisites
 
 Ten minutes, best done **before** the workshop. Conference Wi-Fi is not the place to
 install things, and the session has no slack for it.
@@ -48,7 +48,7 @@ You bring your own. No key is shared in the workshop. One of these is enough. No
 The key stays in your browser.
 
 Only a subscription, such as Claude, ChatGPT or Copilot, and no API key? Then build with
-your own assistant on your laptop: install it before you come, and see
+your own assistant on your laptop: install it beforehand, and see
 [Set up your AI tool](ai-tool-setup.md). This route also needs step 5 below.
 
 No model at all? Sit with a team that has one. You can also write the YAML by hand: the

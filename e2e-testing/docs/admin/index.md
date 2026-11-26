@@ -40,7 +40,7 @@ The model is the team's own. Nothing about it is deployed or paid for by the eve
 - [ ] The team list is final. See [Assign products](assign.md).
 - [ ] The committers of every assigned product know that a pull request is coming, and
   agree to approve workflow runs of first-time contributors on the day.
-- [ ] The invitation tells participants to do [Before you come](../reference/prepare.md):
+- [ ] The invitation tells participants to complete the [Prerequisites](../reference/prepare.md):
   ECA, Git, and a model of their own.
 
 ### One week before
