@@ -50,3 +50,7 @@ mxd/backend-service/build
 /mxd-runtimes/jwt-signer/out/
 /icc-irs-challenges/node_modules/
 __pycache__/
+
+# Python virtual environments and site output
+**/.venv/
+/e2e-testing/site/

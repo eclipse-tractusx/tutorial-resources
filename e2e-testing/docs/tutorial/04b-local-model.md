@@ -78,7 +78,7 @@ You will use these in chapter 5:
 
 ---
 
-[← 4 · Choose your AI](04-choose-your-ai.md) · [Home](../index.md) · [Next: 5 · Build the test with the assistant →](05-build-the-test.md)
+[← 4 · Choose your AI](04-choose-your-ai/index.md) · [Home](../index.md) · [Next: 5 · Build the test with the assistant →](05-build-the-test.md)
 
 ## NOTICE
 
@@ -87,4 +87,5 @@ This work is licensed under the [CC-BY-4.0](https://creativecommons.org/licenses
 - SPDX-License-Identifier: CC-BY-4.0
 - SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
 - SPDX-FileCopyrightText: 2026 Catena-X Automotive Network e.V.
+- SPDX-FileCopyrightText: 2026 LKS Next
 - Source URL: <https://github.com/eclipse-tractusx/tutorial-resources>

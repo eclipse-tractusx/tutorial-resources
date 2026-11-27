@@ -49,7 +49,7 @@ flowchart TD
 | 1 | [Start here](tutorial/01-start-here.md) | 5 | Your handout, and the mission |
 | 2 | [Your product and your connectors](tutorial/02-your-product.md) | 5 | Your fork, and the scenario your test will prove |
 | 3 | [Hello, TestLab: your first test, by hand](tutorial/03-hello-testlab.md) | 15 | A test you wrote yourself, compiled and green |
-| 4 | [Choose your AI](tutorial/04-choose-your-ai.md): [A · API key](tutorial/04a-api-key.md), [B · local model](tutorial/04b-local-model.md) or [C · your own AI tool](tutorial/04c-your-own-ai-tool.md) | 5–10 | An assistant that answers |
+| 4 | [Choose your AI](tutorial/04-choose-your-ai/index.md): [A · API key](tutorial/04a-api-key.md), [B · local model](tutorial/04b-local-model.md) or [C · your own AI tool](tutorial/04c-your-own-ai-tool.md) | 5–10 | An assistant that answers |
 | | *Route C builds on your laptop and replaces chapter 5* | *20* | |
 | 5 | [Build the test with the assistant](tutorial/05-build-the-test.md) | 15 | A test project that compiles |
 | 6 | [Run it against your connectors](tutorial/06-run-it.md) | 10 | A green run, for the right reasons |
@@ -91,4 +91,5 @@ This work is licensed under the [CC-BY-4.0](https://creativecommons.org/licenses
 - SPDX-License-Identifier: CC-BY-4.0
 - SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
 - SPDX-FileCopyrightText: 2026 Catena-X Automotive Network e.V.
+- SPDX-FileCopyrightText: 2026 LKS Next
 - Source URL: <https://github.com/eclipse-tractusx/tutorial-resources>

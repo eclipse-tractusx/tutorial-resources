@@ -51,7 +51,7 @@ The result shows in the top bar (**PASSED** or **FAILED**) and in the console.
 ## The assistant
 
 **Ask AI** opens the assistant. Your key goes from your browser straight to the provider.
-[Chapter 4](../tutorial/04-choose-your-ai.md) connects it.
+[Chapter 4](../tutorial/04-choose-your-ai/index.md) connects it.
 
 ![The assistant panel](../assets/screenshots/ide-ask-ai.png)
 
@@ -66,4 +66,5 @@ This work is licensed under the [CC-BY-4.0](https://creativecommons.org/licenses
 - SPDX-License-Identifier: CC-BY-4.0
 - SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
 - SPDX-FileCopyrightText: 2026 Catena-X Automotive Network e.V.
+- SPDX-FileCopyrightText: 2026 LKS Next
 - Source URL: <https://github.com/eclipse-tractusx/tutorial-resources>
