@@ -1,0 +1,1600 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Deploy your own Tractus-X connectors, or a whole small dataspace, on a local Kubernetes cluster.">
+      
+      
+      
+        <link rel="canonical" href="https://eclipse-tractusx.github.io/tutorial-resources/pr-preview/774/mxd/performance-tests/">
+      
+      
+        <link rel="prev" href="../docs/Trudy%20Connector%20Tutorial/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/tractusx/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+      
+        <title>EDC Performance Tests - Minimum Tractus-X Dataspace (MXD)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+  
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Manrope:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Manrope";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;800&display=swap">
+  
+
+    
+      <link rel="stylesheet" href="../assets/tractusx/tractusx.css">
+    
+      <link rel="stylesheet" href="../assets/tractusx/markdown-site.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  
+    <meta name="robots" content="noindex, nofollow">
+  
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#edc-performance-tests" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+            
+  
+    
+    <span class="tx-preview">
+      <strong>Preview of pull request #774.</strong>
+      Not the published site.
+      <a href="https://github.com/eclipse-tractusx/tutorial-resources/pull/774">Open the pull request</a> ·
+      <a href="https://eclipse-tractusx.github.io/tutorial-resources/pr-preview/774/">Preview home</a> ·
+      <a href="https://eclipse-tractusx.github.io/tutorial-resources/">Published site</a>
+    </span>
+  
+
+          </div>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://eclipse-tractusx.github.io/tutorial-resources/pr-preview/774/" title="Minimum Tractus-X Dataspace (MXD)" class="md-header__button md-logo" aria-label="Minimum Tractus-X Dataspace (MXD)" data-md-component="logo">
+      
+  <img src="../assets/tractusx/logo_tractus-x.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Minimum Tractus-X Dataspace (MXD)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              EDC Performance Tests
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette"><button type="button" class="md-header__button md-icon tx-about-button" popovertarget="tx-about" title="About this tutorial" aria-label="About this tutorial">About</button>
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/eclipse-tractusx/tutorial-resources" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    eclipse-tractusx/tutorial-resources
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://eclipse-tractusx.github.io/tutorial-resources/pr-preview/774/" title="Minimum Tractus-X Dataspace (MXD)" class="md-nav__button md-logo" aria-label="Minimum Tractus-X Dataspace (MXD)" data-md-component="logo">
+      
+  <img src="../assets/tractusx/logo_tractus-x.svg" alt="logo">
+
+    </a>
+    Minimum Tractus-X Dataspace (MXD)
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/eclipse-tractusx/tutorial-resources" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    eclipse-tractusx/tutorial-resources
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Minimum Tractus-X Dataspace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Docs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docs/Access%20Policies%20Tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Restricting users from accessing an asset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docs/Business%20Partner%20Group%20Policy%20Tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Business Partner Group Policy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docs/CredentialIssuance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DCP Credential Issuance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docs/EDR%20Transfer%20Tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simplify negotiation and transfer using the EDR API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docs/File%20Transfer%20Azure%20to%20Azure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Transfer: Azure Blob Storage to Azure Blob Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docs/File%20Transfer%20Azure%20to%20S3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Transfer: Azure Blob Storage to Amazon S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docs/File%20Transfer%20S3%20to%20Azure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Transfer: Amazon S3 to Azure Blob Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docs/File%20Transfer%20S3%20to%20S3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Transfer: Amazon S3 to Amazon S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docs/MXD%20Remote%20Deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deploying MXD on Remote Kubernetes Cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docs/Trudy%20Connector%20Tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Add new participant Trudy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance tests
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Performance tests
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#goals-of-the-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goals of the test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tools
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definition-of-general-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definition of General Terms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment-of-the-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment of the Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functional-structure-of-the-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functional structure of the test
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functional structure of the test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measurement-interval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measurement Interval
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#definition-of-properties-experimentproperties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definition of Properties (experiment.properties)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Definition of Properties (experiment.properties)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oem-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OEM Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supplier-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supplier Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functional-structure-in-dependency-to-the-parameter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functional structure in dependency to the parameter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functional structure in dependency to the parameter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Guide
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="User Guide">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation-of-required-softwares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation of Required Softwares
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation of Required Softwares">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup-mxd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup MXD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-jmeter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install JMeter
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup Cluster
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setup Cluster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#local-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-run-in-two-separate-clusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote run in two separate clusters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-the-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running the Evaluation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running the Evaluation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#display-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Display help
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-default-experiment-file-small_experimentproperties-on-kind-mxd-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run default experiment file small_experiment.properties on kind-mxd cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-all-files-from-test-configurations-folder-on-kind-mxd-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run all files from test-configurations folder on kind-mxd cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-just-one-file-ex-medium_experiment_10_contractsproperties-on-kind-mxd-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run just one file ex: medium_experiment_10_contracts.properties on kind-mxd cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-default-experiment-file-small_experimentproperties-on-shoot-edc-lpt-mxd-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run default experiment file small_experiment.properties on shoot--edc-lpt--mxd cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-default-experiment-file-with-test-container-on-kind-mxd-cluster-and-the-rest-of-the-environment-on-shoot-edc-lpt-mxd-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run default experiment file with test container on kind-mxd cluster and the rest of the environment on shoot--edc-lpt--mxd cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-all-files-from-test-configurations-folder-on-separate-clusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run all files from test-configurations folder on separate clusters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customizing-the-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Customizing the Experiments
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="edc-performance-tests">EDC Performance Tests<a class="headerlink" href="#edc-performance-tests" title="Permanent link">&para;</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Deprecated</p>
+<p>This tutorial is kept for reference. It may not match the current Eclipse
+Tractus-X release. <a href="https://eclipse-tractusx.github.io/tutorial-resources/">All tutorials</a></p>
+</div>
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#goals-of-the-test">Goals of the Test</a></li>
+<li><a href="#tools">Tools</a></li>
+<li><a href="#test-design">Test Design</a></li>
+<li><a href="#user-guide">User Guide</a></li>
+</ul>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>This document describes the design of the Eclipse Dataspace Connector (EDC) Performance Tests.
+The EDC is the central communication component in Catena-X, which as a connector implements a framework agreement for sovereign, cross-organizational data exchange.</p>
+<h2 id="goals-of-the-test">Goals of the test<a class="headerlink" href="#goals-of-the-test" title="Permanent link">&para;</a></h2>
+<p>The test measures performance in scenarios similar to those found in the
+automotive industry. It uses a parameter-based, customizable framework
+adaptable to real business situations. It aims to cover a wide range of use
+cases and evaluate their performance.</p>
+<p>To ensure the credibility of the test, the test is based on defined characteristics:</p>
+<ul>
+<li>Real-world: The performance workload should have the characteristics of real-world systems.</li>
+<li>Complexity: The test should capture intra- and inter-company business processes from two counter parties.</li>
+<li>Openness and version independence: The test should be able to be implemented using different versions of the EDC and not be limited to a specific use case scenario.</li>
+</ul>
+<h2 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h2>
+<p>The test and its framework are based on the Java-based test tool <a href="https://jmeter.apache.org/usermanual/generating-dashboard.html">Apache Jmeter</a>. The test scripts are implemented exclusively as .jmx files, an XML-coded script that uses JMeter as the default file format for testing.</p>
+<p>In the first stage of these performance tests, the EDC is simulated using Minimum Tractus-X Dataspace (<a href="https://eclipse-tractusx.github.io/docs-kits/kits/Connector%20Kit/Adoption%20View/connector_kit_adoption_view">MXD</a>).</p>
+<h2 id="test-design">Test Design<a class="headerlink" href="#test-design" title="Permanent link">&para;</a></h2>
+<h3 id="definition-of-general-terms">Definition of General Terms<a class="headerlink" href="#definition-of-general-terms" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OEM</td>
+<td>An OEM or "Original Equipment Manufacturer" manufactures a part or component that is used in another company's product</td>
+</tr>
+<tr>
+<td>Supplier</td>
+<td>An Supplier represents the end of the supply chain in the test scenario and manufactures the end product</td>
+</tr>
+</tbody>
+</table>
+<h3 id="test-setup">Test Setup<a class="headerlink" href="#test-setup" title="Permanent link">&para;</a></h3>
+<p>The relationship between the test setup and the setup of the Minimum Tractus-X Dataspace is visualized in the following figure. It should be emphasized that both the OEM and the supplier act as data recipients and senders.</p>
+<p><img alt="image" src="graphics/TestSetup.svg" /></p>
+<h3 id="deployment-of-the-test">Deployment of the Test<a class="headerlink" href="#deployment-of-the-test" title="Permanent link">&para;</a></h3>
+<p>In order to create a test environment that is as realistic as possible, a deployment in a Kubernetes cluster is used for the test, which in turn deploys a worker node. This worker node of the cluster is characterized by the deployment of two EDCs, each for OEM and supplier and the respective connectors. The contents of the two EDCs are stored in a Postgres database.
+The actual test and thus the workload for the EDCs is carried out by a JMeter script. The entire context is visualized below.</p>
+<p><img alt="image" src="graphics/Test_Deployment.svg" /></p>
+<h3 id="functional-structure-of-the-test">Functional structure of the test<a class="headerlink" href="#functional-structure-of-the-test" title="Permanent link">&para;</a></h3>
+<p>The experiment is divided into three different phases. Each phase is implemented as own .jmx file.</p>
+<h4 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h4>
+<p>During the setup phase an initial set of asset, policy and contract data are loaded into the connectors. The purpose of these data sets is introduce a certain level of data aging before conducting measurements.</p>
+<h4 id="measurement-interval">Measurement Interval<a class="headerlink" href="#measurement-interval" title="Permanent link">&para;</a></h4>
+<p>This phase represents the actual performance evaluation. The script runs through all standard processes that can be executed by the EDC. The process starts with the creation of assets, policies and contract definitions based on the number of mock-up data from the previous process. This is followed by further EDC processes such as "Create Catalogue" until the data transfer is negotiated and executed, as described in the
+<a href="#https://eclipse-tractusx.github.io/docs-kits/category/connector-kit/">EDC wiki</a>.
+In order to test this section as realistically as possible, the process is carried out for both OEMs ("OEM Plants") and suppliers ("Supplier Plants"). The section also contains the "Supplier Fleet Manager" process, a process designed to simulate employees at the supplier who request digital twins of the cars.</p>
+<h3 id="definition-of-properties-experimentproperties">Definition of Properties (experiment.properties)<a class="headerlink" href="#definition-of-properties-experimentproperties" title="Permanent link">&para;</a></h3>
+<h4 id="general-parameters">General Parameters<a class="headerlink" href="#general-parameters" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EXPERIMENT_DURATION_SEC</td>
+<td>Duration of the experiment, during which the threads of the experiment are executed as often as possible. The unit is defined in seconds.</td>
+</tr>
+<tr>
+<td>EDC_NAMESPACE</td>
+<td>URL as an Permanent identifier of the EDC and its version.</td>
+</tr>
+<tr>
+<td>BACKEND_SERVICE</td>
+<td>URL to reference the backend system of the EDCs.</td>
+</tr>
+<tr>
+<td>MAX_NEGOTIATION_POLL_COUNT</td>
+<td>Number of maximum status checks of "FINALIZED" state of the negotiation between the two initiated EDCs Alice and Bob.</td>
+</tr>
+<tr>
+<td>MAX_TRANSFER_POLL_COUNT</td>
+<td>Number of maximum status checks of "FINALIZED" state of the transfer between the two initiated EDCs Alice and Bob.</td>
+</tr>
+<tr>
+<td>INTERVALS_PER_MINUTE</td>
+<td>Number of simulated time intervals per minute.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oem-parameters">OEM Parameters<a class="headerlink" href="#oem-parameters" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OEM_ID</td>
+<td>Unique identifier of the OEM (Business Partner Number).</td>
+</tr>
+<tr>
+<td>OEM_MANAGEMENT_URL</td>
+<td>URL referencing the Management API of the OEM's EDC.</td>
+</tr>
+<tr>
+<td>OEM_PROTOCOL_URL</td>
+<td>URL referencing the Dataspace Protocol of the OEM Connector.</td>
+</tr>
+<tr>
+<td>OEM_API_KEY</td>
+<td>Specific, secret key to access the Management API of the OEM's EDC.</td>
+</tr>
+<tr>
+<td>OEM_PLANTS</td>
+<td>Number of OEM plants manufacturing cars. Each plant is modeled as individual thread.</td>
+</tr>
+<tr>
+<td>OEM_CARS_INITIAL</td>
+<td>Number of inital produced cars in the "SetUp" process for creating mockup data in the database for further processes</td>
+</tr>
+<tr>
+<td>PARTS_PER_CAR</td>
+<td>Number of part twins requested by the OEM from the supplier during the production of a car.</td>
+</tr>
+<tr>
+<td>CARS_PRODUCED_PER_INTERVALL</td>
+<td>Number of cars produced by the OEM during a time interval per plant.</td>
+</tr>
+<tr>
+<td>ADDITIONAL_CONTRACT_DEFINITIONS_OEM</td>
+<td>Number of additional contract definitions added at the setup stage.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="supplier-parameters">Supplier Parameters<a class="headerlink" href="#supplier-parameters" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUPPLIER_ID</td>
+<td>Unique identifier of the Supplier (Business Partner Number)</td>
+</tr>
+<tr>
+<td>SUPPLIER_MANAGEMENT_URL</td>
+<td>URL referencing the Management API of the Supplier EDC.</td>
+</tr>
+<tr>
+<td>SUPPLIER_PROTOCOL_URL</td>
+<td>URL referencing the Dataspace Protocol of the Supplier Connector.</td>
+</tr>
+<tr>
+<td>SUPPLIER_API_KEY</td>
+<td>Specific, secret key to access the Management API of the Supplier EDC.</td>
+</tr>
+<tr>
+<td>SUPPLIER_PLANTS</td>
+<td>Number of supplier plants manufacturing parts. Each plant is modeled as individual thread.</td>
+</tr>
+<tr>
+<td>PARTS_PRODUCED_PER_INTERVALL</td>
+<td>Number of cars produced by the OEM during a time interval per plant.</td>
+</tr>
+<tr>
+<td>SUPPLIER_FLEET_MANAGERS</td>
+<td>Number of employees requesting car twins.</td>
+</tr>
+<tr>
+<td>CARS_REQUESTED_PER_INTERVALL</td>
+<td>Number of car twins requested by the supplier per time interval per employee.</td>
+</tr>
+<tr>
+<td>SUPPLIER_PARTS_INITIAL</td>
+<td>Number of inital produced parts in the "SetUp" process for creating mockup data in the database for further processes</td>
+</tr>
+<tr>
+<td>ADDITIONAL_CONTRACT_DEFINITIONS_SUPPLIER</td>
+<td>Number of additional contract definitions added at the setup stage.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="functional-structure-in-dependency-to-the-parameter">Functional structure in dependency to the parameter<a class="headerlink" href="#functional-structure-in-dependency-to-the-parameter" title="Permanent link">&para;</a></h3>
+<h4 id="visualization">Visualization<a class="headerlink" href="#visualization" title="Permanent link">&para;</a></h4>
+<p>The number of times the processes, which depicts the execution of the production of the cars, the parts required for them and the invoices created for them, are executed in the test setup depends on the three parameters "OEM_PLANTS", "SUPPLIER_PLANTS" and "SUPPLIER FLEET MANAGER". This relationship is illustrated in the following figure:</p>
+<p><img alt="image" src="graphics/Supplier_OEM.svg" /></p>
+<p>The sub-process of executing the above processes is characterized by the number of cars tested. The parameter "OEM_CARS_INITIAL" can be used to define the number of mock-up cars to be created in the setup.jmx. This parameter is then passed to the measurement_interval.jmx and defines the start of the number of cars produced there (starting with counter amount 1).</p>
+<p><img alt="image" src="graphics/Initial_Counter.svg" /></p>
+<h2 id="user-guide">User Guide<a class="headerlink" href="#user-guide" title="Permanent link">&para;</a></h2>
+<h3 id="installation-of-required-softwares">Installation of Required Softwares<a class="headerlink" href="#installation-of-required-softwares" title="Permanent link">&para;</a></h3>
+<h4 id="setup-mxd">Setup MXD<a class="headerlink" href="#setup-mxd" title="Permanent link">&para;</a></h4>
+<p>The minimum Tractus-X Dataspace is required to carry out the tests in a local environment.
+The software and tools required for this are described in the <a href="https://github.com/eclipse-tractusx/tutorial-resources/blob/main/mxd/README.md#1-prerequisites">Eclipse MXD Wiki</a>.</p>
+<p>The setup of the dataspace is explained further in <a href="https://github.com/eclipse-tractusx/tutorial-resources/blob/main/mxd/README.md#2-basic-dataspace-setup">MXD Setup Wiki</a>.</p>
+<h4 id="install-jmeter">Install JMeter<a class="headerlink" href="#install-jmeter" title="Permanent link">&para;</a></h4>
+<ul>
+<li>To run the Jmeter tool, a Java Runtime Environment (JRE) is required, which can be installed <a href="https://www.java.com/de/download/manual.jsp">here</a>.</li>
+<li>After installing the Tractus-X Dataspace, the test software must now be installed.
+  To do this, the Jmeter tool must first be installed. Download <a href="https://jmeter.apache.org/download_jmeter.cgi">here</a>.</li>
+<li>Add the JMETER_HOME environment variable and let it reference the /bin directory of JMeter.</li>
+</ul>
+<h3 id="setup-cluster">Setup Cluster<a class="headerlink" href="#setup-cluster" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Install kind and run <code>kind</code></li>
+</ol>
+<h4 id="local-run">Local run<a class="headerlink" href="#local-run" title="Permanent link">&para;</a></h4>
+<p>Install kind and run <code>kind create cluster -n mxd</code>, this will create a local cluster named <code>kind-mxd</code>
+which is the default cluster name.</p>
+<h4 id="remote-run">Remote run<a class="headerlink" href="#remote-run" title="Permanent link">&para;</a></h4>
+<p>For remote run you don't need <code>kind</code> just provide the name of the remote cluster in -x and -y args.</p>
+<h4 id="remote-run-in-two-separate-clusters">Remote run in two separate clusters<a class="headerlink" href="#remote-run-in-two-separate-clusters" title="Permanent link">&para;</a></h4>
+<p>Collect .kube/config files and merge them in one as described <a href="https://blog.thenets.org/managing-multiples-kubernetes-clusters-with-kubectl/">here</a>.
+Then provide the name of the remote cluster for test pod with -x arg, and name of the remote cluster for rest of pods using -y arg.</p>
+<h3 id="running-the-evaluation">Running the Evaluation<a class="headerlink" href="#running-the-evaluation" title="Permanent link">&para;</a></h3>
+<p>Once all tools and software have been installed and the Tractus-X Dataspace has been deployed as explained in the wiki, the test can be executed:</p>
+<p>The script <code>./experiment_controller.sh</code></p>
+<ol>
+<li>Deploys terraform from <code>mxd</code>folder to a provided cluster</li>
+<li>Starts the <code>mxd-performance-test</code> container which runs
+   <code>small_experiment.properties</code> by default with latest changes from .jmx files.</li>
+</ol>
+<h4 id="display-help">Display help<a class="headerlink" href="#display-help" title="Permanent link">&para;</a></h4>
+<p><code>./experiment_controller.sh -h</code>
+For more information about arguments visit <a href="https://github.com/eclipse-tractusx/tutorial-resources/blob/main/mxd/performance-tests/help.txt">help.txt</a>.</p>
+<h4 id="run-default-experiment-file-small_experimentproperties-on-kind-mxd-cluster">Run default experiment file small_experiment.properties on <code>kind-mxd</code> cluster<a class="headerlink" href="#run-default-experiment-file-small_experimentproperties-on-kind-mxd-cluster" title="Permanent link">&para;</a></h4>
+<p><code>./experiment_controller.sh</code></p>
+<h4 id="run-all-files-from-test-configurations-folder-on-kind-mxd-cluster">Run all files from test-configurations folder on <code>kind-mxd</code> cluster<a class="headerlink" href="#run-all-files-from-test-configurations-folder-on-kind-mxd-cluster" title="Permanent link">&para;</a></h4>
+<p><code>./experiment_controller.sh -f test-configurations</code></p>
+<h4 id="run-just-one-file-ex-medium_experiment_10_contractsproperties-on-kind-mxd-cluster">Run just one file ex:  medium_experiment_10_contracts.properties  on <code>kind-mxd</code> cluster<a class="headerlink" href="#run-just-one-file-ex-medium_experiment_10_contractsproperties-on-kind-mxd-cluster" title="Permanent link">&para;</a></h4>
+<p><code>./experiment_controller.sh -f test-configurations/medium_experiment_10_contracts.properties</code></p>
+<h4 id="run-default-experiment-file-small_experimentproperties-on-shoot-edc-lpt-mxd-cluster">Run default experiment file small_experiment.properties on <code>shoot--edc-lpt--mxd</code> cluster<a class="headerlink" href="#run-default-experiment-file-small_experimentproperties-on-shoot-edc-lpt-mxd-cluster" title="Permanent link">&para;</a></h4>
+<p><code>./experiment_controller.sh -x shoot--edc-lpt--mxd -y shoot--edc-lpt--mxd</code></p>
+<h4 id="run-default-experiment-file-with-test-container-on-kind-mxd-cluster-and-the-rest-of-the-environment-on-shoot-edc-lpt-mxd-cluster">Run default experiment file with test container on <code>kind-mxd</code> cluster and the rest of the environment on <code>shoot--edc-lpt--mxd</code> cluster<a class="headerlink" href="#run-default-experiment-file-with-test-container-on-kind-mxd-cluster-and-the-rest-of-the-environment-on-shoot-edc-lpt-mxd-cluster" title="Permanent link">&para;</a></h4>
+<p><code>./experiment_controller.sh -x kind-mxd -y shoot--edc-lpt--mxd</code></p>
+<h4 id="run-all-files-from-test-configurations-folder-on-separate-clusters">Run all files from test-configurations folder on separate clusters<a class="headerlink" href="#run-all-files-from-test-configurations-folder-on-separate-clusters" title="Permanent link">&para;</a></h4>
+<p><code>./experiment_controller.sh -f test-configurations -x kind-mxd -y shoot--edc-lpt--mxd</code></p>
+<p>Enjoy the test results!</p>
+<h3 id="test-results">Test results<a class="headerlink" href="#test-results" title="Permanent link">&para;</a></h3>
+<p>After executing the shell script, the test results can be viewed at /Output/measurement_interval/index.html.
+Of relevance is the sub-item "Statistics" in index.html. This sub-item contains, among other things:</p>
+<table>
+<thead>
+<tr>
+<th>Naming</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Executions</td>
+<td>Number of processes performed</td>
+</tr>
+<tr>
+<td>Response Time (ms)</td>
+<td>Number in milliseconds of how long it takes the EDC to respond</td>
+</tr>
+<tr>
+<td>Throughput</td>
+<td>Ratio of executions to response time</td>
+</tr>
+<tr>
+<td>Network (KB/sec)</td>
+<td>Data throughput of the EDC in KB</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://jmeter.apache.org/usermanual/generating-dashboard.html">See JMeter Dashboard Reference</a></p>
+<h3 id="customizing-the-experiments">Customizing the Experiments<a class="headerlink" href="#customizing-the-experiments" title="Permanent link">&para;</a></h3>
+<ol>
+<li>[OPTIONAL] Review and update the connectors properties in the three different .properties files.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Naming</th>
+<th>Default Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>small_experiment.properties</td>
+<td>Supplier/OEM Plants = 1, Initial cars/parts = 10000</td>
+</tr>
+<tr>
+<td>medium_experiment.properties</td>
+<td>Supplier/OEM Plants = 5, Initial cars/parts = 100000</td>
+</tr>
+<tr>
+<td>medium_experiment.properties</td>
+<td>Supplier/OEM Plants = 10, Initial cars/parts = 1000000</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; Contributors to the Eclipse Foundation · <a href="https://github.com/eclipse-tractusx/tutorial-resources/blob/main/LICENSE_non-code">CC-BY-4.0</a> (content) · <a href="https://github.com/eclipse-tractusx/tutorial-resources/blob/main/LICENSE">Apache-2.0</a> (code) · <a href="https://github.com/eclipse-tractusx/tutorial-resources/blob/main/NOTICE.md">Notice</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "content.code.copy", "search.highlight", "toc.follow"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  <div id="tx-about" class="tx-about" popover><div class="tx-about__head"><h2>About this tutorial</h2><button type="button" class="tx-about__close" popovertarget="tx-about" popovertargetaction="hide" aria-label="Close">&times;</button></div><dl class="tx-about__facts"><div><dt>Version</dt><dd>v2.2</dd></div><div><dt>Added</dt><dd>Aug 2023</dd></div><div><dt>Updated</dt><dd>Mar 2025</dd></div></dl><h3>Authors</h3><ul class="tx-about__authors"><li><a href="https://github.com/hemantxpatel"><img src="https://avatars.githubusercontent.com/u/141825885?v=4&amp;s=56" alt="" width="28" height="28" loading="lazy">hemantxpatel</a></li><li><a href="https://github.com/paullatzelsperger"><img src="https://avatars.githubusercontent.com/u/43503240?v=4&amp;s=56" alt="" width="28" height="28" loading="lazy">paullatzelsperger</a></li><li><a href="https://github.com/AndrYurk"><img src="https://avatars.githubusercontent.com/u/180180790?v=4&amp;s=56" alt="" width="28" height="28" loading="lazy">AndrYurk</a></li><li><a href="https://github.com/ieuna"><img src="https://avatars.githubusercontent.com/u/161810204?v=4&amp;s=56" alt="" width="28" height="28" loading="lazy">ieuna</a></li><li><a href="https://github.com/wolf4ood"><img src="https://avatars.githubusercontent.com/u/98812?v=4&amp;s=56" alt="" width="28" height="28" loading="lazy">wolf4ood</a></li><li><a href="https://github.com/ravinderkumarsap"><img src="https://avatars.githubusercontent.com/u/142776138?v=4&amp;s=56" alt="" width="28" height="28" loading="lazy">ravinderkumarsap</a></li><li><a href="https://github.com/jkbquabeck"><img src="https://avatars.githubusercontent.com/u/139474964?v=4&amp;s=56" alt="" width="28" height="28" loading="lazy">jkbquabeck</a></li><li><a href="https://github.com/pratapipatelbcone"><img src="https://avatars.githubusercontent.com/u/207156538?v=4&amp;s=56" alt="" width="28" height="28" loading="lazy">pratapipatelbcone</a></li><li class="tx-about__more">and 6 more</li></ul><h3>Versions</h3><ol class="tx-about__history" reversed><li><b>1.0</b> <span>Aug 2023</span> First published.</li><li><b>2.0</b> <span>Nov 2024</span> IdentityHub and STS replace MIW and Keycloak.</li><li><b>2.1</b> <span>Jan 2025</span> IdentityHub upgrade.</li><li><b>2.2</b> <span>Mar 2025</span> DCP issuance, Tractus-X EDC 0.9.</li></ol><p class="tx-about__links"><a href="https://github.com/eclipse-tractusx/tutorial-resources/tree/main/mxd">Source on GitHub</a> · <a href="https://eclipse-tractusx.github.io/tutorial-resources/pr-preview/774/">All tutorials</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a></p></div></body>
+</html>

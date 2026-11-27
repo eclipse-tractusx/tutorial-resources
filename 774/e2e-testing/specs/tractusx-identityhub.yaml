@@ -1,0 +1,148 @@
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+#
+# E2E test spec. Rendered to docs/specs/tractusx-identityhub.md by
+# specs/build_specs.py. Edit this file, not the page.
+
+$schema: ./spec.schema.json
+product: tractusx-identityhub
+specVersion: "1.0"
+status: draft
+statusNote: >
+  Not run end to end yet. The test proves the wallet by its effect: the connectors
+  only agree when the partner's credentials are presented and accepted.
+
+inOneSentence: >
+  A partner whose wallet holds the right credentials gets the contract, and an offer
+  meant for another company stays invisible to it.
+
+whatItDoes: >
+  Every company in the dataspace has a wallet that holds its verifiable credentials:
+  proof that it is a member, which framework agreements it signed, and its BPN. The
+  IssuerService hands these credentials out. When a partner asks for a catalog or a
+  contract, its connector presents the credentials from its wallet, and the provider's
+  connector checks them against the policy.
+
+journey:
+  yourSide: The provider's connector and wallet
+  partnerSide: The partner's connector and wallet, where the tests run from
+  moves:
+    - The provider publishes an offer whose usage policy asks for membership and the DataExchangeGovernance framework agreement.
+    - The partner's connector presents the credentials from its wallet and negotiates.
+    - The provider's connector accepts them, and the contract is agreed.
+    - The provider publishes a second offer that only one other BPN may see.
+    - The partner asks the catalog and does not see the second offer.
+
+tck:
+  id: tractusx-identityhub-e2e
+  folder: tck/e2e
+  standards: []
+  infrastructure:
+    engine: [connector]
+    sut: [connector]
+  runsInWorkshop: true
+  workflow:
+    runInToolbox: true
+  variables:
+    - id: product_internal_url
+      kind: input
+      scope: sut
+      what: Any data behind the asset. The test is about the credentials, not the data.
+      example: http://tck-echo
+      inWorkflow: Filled from product_internal_url, a traefik/whoami echo service.
+    - id: access_policy
+      kind: policy
+      what: "Who may see the first offer: active members."
+    - id: usage_policy
+      kind: policy
+      what: >
+        Active membership, the framework agreement DataExchangeGovernance:1.0 and the
+        usage purpose cx.core.industrycore:1. Copy it from the template: these are the
+        credentials the toolbox issues to both participants.
+    - id: other_company_policy
+      kind: policy
+      what: >
+        An access policy with one constraint: BusinessPartnerNumber isAnyOf a BPN that
+        is neither the provider's nor the partner's.
+      example: BPNL0000000000XX
+    - id: other_company_bpnl
+      kind: input
+      scope: engine
+      what: A made-up BPN that belongs to no participant of the run. The other_company_policy uses it.
+      example: BPNL0000000000XX
+
+tests:
+  - file: credentials_open_the_contract.yaml
+    id: credentials-open-the-contract
+    name: The partner's credentials are accepted and the contract is agreed
+    kinds: [journey, positive]
+    proves: Wallet, credentials and the policy check work together. Without them no contract is agreed.
+    setup:
+      - do: Create the access policy.
+        step: connector/provider/create_policy
+      - do: Create the usage policy.
+        step: connector/provider/create_policy
+      - do: Create an asset with id tractusx-identityhub-e2e-asset.
+        step: connector/provider/create_asset
+      - do: Publish the offer under both policies.
+        step: connector/provider/create_contract_definition
+    execution:
+      - do: As the partner, find the offer, negotiate and start the transfer.
+        step: connector/consumer/pull_data_filtered
+        check:
+          - The asset id is the one created in setup.
+          - An agreement id is returned.
+          - An EDR token is returned.
+    teardown:
+      - do: Delete the contract definition.
+        step: connector/provider/delete_contract_definition
+      - do: Delete the asset.
+        step: connector/provider/delete_asset
+      - do: Delete the usage policy.
+        step: connector/provider/delete_policy
+      - do: Delete the access policy.
+        step: connector/provider/delete_policy
+
+  - file: offer_for_another_company_is_hidden.yaml
+    id: offer-for-another-company-is-hidden
+    name: An offer meant for another BPN is not in the partner's catalog
+    kinds: [negative]
+    proves: The provider reads the partner's identity from its credentials and hides what is not meant for it.
+    setup:
+      - do: Create the other_company_policy as access policy, and the usage policy.
+        step: connector/provider/create_policy
+      - do: Create an asset with id tractusx-identityhub-e2e-hidden-asset.
+        step: connector/provider/create_asset
+      - do: Publish the offer under other_company_policy and the usage policy.
+        step: connector/provider/create_contract_definition
+    execution:
+      - do: As the partner, ask the catalog for the hidden asset by its id.
+        step: connector/consumer/query_catalog_with_filters
+        check:
+          - The list of datasets is empty.
+    teardown:
+      - do: Delete the contract definition, the asset and both policies, in that order.
+        step: connector/provider/delete_contract_definition
+
+breakItOnPurpose:
+  - test: offer_for_another_company_is_hidden.yaml
+    change: Put the partner's own BPN (engine_bpnl) into other_company_policy.
+    expect: The offer becomes visible, the list is not empty and the check fails.
+  - test: credentials_open_the_contract.yaml
+    change: Expect a different asset id.
+    expect: The asset id check fails.
+
+notInScope:
+  - The wallet's own APIs (creating participants, storing credentials). The toolbox does that before the tests run.
+  - Issuing a credential during the test.
+
+pitfalls:
+  - A red result can also be the connector's fault. Say so in the pull request.
+  - The negative test needs its own asset id, different from test 1, so that the two tests can run in any order.
+  - Do not write a real BPN of a company into the test. Use the input variable.
+
+sources:
+  - label: Tractus-X IdentityHub repository
+    url: https://github.com/eclipse-tractusx/tractusx-identityhub
+  - label: Agent kit, pattern 5 "A service the connectors rely on"
+    url: https://github.com/eclipse-tractusx/tutorial-resources/blob/main/e2e-testing/agent-kit/skills/tractusx-e2e-test/reference/patterns.md
