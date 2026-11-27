@@ -62,9 +62,9 @@ and an IssuerService, deployed from the Tractus-X Umbrella chart. It issues the
 participants' credentials, runs the package and throws everything away. No secrets, no
 external cluster. [The developer toolbox](toolbox.md) shows what is in it and how it comes up.
 
-It does the same job as TestLab's own
-[E2E workflow](https://github.com/eclipse-tractusx/tractusx-testlab/blob/main/.github/workflows/e2e-umbrella.yml):
-its dataspace steps are taken from there.
+The developer toolbox lives in the Tractus-X Starter Kit, as the
+[`developer-toolbox` action](https://github.com/eclipse-tractusx/tractusx-starter-kit/tree/main/developer-toolbox).
+The workflow calls it in one step and runs your package against the values it returns.
 
 ## Inputs
 
