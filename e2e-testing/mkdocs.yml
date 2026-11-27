@@ -52,6 +52,7 @@ extra_javascript:
 # buttons; the About button in the header comes from the shared theme.
 hooks:
   - hooks/page_nav.py
+  - ../pages/theme/hooks/preview.py
   - ../pages/theme/hooks/about.py
 
 # The tutorial's own version, separate from the software it uses: 1.0 when

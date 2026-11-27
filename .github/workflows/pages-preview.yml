@@ -1,0 +1,264 @@
+#################################################################################
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License, Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+#################################################################################
+
+# A preview of the website for every pull request that changes it, at
+#
+#   https://eclipse-tractusx.github.io/tutorial-resources/pr-preview/<number>/
+#
+# built for that address (with a banner and noindex, pages/theme/hooks/preview.py),
+# linked in a pull request comment that is updated on every push, and removed
+# when the pull request is closed. Modelled on the documentation previews of
+# eclipse-tractusx/tractusx-edc (publish-docs.yaml).
+#
+# The website is deployed with GitHub Pages from Actions (pages.yml), and only
+# main may deploy to the github-pages environment. So a preview is not deployed
+# from here: it is stored in its own folder on the pr-previews branch
+# (.github/scripts/pr_previews.sh), and pages.yml is dispatched on main, which
+# copies that branch to /pr-preview/ in the site it deploys.
+#
+# The preview holds the home page, the E2E testing tutorial and the Markdown
+# tutorials; the EDC Policy Playground (an Angular build) is left out.
+#
+# Pull requests from branches of this repository are published: their authors
+# can push already, so the write token gives them nothing new. Pull requests
+# from forks get a read-only token, so they are only built; the site is in the
+# run's "pages-preview" artifact. No workflow_run or pull_request_target
+# trigger is used, which would run with write access on untrusted input.
+
+name: GitHub Pages - pull request preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    paths:
+      - "pages/**"
+      - "e2e-testing/**"
+      - ".github/scripts/**"
+      - ".github/workflows/pages.yml"
+      - ".github/workflows/pages-preview.yml"
+
+permissions:
+  contents: read
+
+env:
+  PR_NUMBER: ${{ github.event.pull_request.number }}
+  PREVIEW_URL: https://eclipse-tractusx.github.io/tutorial-resources/pr-preview/${{ github.event.pull_request.number }}/
+
+jobs:
+  build:
+    name: Build the preview
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      # Every site is built for its address below pr-preview/<number>/.
+      PAGES_PREVIEW_PR: ${{ github.event.pull_request.number }}
+      NO_MKDOCS_2_WARNING: "1"
+      # Read-only: the authors in the About panels come from the GitHub API.
+      GITHUB_TOKEN: ${{ github.token }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          # The whole history: the About panels show when each tutorial was added.
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.12"
+
+      - name: Install MkDocs
+        run: pip install -r e2e-testing/requirements.txt
+
+      - name: Home page
+        working-directory: pages
+        run: |
+          mkdocs build --strict --site-dir "${GITHUB_WORKSPACE}/_site"
+          python "${GITHUB_WORKSPACE}/.github/scripts/stamp_tutorials.py" "${GITHUB_WORKSPACE}/_site/index.html"
+
+      - name: E2E testing tutorial
+        working-directory: e2e-testing
+        run: mkdocs build --strict --site-dir "${GITHUB_WORKSPACE}/_site/e2e-testing"
+
+      - name: Markdown tutorials (pages/markdown-sites.yml)
+        run: python .github/scripts/build_markdown_sites.py --out _site
+
+      - name: Upload the preview
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: pages-preview
+          path: _site
+          retention-days: 7
+
+  publish:
+    name: Publish the preview
+    needs: build
+    if: >-
+      github.repository == 'eclipse-tractusx/tutorial-resources' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write # the pr-previews branch
+      actions: write # dispatch pages.yml on main
+      pull-requests: write # the preview comment
+    # Shared with remove, so a preview is never published after its removal.
+    concurrency:
+      group: pages-preview-pr-${{ github.event.pull_request.number }}
+      cancel-in-progress: false
+    env:
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - name: Download the preview
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: pages-preview
+          path: site
+
+      - name: Check out the preview script
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: tools
+          sparse-checkout: .github/scripts
+          persist-credentials: false
+
+      # A newer push or the closing of the pull request may have happened while this job waited.
+      - name: Check that the pull request is still current
+        id: state
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: Number(process.env.PR_NUMBER),
+            });
+            const current = pr.state === 'open' && pr.head.sha === process.env.HEAD_SHA;
+            if (!current) core.notice(`Pull request #${process.env.PR_NUMBER} was closed or updated; skipping.`);
+            core.setOutput('current', String(current));
+
+      - name: Store the preview on the pr-previews branch
+        if: steps.state.outputs.current == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bash tools/.github/scripts/pr_previews.sh add "${PR_NUMBER}" site
+
+      # A workflow_dispatch is the one event a GITHUB_TOKEN may start another workflow with.
+      - name: Deploy the website with the preview (pages.yml on main)
+        if: steps.state.outputs.current == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --repo "${GITHUB_REPOSITORY}" --ref main
+
+      - name: Link the preview in the pull request
+        if: steps.state.outputs.current == 'true'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const marker = '<!-- pages-preview-comment -->';
+            const runs = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/workflows/pages.yml`;
+            const body = [
+              marker,
+              '### Website preview',
+              '',
+              `The website of this pull request is published at **${process.env.PREVIEW_URL}**`,
+              `(E2E testing tutorial: ${process.env.PREVIEW_URL}e2e-testing/).`,
+              '',
+              `Built from ${process.env.HEAD_SHA.slice(0, 7)}. It is online once the [GitHub Pages run](${runs}) ` +
+                'has finished, usually in a few minutes. The preview is updated on every push that changes the ' +
+                'website and removed when the pull request is closed.',
+            ].join('\n');
+            const issue_number = Number(process.env.PR_NUMBER);
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner, repo: context.repo.repo, issue_number, per_page: 100,
+            });
+            const existing = comments.find(c => c.user?.type === 'Bot' && c.body?.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner, repo: context.repo.repo, comment_id: existing.id, body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner, repo: context.repo.repo, issue_number, body,
+              });
+            }
+
+  remove:
+    name: Remove the preview
+    if: >-
+      github.repository == 'eclipse-tractusx/tutorial-resources' &&
+      github.event.action == 'closed' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: write
+      pull-requests: write
+    concurrency:
+      group: pages-preview-pr-${{ github.event.pull_request.number }}
+      cancel-in-progress: false
+    env:
+      MERGED: ${{ github.event.pull_request.merged }}
+    steps:
+      # From the base branch: the pull request is closed, its script no longer matters.
+      - name: Check out the preview script
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: tools
+          sparse-checkout: .github/scripts
+          persist-credentials: false
+
+      - name: Remove the preview from the pr-previews branch
+        if: hashFiles('tools/.github/scripts/pr_previews.sh') != ''
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bash tools/.github/scripts/pr_previews.sh remove "${PR_NUMBER}"
+
+      - name: Deploy the website without the preview (pages.yml on main)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --repo "${GITHUB_REPOSITORY}" --ref main
+
+      - name: Update the preview comment
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const marker = '<!-- pages-preview-comment -->';
+            const issue_number = Number(process.env.PR_NUMBER);
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner, repo: context.repo.repo, issue_number, per_page: 100,
+            });
+            const existing = comments.find(c => c.user?.type === 'Bot' && c.body?.includes(marker));
+            if (!existing) return;
+            const merged = process.env.MERGED === 'true';
+            const body = [
+              marker,
+              '### Website preview',
+              '',
+              'The preview was removed because this pull request was closed.' +
+                (merged ? ' The changes appear on https://eclipse-tractusx.github.io/tutorial-resources/ once main is published.' : ''),
+            ].join('\n');
+            await github.rest.issues.updateComment({
+              owner: context.repo.owner, repo: context.repo.repo, comment_id: existing.id, body,
+            });

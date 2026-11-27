@@ -779,3 +779,13 @@
 .md-typeset td > span[id]:first-child { scroll-margin-top: 7rem; }
 .md-typeset tr:has(> td > span[id]:target) > td { background: color-mix(in srgb, var(--tx-orange) 14%, transparent); }
 .md-typeset tr:has(> td > span[id]:first-child) > td:first-child { width: 28%; }
+
+/* The banner of a pull request preview (hooks/preview.py, main.html). */
+.md-banner:has(.tx-preview) {
+  background: var(--tx-orange);
+  color: #000;
+}
+.md-banner .tx-preview a {
+  color: inherit;
+  text-decoration: underline;
+}

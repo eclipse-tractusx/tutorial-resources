@@ -36,6 +36,7 @@ extra_css:
   - stylesheets/home.css
 
 hooks:
+  - theme/hooks/preview.py
   - theme/hooks/about.py
   - hooks/home.py
 

@@ -76,8 +76,10 @@ extra:
   # The logo leads to the list of all tutorials, from every site.
   homepage: https://eclipse-tractusx.github.io/tutorial-resources/
 
-# The "About" button in the header and the panel it opens.
+# The "About" button in the header and the panel it opens; preview.py first,
+# for pull request previews (PAGES_PREVIEW_PR).
 hooks:
+  - ../pages/theme/hooks/preview.py
   - ../pages/theme/hooks/about.py
 
 markdown_extensions:
