@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
-# SPDX-License-Identifier: CC-BY-4.0
+# SPDX-License-Identifier: Apache-2.0
 #
 # E2E test spec. Rendered to docs/specs/tractusx-edc.md by
 # specs/build_specs.py. Edit this file, not the page.
