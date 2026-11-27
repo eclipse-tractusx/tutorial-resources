@@ -1,0 +1,150 @@
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+#
+# E2E test spec. Rendered to docs/specs/bpdm.md by
+# specs/build_specs.py. Edit this file, not the page.
+
+$schema: ./spec.schema.json
+product: bpdm
+specVersion: "1.0"
+status: draft
+statusNote: >
+  Not run yet. BPDM is not in the workshop environment: build, validate and compile
+  in the workshop, and run it where BPDM and its identity provider are deployed.
+  The labs/ steps used here are marked experimental in TestLab.
+
+inOneSentence: >
+  A business partner a member uploads to the Gate can be read back, and the Gate
+  refuses a caller without a token.
+
+whatItDoes: >
+  BPDM keeps the "golden record" of business partners: one clean, shared entry per
+  company, site and address, each with a BPN. A member uploads its own view of a
+  partner to the Gate. The Orchestrator and the Pool clean and merge the data, and the
+  result comes back to the Gate's output with a BPN.
+
+journey:
+  yourSide: The BPDM Gate, called directly with a token from its identity provider
+  partnerSide: The test, acting as a member's system that calls the Gate
+  moves:
+    - The member gets a token from the identity provider.
+    - The member uploads one business partner to the Gate's input, under an external id of its own.
+    - The member reads it back from the input by that external id.
+    - The member asks for its sharing state and sees that it is known.
+    - A caller without a token is refused.
+
+tck:
+  id: bpdm-e2e
+  folder: tck/e2e
+  standards: []
+  infrastructure:
+    engine: []
+    sut: []
+  runsInWorkshop: false
+  workflow:
+    runInToolbox: false
+    note: Set run-in-toolbox to false. The workflow then validates and compiles on every pull request.
+  apis:
+    - id: gate
+      what: >
+        The Gate's OpenAPI document. Copy docs/api/gate.json of the BPDM release under
+        test to tck/e2e/apis/gate.json and declare it under env.apis. Tests call its
+        operations by operationId, so nobody has to type a path.
+      source: https://github.com/eclipse-tractusx/bpdm/blob/main/docs/api/gate.json
+  variables:
+    - id: gate_url
+      kind: input
+      scope: sut
+      what: Base URL of the Gate API, without the version.
+      example: https://bpdm-gate.example.org
+    - id: token_url
+      kind: input
+      scope: sut
+      what: Token endpoint of the identity provider the Gate trusts.
+      example: https://centralidp.example.org/auth/realms/CX-Central/protocol/openid-connect/token
+    - id: client_id
+      kind: input
+      scope: engine
+      what: The technical user the test calls the Gate as.
+    - id: client_secret
+      kind: input
+      scope: engine
+      what: Its secret. Supplied when the TCK runs, never written into a file.
+
+tests:
+  - file: upload_and_read_back.yaml
+    id: upload-and-read-back
+    name: A business partner uploaded to the Gate can be read back
+    kinds: [journey, positive, contract]
+    proves: The Gate stores what a member uploads, under the member's own external id, in the shape its API documents.
+    execution:
+      - do: Mint an external id that is new in every run.
+        step: util/generate_uuid
+      - do: Get a token with the client credentials.
+        step: security/oauth2/client_credentials
+        check:
+          - An access token is returned.
+      - do: "Upload one business partner: operation upsertBusinessPartnersInput, with the external id and a legal name."
+        step: labs/http/api_request
+        check:
+          - The answer is a success (2XX) and matches the documented answer.
+      - do: "Read it back: operation getBusinessPartnersInput, with the external id."
+        step: labs/http/api_request
+        check:
+          - The answer holds exactly one business partner.
+          - Its external id and legal name are the ones uploaded.
+      - do: "Ask for its sharing state: operation getSharingStates, with the external id."
+        step: labs/http/api_request
+        check:
+          - A sharing state is returned for the external id.
+
+  - file: no_token_is_refused.yaml
+    id: no-token-is-refused
+    name: The Gate refuses a caller without a token
+    kinds: [negative]
+    proves: Business partner data is not open to anyone who finds the address.
+    execution:
+      - do: "Call getBusinessPartnersInput without an Authorization header, expecting 401."
+        step: labs/http/api_request
+        check:
+          - The answer is 401.
+
+  - file: golden_record_has_a_bpn.yaml
+    id: golden-record-has-a-bpn
+    name: The uploaded partner comes back from the Pool with a BPN
+    kinds: [journey, positive]
+    optional: true
+    proves: The whole BPDM chain works, Gate, Orchestrator and Pool, not only the Gate.
+    execution:
+      - do: Upload a business partner as in test 1 and set it ready to be shared with postSharingStateReady.
+        step: labs/http/api_request
+      - do: Wait until the sharing state of the partner is Success, retrying the read instead of sleeping.
+        step: flow/retry
+      - do: "Read it from the output: operation getBusinessPartnersOutput, with the external id."
+        step: labs/http/api_request
+        check:
+          - The answer holds the partner with a BPNL.
+
+breakItOnPurpose:
+  - test: upload_and_read_back.yaml
+    change: Read back a different, fresh external id.
+    expect: The answer holds no business partner and the check fails.
+  - test: no_token_is_refused.yaml
+    change: Send the token from test 1.
+    expect: The answer is 200 and the check fails.
+
+notInScope:
+  - CSV upload, relations and statistics.
+  - The Pool's and the Orchestrator's own APIs.
+  - Deleting a business partner. The Gate has no delete for input partners, so use a new external id in every run.
+
+pitfalls:
+  - Use the v7 operations. The v6 ones have a _1 at the end of their operationId.
+  - The secret is an input supplied at run time. A secret in a file fails review.
+  - If the compiler refuses an empty infrastructure, ask a facilitator; do not add a connector the tests do not use.
+
+sources:
+  - label: BPDM repository
+    url: https://github.com/eclipse-tractusx/bpdm
+  - label: BPDM Gate OpenAPI document (version 7.6.0 when this spec was written)
+    url: https://github.com/eclipse-tractusx/bpdm/blob/main/docs/api/gate.json
