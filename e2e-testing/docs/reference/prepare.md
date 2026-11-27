@@ -61,7 +61,7 @@ You do not need it in the workshop. The IDE compiles and runs for you, and GitHu
 does the same in CI. If you like a terminal, with Python 3.12 or newer:
 
 ```bash
-pip install "tractusx-testlab==1.0.0a24"
+pip install "tractusx-testlab==1.0.0a25"
 testlab --help
 ```
 

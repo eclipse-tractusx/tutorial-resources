@@ -35,7 +35,7 @@ Read <path to this folder>/AGENTS.md and follow it.
 
 | Check | Result |
 | --- | --- |
-| The template and the example inside the skill | Validate and compile with TestLab 1.0.0a24, and pass in GitHub Actions |
+| The template and the example inside the skill | Validate and compile with TestLab 1.0.0a25, and pass in GitHub Actions |
 | The commands in `SKILL.md` | Run as written |
 | The skill, used by an assistant with no other knowledge | It built a two-test project for the BPN-DID Resolution Service that validates and compiles, in three rounds. Its eleven findings are fixed in the kit. The project was not run. |
 | Assistants other than Claude Code | **Not tried** |

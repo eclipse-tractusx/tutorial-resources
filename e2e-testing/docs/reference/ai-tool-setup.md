@@ -21,7 +21,7 @@ assistants read it. They differ only in **where** they look for it.
 ## First, for every tool
 
 ```bash
-pip install "tractusx-testlab==1.0.0a24"
+pip install "tractusx-testlab==1.0.0a25"
 git clone --depth 1 https://github.com/eclipse-tractusx/tutorial-resources.git
 cd tutorial-resources/e2e-testing/agent-kit
 ```

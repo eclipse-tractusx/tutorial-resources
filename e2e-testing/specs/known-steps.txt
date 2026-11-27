@@ -1,4 +1,4 @@
-# Steps of tractusx-testlab 1.0.0a24, from `testlab docs --json`.
+# Steps of tractusx-testlab 1.0.0a25, from `testlab docs --json`.
 # Rewrite with: python specs/build_specs.py --refresh-steps
 connector/consumer/discover_connector
 connector/consumer/do_dsp

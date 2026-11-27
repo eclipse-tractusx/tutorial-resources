@@ -24,7 +24,7 @@ compiler that what you wrote is well-formed.
    testlab --help
    ```
 
-   If the command is missing: `pip install "tractusx-testlab==1.0.0a24"` (Python 3.12 or newer).
+   If the command is missing: `pip install "tractusx-testlab==1.0.0a25"` (Python 3.12 or newer).
 3. Generate the step catalog once and keep it out of the repository:
 
    ```bash

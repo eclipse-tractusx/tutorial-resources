@@ -71,7 +71,7 @@ The workflow calls it in one step and runs your package against the values it re
 | Input | Default | Use it to |
 | --- | --- | --- |
 | `tck-directory` | `tck/e2e` | Point at the folder that holds `index.yaml`. |
-| `testlab-version` | `1.0.0a24` | Pin the TestLab version that validates, compiles and runs. |
+| `testlab-version` | `1.0.0a25` | Pin the TestLab version that validates, compiles and runs. |
 | `run-in-toolbox` | `true` | Set to `false` to only validate and compile, for a product the developer toolbox cannot run yet. |
 | `config` | none | Add run values of your own: a YAML file with `variables:`. |
 | `toolbox-values` | none | Add Helm values to the developer toolbox, for example the image built from this pull request. |
