@@ -1,0 +1,183 @@
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: CC-BY-4.0
+#
+# E2E test spec. Rendered to docs/specs/tractusx-edc.md by
+# specs/build_specs.py. Edit this file, not the page.
+
+$schema: ./spec.schema.json
+product: tractusx-edc
+specVersion: "1.0"
+status: draft
+statusNote: >
+  Tests 1 and 2 follow the template, which passes in GitHub Actions. Tests 3 and 4
+  have not been run yet: confirm the status code of test 3 in the first run.
+
+inOneSentence: >
+  A partner finds an offer in the catalog, negotiates a contract and gets the data,
+  and without a token it gets nothing.
+
+whatItDoes: >
+  The connector is the door of a company to the dataspace. A provider puts data behind
+  it as an "asset" and publishes an offer with rules (policies) on who may see it and
+  what it may be used for. A partner's connector asks for the catalog, negotiates a
+  contract and receives a token. With the token it calls the provider's data plane and
+  gets the data.
+
+journey:
+  yourSide: The provider's connector, with a small echo service behind it as the data
+  partnerSide: The partner's connector, where the tests run from
+  moves:
+    - The provider creates an access policy, a usage policy and an asset that points at the echo service.
+    - The provider publishes a contract definition that ties the three together.
+    - The partner asks the provider's catalog for that asset and sees the offer.
+    - The partner negotiates a contract and receives a data plane URL and a token.
+    - The partner calls the data plane with the token and gets the echo service's answer.
+    - The provider removes the offer, the asset and both policies.
+
+tck:
+  id: tractusx-edc-e2e
+  folder: tck/e2e
+  standards: []
+  infrastructure:
+    engine: [connector]
+    sut: [connector]
+  runsInWorkshop: true
+  workflow:
+    runInToolbox: true
+  variables:
+    - id: product_internal_url
+      kind: input
+      scope: sut
+      what: The data behind the asset, as the provider's connector reaches it.
+      example: http://tck-echo
+      inWorkflow: Filled from product_internal_url, a traefik/whoami echo service.
+    - id: product_asset
+      kind: asset
+      what: >
+        The asset: id tractusx-edc-e2e-asset, base URL product_internal_url, dct_type
+        https://w3id.org/catenax/taxonomy#TestData, and proxy_params with proxyPath "true"
+        so that the path of a call reaches the echo service (the worked example does the
+        same for the registry).
+    - id: access_policy
+      kind: policy
+      what: "Who may see the offer: active members."
+    - id: usage_policy
+      kind: policy
+      what: >
+        What the data may be used for: active membership, the framework agreement
+        DataExchangeGovernance:1.0 and the usage purpose cx.core.industrycore:1.
+        Copy it from the template.
+
+tests:
+  - file: partner_pulls_data.yaml
+    id: partner-pulls-data
+    name: A partner finds the offer, negotiates a contract and gets the data
+    kinds: [journey, positive]
+    proves: "The whole exchange works between two companies: catalog, negotiation, transfer and the call with the token."
+    setup:
+      - do: Create the access policy.
+        step: connector/provider/create_policy
+      - do: Create the usage policy.
+        step: connector/provider/create_policy
+      - do: Create the asset from product_asset.
+        step: connector/provider/create_asset
+      - do: Publish the offer under both policies.
+        step: connector/provider/create_contract_definition
+    execution:
+      - do: As the partner, find the offer by its asset id, negotiate and start the transfer, all in one step.
+        step: connector/consumer/pull_data_filtered
+        check:
+          - The asset id is the one created in setup.
+          - An agreement id is returned.
+          - An EDR token is returned.
+      - do: Call GET /api on the data plane with the token. The echo service answers with the request it received, as JSON.
+        step: connector/dataplane/http_request
+        check:
+          - The answer is 200.
+          - The field method in the body is GET.
+    teardown:
+      - do: Delete the contract definition.
+        step: connector/provider/delete_contract_definition
+      - do: Delete the asset.
+        step: connector/provider/delete_asset
+      - do: Delete the usage policy.
+        step: connector/provider/delete_policy
+      - do: Delete the access policy.
+        step: connector/provider/delete_policy
+
+  - file: unknown_offer_is_not_found.yaml
+    id: unknown-offer-is-not-found
+    name: An offer that was never published is not in the catalog
+    kinds: [negative]
+    proves: The catalog shows what was offered and nothing else.
+    execution:
+      - do: Ask the provider's catalog for an asset id that was never published.
+        step: connector/consumer/query_catalog_with_filters
+        check:
+          - The list of datasets is empty.
+
+  - file: no_token_no_data.yaml
+    id: no-token-no-data
+    name: The data plane refuses a call without a token
+    kinds: [negative]
+    proves: Data only flows under a contract. A caller without a token is turned away.
+    setup:
+      - do: Create both policies, the asset and the contract definition, as in test 1.
+        step: connector/provider/create_policy
+    execution:
+      - do: As the partner, negotiate as in test 1 to learn the data plane URL.
+        step: connector/consumer/pull_data_filtered
+      - do: Call the same data plane URL with an empty token.
+        step: connector/dataplane/http_request
+        check:
+          - The answer is 401 or 403, never 200.
+    teardown:
+      - do: Delete the contract definition, the asset and both policies, in that order.
+        step: connector/provider/delete_contract_definition
+
+  - file: offer_carries_the_policy.yaml
+    id: offer-carries-the-policy
+    name: The offer in the catalog carries the usage policy
+    kinds: [contract]
+    optional: true
+    proves: A partner sees the rules of an offer before it signs, exactly as the provider set them.
+    setup:
+      - do: Create both policies, the asset and the contract definition, as in test 1.
+        step: connector/provider/create_policy
+    execution:
+      - do: Ask the catalog for the asset by its id.
+        step: connector/consumer/query_catalog_by_asset_id
+        check:
+          - The dataset's asset id is the one created in setup.
+          - The catalog policy is not empty.
+    teardown:
+      - do: Delete the contract definition, the asset and both policies, in that order.
+        step: connector/provider/delete_contract_definition
+
+breakItOnPurpose:
+  - test: partner_pulls_data.yaml
+    change: Expect method POST instead of GET in the echo answer.
+    expect: The field check fails and shows GET.
+  - test: unknown_offer_is_not_found.yaml
+    change: Filter for the asset id that test 1 creates, and run it after setup of test 1.
+    expect: The list is no longer empty and the check fails.
+  - test: no_token_no_data.yaml
+    change: Pass the real token from the negotiation.
+    expect: The answer is 200 and the check fails.
+
+notInScope:
+  - Push transfers to a partner's endpoint. A good next pull request.
+  - Policies that need credentials the toolbox does not issue.
+
+pitfalls:
+  - A status 200 alone proves little. Check a field of the answer.
+  - The policy and asset ids must be the same in every run, and teardown must delete them, or the second run fails with a conflict.
+  - participant_id is a DID, not a BPN.
+
+sources:
+  - label: The E2E test template
+    url: https://github.com/eclipse-tractusx/tutorial-resources/tree/main/e2e-testing/template/tck/e2e
+  - label: Tractus-X EDC repository
+    url: https://github.com/eclipse-tractusx/tractusx-edc
+  - label: traefik/whoami, the echo service
+    url: https://github.com/traefik/whoami

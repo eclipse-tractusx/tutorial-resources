@@ -1,0 +1,65 @@
+/*
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation
+ *
+ * See the NOTICE file(s) distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Apache License, Version 2.0 which is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* Styles only the Markdown tutorial sites need (build_markdown_sites.py). */
+
+/* "Try the app": the app's screenshot out of focus, the button over it. */
+.md-typeset .tx-app-preview {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  margin: 1.2em 0 1.6em;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.4rem;
+  aspect-ratio: 16 / 7;
+}
+
+.md-typeset .tx-app-preview img {
+  position: absolute;
+  /* A little past the edges, so the blur has no soft border; not zoomed. */
+  inset: -12px;
+  width: calc(100% + 24px);
+  max-width: none;
+  height: calc(100% + 24px);
+  object-fit: cover;
+  object-position: top left;
+  border-radius: 0;
+  filter: blur(4px) saturate(0.8);
+  transition: filter 0.3s;
+}
+
+.md-typeset .tx-app-preview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(0 0 0 / 5%), rgb(0 0 0 / 30%));
+}
+
+.md-typeset .tx-app-preview .md-button {
+  position: relative;
+  z-index: 1;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.6rem 1.4rem rgb(0 0 0 / 30%);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.md-typeset .tx-app-preview:hover img {
+  filter: blur(3px);
+}
+
+.md-typeset .tx-app-preview:hover .md-button,
+.md-typeset .tx-app-preview:focus-visible .md-button {
+  transform: translateY(-3px);
+  box-shadow: 0 1rem 2rem rgb(0 0 0 / 35%);
+}
