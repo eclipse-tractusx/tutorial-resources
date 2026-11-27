@@ -53,7 +53,7 @@ on:
       testlab-version:
         description: Version of tractusx-testlab on PyPI that validates, compiles and runs the project.
         type: string
-        default: "1.0.0a24"
+        default: "1.0.0a25"
       run-in-toolbox:
         description: Run the tests in the Eclipse Tractus-X developer toolbox, a dataspace created in the runner. Set to false to only validate and compile.
         type: boolean

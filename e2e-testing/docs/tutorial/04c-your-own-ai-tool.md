@@ -20,7 +20,7 @@ checklist. Expect a little less comfort than in the IDE. It works.
    uses it to check its own work:
 
     ```bash
-    pip install "tractusx-testlab==1.0.0a24"
+    pip install "tractusx-testlab==1.0.0a25"
     ```
 
 2. Clone the [fork](../reference/glossary.md#fork-and-pull-request) you made in chapter 2
@@ -106,7 +106,7 @@ In the IDE, your tests in the explorer on the left and the message **Compilation
 >   the file: `Read ../tutorial-resources/e2e-testing/agent-kit/AGENTS.md and follow it.`
 > - **It invents steps:** say `Use only steps that testlab docs lists.`
 > - **`testlab` is not found:** the `pip install` went into another Python. Try
->   `python3 -m pip install "tractusx-testlab==1.0.0a24"` and open a new terminal.
+>   `python3 -m pip install "tractusx-testlab==1.0.0a25"` and open a new terminal.
 > - **`validate` stays red after three rounds:** copy the template again (step 4) and ask
 >   for one test at a time.
 > - **Your assistant cannot run commands:** run `testlab validate` yourself and paste the

@@ -46,7 +46,7 @@ The [syntax cheat sheet](../reference/syntax.md) explains every part.
     1. Install TestLab (Python 3.12+) and the VS Code extension **YAML** by Red Hat:
 
         ```bash
-        pip install "tractusx-testlab==1.0.0a24"
+        pip install "tractusx-testlab==1.0.0a25"
         ```
 
     2. Unpack [`hello-start.zip`](../downloads/hello-start.zip) into a folder `hello` and
@@ -56,7 +56,7 @@ The [syntax cheat sheet](../reference/syntax.md) explains every part.
        autocomplete:
 
         ```yaml
-        # yaml-language-server: $schema=https://raw.githubusercontent.com/eclipse-tractusx/tractusx-testlab/v1-alpha24/src/tractusx_testlab/compiler/schemas/tck_test.schema.json
+        # yaml-language-server: $schema=https://raw.githubusercontent.com/eclipse-tractusx/tractusx-testlab/v1-alpha25/src/tractusx_testlab/compiler/schemas/tck_test.schema.json
         ```
 
     5. In `index.yaml`, replace `tests: []` with:

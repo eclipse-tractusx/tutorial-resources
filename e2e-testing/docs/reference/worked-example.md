@@ -73,7 +73,7 @@ That is what a contract check is for. A check on "status 200" would have stayed 
 With Python 3.12 or newer:
 
 ```bash
-pip install "tractusx-testlab==1.0.0a24"
+pip install "tractusx-testlab==1.0.0a25"
 cd e2e-testing/examples/digital-twin-registry/tck/e2e
 testlab validate index.yaml
 testlab compile index.yaml -o /tmp/dtr-e2e.tck
