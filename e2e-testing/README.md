@@ -24,7 +24,7 @@ Made for the "AI and Test Management" session of the 7th Eclipse Tractus-X Commu
 | 1 | [Start here](docs/tutorial/01-start-here.md) | 5 |
 | 2 | [Your product and your connectors](docs/tutorial/02-your-product.md) | 5 |
 | 3 | [Hello, TestLab: your first test, by hand](docs/tutorial/03-hello-testlab.md) | 15 |
-| 4 | [Choose your AI](docs/tutorial/04-choose-your-ai.md) | 5 |
+| 4 | [Choose your AI](docs/tutorial/04-choose-your-ai/index.md) | 5 |
 | 5 | [Build the test with the assistant](docs/tutorial/05-build-the-test.md) | 15 |
 | 6 | [Run it against your connectors](docs/tutorial/06-run-it.md) | 10 |
 | 7 | [Add it to your repository](docs/tutorial/07-add-to-repository.md) | 10 |
@@ -79,4 +79,5 @@ This work is licensed under the [CC-BY-4.0](https://creativecommons.org/licenses
 - SPDX-License-Identifier: CC-BY-4.0
 - SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
 - SPDX-FileCopyrightText: 2026 Catena-X Automotive Network e.V.
+- SPDX-FileCopyrightText: 2026 LKS Next
 - Source URL: <https://github.com/eclipse-tractusx/tutorial-resources>

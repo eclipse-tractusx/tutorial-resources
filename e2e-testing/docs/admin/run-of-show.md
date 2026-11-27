@@ -36,7 +36,7 @@ chapters 5 and 6, and keep the two checkpoints.
 | 0 | [1 · Start here](../tutorial/01-start-here.md) | "Read box A. Pick Driver, Navigator, Skeptic." | Teams with an empty box on the handout |
 | 5 | [2 · Your product](../tutorial/02-your-product.md) | "Read your scenario. Press Fork now." | Teams that cannot find a refusal: suggest "what was never offered is not found" |
 | 10 | [3 · Hello, TestLab](../tutorial/03-hello-testlab.md) | "Write the first test yourself. No AI yet." | Teams stuck on indentation: point them to the finished files in the chapter |
-| 25 | [4 · Choose your AI](../tutorial/04-choose-your-ai.md) | "Hands up when your assistant has answered." | Teams without a model: seat them with a team that has one |
+| 25 | [4 · Choose your AI](../tutorial/04-choose-your-ai/index.md) | "Hands up when your assistant has answered." | Teams without a model: seat them with a team that has one |
 | 30 | [5 · Build](../tutorial/05-build-the-test.md) | "Plan first. Do not let it write before you agree with the plan." | Teams whose compile stays red after three rounds |
 | 45 | [6 · Run](../tutorial/06-run-it.md) | **Checkpoint:** "Who has a green compile?" | Runs that wait: check the connectors at the Desk |
 | 55 | [7 · Repository](../tutorial/07-add-to-repository.md) | **Checkpoint:** "Who has seen a green run? Who has seen a red one and knows why?" | Git push problems, missing sign-off |
@@ -83,4 +83,5 @@ This work is licensed under the [CC-BY-4.0](https://creativecommons.org/licenses
 - SPDX-License-Identifier: CC-BY-4.0
 - SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
 - SPDX-FileCopyrightText: 2026 Catena-X Automotive Network e.V.
+- SPDX-FileCopyrightText: 2026 LKS Next
 - Source URL: <https://github.com/eclipse-tractusx/tutorial-resources>

@@ -37,7 +37,7 @@ edit_uri: edit/main/e2e-testing/docs/
 theme:
   features:
     - navigation.tabs
-    - navigation.sections
+    - navigation.expand
     - navigation.top
     - navigation.indexes
     - content.code.copy
@@ -86,7 +86,7 @@ nav:
       - 2 · Your product and your connectors: tutorial/02-your-product.md
       - 3 · Hello, TestLab: tutorial/03-hello-testlab.md
       - 4 · Choose your AI:
-          - Choose: tutorial/04-choose-your-ai.md
+          - tutorial/04-choose-your-ai/index.md
           - A · API key in the IDE: tutorial/04a-api-key.md
           - B · Local model in the IDE: tutorial/04b-local-model.md
           - C · Your own AI tool: tutorial/04c-your-own-ai-tool.md

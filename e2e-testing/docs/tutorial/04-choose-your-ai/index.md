@@ -20,7 +20,7 @@ an AI coding tool, otherwise **B**.
 
     *You need:* the key. *Time:* 5 + 15 minutes.
 
-    [Take route A →](04a-api-key.md)
+    [Take route A →](../04a-api-key.md)
 
 -   **B · A local model in the IDE**
 
@@ -31,7 +31,7 @@ an AI coding tool, otherwise **B**.
 
     *You need:* Ollama and 8 GB of RAM or more. *Time:* 10 + 20 minutes.
 
-    [Take route B →](04b-local-model.md)
+    [Take route B →](../04b-local-model.md)
 
 -   **C · Your own AI tool, then upload**
 
@@ -42,7 +42,7 @@ an AI coding tool, otherwise **B**.
 
     *You need:* your tool and Python. *Time:* 20 minutes.
 
-    [Take route C →](04c-your-own-ai-tool.md)
+    [Take route C →](../04c-your-own-ai-tool.md)
 
 </div>
 
@@ -53,17 +53,17 @@ flowchart LR
     S --> C["C · Your own tool"] --> R
 ```
 
-The details, sizes and limits of each route: [Choose your AI option](../reference/ai-options.md).
+The details, sizes and limits of each route: [Choose your AI option](../../reference/ai-options.md).
 
 > [!TIP]
 > **Stuck?**
 >
 > - **Nobody in the team has any of the three:** join a team that has one, or change the
->   template by hand with the [worked example](../reference/worked-example.md) next to you.
+>   template by hand with the [worked example](../../reference/worked-example.md) next to you.
 
 ---
 
-[← 3 · Hello, TestLab](03-hello-testlab.md) · [Home](../index.md)
+[← 3 · Hello, TestLab](../03-hello-testlab.md) · [Home](../../index.md)
 
 ## NOTICE
 
@@ -72,4 +72,5 @@ This work is licensed under the [CC-BY-4.0](https://creativecommons.org/licenses
 - SPDX-License-Identifier: CC-BY-4.0
 - SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
 - SPDX-FileCopyrightText: 2026 Catena-X Automotive Network e.V.
+- SPDX-FileCopyrightText: 2026 LKS Next
 - Source URL: <https://github.com/eclipse-tractusx/tutorial-resources>
