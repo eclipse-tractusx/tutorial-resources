@@ -95,6 +95,13 @@ nav:
       - 7 · Add it to your repository: tutorial/07-add-to-repository.md
       - 8 · Link it and open the pull request: tutorial/08-link-and-pull-request.md
       - 9 · What comes next: tutorial/09-what-comes-next.md
+  - E2E specs:
+      - specs/index.md
+      - BPDM: specs/bpdm.md
+      - BPN-DID Resolution Service: specs/bpn-did-resolution-service.md
+      - Digital Twin Registry: specs/sldt-digital-twin-registry.md
+      - Tractus-X EDC: specs/tractusx-edc.md
+      - Tractus-X IdentityHub: specs/tractusx-identityhub.md
   - Reference:
       - Glossary: reference/glossary.md
       - Prerequisites: reference/prepare.md

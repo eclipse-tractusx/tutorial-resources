@@ -70,6 +70,9 @@ jobs:
       - name: The catalog page matches products.json
         run: python catalog/build_catalog.py --check
 
+      - name: The spec pages match the specs, and every step they name exists
+        run: python specs/build_specs.py --check
+
       - name: The template archive matches the template
         run: python tools/build_template_zip.py --check
 

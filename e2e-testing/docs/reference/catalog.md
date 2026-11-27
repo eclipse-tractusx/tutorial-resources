@@ -2,7 +2,7 @@
 
 # Product catalog
 
-29 Eclipse Tractus-X products that should get an E2E test. 5 of them can be built **and run** in the workshop.
+22 Eclipse Tractus-X products that should get an E2E test. 4 of them can be built **and run** in the workshop.
 
 Collected on 2026-11-24 from the `eclipse-tractusx` organization: the repository list, each repository's `.tractusx` metafile and the Umbrella chart.
 
@@ -18,7 +18,6 @@ These need only what every team gets: connector, Digital Twin Registry, wallet, 
 | **Digital Twin Registry**<br/>[`sldt-digital-twin-registry`](https://github.com/eclipse-tractusx/sldt-digital-twin-registry) | A twin its owner registers can be read back, and a partner finds and reads it through the owner's connector. | connector, Digital Twin Registry, wallet, BDRS | Yes | Starter |
 | **Tractus-X IdentityHub (wallet and IssuerService)**<br/>[`tractusx-identityhub`](https://github.com/eclipse-tractusx/tractusx-identityhub) | A participant presents its membership credential in a contract negotiation and is accepted, and a policy asking for a credential it does not hold is refused. | connector, wallet, BDRS | Yes | Intermediate |
 | **BPN-DID Resolution Service (BDRS)**<br/>[`bpn-did-resolution-service`](https://github.com/eclipse-tractusx/bpn-did-resolution-service) | A partner's BPN is resolved to its DID, and the partner's catalog is reached with nothing but that BPN. | connector, wallet, BDRS | Yes | Intermediate |
-| **Tractus-X SDK**<br/>[`tractusx-sdk`](https://github.com/eclipse-tractusx/tractusx-sdk) | The SDK's connector and registry services complete a provide-and-consume journey against two real connectors. | connector, Digital Twin Registry, wallet, BDRS | No | Intermediate |
 
 ## Needs more than the workshop environment
 
@@ -26,10 +25,10 @@ Build, validate and compile the test in the workshop. Run it where the product i
 
 | Product | Suggested E2E scenario | Needs | In the developer toolbox | Difficulty |
 | --- | --- | --- | --- | --- |
+| **Business Partner Data Management (BPDM)**<br/>[`bpdm`](https://github.com/eclipse-tractusx/bpdm) | A business partner a member uploads to the Gate arrives in the Pool as a golden record with a BPN. | BPDM, identity provider, database | Yes | Intermediate |
 | **Discovery Finder**<br/>[`sldt-discovery-finder`](https://github.com/eclipse-tractusx/sldt-discovery-finder) | A registered BPN Discovery endpoint is returned for its identifier type, and an unknown type returns an empty list. | Discovery Finder, identity provider | Yes | Starter |
 | **BPN Discovery**<br/>[`sldt-bpn-discovery`](https://github.com/eclipse-tractusx/sldt-bpn-discovery) | An identifier registered for a BPN is found again by a search, and it is gone after it was deleted. | BPN Discovery, identity provider | Yes | Starter |
 | **Semantic Hub**<br/>[`sldt-semantic-hub`](https://github.com/eclipse-tractusx/sldt-semantic-hub) | A published aspect model is listed, its JSON schema can be generated, and an invalid model is rejected. | Semantic Hub, identity provider | Yes | Starter |
-| **Business Partner Data Management (BPDM)**<br/>[`bpdm`](https://github.com/eclipse-tractusx/bpdm) | A business partner a member uploads to the Gate arrives in the Pool as a golden record with a BPN. | BPDM, identity provider, database | Yes | Intermediate |
 | **Portal**<br/>[`portal`](https://github.com/eclipse-tractusx/portal) | An invited company completes its registration, is approved by the operator and can create a technical user. | Portal, identity provider, database | Yes | Advanced |
 | **Portal IAM (Keycloak instances)**<br/>[`portal-iam`](https://github.com/eclipse-tractusx/portal-iam) | A technical user gets a token from the central identity provider and a protected service accepts it, and an unknown client is refused. | identity provider, database | Yes | Intermediate |
 | **Self-Description Factory**<br/>[`sd-factory`](https://github.com/eclipse-tractusx/sd-factory) | A self-description requested for a participant is created, and a request with missing mandatory data is rejected. | identity provider, wallet | Yes | Intermediate |
@@ -39,26 +38,20 @@ Build, validate and compile the test in the workshop. Run it where the product i
 | **Trace-X (Traceability FOSS)**<br/>[`traceability-foss`](https://github.com/eclipse-tractusx/traceability-foss) | A quality notification sent for a part arrives at the partner, and the partner's reply closes it. | connector, Digital Twin Registry, submodel server, IRS, identity provider, database | No | Advanced |
 | **PURIS**<br/>[`puris`](https://github.com/eclipse-tractusx/puris) | Stock information a supplier provides for a material is received and shown on the customer side. | connector, Digital Twin Registry, identity provider, database | No | Advanced |
 | **Industry Core Hub**<br/>[`industry-core-hub`](https://github.com/eclipse-tractusx/industry-core-hub) | A part published through the hub is found by a partner in the Digital Twin Registry, and its submodel is pulled through the connector. | connector, Digital Twin Registry, submodel server, database | No | Intermediate |
-| **AAS Suite**<br/>[`aas-suite`](https://github.com/eclipse-tractusx/aas-suite) | A shell and submodel created through the suite are readable by a partner through the connector. | connector, Digital Twin Registry, submodel server | No | Intermediate |
 | **Knowledge Agents**<br/>[`knowledge-agents`](https://github.com/eclipse-tractusx/knowledge-agents) | A federated query sent by one participant is answered with data bound from a partner's agent, through both connectors. | connector, wallet, BDRS | No | Advanced |
-| **Tractus-X EDC Kafka Extension**<br/>[`tractusx-edc-kafka-extension`](https://github.com/eclipse-tractusx/tractusx-edc-kafka-extension) | A partner negotiates a Kafka asset, receives short-lived broker credentials and reads the messages of the stream. | connector, Kafka, wallet, BDRS | No | Advanced |
-| **EDC Dashboard and Policy Builder**<br/>[`tractusx-edc-dashboard`](https://github.com/eclipse-tractusx/tractusx-edc-dashboard) | A policy built with the dashboard is created on the connector and is the policy a partner sees in the catalog. | connector, browser | No | Advanced |
 | **Managed Simple Data Exchanger (SDE)**<br/>[`managed-simple-data-exchanger`](https://github.com/eclipse-tractusx/managed-simple-data-exchanger) | Data uploaded through the exchanger appears as a twin and as a contract offer a partner can negotiate. | connector, Digital Twin Registry, Portal, identity provider, database | No | Advanced |
 | **Managed Service Orchestrator**<br/>[`managed-service-orchestrator`](https://github.com/eclipse-tractusx/managed-service-orchestrator) | A subscription triggers the setup, and the connector it deploys answers a catalog request. | Portal, identity provider, Kubernetes cluster, database | No | Advanced |
 | **E2E Data Exchange Test Service**<br/>[`data-exchange-test-service`](https://github.com/eclipse-tractusx/data-exchange-test-service) | A test started for a connector reports success for a working connector and a clear failure for an unreachable one. | connector, Portal, identity provider | No | Intermediate |
 | **Dataspace Management**<br/>[`dataspace-mgm-services`](https://github.com/eclipse-tractusx/dataspace-mgm-services) | A company created by an onboarding service provider can be read back, and a user of another provider cannot see it. | identity provider, database | No | Intermediate |
-| **Tractus-X SDK Services**<br/>[`tractusx-sdk-services`](https://github.com/eclipse-tractusx/tractusx-sdk-services) | The pull service fetches a twin's submodel from a partner through the connector and reports each step it took. | connector, Digital Twin Registry, wallet | No | Intermediate |
-| **Tractus-X Starter Kit**<br/>[`tractusx-starter-kit`](https://github.com/eclipse-tractusx/tractusx-starter-kit) | A setup generated with the default answers starts, and its first data exchange succeeds. | connector, wallet, BDRS | No | Advanced |
-| **Tractus-X TestLab**<br/>[`tractusx-testlab`](https://github.com/eclipse-tractusx/tractusx-testlab) | The compile, validate and run pipeline passes against a live dataspace. | connector, Digital Twin Registry, wallet, BDRS | No | Advanced |
 
 ## What is missing for each of them
 
 | Product | To run its test you also need |
 | --- | --- |
+| Business Partner Data Management (BPDM) | Needs BPDM and its identity provider deployed. Build from the Gate and Pool OpenAPI documents in the workshop. |
 | Discovery Finder | Small REST API with an OpenAPI document: build and compile in the workshop, run where the service and its identity provider are deployed. |
 | BPN Discovery | Small REST API with an OpenAPI document: build and compile in the workshop, run where the service and its identity provider are deployed. |
 | Semantic Hub | Small REST API with an OpenAPI document: build and compile in the workshop, run where the service and its identity provider are deployed. |
-| Business Partner Data Management (BPDM) | Needs BPDM and its identity provider deployed. Build from the Gate and Pool OpenAPI documents in the workshop. |
 | Portal | Needs the Portal backend and both identity providers deployed. A long flow: plan more than one session. |
 | Portal IAM (Keycloak instances) | Needs both Keycloak instances deployed. The token request needs client credentials supplied at run time. |
 | Self-Description Factory | Needs the service, its identity provider and a signing service deployed. |
@@ -68,17 +61,11 @@ Build, validate and compile the test in the workshop. Run it where the product i
 | Trace-X (Traceability FOSS) | Needs Trace-X, the IRS and a full data provider stack deployed on two sides. |
 | PURIS | Needs two PURIS instances, each with a connector and a Digital Twin Registry. |
 | Industry Core Hub | Needs the hub deployed next to the provider's connector and registry. Build from its OpenAPI document in the workshop. |
-| AAS Suite | Needs the suite deployed next to a connector. |
 | Knowledge Agents | Needs connectors built with the agent extensions and a provisioning agent on the provider side. |
-| Tractus-X EDC Kafka Extension | Needs connectors built with the extension and a Kafka broker. |
-| EDC Dashboard and Policy Builder | A user interface: the test covers the Management API calls behind it, not the clicks. |
 | Managed Simple Data Exchanger (SDE) | Needs the exchanger, a Portal with its identity provider, a connector and a registry. |
 | Managed Service Orchestrator | Needs the orchestrator, a Portal and a cluster it may deploy into. |
 | E2E Data Exchange Test Service | Needs the service deployed with a Portal and its identity provider. |
 | Dataspace Management | Needs the service and its identity provider deployed. Its metafile names a leading repository that does not exist yet. |
-| Tractus-X SDK Services | Needs both services deployed next to a connector. |
-| Tractus-X Starter Kit | Runs in Docker Compose, not in the developer toolbox: the workflow needs its own bring-up step. |
-| Tractus-X TestLab | Already has its E2E test as a TCK project. Read it as the reference. |
 
 ## More scenarios
 
@@ -105,11 +92,10 @@ Read them before you write a scenario: they show what the maintainers consider i
 | Digital Twin Registry | `e2e-tests/`, `aas-registry-e2e-test.yml` |
 | Tractus-X IdentityHub (wallet and IssuerService) | `tests/deployment/`, `postman-e2e-test.yaml` |
 | BPN-DID Resolution Service (BDRS) | `system-tests/`, `run-all-tests.yml` |
-| Tractus-X SDK | `tck/connector/`, `compatibility-test.yaml` |
+| Business Partner Data Management (BPDM) | `bpdm-system-tester/`, `app-test-charts.yaml` |
 | Discovery Finder | `e2e-tests/`, `discoveryfinder-e2e-test.yml` |
 | BPN Discovery | `e2e-tests/`, `bpndiscovery-e2e-test.yml` |
 | Semantic Hub | `e2e-tests/`, `semantic-hub-e2e-test.yml` |
-| Business Partner Data Management (BPDM) | `bpdm-system-tester/`, `app-test-charts.yaml` |
 | Portal | `portal-chart-test.yaml`, `portal-backend: postman/`, `portal-frontend: cypress/` |
 | Portal IAM (Keycloak instances) | `centralidp-chart-test.yaml`, `sharedidp-chart-test.yaml` |
 | Self-Description Factory | `sdfactorypipeline.yml` |
@@ -118,10 +104,8 @@ Read them before you write a scenario: they show what the maintainers consider i
 | Trace-X (Traceability FOSS) | `tx-cucumber-tests/`, `xray-cucumber.yaml`, `e2e-tests-xray_frontend.yml` |
 | PURIS | `helm-test.yml`, `local/testing/e2e/` |
 | Industry Core Hub | `deployment-tests.yaml`, `helm-test.yaml` |
-| Tractus-X EDC Kafka Extension | `deployment-test.yaml` |
 | E2E Data Exchange Test Service | `dataexchange-pipeline.yml`, `helm-test.yaml` |
 | Dataspace Management | `helm-test.yml` |
-| Tractus-X TestLab | `tests/e2e/connector-dtr-smoke/`, `e2e-umbrella.yml` |
 
 ## Not in the list
 

@@ -1,0 +1,139 @@
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: CC-BY-4.0
+#
+# E2E test spec. Rendered to docs/specs/bpn-did-resolution-service.md by
+# specs/build_specs.py. Edit this file, not the page.
+
+$schema: ./spec.schema.json
+product: bpn-did-resolution-service
+specVersion: "1.0"
+status: draft
+statusNote: >
+  Not run end to end yet. The test proves the directory by its effect: a partner is
+  reached with nothing but its BPN. The discovery steps are Saturn only.
+
+inOneSentence: >
+  A partner is found and its catalog is reached with nothing but its BPN, and it
+  resolves to the right identity.
+
+whatItDoes: >
+  In the dataspace a company is known by its Business Partner Number (BPN), but
+  connectors talk to each other by DID, a kind of web address for an identity. The
+  BPN-DID Resolution Service (BDRS) is the directory between the two: give it a BPN and
+  it returns the company's DID. Without it, a partner would need to know the other
+  company's technical address in advance.
+
+journey:
+  yourSide: The provider's connector, registered in the BDRS under its BPN
+  partnerSide: The partner's connector, where the tests run from
+  moves:
+    - The partner knows only the provider's BPN.
+    - The partner's connector asks for the provider's connector by that BPN.
+    - It gets back an address and an identity, and the identity is the provider's DID.
+    - The partner asks for the catalog by BPN and sees an offer the provider published.
+
+tck:
+  id: bpn-did-resolution-service-e2e
+  folder: tck/e2e
+  standards: []
+  infrastructure:
+    engine: [connector]
+    sut: [connector]
+  runsInWorkshop: true
+  workflow:
+    runInToolbox: true
+  variables:
+    - id: sut_bpnl
+      kind: input
+      scope: sut
+      what: BPN of the provider, the only thing the partner knows.
+      example: BPNL000000000001
+      inWorkflow: Filled from sut_bpnl.
+    - id: product_internal_url
+      kind: input
+      scope: sut
+      what: Any data behind the asset of test 2.
+      example: http://tck-echo
+      inWorkflow: Filled from product_internal_url, a traefik/whoami echo service.
+    - id: access_policy
+      kind: policy
+      what: "Who may see the offer: active members."
+    - id: usage_policy
+      kind: policy
+      what: Copy it from the template.
+
+tests:
+  - file: bpn_resolves_to_the_provider.yaml
+    id: bpn-resolves-to-the-provider
+    name: The provider's BPN resolves to the provider's identity
+    kinds: [positive, contract]
+    proves: The directory entry is right. A BPN that resolved to another identity would send partners to the wrong company.
+    execution:
+      - do: Discover the provider's connector from its BPN.
+        step: connector/consumer/discover_connector
+        check:
+          - An address is returned.
+          - The counter_party_id equals infrastructure.sut.connector.participant_id.
+
+  - file: catalog_by_bpn.yaml
+    id: catalog-by-bpn
+    name: A partner reaches the provider's catalog with nothing but its BPN
+    kinds: [journey, positive]
+    proves: The whole path works from a BPN to an offer, as a partner who knows nothing else would use it.
+    setup:
+      - do: Create the access policy.
+        step: connector/provider/create_policy
+      - do: Create the usage policy.
+        step: connector/provider/create_policy
+      - do: Create an asset with id bpn-did-resolution-service-e2e-asset.
+        step: connector/provider/create_asset
+      - do: Publish the offer under both policies.
+        step: connector/provider/create_contract_definition
+    execution:
+      - do: Ask for the catalog by sut_bpnl, filtered to the asset id.
+        step: connector/consumer/query_catalog_by_bpnl
+        check:
+          - The list of datasets has exactly one entry.
+    teardown:
+      - do: Delete the contract definition.
+        step: connector/provider/delete_contract_definition
+      - do: Delete the asset.
+        step: connector/provider/delete_asset
+      - do: Delete the usage policy.
+        step: connector/provider/delete_policy
+      - do: Delete the access policy.
+        step: connector/provider/delete_policy
+
+  - file: unknown_offer_by_bpn_is_not_found.yaml
+    id: unknown-offer-by-bpn-is-not-found
+    name: An offer that was never published is not found by BPN either
+    kinds: [negative]
+    proves: Reaching a partner by BPN shows its real catalog, not a guess.
+    execution:
+      - do: Ask for the catalog by sut_bpnl, filtered to an asset id that was never published.
+        step: connector/consumer/query_catalog_by_bpnl
+        check:
+          - The list of datasets is empty.
+
+breakItOnPurpose:
+  - test: bpn_resolves_to_the_provider.yaml
+    change: Compare counter_party_id with infrastructure.engine.connector.participant_id.
+    expect: The check fails, because the BPN resolves to the provider, not to the partner.
+  - test: catalog_by_bpn.yaml
+    change: Expect two datasets.
+    expect: The length check fails with one.
+
+notInScope:
+  - The BDRS management API (adding and removing entries). The toolbox fills the directory before the tests run.
+  - An unknown BPN. How a connector reports a BPN it cannot resolve is still to be checked in a run; add the test once it is.
+
+pitfalls:
+  - A red result can also be the connector's fault. Say so in the pull request.
+  - participant_id is a DID. The BPN is the input variable sut_bpnl.
+  - discover_connector and query_catalog_by_bpnl are registered for Saturn only. Keep dataspace.version saturn.
+
+sources:
+  - label: BPN-DID Resolution Service repository
+    url: https://github.com/eclipse-tractusx/bpn-did-resolution-service
+  - label: Agent kit, pattern 5 "A service the connectors rely on"
+    url: https://github.com/eclipse-tractusx/tutorial-resources/blob/main/e2e-testing/agent-kit/skills/tractusx-e2e-test/reference/patterns.md
