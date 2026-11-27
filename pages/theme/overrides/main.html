@@ -15,6 +15,29 @@
 -#}
 {% extends "base.html" %}
 
+{#- A pull request preview (hooks/preview.py): not indexed, and a banner on top. -#}
+{% block extrahead %}
+  {{ super() }}
+  {% if config.extra.preview %}
+    <meta name="robots" content="noindex, nofollow">
+  {% endif %}
+{% endblock %}
+
+{% block announce %}
+  {% if config.extra.preview %}
+    {% set preview = config.extra.preview %}
+    <span class="tx-preview">
+      <strong>Preview of pull request #{{ preview.number }}.</strong>
+      Not the published site.
+      <a href="{{ preview.pull_request }}">Open the pull request</a> ·
+      <a href="{{ preview.home }}">Preview home</a> ·
+      <a href="{{ preview.published }}">Published site</a>
+    </span>
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
 {% block fonts %}
   {{ super() }}
   {% if config.theme.font %}

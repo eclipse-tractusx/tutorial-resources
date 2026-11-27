@@ -75,6 +75,7 @@ extra:
     deprecated: {deprecated}
 
 hooks:
+  - {preview}
   - {about}
   - {hook}
 
@@ -146,6 +147,7 @@ def build(site: dict, out: Path, work: Path) -> None:
         CONFIG.format(
             base=json_string(str(THEME / "mkdocs-base.yml")),
             custom_dir=json_string(str(THEME / "overrides")),
+            preview=json_string(str(THEME / "hooks" / "preview.py")),
             about=json_string(str(THEME / "hooks" / "about.py")),
             tutorial=json_string_any(tutorial),
             title=json_string(site["title"]),

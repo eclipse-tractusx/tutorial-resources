@@ -38,6 +38,7 @@ Made for the "AI and Test Management" session of the 7th Eclipse Tractus-X Commu
 | --- | --- |
 | [`docs/`](docs/index.md) | Every page of the tutorial. Plain Markdown: read it here, or as a site. |
 | [`catalog/`](catalog/) | `products.json`: every product that should get an E2E test. `assignments.json`: which team has which product. |
+| [`specs/`](specs/) | One E2E spec per product: what its TCK must test and look like. `build_specs.py` turns them into the pages under `docs/specs/` |
 | [`template/`](template/tck/e2e/) | An E2E test project to copy and fill in |
 | [`examples/digital-twin-registry/`](examples/digital-twin-registry/) | A complete example that passes in GitHub Actions: the project, the workflow and the `.tractusx` link |
 | [`agent-kit/`](agent-kit/) | A skill and an agent that teach your own AI coding tool the format, for teams without an API key |
@@ -64,6 +65,7 @@ Then open <http://localhost:8000>.
 | --- | --- |
 | `catalog/products.json` or `catalog/assignments.json` | `python catalog/build_catalog.py` |
 | Anything under `template/tck/e2e` or the example | `python tools/build_template_zip.py` and `python tools/build_agent_kit.py` |
+| A spec under `specs/` | `python specs/build_specs.py` |
 | A page under `docs/` | `mkdocs build --strict` |
 
 The workflow [`e2e-testing-site.yml`](../.github/workflows/e2e-testing-site.yml) runs the

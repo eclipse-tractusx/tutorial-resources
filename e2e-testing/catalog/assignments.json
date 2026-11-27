@@ -7,6 +7,6 @@
     { "team": "team-02", "teamName": "Team 02", "productId": "tractusx-edc" },
     { "team": "team-03", "teamName": "Team 03", "productId": "tractusx-identityhub" },
     { "team": "team-04", "teamName": "Team 04", "productId": "bpn-did-resolution-service" },
-    { "team": "team-05", "teamName": "Team 05", "productId": "tractusx-sdk" }
+    { "team": "team-05", "teamName": "Team 05", "productId": "bpdm" }
   ]
 }

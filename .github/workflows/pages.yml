@@ -25,6 +25,8 @@
 #   /e2e-testing/         the E2E testing tutorial (MkDocs, e2e-testing/)
 #   /<folder>/            each Markdown tutorial in pages/markdown-sites.yml
 #   /policy-playground/   the EDC Policy Playground (Angular, edc-policy-playground/)
+#   /pr-preview/<number>/ the preview of each open pull request that changes the
+#                         website (pages-preview.yml, from the pr-previews branch)
 #
 # The MkDocs sites share one theme (pages/theme): the same header, footer and
 # About panel everywhere. To publish another tutorial site, build it into its
@@ -126,6 +128,27 @@ jobs:
                       dpp-tutorial/index.html icc-irs-challenges/index.html migration-guides/index.html; do
             test -f "_site/${path}" || { echo "::error::_site/${path} is missing"; exit 1; }
           done
+
+      # pages-preview.yml keeps one folder per open pull request on the
+      # pr-previews branch and dispatches this workflow on main.
+      - name: Pull request previews, at /pr-preview/<number>/
+        if: github.event_name != 'pull_request'
+        run: |
+          if ! git rev-parse --verify --quiet refs/remotes/origin/pr-previews >/dev/null; then
+            echo "No pr-previews branch: no previews."
+            exit 0
+          fi
+          # Only the <number>/ folders, never the branch's README or anything else.
+          folders="$(git ls-tree -d --name-only refs/remotes/origin/pr-previews | grep -E '^[1-9][0-9]{0,6}$' || true)"
+          if [ -z "${folders}" ]; then
+            echo "No open previews."
+            exit 0
+          fi
+          mkdir -p _site/pr-preview
+          # shellcheck disable=SC2086 # one argument per folder
+          git archive --format=tar refs/remotes/origin/pr-previews -- ${folders} | tar -x -C _site/pr-preview
+          echo "Previews of pull requests:"
+          echo "${folders}"
 
       - name: Upload the site
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0

@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eclipse-tractusx.github.io/tutorial-resources/e2e-testing/specs/spec.schema.json",
+  "title": "E2E test spec of one Eclipse Tractus-X product",
+  "description": "What the E2E test of one product must prove, and the shape of the TCK that proves it. Written so that a team that does not know the product, and its AI assistant, can build the test from it.",
+  "type": "object",
+  "required": ["product", "specVersion", "status", "inOneSentence", "whatItDoes", "journey", "tck", "tests", "breakItOnPurpose"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "product": {
+      "description": "The product's id in catalog/products.json.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "specVersion": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
+    "status": {
+      "description": "proven: a TCK built from this spec passed in the workflow. draft: not run end to end yet.",
+      "enum": ["proven", "draft"]
+    },
+    "statusNote": { "type": "string", "maxLength": 300 },
+    "inOneSentence": { "type": "string", "maxLength": 200 },
+    "whatItDoes": {
+      "description": "The product for someone who has never heard of it. Two to four sentences, no jargon that the glossary does not explain.",
+      "type": "string",
+      "maxLength": 700
+    },
+    "journey": {
+      "description": "The story the test tells, as numbered moves between the two sides.",
+      "type": "object",
+      "required": ["yourSide", "partnerSide", "moves"],
+      "additionalProperties": false,
+      "properties": {
+        "yourSide": { "description": "What plays the SUT.", "type": "string" },
+        "partnerSide": { "description": "What plays the engine.", "type": "string" },
+        "moves": { "type": "array", "items": { "type": "string" }, "minItems": 2, "maxItems": 8 }
+      }
+    },
+    "tck": { "$ref": "#/$defs/tck" },
+    "tests": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/test" }
+    },
+    "breakItOnPurpose": {
+      "description": "One way per test to make it fail for the right reason, so the team knows its checks can fail.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["test", "change", "expect"],
+        "additionalProperties": false,
+        "properties": {
+          "test": { "type": "string" },
+          "change": { "type": "string" },
+          "expect": { "type": "string" }
+        }
+      }
+    },
+    "notInScope": { "type": "array", "items": { "type": "string" } },
+    "pitfalls": { "type": "array", "items": { "type": "string" } },
+    "sources": {
+      "description": "Where the facts in this spec come from.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["label", "url"],
+        "additionalProperties": false,
+        "properties": {
+          "label": { "type": "string" },
+          "url": { "type": "string", "pattern": "^https://" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "stepName": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]*(/[a-z0-9][a-z0-9_.-]*)+$"
+    },
+    "tck": {
+      "type": "object",
+      "required": ["id", "folder", "infrastructure", "variables"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "The manifest id. Every test file repeats it as namespace.",
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*-e2e$"
+        },
+        "folder": { "const": "tck/e2e" },
+        "standards": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "version"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string", "pattern": "^CX-\\d{4}$" },
+              "version": { "type": "string" }
+            }
+          }
+        },
+        "infrastructure": {
+          "type": "object",
+          "required": ["engine", "sut"],
+          "additionalProperties": false,
+          "properties": {
+            "engine": { "type": "array", "items": { "enum": ["connector", "dtr"] }, "uniqueItems": true },
+            "sut": { "type": "array", "items": { "enum": ["connector", "dtr"] }, "uniqueItems": true }
+          }
+        },
+        "variables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "kind", "what"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+              "kind": { "enum": ["input", "asset", "policy"] },
+              "scope": { "enum": ["sut", "engine"] },
+              "what": { "type": "string" },
+              "example": { "type": "string" },
+              "inWorkflow": { "description": "How the shared workflow fills it, when it does.", "type": "string" }
+            }
+          }
+        },
+        "schemas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "file", "what"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string" },
+              "file": { "type": "string", "pattern": "^[a-z0-9_]+\\.json$" },
+              "what": { "type": "string" },
+              "copyFrom": { "type": "string" }
+            }
+          }
+        },
+        "apis": {
+          "description": "API documents the tests call by operationId, declared under env.apis.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "what", "source"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string" },
+              "what": { "type": "string" },
+              "source": { "type": "string", "pattern": "^https://" }
+            }
+          }
+        },
+        "runsInWorkshop": { "type": "boolean" },
+        "workflow": {
+          "description": "The inputs of the shared workflow this product needs.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "runInToolbox": { "type": "boolean" },
+            "note": { "type": "string" }
+          }
+        }
+      }
+    },
+    "phaseStep": {
+      "type": "object",
+      "required": ["do", "step"],
+      "additionalProperties": false,
+      "properties": {
+        "do": { "description": "What happens, in plain words.", "type": "string" },
+        "step": { "$ref": "#/$defs/stepName" },
+        "check": {
+          "description": "What must be true afterwards. Each line becomes one check.",
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "test": {
+      "type": "object",
+      "required": ["file", "id", "name", "kinds", "proves", "execution"],
+      "additionalProperties": false,
+      "properties": {
+        "file": { "type": "string", "pattern": "^[a-z0-9_]+\\.yaml$" },
+        "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "name": { "type": "string", "maxLength": 100 },
+        "kinds": {
+          "type": "array",
+          "items": { "enum": ["journey", "positive", "negative", "contract"] },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "proves": { "type": "string" },
+        "optional": { "description": "Nice to have: build it when the others are green.", "type": "boolean" },
+        "setup": { "type": "array", "items": { "$ref": "#/$defs/phaseStep" } },
+        "execution": { "type": "array", "items": { "$ref": "#/$defs/phaseStep" }, "minItems": 1 },
+        "teardown": { "type": "array", "items": { "$ref": "#/$defs/phaseStep" } }
+      }
+    }
+  }
+}

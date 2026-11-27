@@ -13,6 +13,9 @@ You say **what** must be proven. The assistant writes **how**. The Skeptic reads
 2. In the assistant panel, switch the mode to **Plan**. A plan changes nothing.
 3. Paste [starter prompt 1](../reference/prompts.md#1-plan-the-test) and fill in your
    product, its repository and the scenario from the handout, box **A**. Send it.
+
+    Your product has an [E2E spec](../specs/index.md)? Attach its raw spec file and send
+    the prompt from part 8 of the spec instead. The plan then follows the spec.
 4. Read the plan. The Skeptic asks three questions:
 
     | Question | A good plan says |

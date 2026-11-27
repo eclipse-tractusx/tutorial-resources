@@ -15,6 +15,10 @@
 3. Find your product in the [product catalog](../reference/catalog.md) and read its
    suggested scenario. It is the same as on the handout, box **A**: what a partner can
    do with your product, and what is refused. Your test proves both.
+
+    Does your product have an [E2E spec](../specs/index.md)? Then read it instead: it
+    says what each test must prove, which steps to use and what the finished TCK looks
+    like. You don't need to work out the product's API yourself.
 4. Look at boxes **C** and **D** of the handout. They are your two
    [connectors](../reference/glossary.md#connector):
 
