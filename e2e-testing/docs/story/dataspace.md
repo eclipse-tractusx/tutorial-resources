@@ -77,6 +77,9 @@ The same small dataspace is created inside GitHub Actions when your test runs in
 It is the [Eclipse Tractus-X developer toolbox](../reference/glossary.md#eclipse-tractus-x-developer-toolbox): the
 Tractus-X Umbrella Helm chart with a small dataspace configuration, in memory in the runner.
 
+![Eclipse Tractus-X Developer Toolbox](../assets/toolbox/toolbox-logo-light.png#only-light){ width="420" }
+![Eclipse Tractus-X Developer Toolbox](../assets/toolbox/toolbox-logo-dark.png#only-dark){ width="420" }
+
 ---
 
 [← Why we are here](why.md) · [Home](../index.md) · [Next: What a test is made of →](test-anatomy.md)

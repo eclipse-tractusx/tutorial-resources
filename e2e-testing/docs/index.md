@@ -78,6 +78,7 @@ run needed closer to 90: if your session is longer, spend the extra time on chap
 | **A TCK project** | A folder of YAML files that describes your test. This is what you commit. |
 | **The Test Suite IDE** | A browser tool for building TCK projects with blocks and an AI assistant. One way to get there faster; the files it produces are plain YAML you could also write by hand. |
 | **A reusable workflow** | A few lines of GitHub Actions that validate, compile and run your test. |
+| ![](assets/toolbox/toolbox-app-icon-small.png){ width="28" style="vertical-align: middle" } **The developer toolbox** | The small Eclipse Tractus-X dataspace the workflow starts in the GitHub runner. [What is in it](reference/toolbox.md) |
 
 The IDE in this workshop is provided by the Catena-X Association. The TCK format and
 TestLab are not tied to one dataspace: the same approach works for tests of other
